@@ -6,6 +6,7 @@ import play.mvc.*;
 
 import play.data.Form;
 import com.avaje.ebean.Ebean;
+import play.Logger;
 
 import views.html.*;
 
@@ -29,9 +30,9 @@ public class Application extends Controller {
         String password = boundForm.bindFromRequest().field("password").value();
         User user = new User(username, password);
 
-
+        Logger.info("dsasad");
         Ebean.save(user);
-        return redirect(routes.Application.signIn());
+        return redirect(routes.Application.index());
     }
 
 }

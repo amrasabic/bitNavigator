@@ -3,7 +3,7 @@
 
 @main("Sign in") {
     <h1>Sign in</h1>
-    @helper.form(action = routes.Application.signIn()) {
+    @helper.form(action = routes.Application.save()) {
         <fieldset>
             <legend>User</legend>
             @helper.inputText(userForm("username"), '_label -> "Username")
