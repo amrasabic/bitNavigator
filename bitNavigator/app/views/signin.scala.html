@@ -1,0 +1,14 @@
+@(userForm: Form[User])
+@import helper._
+
+@main("Sign in") {
+    <h1>Sign in</h1>
+    @helper.form(action = routes.Application.signIn()) {
+        <fieldset>
+            <legend>User</legend>
+            @helper.inputText(userForm("username"), '_label -> "Username")
+            @helper.inputText(userForm("password"), '_label -> "Password")
+        </fieldset>
+        <input type="submit" value="Sign in">
+    }
+}
