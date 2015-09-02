@@ -8,8 +8,8 @@
             <legend>User</legend>
             @helper.inputText(userForm("username"), '_label -> "Username")
             @helper.inputText(userForm("email"), '_label -> "Email")
-            @helper.inputText(userForm("password"), '_label -> "Password")
-            @helper.inputText(userForm("password"), '_label -> "Confirm password")
+            @helper.inputPassword(userForm("password"), '_label -> "Password")
+            @helper.inputPassword(userForm("password"), '_label -> "Confirm password")
             <div id="error-msg">
                 @if(flash.containsKey("error")) {
                     @flash.get("error")
@@ -22,11 +22,9 @@
             var pass1 = document.getElementsByName("password")[0];
             var pass2 = document.getElementsByName("password")[1];
             var msg = document.getElementById("error-msg");
-            var email = document.getElementById("email");
 
             function checkPwd(str) {
-            str = this.value;
-
+                str = this.value;
                 if (str.length < 8) {
                     msg.innerText = "too short";
                     //return("too_short");
@@ -56,19 +54,6 @@
                 }
             }
 
-            function validateEmail() {
-                var at = '/u&#64';
-                var re = /^([\w-]+(?:\.[\w-]+)*)/ + at+ /((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-                if (re.test(email.value)) {
-                    msg.innerText = "email ok";
-                } else {
-                    msg.innerText = "email not valid";
-                }
-                return re;
-            }
-
-
-            email.onkeyup = validateEmail;
             pass1.onkeyup = checkPwd;
             pass2.onkeyup = isEqual;
 

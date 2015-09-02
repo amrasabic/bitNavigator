@@ -9,7 +9,6 @@ import views.html.signin;
 import views.html.signup;
 import play.Logger;
 import utillities.PasswordHash;
-
 /**
  * Created by ognje on 01-Sep-15.
  */
@@ -49,6 +48,10 @@ public class UserHandler extends Controller {
         Form<User> boundForm = userForm.bindFromRequest();
         String email = boundForm.bindFromRequest().field("email").value();
         User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
+        if (!isValidEmailAddress(email)) {
+            flash("error", "Invalid email");
+            return badRequest(signup.render(boundForm));
+        }
         if (user != null) {
             flash("error", "Account already linked to given email");
             return badRequest(signup.render(boundForm));
@@ -67,6 +70,13 @@ public class UserHandler extends Controller {
 
         Ebean.save(user);
         return redirect(routes.Application.index());
+    }
+
+    public boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 
 }
