@@ -6,8 +6,13 @@
     @helper.form(action = routes.UserHandler.checkSignIn()) {
         <fieldset>
             <legend>User</legend>
-            @helper.inputText(userForm("username"), '_label -> "Username")
+            @helper.inputText(userForm("email"), '_label -> "Email")
             @helper.inputText(userForm("password"), '_label -> "Password")
+            @if(flash.containsKey("error")) {
+                <div>
+                  @flash.get("error")
+                </div>
+            }
         </fieldset>
         <input type="submit" value="Sign in">
     }
