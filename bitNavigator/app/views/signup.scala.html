@@ -1,0 +1,16 @@
+@(userForm: Form[User])
+@import helper._
+
+@main("Sign up") {
+    <h1>Sign up</h1>
+    @helper.form(action = routes.UserHandler.save()) {
+        <fieldset>
+            <legend>User</legend>
+            @helper.inputText(userForm("username"), '_label -> "Username")
+            @helper.inputText(userForm("email"), '_label -> "Email")
+            @helper.inputText(userForm("password"), '_label -> "Password")
+            @helper.inputText(userForm("password"), '_label -> "Confirm password")
+        </fieldset>
+        <input type="submit" value="Sign up">
+    }
+}
