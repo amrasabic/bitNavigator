@@ -2,29 +2,120 @@
 @import helper._
 
 @main("Sign up") {
-    <h1>Sign up</h1>
+
     @helper.form(action = routes.UserHandler.save()) {
-        <fieldset>
-            <legend>User</legend>
-            @helper.inputText(userForm("username"), '_label -> "Username")
-            @helper.inputText(userForm("email"), '_label -> "Email")
-            @helper.inputPassword(userForm("password"), '_label -> "Password")
-            @helper.inputPassword(userForm("password"), '_label -> "Confirm password")
-            <div id="error-msg">
-                @if(flash.containsKey("error")) {
-                    @flash.get("error")
-                }
-            </div>
-        </fieldset>
-        <input type="submit" value="Sign up">
-        <script>
+
+    <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Register </title>
+                    <!-- Bootstrap -->
+                <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+            </head>
+            <body>
+                <p><br/></p>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="page-header" style="margin-top:5px;">
+                                    <h3>User registration </h3>
+                                </div>
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <label for="inputfn3" class="col-sm-2 control-label">First Name</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                                <input type="first_name" name="first_name" class="form-control" id="first_name" placeholder="Insert first name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputfn3" class="col-sm-2 control-label">Last Name</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                                <input type="last_name" name="last_name" class="form-control" id="last_name" placeholder="Insert last name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                                                <input type="email" name="email" class="form-control" id="email" placeholder="Insert email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+                                                <input type="password" name="password" class="form-control" id="password" placeholder="Insert password">
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <p><br/></p>
+                                    <div class="form-group">
+                                        <label for="inputPassword3" class="col-sm-2 control-label">Confirm password</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+                                                <input type="password" name="password" class="form-control" id="password" placeholder="Confirm password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary" values="Sign up">Register</button>
+                                            <button type="button" class="btn btn-success">Back to Sign in</button>
+                                        </div>
+                                    </div>
+                                    <p><br></p>
+                                    <div id="error-msg">
+                                    @if(flash.containsKey("error")) {
+                                        <div class="alert alert-warning">
+                                        @flash.get("error")
+                                        </div>
+                                    }
+                                    </div>
+
+                                    }
+
+</form>
+
+</div>
+</div>
+</div>
+    <div class="col-md-2"></div>
+</div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script>
 
             var pass1 = document.getElementsByName("password")[0];
             var pass2 = document.getElementsByName("password")[1];
             var msg = document.getElementById("error-msg");
+            var email = document.getElementById("email");
 
             function checkPwd(str) {
-                str = this.value;
+            str = this.value;
+
                 if (str.length < 8) {
                     msg.innerText = "too short";
                     //return("too_short");
@@ -54,9 +145,26 @@
                 }
             }
 
+            function validateEmail() {
+                var at = '/u&#64';
+                var re = /^([\w-]+(?:\.[\w-]+)*)/ + at+ /((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                if (re.test(email.value)) {
+                    msg.innerText = "email ok";
+                } else {
+                    msg.innerText = "email not valid";
+                }
+                return re;
+            }
+
+            email.onkeyup = validateEmail;
             pass1.onkeyup = checkPwd;
             pass2.onkeyup = isEqual;
 
         </script>
-    }
+</body>
+
+</html>
+
+
 }
+
