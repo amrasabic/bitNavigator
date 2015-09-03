@@ -12,23 +12,30 @@ import utillities.PasswordHash;
 /**
  * Created by ognje on 01-Sep-15.
  */
+
+/*
+    Public class UserHandler extends Controller. Has methods within it that leads random user to other subpages. Paths to subpages are defined in routes.
+ */
 public class UserHandler extends Controller {
 
     private static final Form<User> userForm = Form.form(User.class);
 
+    //Leads random user to signin subpage
     public Result signIn() {
         return ok(signin.render(userForm));
     }
 
+    //Leads random user to signup page
     public Result signUp() {
         return ok(signup.render(userForm));
     }
 
-    public Result checkSignIn(){
+    //Checks if all requirments are fullfiled to continue further. This method gets email and password from database and compares them, if they match user is logged in. Method use password hashing.
+    public Result validateSignIn(){
         Form<User> boundForm = userForm.bindFromRequest();
         User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
         if (user == null) {
-            flash("error", "Wrong email");
+            flash("error", "Wrong email or password");
             return badRequest(signin.render(boundForm));
         }
         try {
@@ -36,7 +43,7 @@ public class UserHandler extends Controller {
                 throw new IllegalArgumentException();
             }
         } catch (Exception e) {
-            flash("error", "Wrong password");
+            flash("error", "Wrong email or password");
             return badRequest(signin.render(boundForm));
         }
 
@@ -44,6 +51,7 @@ public class UserHandler extends Controller {
         return ok(signin.render(userForm));
     }
 
+    //Method sends all data from signup form to database and in that way saves new user. This method use isValidEmailAddress method which checks is form of entered email valid.
     public Result save() {
         Form<User> boundForm = userForm.bindFromRequest();
         String email = boundForm.bindFromRequest().field("email").value();
@@ -53,7 +61,7 @@ public class UserHandler extends Controller {
             return badRequest(signup.render(boundForm));
         }
         if (user != null) {
-            flash("error", "Account already linked to given email");
+            flash("error", "Email already taken");
             return badRequest(signup.render(boundForm));
         }
         user = new User();
@@ -72,6 +80,11 @@ public class UserHandler extends Controller {
         return redirect(routes.Application.index());
     }
 
+    /**
+     * Method checks is form of entered email valid
+     * @param email entered email from email input field
+     * @return is entered email valid(true/false)
+     */
     public boolean isValidEmailAddress(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);

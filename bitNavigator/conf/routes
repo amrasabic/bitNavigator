@@ -10,5 +10,5 @@ GET         /assets/*file        controllers.Assets.versioned(path="/public", fi
 
 GET         /signin              @controllers.UserHandler.signIn()
 GET         /signup              @controllers.UserHandler.signUp()
-POST        /signin/             @controllers.UserHandler.checkSignIn()
+POST        /signin/             @controllers.UserHandler.validateSignIn()
 POST        /signup/             @controllers.UserHandler.save()

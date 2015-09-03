@@ -19,6 +19,7 @@ public class User extends Model {
 
     public static Finder<Integer, User> finder = new Finder<>(Integer.class, User.class);
 
+    //Initializing atributes
     @Id
     public int id;
     public String username;
@@ -29,15 +30,22 @@ public class User extends Model {
     @Constraints.Required
     public String password;
 
+    //Constructor
     public User() {
 
     }
 
+    //Default constructor
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
+    /**
+     * Method searches for user in database that has same email like the one in param
+     * @param email email from user we want to find
+     * @return User with entered email
+     */
     public static User findByEmail(String email) {
         User u = finder.where().eq("email", email).findUnique();
         //Logger.info(u.email);
