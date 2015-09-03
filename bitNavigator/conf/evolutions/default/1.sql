@@ -5,11 +5,11 @@
 
 create table user (
   id                        integer auto_increment not null,
-  username                  varchar(255),
   email                     varchar(255),
   first_name                varchar(255),
   last_name                 varchar(255),
   password                  varchar(255),
+  account_created           datetime(6),
   constraint pk_user primary key (id))
 ;
 

@@ -9,6 +9,7 @@ import play.data.validation.Constraints;
 
 import play.Logger;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -21,27 +22,25 @@ public class User extends Model {
 
     @Id
     public int id;
-    public String username;
     @Constraints.Required
     public String email;
     public String firstName;
     public String lastName;
     @Constraints.Required
     public String password;
+    @Formats.DateTime(pattern="dd/MM/yyyy")
+    public Calendar accountCreated;
 
     public User() {
 
     }
 
-    public User(String username, String password) {
-        this.username = username;
+    public User(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
     public static User findByEmail(String email) {
-        User u = finder.where().eq("email", email).findUnique();
-        //Logger.info(u.email);
-
-        return u;
+        return finder.where().eq("email", email).findUnique();
     }
 }
