@@ -8,9 +8,55 @@
             <legend>User</legend>
             @helper.inputText(userForm("username"), '_label -> "Username")
             @helper.inputText(userForm("email"), '_label -> "Email")
-            @helper.inputText(userForm("password"), '_label -> "Password")
-            @helper.inputText(userForm("password"), '_label -> "Confirm password")
+            @helper.inputPassword(userForm("password"), '_label -> "Password")
+            @helper.inputPassword(userForm("password"), '_label -> "Confirm password")
+            <div id="error-msg">
+                @if(flash.containsKey("error")) {
+                    @flash.get("error")
+                }
+            </div>
         </fieldset>
         <input type="submit" value="Sign up">
+        <script>
+
+            var pass1 = document.getElementsByName("password")[0];
+            var pass2 = document.getElementsByName("password")[1];
+            var msg = document.getElementById("error-msg");
+
+            function checkPwd(str) {
+                str = this.value;
+                if (str.length < 8) {
+                    msg.innerText = "too short";
+                    //return("too_short");
+                } else if (str.length > 50) {
+                    msg.innerText = "too long";
+                    //return("too_long");
+                } else if (str.search(/\d/) == -1) {
+                    msg.innerText = "no number";
+                    //return("no_num");
+                } else if (str.search(/[a-zA-Z]/) == -1) {
+                    msg.innerText = "no letter";
+                    //return("no_letter");
+                } else if (str.search(/[^a-zA-Z0-9\!\$\%\^\&\*\(\)\_\+]/) != -1) {
+                    msg.innerText = "character not supported";
+                    //return("bad_char");
+                } else {
+                    msg.innerText = "password ok";
+                }
+                //return("ok");
+            }
+
+            function isEqual() {
+                if (pass1.value != pass2.value) {
+                    msg.innerText = "passwords do not match";
+                } else {
+                    msg.innerText = "passwords ok";
+                }
+            }
+
+            pass1.onkeyup = checkPwd;
+            pass2.onkeyup = isEqual;
+
+        </script>
     }
 }
