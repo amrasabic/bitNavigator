@@ -23,7 +23,7 @@
                     <div class="col-md-8">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="page-header" style="margin-top:5px;">
+                                <div class="page-header" style="margin-top : 5 px ;">
                                     <h3>User registration </h3>
                                 </div>
                                 <form class="form-horizontal" role="form">
@@ -78,28 +78,34 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary" values="Sign up">Register</button>
-                                            <button type="button" class="btn btn-success">Back to Sign in</button>
+                                            <button type="submit" class="btn btn-primary" values="Sign up">Sign up</button>
+                                            <button type="button" class="btn btn-success" onclick="javascript:location.href='/signin'">
+                                                Back to Sign in</button>
                                         </div>
                                     </div>
-                                    <p><br></p>
-                                    <div id="error-msg">
-                                    @if(flash.containsKey("error")) {
-                                        <div class="alert alert-warning">
-                                        @flash.get("error")
-                                        </div>
-                                    }
-                                    </div>
+                                    <p><br/></p>
+
 
                                     }
 
-</form>
+                            </form>
+                        </div>
+                    </div>
 
-</div>
-</div>
-</div>
-    <div class="col-md-2"></div>
-</div>
+    @if(flash.containsKey("error")) {
+        <div class="alert alert-danger">
+        @flash.get("error")
+        </div>
+    }
+    @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+        @flash.get("success")
+        </div>
+    }
+                </div>
+
+                <div class="col-md-2"></div>
+            </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -162,9 +168,7 @@
 
         </script>
 </body>
-
 </html>
-
 
 }
 

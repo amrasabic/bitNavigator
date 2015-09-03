@@ -10,12 +10,12 @@
                 <meta charset="utf-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                <title>User Login</title>
+                <title>Sign in</title>
                     <!-- Bootstrap -->
                 <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
             </head>
-            <body style="background:#eee;">
+            <body style="background : #eee ;">
                 <div class="container">
                     <p><br/></p>
                     <div class="row">
@@ -42,8 +42,9 @@
                                             </div>
                                         </div>
                                         <hr/>
-                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-lock" values="Sign in"></span> Login</button>
-                                        <button type="button" class="btn btn-success">Register</button>
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-lock" values="Sign in"></span>
+                                            Sign in</button>
+                                        <button type="button" class="btn btn-success" onclick="javascript:location.href='/signup'">Sign up</button>
                                         <p><br/></p>
                                         @if(flash.containsKey("error")) {
                                             <div class="alert alert-danger">
@@ -56,19 +57,18 @@
                                             </div>
                                         }
                                         }
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-</body>
-</html>
+                 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                 <!-- Include all compiled plugins (below), or include individual files as needed -->
+                 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+             </body>
+        </html>
 
 }
