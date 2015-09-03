@@ -3,11 +3,16 @@
 
 @main("Sign in") {
     <h1>Sign in</h1>
-    @helper.form(action = routes.Application.signIn()) {
+    @helper.form(action = routes.UserHandler.validateSignIn()) {
         <fieldset>
             <legend>User</legend>
-            @helper.inputText(userForm("username"), '_label -> "Username")
-            @helper.inputText(userForm("password"), '_label -> "Password")
+            @helper.inputText(userForm("email"), '_label -> "Email")
+            @helper.inputPassword(userForm("password"), '_label -> "Password")
+            @if(flash.containsKey("error")) {
+                <div>
+                  @flash.get("error")
+                </div>
+            }
         </fieldset>
         <input type="submit" value="Sign in">
     }

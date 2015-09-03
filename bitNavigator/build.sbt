@@ -10,8 +10,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
-  "mysql" % "mysql-connector-java" % "5.1.36",
-  "com.google.inject" % "guice" % "3.0"
+  "mysql" % "mysql-connector-java" % "5.1.36"
 )
 
 lazy val myProject = (project in file("."))
