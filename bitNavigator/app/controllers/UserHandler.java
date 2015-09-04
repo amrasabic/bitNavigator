@@ -82,6 +82,13 @@ public class UserHandler extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
+        String firstName = boundForm.bindFromRequest().field(User.FIRST_NAME).value();
+        String lastName = boundForm.bindFromRequest().field(User.LAST_NAME).value();
+        if (UserValidator.isNameValid(firstName, lastName)[0].equals(ERROR_MESSAGE)) {
+            flash(UserValidator.isNameValid(firstName, lastName)[0], UserValidator.isNameValid(firstName, lastName)[1]);
+            return badRequest(signup.render(boundForm));
+        }
+
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user != null) {
             flash(ERROR_MESSAGE, "Account already linked to given email!");
@@ -100,7 +107,6 @@ public class UserHandler extends Controller {
         }
 
         user = new User();
-
         try {
             password = PasswordHash.createHash(password);
         } catch (Exception e) {
@@ -109,8 +115,8 @@ public class UserHandler extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
-        user.firstName = boundForm.bindFromRequest().field(User.FIRST_NAME).value();
-        user.lastName = boundForm.bindFromRequest().field(User.LAST_NAME).value();
+        user.firstName = firstName;
+        user.lastName = lastName;
         user.password = password;
         user.email = email;
         user.accountCreated = Calendar.getInstance();
