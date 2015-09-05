@@ -12,10 +12,8 @@ libraryDependencies ++= Seq(
   javaWs,
   "mysql" % "mysql-connector-java" % "5.1.36"
 )
-
 lazy val myProject = (project in file("."))
   .enablePlugins(PlayJava, PlayEbean)
-
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
