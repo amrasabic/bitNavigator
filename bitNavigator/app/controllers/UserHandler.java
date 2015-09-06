@@ -127,5 +127,4 @@ public class UserHandler extends Controller {
         return ok(signup.render(userForm));
     }
 
-
 }
