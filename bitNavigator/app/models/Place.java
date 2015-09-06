@@ -21,7 +21,7 @@ import java.util.List;
 public class Place extends Model {
     // declaration of enums
 //    public Enum typeOfService {
-//        ACCOMMODATION, COFFEE, FOOD, SHOPING, NIGHTLIFE, SPORT, SERVICES, TRANSPORTATION
+//        ACCOMMODATION, COFFEE, FOOD, SHOPPING, NIGHTLIFE, SPORT, SERVICES, TRANSPORTATION
 //    }
 //
 //    public enum workingDays {
@@ -31,6 +31,8 @@ public class Place extends Model {
 
     public static Finder<Integer, Place> finder = new Finder<>(Integer.class, Place.class);
     // declaration of parameters
+    @Id
+    public Integer id;
     @Constraints.Required
     public String title;
     public String description;
