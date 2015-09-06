@@ -20,28 +20,28 @@ import java.util.List;
 @Entity
 public class Place extends Model {
     // declaration of enums
-    public Enum typeOfService {
-        ACCOMMODATION, COFFEE, FOOD, SHOPING, NIGHTLIFE, SPORT, SERVICES, TRANSPORTATION
-    }
-
-    public enum workingDays {
-        MONDAY, TUESDAY, WEDNESDAY,
-        THURSDAY, FRIDAY, SATURDAY, SUNDAY
-    }
+//    public Enum typeOfService {
+//        ACCOMMODATION, COFFEE, FOOD, SHOPING, NIGHTLIFE, SPORT, SERVICES, TRANSPORTATION
+//    }
+//
+//    public enum workingDays {
+//        MONDAY, TUESDAY, WEDNESDAY,
+//        THURSDAY, FRIDAY, SATURDAY, SUNDAY
+//    }
 
     public static Finder<Integer, Place> finder = new Finder<>(Integer.class, Place.class);
     // declaration of parameters
     @Constraints.Required
     public String title;
     public String description;
-    public Gallery gallery;
-    @Constraints.Required
-    public Enum typeOfService;
-    public Enum workingDays;
+//    public Gallery gallery;
+//    @Constraints.Required
+//    public Enum typeOfService;
+//    public Enum workingDays;
     @Constraints.Required
     public String address;
     @Constraints.Required
-    public BigInteger phone;
+    public String phone;
     public Calendar placeCreated;
 
     /**
@@ -61,12 +61,12 @@ public class Place extends Model {
      * @param address
      * @param phone
      */
-    public Place(String title, String description, Gallery gallery, Enum typeOfService, Enum workingDays, String address, BigInteger phone) {
+    public Place(String title, String description, String address, String phone) {
         this.title = title;
         this.description = description;
-        this.gallery = gallery;
-        this.typeOfService = typeOfService;
-        this.workingDays = workingDays;
+//        this.gallery = gallery;
+//        this.typeOfService = typeOfService;
+//        this.workingDays = workingDays;
         this.address = address;
         this.phone = phone;
     }

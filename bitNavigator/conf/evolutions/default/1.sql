@@ -3,6 +3,14 @@
 
 # --- !Ups
 
+create table place (
+  title                     varchar(255),
+  description               varchar(255),
+  address                   varchar(255),
+  phone                     varchar(255),
+  place_created             datetime(6))
+;
+
 create table user (
   id                        integer auto_increment not null,
   email                     varchar(255),
@@ -19,6 +27,8 @@ create table user (
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table place;
 
 drop table user;
 

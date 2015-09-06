@@ -1,0 +1,95 @@
+@(placeForm: Form[Place])
+@import helper._
+
+@main("Add place") {
+
+    @helper.form(action = routes.PlaceHandler.save()) {
+    <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <title>Add place</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            </head>
+
+            <body>
+                    <!-- Container wrapping adding place -->
+                <div class="container">
+                        <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add place</button>
+
+                        <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Creating new place.</h4>
+                                </div>
+
+                                    <!--Modal body with place information field -->
+                                <div class="modal-body">
+                                        <!-- Title input field -->
+                                    <div class="form-group">
+                                        <label for="usr">Title:</label>
+                                        <input type="text" class="form-control" id="usr">
+                                    </div>
+                                        <!-- Description input field -->
+                                    <div class="form-group">
+                                        <label for="comment">Description:</label>
+                                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                                    </div>
+                                        <!-- Address input field -->
+                                    <div class="form-group">
+                                        <label for="usr">Adress:</label>
+                                        <input type="text" class="form-control" id="usr">
+                                    </div>
+                                        <!-- Phone input field -->
+                                    <div class="form-group">
+                                        <label for="usr">Phone:</label>
+                                        <input type="text" class="form-control" id="usr">
+                                    </div>
+
+                                        <!-- Place type -->
+                                    <div class="radio">
+                                        <label><input type="radio" name="optradio">Option 1</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="optradio">Option 2</label>
+                                    </div>
+                                    <div class="radio disabled">
+                                        <label><input type="radio" name="optradio" disabled>Option 3</label>
+                                    </div>
+
+
+
+
+
+
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Create</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </body>
+        </html>
+
+    }
+
+}
+
