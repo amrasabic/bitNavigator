@@ -13,6 +13,7 @@
         <entry key="myProject">
           <value>
             <ProjectSettingsEntry>
+              <option name="sourceDir" value="C:\Users\Amra\Documents\Play\bitNavigator\bitNavigator\app" />
               <option name="confDir" value="C:\Users\Amra\Documents\Play\bitNavigator\bitNavigator\app" />
               <option name="templateImports">
                 <list>
