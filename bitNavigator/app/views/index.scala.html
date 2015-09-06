@@ -1,7 +1,14 @@
-@(message: String)
+@main("bitNavigator") {
 
-@main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
-
+    <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 43.831, lng: 18.370},
+                zoom: 13
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+    <div id="map"></div>
 }

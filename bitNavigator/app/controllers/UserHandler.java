@@ -62,7 +62,7 @@ public class UserHandler extends Controller {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             return badRequest(signin.render(boundForm));
         }
-
+        Logger.info(user.email);
         flash(SUCCESS_MESSAGE, "You are signed in!");
         return ok(signin.render(userForm));
     }

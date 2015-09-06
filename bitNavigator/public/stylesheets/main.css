@@ -1,0 +1,69 @@
+.navbar {
+    padding: 0px;
+    margin: 0px;
+    background-color: #2b669a;
+}
+
+.navbar-header {
+    margin: 5px;
+}
+
+.navbar-form {
+    margin-right: 5px;
+}
+
+.form-group, #btn-sign-in {
+    margin: 5px;
+    position: relative;
+}
+
+.navbar-right {
+    height: 40px;
+}
+
+.form-control {
+    margin: 0px;
+    position: relative;
+    height: 30px;
+    padding: 5px;
+}
+
+.input-group {
+    margin: 5px;
+    width: 50%;
+}
+
+.input-group-sm {
+    width: 250px;
+}
+
+.input-group-addon {
+    width: 150px;
+    text-align: left;
+}
+
+#btn-sign-up {
+    margin: 5px;
+    background-color: #2e6da4;
+    color: white;
+    border-color: gainsboro;
+}
+
+#btn-sign-in {
+    height: 30px;
+    background-color: #2b669a;
+    color: white;
+}
+
+#map {
+    height: inherit;
+}
+body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.glyphicon-globe {
+    font-size:3em;
+    color: white;
+}
