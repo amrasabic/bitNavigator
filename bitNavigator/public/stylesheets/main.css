@@ -12,13 +12,12 @@
     margin-right: 5px;
 }
 
-.form-group, #btn-sign-in {
-    margin: 5px;
-    position: relative;
-}
-
 .navbar-right {
     height: 40px;
+}
+
+.form-group {
+    margin: 0px;
 }
 
 .form-control {
@@ -42,6 +41,13 @@
     text-align: left;
 }
 
+#btn-signed {
+    margin: 5px;
+    background-color: #2b669a;
+    color: white;
+    height: 32px;
+}
+
 #btn-sign-up {
     margin: 5px;
     background-color: #2e6da4;
@@ -50,6 +56,7 @@
 }
 
 #btn-sign-in {
+    margin: 5px;
     height: 30px;
     background-color: #2b669a;
     color: white;

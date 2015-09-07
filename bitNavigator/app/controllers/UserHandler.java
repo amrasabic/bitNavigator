@@ -4,8 +4,10 @@ import com.avaje.ebean.Ebean;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import utillities.UserValidator;
+import views.html.index;
 import views.html.signin;
 import views.html.signup;
 import play.Logger;
@@ -62,7 +64,7 @@ public class UserHandler extends Controller {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             return badRequest(signin.render(boundForm));
         }
-        Logger.info(user.email);
+        session("email", user.email);
         flash(SUCCESS_MESSAGE, "You are signed in!");
         return ok(signin.render(userForm));
     }
@@ -127,5 +129,9 @@ public class UserHandler extends Controller {
         return ok(signup.render(userForm));
     }
 
+    public Result signOut() {
+        session().clear();
+        return redirect("/");
+    }
 
 }

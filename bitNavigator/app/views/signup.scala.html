@@ -9,17 +9,17 @@
             <form method="post" action="@routes.UserHandler.save()">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">First name</span>
-                        <input type="text" class="form-control" placeholder="@userForm("firstName").value" aria-describedby="basic-addon1" name="firstName"
+                        <input type="text" class="form-control" value="@userForm("firstName").value" aria-describedby="basic-addon1" name="firstName"
                         data-toggle="popover" data-trigger="focus" data-content="Can only contain letters.">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Last name</span>
-                    <input type="text" class="form-control" placeholder="@userForm("lastName").value" aria-describedby="basic-addon1" name="lastName"
+                    <input type="text" class="form-control" value="@userForm("lastName").value" aria-describedby="basic-addon1" name="lastName"
                     data-toggle="popover" data-trigger="focus" data-content="Can only contain letters.">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Email</span>
-                    <input type="text" class="form-control" placeholder="@userForm("email").value" aria-describedby="basic-addon1" name="email"
+                    <input type="text" class="form-control" value="@userForm("email").value" aria-describedby="basic-addon1" name="email"
                     data-toggle="popover" data-trigger="focus" data-content="Input valid email address.">
                 </div>
                 <div class="input-group">
