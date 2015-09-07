@@ -1,0 +1,76 @@
+.navbar {
+    padding: 0px;
+    margin: 0px;
+    background-color: #2b669a;
+}
+
+.navbar-header {
+    margin: 5px;
+}
+
+.navbar-form {
+    margin-right: 5px;
+}
+
+.navbar-right {
+    height: 40px;
+}
+
+.form-group {
+    margin: 0px;
+}
+
+.form-control {
+    margin: 0px;
+    position: relative;
+    height: 30px;
+    padding: 5px;
+}
+
+.input-group {
+    margin: 5px;
+    width: 50%;
+}
+
+.input-group-sm {
+    width: 250px;
+}
+
+.input-group-addon {
+    width: 150px;
+    text-align: left;
+}
+
+#btn-signed {
+    margin: 5px;
+    background-color: #2b669a;
+    color: white;
+    height: 32px;
+}
+
+#btn-sign-up {
+    margin: 5px;
+    background-color: #2e6da4;
+    color: white;
+    border-color: gainsboro;
+}
+
+#btn-sign-in {
+    margin: 5px;
+    height: 30px;
+    background-color: #2b669a;
+    color: white;
+}
+
+#map {
+    height: inherit;
+}
+body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.glyphicon-globe {
+    font-size:3em;
+    color: white;
+}
