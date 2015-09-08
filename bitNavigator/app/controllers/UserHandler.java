@@ -133,7 +133,11 @@ public class UserHandler extends Controller {
         return redirect("/");
     }
 
-
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Result profile (Integer id) {
         final User user = User.findById(id);
         if(user == null)
