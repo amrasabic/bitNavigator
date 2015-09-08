@@ -4,9 +4,9 @@
 @main("User profile") {
 
 @helper.form(action = routes.UserHandler.save()) {
-
+<body>
 <div class="container">
-    <h1>Profile</h1>
+    <h1>Hi @userForm("firstName").value  @userForm("lastName").value!</h1>
     <hr>
     <div class="row">
         <!-- left column -->
@@ -14,7 +14,7 @@
         <div class="col-md-3">
             <div class="text-center">
                 <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
-                <h6>Upload a different photo...</h6>
+                <h6>Upload a different photo</h6>
 
                 <input class="form-control" type="file">
             </div>
@@ -26,7 +26,7 @@
             <div class="alert alert-info alert-dismissable">
                 <a class="panel-close close" data-dismiss="alert">×</a>
                 <i class="fa fa-coffee"></i>
-                This is an <strong>.alert</strong>.Welcome to bitnavigator.
+                Welcome to bitnavigator. You can't change your <strong>email</strong> address.
                 <!-- User info div -->
             </div>
             <h3>User info</h3>
@@ -36,46 +36,46 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">First name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" value="first_name" type="first_name" name="firstName" id="first_name">
+                        <input class="form-control" value="@userForm("firstName").value" type="first_name" name="firstName" id="first_name">
                     </div>
                 </div>
                 <!-- User last name field-->
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Last name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" value="last_name" type="text">
+                        <input class="form-control" value="@userForm("lastName").value" type="text">
                     </div>
                 </div>
                 <!-- User email -->
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Email:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" value="janesemailgmail.com" type="text">
+                        <input class="form-control" value="@userForm("email").value" type="text" disabled>
                     </div>
                 </div>
                 <!-- User passwor field -->
                 <div class="form-group">
                     <label class="col-md-3 control-label">Password:</label>
                     <div class="col-md-8">
-                        <input class="form-control" value="password" type="password">
+                        <input class="form-control" value="@userForm("password").value" type="password">
                     </div>
                 </div>
                 <!-- User confirm password filed -->
                 <div class="form-group">
                     <label class="col-md-3 control-label">Confirm password:</label>
                     <div class="col-md-8">
-                        <input class="form-control" value="password" type="password">
+                        <input class="form-control"  value="@userForm("password").value" type="password">
                     </div>
                 </div>
                 <!-- Confirm and cancel buttons -->
                 <div class="form-group">
                     <label class="col-md-3 control-label"></label>
                     <div class="col-md-8">
-                        <input class="btn btn-primary" value="Save Changes" type="button">
+                        <input class="btn btn-primary" value="Save Changes" type="submit">
                         <span></span>
                         <input class="btn btn-default" value="Cancel" type="reset">
                         }
                     </div>
                 </div>
-
+</body>
                 }
