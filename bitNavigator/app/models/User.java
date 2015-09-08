@@ -2,12 +2,15 @@ package models;
 
 import javax.persistence.*;
 
+import controllers.UserHandler;
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
 import play.data.validation.Constraints;
 
 import play.Logger;
+import utillities.PasswordHash;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -56,6 +59,16 @@ public class User extends Model {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public static void newUser(UserHandler.SignUpForm signUp) {
+        User user = new User();
+        user.email = signUp.email;
+        user.firstName = signUp.firstName;
+        user.lastName = signUp.lastName;
+        user.password = signUp.password;
+        user.accountCreated = Calendar.getInstance();
+        user.save();
     }
 
     /**

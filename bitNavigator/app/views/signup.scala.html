@@ -1,4 +1,4 @@
-@(userForm: Form[User])
+@(userForm: Form[UserHandler.SignUpForm])
 @import helper._
 
 @main("Sign up") {
@@ -24,12 +24,12 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Password</span>
-                    <input type="password" class="form-control" placeholder="@userForm("password").value" aria-describedby="basic-addon1" name="password"
+                    <input type="password" class="form-control" placeholder="" aria-describedby="basic-addon1" name="password"
                     data-toggle="popover" data-trigger="focus" data-content="Password must contain between 8 and 25 characters. There has to be at least one letter and one digit character">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Confirm password</span>
-                    <input type="password" class="form-control" placeholder="@userForm("password").value" aria-describedby="basic-addon1" name="password"
+                    <input type="password" class="form-control" placeholder="" aria-describedby="basic-addon1" name="confirmPassword"
                     data-toggle="popover" data-trigger="focus" data-content="Confirm password.">
                 </div>
                 <button id="btn-sign-up" type="submit" class="btn btn-default">Sign up</button>
@@ -54,7 +54,7 @@
 
 
             <script>
-                var pass = document.getElementById("password");
+               /* var pass = document.getElementById("password");
                 var conPass = document.getElementById("password");
                 var btnSubmit = document.getElementById("btn-submit");
                 function isEqual() {
@@ -62,7 +62,7 @@
                         pass.value = null;
                     }
                 }
-                btnSubmit.onclick = isEqual();
+                btnSubmit.onclick = isEqual();*/
             </script>
 
     }

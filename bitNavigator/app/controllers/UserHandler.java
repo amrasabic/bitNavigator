@@ -3,6 +3,7 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import models.User;
 import play.data.Form;
+import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -13,6 +14,7 @@ import views.html.signup;
 import play.Logger;
 import utillities.PasswordHash;
 
+import javax.persistence.Column;
 import java.util.Calendar;
 
 /**
@@ -26,6 +28,7 @@ public class UserHandler extends Controller {
     public static final String SUCCESS_MESSAGE = "success";
 
     private static final Form<User> userForm = Form.form(User.class);
+    private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
 
     /**
      * Leads random user to signin subpage
@@ -40,7 +43,7 @@ public class UserHandler extends Controller {
      * @return
      */
     public Result signUp() {
-        return ok(signup.render(userForm));
+        return ok(signup.render(signUpForm));
     }
 
     /**
@@ -54,7 +57,7 @@ public class UserHandler extends Controller {
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            return badRequest(signin.render(boundForm));
+            return badRequest(index.render());
         }
         try {
             if (!PasswordHash.validatePassword(boundForm.bindFromRequest().field(User.PASSWORD).value(), user.password)) {
@@ -62,11 +65,11 @@ public class UserHandler extends Controller {
             }
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            return badRequest(signin.render(boundForm));
+            return badRequest(index.render());
         }
+        session().clear();
         session("email", user.email);
-        flash(SUCCESS_MESSAGE, "You are signed in!");
-        return ok(signin.render(userForm));
+        return ok(index.render());
     }
 
     /**
@@ -76,62 +79,56 @@ public class UserHandler extends Controller {
      * @return
      */
     public Result save() {
-        Form<User> boundForm = userForm.bindFromRequest();
-
-        String email = boundForm.bindFromRequest().field(User.EMAIL).value();
-        if (!UserValidator.isEmailValid(email)) {
-            flash(ERROR_MESSAGE, "Email format invalid!");
+        Form<SignUpForm> boundForm = signUpForm.bindFromRequest();
+        if(boundForm.hasErrors()) {
+            flash(ERROR_MESSAGE, "Wrong input");
             return badRequest(signup.render(boundForm));
         }
 
-        String firstName = boundForm.bindFromRequest().field(User.FIRST_NAME).value();
-        String lastName = boundForm.bindFromRequest().field(User.LAST_NAME).value();
-        if (UserValidator.isNameValid(firstName, lastName)[0].equals(ERROR_MESSAGE)) {
-            flash(UserValidator.isNameValid(firstName, lastName)[0], UserValidator.isNameValid(firstName, lastName)[1]);
-            return badRequest(signup.render(boundForm));
-        }
-
-        User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
-        if (user != null) {
+        SignUpForm singUp = boundForm.get();
+        if(User.findByEmail(singUp.email) != null) {
             flash(ERROR_MESSAGE, "Account already linked to given email!");
             return badRequest(signup.render(boundForm));
         }
 
-        String password = boundForm.bindFromRequest().field(User.PASSWORD).value();
-        if (password.equals("null")) {
+        if (!singUp.password.equals(singUp.confirmPassword)) {
             flash(ERROR_MESSAGE, "Passwords do not match!");
             return badRequest(signup.render(boundForm));
         }
 
-        if (UserValidator.isPasswordValid(password)[0].equals(ERROR_MESSAGE)) {
-            flash(UserValidator.isPasswordValid(password)[0], UserValidator.isPasswordValid(password)[1]);
-            return badRequest(signup.render(boundForm));
-        }
-
-        user = new User();
         try {
-            password = PasswordHash.createHash(password);
+            singUp.password = PasswordHash.createHash(singUp.password);
         } catch (Exception e) {
             Logger.error("Could not create hash");
             flash(ERROR_MESSAGE, "Password invalid!");
             return badRequest(signup.render(boundForm));
         }
 
-        user.firstName = firstName;
-        user.lastName = lastName;
-        user.password = password;
-        user.email = email;
-        user.accountCreated = Calendar.getInstance();
-
-        Ebean.save(user);
-
-        flash(SUCCESS_MESSAGE, "Account successfully created!");
-        return ok(signup.render(userForm));
+        User.newUser(singUp);
+        session().clear();
+        session("email", singUp.email);
+        return ok(index.render());
     }
 
     public Result signOut() {
         session().clear();
         return redirect("/");
+    }
+
+    public static class SignUpForm  {
+        @Constraints.Email
+        @Constraints.Required
+        public String email;
+        public String firstName;
+        public String lastName;
+        @Constraints.MinLength (8)
+        @Constraints.MaxLength (25)
+        @Constraints.Required
+        public String password;
+        @Constraints.MinLength (8)
+        @Constraints.MaxLength (25)
+        @Constraints.Required
+        public String confirmPassword;
     }
 
 }
