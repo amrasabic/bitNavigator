@@ -2,16 +2,15 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import models.User;
+import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
+import utillities.PasswordHash;
 import utillities.UserValidator;
-import views.html.index;
+import views.html.profile;
 import views.html.signin;
 import views.html.signup;
-import play.Logger;
-import utillities.PasswordHash;
 
 import java.util.Calendar;
 
@@ -134,4 +133,15 @@ public class UserHandler extends Controller {
         return redirect("/");
     }
 
+
+    public Result profile (Integer id) {
+        final User user = User.findById(id);
+        if(user == null)
+        {
+            return notFound(String.format("User %s does not exist.", id));
+        }
+        Form <User> filledForm =  userForm.fill(user);
+        return ok(profile.render(filledForm));
+
+    }
 }
