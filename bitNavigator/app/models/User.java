@@ -62,4 +62,13 @@ public class User extends Model {
     public static User findByEmail(String email) {
         return finder.where().eq(EMAIL, email).findUnique();
     }
+
+    /**
+     * Returns User with given id or null if no user with that id
+     * @param id - User id
+     * @return User with given id
+     */
+    public static User findById (Integer id) {
+        return finder.where().eq(ID, id).findUnique();
+    }
 }

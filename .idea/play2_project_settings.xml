@@ -13,8 +13,8 @@
         <entry key="myProject">
           <value>
             <ProjectSettingsEntry>
-              <option name="sourceDir" value="C:\Users\Amra\Documents\Play\bitNavigator\bitNavigator\app" />
-              <option name="confDir" value="C:\Users\Amra\Documents\Play\bitNavigator\bitNavigator\app" />
+              <option name="sourceDir" value="C:\Users\Kristina Pupavac\Desktop\tim\bitNavigator\bitNavigator\app" />
+              <option name="confDir" value="C:\Users\Kristina Pupavac\Desktop\tim\bitNavigator\bitNavigator\app" />
               <option name="templateImports">
                 <list>
                   <option value="models._" />
@@ -39,7 +39,7 @@
                   <option value="play.libs.F" />
                 </list>
               </option>
-              <option name="uri" value="C:\Users\Amra\Documents\Play\bitNavigator\bitNavigator" />
+              <option name="uri" value="C:\Users\Kristina Pupavac\Desktop\tim\bitNavigator\bitNavigator" />
             </ProjectSettingsEntry>
           </value>
         </entry>
