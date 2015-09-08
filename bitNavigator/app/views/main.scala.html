@@ -42,11 +42,12 @@
                         @session.get("email") <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Add place</a></li>
-                        <li><a href="#">Another action</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-plus-sign"></i> Add place</a></li>
+
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><form method="post" action="@routes.UserHandler.signOut()"><input type="submit"></form></li>
+                        <li><a href="@routes.UserHandler.signOut()"><i class="glyphicon glyphicon-remove-sign"></i> Logout</a></li>
                     </ul>
                 </div>
             }

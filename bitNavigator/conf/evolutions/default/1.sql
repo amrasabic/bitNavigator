@@ -10,6 +10,7 @@ create table user (
   last_name                 varchar(255),
   password                  varchar(255),
   account_created           datetime(6),
+  constraint uq_user_email unique (email),
   constraint pk_user primary key (id))
 ;
 

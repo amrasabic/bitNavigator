@@ -30,10 +30,14 @@ public class User extends Model {
 
     @Id
     public int id;
+    @Constraints.Email
+    @Column (unique = true)
     @Constraints.Required
     public String email;
     public String firstName;
     public String lastName;
+    @Constraints.MinLength (8)
+    @Constraints.MaxLength (25)
     @Constraints.Required
     public String password;
     public Calendar accountCreated;
