@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.css")">
@@ -35,6 +35,7 @@
                         <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password" name="password">
                     </div>
                     <button id="btn-sign-in" type="submit" class="btn btn-default">Sign in</button>
+                    <button type="button" class="btn btn-default btn-sign"><a href="@routes.UserHandler.signUp()">Sign up</a></button>
                 </form>
             } else {
                 <div class="btn-group navbar-form navbar-right">
@@ -42,11 +43,12 @@
                         @session.get("email") <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Add place</a></li>
-                        <li><a href="#">Edit profile</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-plus-sign"></i> Add place</a></li>
+
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="@routes.UserHandler.signOut()">Logout</a></li>
+                        <li><a href="@routes.UserHandler.signOut()"><i class="glyphicon glyphicon-remove-sign"></i> Logout</a></li>
                     </ul>
                 </div>
             }

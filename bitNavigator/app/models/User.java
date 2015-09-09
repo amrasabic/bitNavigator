@@ -2,12 +2,15 @@ package models;
 
 import javax.persistence.*;
 
-import play.db.ebean.*;
+import com.avaje.ebean.Model;
+import controllers.UserHandler;
 import play.data.format.*;
 import play.data.validation.*;
 import play.data.validation.Constraints;
 
 import play.Logger;
+import utillities.PasswordHash;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -30,10 +33,16 @@ public class User extends Model {
 
     @Id
     public int id;
+    @Constraints.Email
+    @Column (unique = true)
     @Constraints.Required
     public String email;
+    @Constraints.Pattern ("[a-zA-Z]+")
     public String firstName;
+    @Constraints.Pattern ("[a-zA-Z]+")
     public String lastName;
+    @Constraints.MinLength (8)
+    @Constraints.MaxLength (25)
     @Constraints.Required
     public String password;
     public Calendar accountCreated;
@@ -54,6 +63,16 @@ public class User extends Model {
         this.password = password;
     }
 
+    public static void newUser(UserHandler.SignUpForm signUp) {
+        User user = new User();
+        user.email = signUp.email;
+        user.firstName = signUp.firstName;
+        user.lastName = signUp.lastName;
+        user.password = signUp.password;
+        user.accountCreated = Calendar.getInstance();
+        user.save();
+    }
+
     /**
      * Returns User with given email or null if no account is linked to given email.
      * @param email An email.
@@ -61,14 +80,5 @@ public class User extends Model {
      */
     public static User findByEmail(String email) {
         return finder.where().eq(EMAIL, email).findUnique();
-    }
-
-    /**
-     * Returns User with given id or null if no user with that id
-     * @param id - User id
-     * @return User with given id
-     */
-    public static User findById (Integer id) {
-        return finder.where().eq(ID, id).findUnique();
     }
 }
