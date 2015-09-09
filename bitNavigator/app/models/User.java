@@ -2,8 +2,8 @@ package models;
 
 import javax.persistence.*;
 
+import com.avaje.ebean.Model;
 import controllers.UserHandler;
-import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
 import play.data.validation.Constraints;
@@ -37,7 +37,9 @@ public class User extends Model {
     @Column (unique = true)
     @Constraints.Required
     public String email;
+    @Constraints.Pattern ("[a-zA-Z]+")
     public String firstName;
+    @Constraints.Pattern ("[a-zA-Z]+")
     public String lastName;
     @Constraints.MinLength (8)
     @Constraints.MaxLength (25)

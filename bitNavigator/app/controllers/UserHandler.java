@@ -119,7 +119,9 @@ public class UserHandler extends Controller {
         @Constraints.Email
         @Constraints.Required
         public String email;
+        @Constraints.Pattern ("[a-zA-Z]+")
         public String firstName;
+        @Constraints.Pattern ("[a-zA-Z]+")
         public String lastName;
         @Constraints.MinLength (8)
         @Constraints.MaxLength (25)
