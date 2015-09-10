@@ -57,7 +57,7 @@
 
 #btn-sign-in {
     margin: 5px;
-    height: 30px;
+    height: 33px;
     background-color: #2b669a;
     color: white;
 }
@@ -81,7 +81,7 @@ body {
     height: 450px;
 }
 
-a {
+a:hover {
     text-decoration: none;
     color: #2b669a;
 }
@@ -95,4 +95,13 @@ a {
     padding: 15px;
     border-radius: 10px;
     border: 1px #2b669a solid;
+}
+
+.btn {
+    text-transform: none;
+}
+
+.input-group-addon {
+    background-color: #2b669a;
+    color: white;
 }

@@ -20,7 +20,6 @@ import java.util.List;
 @Entity
 public class Place extends Model {
 
-    public static Finder<Integer, Place> finder = new Finder<>(Integer.class, Place.class);
     // declaration of parameters
     @Id
     public Integer id;
@@ -35,14 +34,23 @@ public class Place extends Model {
     public Calendar placeCreated;
     @ManyToOne
     public User user;
-    @OneToMany (cascade = CascadeType.ALL)
-    public List<Service> services;
+    @OneToOne
+    public Service service;
 
+    public static Finder<Integer, Place> finder = new Finder<>(Integer.class, Place.class);
     /**
      * Default constructor.
      */
     public Place() {
 
+    }
+
+    public static List<Place> findAll() {
+        return finder.all();
+    }
+
+    public static Place findById(int id) {
+        return finder.byId(id);
     }
 
 }

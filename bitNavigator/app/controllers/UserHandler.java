@@ -1,6 +1,7 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import models.Place;
 import models.User;
 import play.data.Form;
 import play.data.validation.Constraints;
@@ -11,12 +12,14 @@ import utillities.UserValidator;
 import views.html.index;
 import views.html.signin;
 import views.html.signup;
+import views.html.userlist;
 import views.html.profile;
 import play.Logger;
 import utillities.PasswordHash;
 
 import javax.persistence.Column;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Public class UserHandler extends Controller. Has methods within it that
@@ -58,7 +61,8 @@ public class UserHandler extends Controller {
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            return badRequest(index.render());
+            List<Place> places = Place.findAll();
+            return badRequest(index.render(places));
         }
         try {
             if (!PasswordHash.validatePassword(boundForm.bindFromRequest().field(User.PASSWORD).value(), user.password)) {
@@ -66,11 +70,13 @@ public class UserHandler extends Controller {
             }
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            return badRequest(index.render());
+            List<Place> places = Place.findAll();
+            return badRequest(index.render(places));
         }
         session().clear();
         session("email", user.email);
-        return ok(index.render());
+        List<Place> places = Place.findAll();
+        return ok(index.render(places));
     }
 
     /**
@@ -108,7 +114,8 @@ public class UserHandler extends Controller {
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);
-        return ok(index.render());
+        List<Place> places = Place.findAll();
+        return ok(index.render(places));
     }
 
     public Result profile (String email) {
@@ -133,12 +140,38 @@ public class UserHandler extends Controller {
             return notFound(String.format("User %s does not exist.", email));
         }
 
+        if (!email.equals(user.email)) {
+            User tmp = User.findByEmail(email);
+            if (tmp == null || !tmp.admin) {
+                return unauthorized("Permission denied!");
+            }
+        }
+
+        if (boundForm.hasErrors()) {
+            flash(ERROR_MESSAGE, "Wrong input");
+            return profile(user.email);
+        }
+
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
 
         user.update();
+        List<Place> places = Place.findAll();
+        return ok(index.render(places));
+    }
 
-        return ok(index.render());
+    public Result userList(){
+        List<User> users = User.findAll();
+        return ok(userlist.render(users));
+    }
+
+    public Result delete(String email) {
+        User user = User.findByEmail(email);
+        if (user == null) {
+            return notFound(String.format("User %s does not exists.", email));
+        }
+        user.delete();
+        return redirect(routes.UserHandler.userList());
     }
 
     public Result signOut() {

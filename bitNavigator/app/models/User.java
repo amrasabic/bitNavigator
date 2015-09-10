@@ -46,6 +46,8 @@ public class User extends Model {
     @Constraints.Required
     public String password;
     public Calendar accountCreated;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Place> places;
     public boolean admin = false;
 
     /**
@@ -72,6 +74,10 @@ public class User extends Model {
         user.password = signUp.password;
         user.accountCreated = Calendar.getInstance();
         user.save();
+    }
+
+    public static List<User> findAll() {
+        return finder.all();
     }
 
     /**

@@ -1,4 +1,4 @@
-@(placeForm: Form[Place])
+@(placeForm: Form[Place])(services: java.util.List[Service])
 @import helper._
 
 
@@ -76,7 +76,15 @@
                             </div>
                             <input id="longitude" name="longitude" type="hidden">
                             <input id="latitude" name="latitude" type="hidden">
-
+                            <div class="dropdown" style="padding-top: 5px;">
+                                <label for="service-list">Service:</label>
+                                <select id="service-list" class="btn btn-default dropdown-toggle" value="Services">
+                                    @for(service <- services){
+                                        <option>@service.serviceType</option>
+                                    }
+                                </select>
+                            </div>
+                            <input id="service" name="serviceType" type="hidden">
                             <p><br/></p>
                                 <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
                             <span class="btn btn-default btn-file">
@@ -96,6 +104,11 @@
             <button class="button" id="btn-add">Address</button>
         </div>
 
+    <script>
+        var serviceValue = document.getElementById("service");
+        var services = document.getElementById("service-list");
+        var a = serviceValue.value = services.options[services.selectedIndex].text;
+    </script>
     @*</form> *@
     <script>
        /* $(document).ready(function(){

@@ -18,7 +18,7 @@
             <div class="navbar-header">
                 <a href="@routes.Application.index()"><i class="glyphicon glyphicon-globe"></i></a>
             </div>
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" action="@routes.PlaceHandler.placeList()">
                 <div class="input-group input-group-sm" style="max-width : 360 px ;">
                     <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
                     <div class="input-group-btn">
@@ -43,8 +43,8 @@
                         @session.get("email") <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-plus-sign"></i> Add place</a></li>
+                        <li><a href="@routes.UserHandler.profile(session.get("email"))"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                        <li><a href="@routes.PlaceHandler.addPlace()"><i class="glyphicon glyphicon-plus-sign"></i> Add place</a></li>
 
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>

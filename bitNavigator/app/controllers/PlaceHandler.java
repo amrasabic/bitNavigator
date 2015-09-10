@@ -3,6 +3,7 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import models.Image;
 import models.Place;
+import models.Service;
 import models.User;
 import play.Play;
 import play.mvc.Controller;
@@ -27,24 +28,39 @@ public class PlaceHandler extends Controller{
 
     private static final Form<Place> placeForm = Form.form(Place.class);
     private static final Form<Image> imageForm = Form.form(Image.class);
+    private static final Form<Service> serviceForm = Form.form(Service.class);
     private static List<String> imageLists = new ArrayList<>();
 
     public Result addPlace() {
-        return ok(addplace.render(placeForm));
+        List<Service> services = Service.findAll();
+
+        return ok(addplace.render(placeForm, services));
     }
 
 
     public Result savePlace() {
 
         Form<Place> boundForm = placeForm.bindFromRequest();
+        Form<Service> boundServiceForm = serviceForm.bindFromRequest();
 
-        if (boundForm.hasErrors()) {
+        Place p = boundForm.get();
+
+
+        if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
+            return TODO;
+        }
+
+        Service service = boundServiceForm.get();
+        service = Service.findByType(service.serviceType);
+
+        if (service == null) {
             return TODO;
         }
 
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
         place.placeCreated = Calendar.getInstance();
+        place.service = service;
         place.save();
 
 
@@ -79,6 +95,41 @@ public class PlaceHandler extends Controller{
             return badRequest("Pictures missing.");
         }
 
+    }
+
+    public Result placeList(){
+        List<Place> places = Place.findAll();
+        return ok(placelist.render(places));
+    }
+
+    public Result delete(int id) {
+        Place place = Place.findById(id);
+        if (place == null) {
+            return notFound(String.format("Place %s does not exists.", id));
+        }
+
+        User owner = User.findByEmail(session("email"));
+        Logger.info(owner.email);
+        Logger.info(place.user.email);
+        if (owner == null || !place.user.equals(owner)) {
+            if (!owner.admin) {
+                return unauthorized("Permission denied!");
+            }
+        }
+
+
+        place.delete();
+        return redirect(routes.PlaceHandler.placeList());
+    }
+
+    public Result editPlace(int id){
+        Place place = Place.findById(id);
+        if (place == null) {
+            return notFound(String.format("Place %s does not exists.", id));
+        }
+        Form <Place> filledForm =  placeForm.fill(place);
+        List<Service> services = Service.findAll();
+        return ok(editplace.render(filledForm, services));
     }
 
     public Result validateForm(){
