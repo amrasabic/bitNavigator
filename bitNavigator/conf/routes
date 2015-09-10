@@ -22,3 +22,4 @@ DELETE        /users/:email          @controllers.UserHandler.delete(email: Stri
 GET           /places/               @controllers.PlaceHandler.placeList()
 DELETE        /places/:id            @controllers.PlaceHandler.delete(id: Integer)
 GET           /place/:id             @controllers.PlaceHandler.editPlace(id: Integer)
+POST          /place/:id             @controllers.PlaceHandler.postComment(id: String)

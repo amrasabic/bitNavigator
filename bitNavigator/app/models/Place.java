@@ -53,4 +53,8 @@ public class Place extends Model {
         return finder.byId(id);
     }
 
+    public static Place findByTitle(String title) {
+        return finder.where().eq("title", title).findUnique();
+    }
+
 }

@@ -147,11 +147,6 @@ public class UserHandler extends Controller {
             }
         }
 
-        if (boundForm.hasErrors()) {
-            flash(ERROR_MESSAGE, "Wrong input");
-            return profile(user.email);
-        }
-
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
 

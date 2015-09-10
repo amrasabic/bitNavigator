@@ -5,7 +5,7 @@
 
     @helper.form(action = routes.UserHandler.save()) {
 
-        <div class="container-fluid">
+        <div id="container-sign-up" class="container-fluid">
             <form method="post" action="@routes.UserHandler.save()">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">First name</span>
@@ -54,15 +54,8 @@
 
 
             <script>
-               /* var pass = document.getElementById("password");
-                var conPass = document.getElementById("password");
-                var btnSubmit = document.getElementById("btn-submit");
-                function isEqual() {
-                    if (pass.value != conPass.value) {
-                        pass.value = null;
-                    }
-                }
-                btnSubmit.onclick = isEqual();*/
+               var body = document.getElementsByTagName("body")[0];
+               body.style.backgroundColor = "lightgrey";
             </script>
 
     }

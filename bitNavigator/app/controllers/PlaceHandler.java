@@ -1,10 +1,7 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
-import models.Image;
-import models.Place;
-import models.Service;
-import models.User;
+import models.*;
 import play.Play;
 import play.mvc.Controller;
 
@@ -29,6 +26,7 @@ public class PlaceHandler extends Controller{
     private static final Form<Place> placeForm = Form.form(Place.class);
     private static final Form<Image> imageForm = Form.form(Image.class);
     private static final Form<Service> serviceForm = Form.form(Service.class);
+    private static final Form<Comment> commentForm = Form.form(Comment.class);
     private static List<String> imageLists = new ArrayList<>();
 
     public Result addPlace() {
@@ -129,6 +127,31 @@ public class PlaceHandler extends Controller{
         }
         Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
+        return ok(editplace.render(filledForm, services));
+    }
+
+    public Result postComment(String id) {
+        Form<Comment> boundForm = commentForm.bindFromRequest();
+
+        if (boundForm.hasErrors()) {
+            return TODO;
+        }
+
+        Comment comment = boundForm.get();
+        User user = User.findByEmail(session("email"));
+        if(user == null) {
+            return TODO;
+        }
+        comment.user = user;
+        Place place = Place.findById(Integer.parseInt(id));
+        if (place == null) {
+            return TODO;
+        }
+        comment.place = place;
+        comment.commentCreated = Calendar.getInstance();
+        comment.save();
+        List<Service> services = Service.findAll();
+        Form <Place> filledForm =  placeForm.fill(place);
         return ok(editplace.render(filledForm, services));
     }
 

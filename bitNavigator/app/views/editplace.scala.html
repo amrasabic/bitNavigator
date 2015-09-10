@@ -63,7 +63,7 @@
                         <!-- Description input field -->
                     <div class="form-group">
                         <label for="comment">Description:</label>
-                        <textarea class="form-control" rows="5" name="description" id="description" type="text" value="@placeForm("description").value" placeholder="Enter description"></textarea>
+                        <textarea class="form-control" rows="3" name="description" id="description" type="text" value="@placeForm("description").value" placeholder="Enter description"></textarea>
                         <span class="alert-danger" data-error-for="description" ></span>
                     </div>
                     <p><br/></p>
@@ -101,12 +101,25 @@
 
             <p><br/></p>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="btn-add">Address</button>
+                <button class="btn btn-primary" id="btn-add">Submit address</button>
                 <button type="submit" class="btn btn-primary" id="btn-submit">
                     Create</button>
                 <button id="redirect" class="btn btn-default" data-dismiss="modal" onclick="javascript:location.href='/'">Cancel</button>
 
             </div>
         </div>
+
     </div>
+    <div id="container-comment" class="container-fluid">
+        <form method="post" action="@routes.PlaceHandler.postComment(placeForm("id").value)">
+            <div class="panel-heading">
+                <h3 class="panel-title">Comment</h3>
+            </div>
+            <div class="panel-body">
+                <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text" value="@placeForm("description").value" placeholder="Write a comment..."></textarea>
+            </div>
+            <button class="btn btn-primary" id="btn-add">Post</button>
+        </form>
+    </div>
+
 }
