@@ -46,6 +46,7 @@ public class User extends Model {
     @Constraints.Required
     public String password;
     public Calendar accountCreated;
+    public boolean admin = false;
 
     /**
      * Default constructor.

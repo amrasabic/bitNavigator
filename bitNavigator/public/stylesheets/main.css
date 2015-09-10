@@ -76,11 +76,23 @@ body {
 }
 
 #map-add-place {
-    height: 400px;
-    width: 500px;
+    border: 1px black solid;
+    width: 100%;
+    height: 450px;
 }
 
 a {
     text-decoration: none;
     color: #2b669a;
+}
+
+#map-container {
+    
+}
+
+#add-place-panel {
+    margin: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px #2b669a solid;
 }

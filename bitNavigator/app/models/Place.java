@@ -2,7 +2,7 @@ package models;
 
 import javax.persistence.*;
 
-import play.db.ebean.*;
+import com.avaje.ebean.Model;
 import play.data.format.*;
 import play.data.validation.*;
 import play.data.validation.Constraints;
@@ -27,18 +27,16 @@ public class Place extends Model {
     @Constraints.Required
     @Constraints.MaxLength(150)
     public String title;
-    @Constraints.Required
     @Column(columnDefinition = "TEXT")
     public String description;
     public Double longitude;
     public Double latitude;
-    //@Constraints.Required
-  //  public String phone;
+    public String address;
     public Calendar placeCreated;
     @ManyToOne
     public User user;
-//    @OneToMany
-//    private static List<String> imageLists = new ArrayList<>();
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Service> services;
 
     /**
      * Default constructor.

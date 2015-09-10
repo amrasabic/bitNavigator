@@ -11,6 +11,7 @@ import utillities.UserValidator;
 import views.html.index;
 import views.html.signin;
 import views.html.signup;
+import views.html.profile;
 import play.Logger;
 import utillities.PasswordHash;
 
@@ -107,6 +108,36 @@ public class UserHandler extends Controller {
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);
+        return ok(index.render());
+    }
+
+    public Result profile (String email) {
+        final User user = User.findByEmail(email);
+        if(user == null)
+        {
+            return notFound(String.format("User %s does not exist.", email));
+        }
+        Form <User> filledForm =  userForm.fill(user);
+        return ok(profile.render(filledForm));
+
+    }
+
+    public Result updateUser(String email) {
+
+        Form<User> boundForm = userForm.bindFromRequest();
+
+        User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
+
+        if(user == null)
+        {
+            return notFound(String.format("User %s does not exist.", email));
+        }
+
+        user.firstName = boundForm.bindFromRequest().field("firstName").value();
+        user.lastName = boundForm.bindFromRequest().field("lastName").value();
+
+        user.update();
+
         return ok(index.render());
     }
 

@@ -5,6 +5,7 @@ import play.db.ebean.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * Created by Amra on 9/8/2015.
@@ -18,7 +19,7 @@ public class Image extends Model {
     public Integer id;
     public String name;
     public String path;
-    @OneToMany
+    @OneToOne
     public Place place;
 
     /**
