@@ -2,12 +2,15 @@ package models;
 
 import javax.persistence.*;
 
-import play.db.ebean.*;
+import com.avaje.ebean.Model;
+import controllers.UserHandler;
 import play.data.format.*;
 import play.data.validation.*;
 import play.data.validation.Constraints;
 
 import play.Logger;
+import utillities.PasswordHash;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -30,13 +33,22 @@ public class User extends Model {
 
     @Id
     public int id;
+    @Constraints.Email
+    @Column (unique = true)
     @Constraints.Required
     public String email;
+    @Constraints.Pattern ("[a-zA-Z]+")
     public String firstName;
+    @Constraints.Pattern ("[a-zA-Z]+")
     public String lastName;
+    @Constraints.MinLength (8)
+    @Constraints.MaxLength (25)
     @Constraints.Required
     public String password;
     public Calendar accountCreated;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Place> places;
+    public boolean admin = false;
 
     /**
      * Default constructor.
@@ -52,6 +64,20 @@ public class User extends Model {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public static void newUser(UserHandler.SignUpForm signUp) {
+        User user = new User();
+        user.email = signUp.email;
+        user.firstName = signUp.firstName;
+        user.lastName = signUp.lastName;
+        user.password = signUp.password;
+        user.accountCreated = Calendar.getInstance();
+        user.save();
+    }
+
+    public static List<User> findAll() {
+        return finder.all();
     }
 
     /**
