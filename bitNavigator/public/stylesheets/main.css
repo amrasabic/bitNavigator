@@ -71,7 +71,7 @@ body {
     position: absolute;
 }
 .glyphicon-globe {
-    font-size:3em;
+    font-size:4em;
     color: white;
 }
 
@@ -126,4 +126,13 @@ a:hover {
     border-radius: 10px;
     border: 1px #2b669a solid;
     text-align: center;
+}
+
+#comment-content {
+    text-align: center;
+}
+
+.media-object {
+    width: 256px;
+    height: 256px;
 }

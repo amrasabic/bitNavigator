@@ -1,11 +1,11 @@
 package models;
 
-import play.db.ebean.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import com.avaje.ebean.Model;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Amra on 9/8/2015.
@@ -19,7 +19,7 @@ public class Image extends Model {
     public Integer id;
     public String name;
     public String path;
-    @OneToOne
+    @ManyToOne
     public Place place;
 
     /**
@@ -29,5 +29,7 @@ public class Image extends Model {
 
     }
 
-
+    public static List<Image> findByPlace(Place place) {
+        return finder.where().eq("place", place).findList();
+    }
 }

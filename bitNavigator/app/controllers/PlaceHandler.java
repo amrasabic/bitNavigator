@@ -41,11 +41,12 @@ public class PlaceHandler extends Controller{
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
 
-        Place p = boundForm.get();
+
 
 
         if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
-            return TODO;
+            flash("error", "Wrong input!");
+            return badRequest(addplace.render(boundForm, Service.findAll()));
         }
 
         Service service = boundServiceForm.get();
@@ -54,6 +55,8 @@ public class PlaceHandler extends Controller{
         if (service == null) {
             return TODO;
         }
+
+        Place p = boundForm.get();
 
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
@@ -69,7 +72,7 @@ public class PlaceHandler extends Controller{
             for (FilePart picture : pictures) {
                 String name = picture.getFilename();
                 File file = picture.getFile();
-                String path = Play.application().path() + "/public/images/placeImages/" + name;
+                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
 
                 Logger.info(name);
                 try {
@@ -77,6 +80,7 @@ public class PlaceHandler extends Controller{
                     imageLists.add(name);
                     Image image = new Image();
                     image.name = name;
+                    path ="/images/placeImages/" + place.title + "/" + name;
                     image.path = path;
                     image.place = place;
                     image.save();
@@ -87,7 +91,7 @@ public class PlaceHandler extends Controller{
                 }
             }
 
-            return ok("File uploaded");
+            return ok(index.render(Place.findAll()));
         } else {
             flash("error", "Files not present.");
             return badRequest("Pictures missing.");
@@ -127,14 +131,26 @@ public class PlaceHandler extends Controller{
         }
         Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
-        return ok(editplace.render(filledForm, services));
+        List<Comment> comments = Comment.findAll();
+        return ok(editplace.render(filledForm, services, comments));
+    }
+
+    public Result viewPlace(int id){
+        Place place = Place.findById(id);
+        if (place == null) {
+            return notFound(String.format("Place %s does not exists.", id));
+        }
+        Form <Place> filledForm =  placeForm.fill(place);
+        List<Service> services = Service.findAll();
+        List<Comment> comments = Comment.findByPlace(place);
+        return ok(viewplace.render(filledForm, services, comments, Image.findByPlace(place)));
     }
 
     public Result postComment(String id) {
         Form<Comment> boundForm = commentForm.bindFromRequest();
 
         if (boundForm.hasErrors()) {
-            return TODO;
+            return unauthorized("Must be signed in to post a comment!");
         }
 
         Comment comment = boundForm.get();
@@ -152,7 +168,8 @@ public class PlaceHandler extends Controller{
         comment.save();
         List<Service> services = Service.findAll();
         Form <Place> filledForm =  placeForm.fill(place);
-        return ok(editplace.render(filledForm, services));
+        List<Comment> comments = Comment.findAll();
+        return ok(viewplace.render(filledForm, services, comments, Image.findByPlace(place)));
     }
 
     public Result validateForm(){

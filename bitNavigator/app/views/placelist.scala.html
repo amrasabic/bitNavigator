@@ -2,9 +2,9 @@
 
 @main("Place list") {
     <script src="@routes.Assets.versioned("javascripts/jquery-2.1.4.js")" type="text/javascript"></script>
-
-    <h2>All places</h2>
-    <script>
+    <div class="container-fluid">
+        <h2>All places</h2>
+        <script>
         function del(urlToDel) {
             $.ajax({
                 url: '/ValidateApplication.php',
@@ -18,31 +18,46 @@
     </script>
 
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>title</th>
-                <th>description</th>
-                <th>address</th>
-            </tr>
-        </thead>
-        <tbody>
-        @for(place <- places) {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>description</th>
+                    <th>address</th>
+                    <th>view</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            @for(place <- places) {
+                @if(place.user != null){
+                    <tr>
+                        <td>@place.id</td>
+                        <td>@place.title</td>
+                        <td>@place.description</td>
+                        <td>@place.address</td>
+                        <td><a href="@routes.PlaceHandler.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
+                        <td>
+                        @if(place.user.email == session.get("email")){
+                            <a href="@routes.PlaceHandler.editPlace(place.id)"> <i class="glyphicon glyphicon-edit"></i></a>
+                        }
+                        </td>
 
-            <tr>
-                <td>@place.id</td>
-                <td>@place.title</td>
-                <td>@place.description</td>
-                <td>@place.address</td>
-                <td>
-                    <a href="@routes.PlaceHandler.editPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a onclick="del('@routes.PlaceHandler.delete(place.id)')"><i class="glyphicon glyphicon-trash"></i></a>
-                </td>
+                        <td>
+                        @if(place.user.email == session.get("email") || (User.findByEmail(session.get("email"))!= null && User.findByEmail(session.get("email")).admin)){
+                            <a onclick="del('@routes.PlaceHandler.delete(place.id)')"><i class="glyphicon glyphicon-trash"></i></a>
+                        }
+                        </td>
 
-            </tr>
+                    </tr>
+                }
 
-        }
-        </tbody>
-    </table>
+
+            }
+            </tbody>
+        </table>
+    </div>
+
 }

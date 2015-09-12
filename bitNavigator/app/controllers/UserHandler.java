@@ -12,6 +12,7 @@ import utillities.UserValidator;
 import views.html.index;
 import views.html.signin;
 import views.html.signup;
+import views.html.adminview;
 import views.html.userlist;
 import views.html.profile;
 import play.Logger;
@@ -62,7 +63,7 @@ public class UserHandler extends Controller {
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
-            return badRequest(index.render(places));
+            return badRequest(signup.render(signUpForm));
         }
         try {
             if (!PasswordHash.validatePassword(boundForm.bindFromRequest().field(User.PASSWORD).value(), user.password)) {
@@ -71,7 +72,7 @@ public class UserHandler extends Controller {
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
-            return badRequest(index.render(places));
+            return badRequest(signup.render(signUpForm));
         }
         session().clear();
         session("email", user.email);
@@ -167,6 +168,14 @@ public class UserHandler extends Controller {
         }
         user.delete();
         return redirect(routes.UserHandler.userList());
+    }
+
+    public Result adminView() {
+        User admin = User.findByEmail(session("email"));
+        if(admin == null || !admin.admin){
+            return unauthorized("Permission denied!");
+        }
+        return ok(adminview.render());
     }
 
     public Result signOut() {

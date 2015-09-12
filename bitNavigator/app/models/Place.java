@@ -33,8 +33,9 @@ public class Place extends Model {
     public String address;
     public Calendar placeCreated;
     @ManyToOne
+    @Constraints.Required
     public User user;
-    @OneToOne
+    @ManyToOne
     public Service service;
 
     public static Finder<Integer, Place> finder = new Finder<>(Integer.class, Place.class);

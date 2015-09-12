@@ -49,10 +49,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
 
 
-
+    <form method="post" action="@routes.PlaceHandler.savePlace()" enctype="multipart/form-data">
         <div id="add-place-panel" class="container-fluid">
             <div class="col-md-6">
-                    <form method="post" action="@routes.PlaceHandler.savePlace()" enctype="multipart/form-data">
+
                         <div class="panel-body">
                             <div class="page-header">
                                 <h3>Add Place</h3>
@@ -78,7 +78,7 @@
                             <input id="latitude" name="latitude" type="hidden">
                             <div class="dropdown" style="padding-top: 5px;">
                                 <label for="service-list">Service:</label>
-                                <select id="service-list" class="btn btn-default dropdown-toggle" value="Services">
+                                <select id="service-list" class="btn btn-block" value="Services">
                                     @for(service <- services){
                                         <option>@service.serviceType</option>
                                     }
@@ -90,19 +90,33 @@
                             <span class="btn btn-default btn-file">
                                 <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*" multiple>
                             </span>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" id="btn-submit">
-                                    Create</button>
-                                <button id="redirect" class="btn btn-default" data-dismiss="modal" onclick="javascript:location.href='/'">Cancel</button>
-                            </div>
+
                         </div>
-                    </form>
+
 
             </div>
-            <div id="map-container" class="col-md-6"><div id="map-add-place"></div></div>
+            <div id="map-container" class="col-md-6"><div id="map-add-place"></div><div class="modal-footer">
+                <button class="btn btn-default" id="btn-add" type="button">Submit address</button>
+                <button type="submit" class="btn btn-primary" id="btn-submit">
+                    Create</button>
+                <button id="redirect" class="btn btn-default" data-dismiss="modal" type="button"><a href="/">Cancel</a></button>
+            </div></div>
 
-            <button class="button" id="btn-add">Address</button>
+
         </div>
+    </form>
+    <div class="container-fluid">
+        @if(flash.containsKey("error")) {
+            <div class="alert alert-danger">
+            @flash.get("error")
+            </div>
+        }
+        @if(flash.containsKey("success")) {
+            <div class="alert alert-success">
+            @flash.get("success")
+            </div>
+        }
+    </div>
 
     <script>
         var serviceValue = document.getElementById("service");
@@ -111,7 +125,7 @@
     </script>
     @*</form> *@
     <script>
-       /* $(document).ready(function(){
+       /*$(document).ready(function(){
             // for any form on this page do the follofing
             $('form').submit(function(e, options){
                 //if options is not defined define it as a empty object

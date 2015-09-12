@@ -5,6 +5,7 @@ import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by ognjen.cetkovic on 10/09/15.
@@ -20,10 +21,17 @@ public class Comment extends Model {
     @ManyToOne
     public Place place;
     @ManyToOne
+    @Constraints.Required
     public User user;
 
     public static Finder<Integer, Comment> finder = new Finder<Integer, Comment>(Integer.class, Comment.class);
 
+    public static List<Comment> findAll() {
+        return finder.all();
+    }
 
+    public static List<Comment> findByPlace(Place place) {
+        return finder.where().eq("place", place).findList();
+    }
 
 }

@@ -17,7 +17,6 @@ create table image (
   name                      varchar(255),
   path                      varchar(255),
   place_id                  integer,
-  constraint uq_image_place_id unique (place_id),
   constraint pk_image primary key (id))
 ;
 
@@ -31,7 +30,6 @@ create table place (
   place_created             datetime(6),
   user_id                   integer,
   service_id                integer,
-  constraint uq_place_service_id unique (service_id),
   constraint pk_place primary key (id))
 ;
 
