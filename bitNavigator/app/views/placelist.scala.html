@@ -41,16 +41,16 @@
                         <td>@place.title</td>
                         <td>@place.description</td>
                         <td>@place.address</td>
-                        <td><a href="@routes.PlaceHandler.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
+                        <td><a href="@routes.PlaceController.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
                         <td>
                         @if(place.user.email == session.get("email")){
-                            <a href="@routes.PlaceHandler.editPlace(place.id)"> <i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="@routes.PlaceController.editPlace(place.id)"> <i class="glyphicon glyphicon-edit"></i></a>
                         }
                         </td>
 
                         <td>
                         @if(place.user.email == session.get("email") || (User.findByEmail(session.get("email"))!= null && User.findByEmail(session.get("email")).admin)){
-                            <a onclick="del('@routes.PlaceHandler.delete(place.id)')"><i class="glyphicon glyphicon-trash"></i></a>
+                            <a onclick="del('@routes.PlaceController.delete(place.id)')"><i class="glyphicon glyphicon-trash"></i></a>
                         }
                         </td>
 

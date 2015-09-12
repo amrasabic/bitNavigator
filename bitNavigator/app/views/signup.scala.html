@@ -1,12 +1,12 @@
-@(userForm: Form[UserHandler.SignUpForm])
+@(userForm: Form[UserController.SignUpForm])
 @import helper._
 
 @main("Sign up") {
 
-    @helper.form(action = routes.UserHandler.save()) {
+    @helper.form(action = routes.UserController.save()) {
 
         <div id="container-sign-up" class="container-fluid">
-            <form method="post" action="@routes.UserHandler.save()">
+            <form method="post" action="@routes.UserController.save()">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">First name</span>
                         <input type="text" class="form-control" value="@userForm("firstName").value" aria-describedby="basic-addon1" name="firstName"

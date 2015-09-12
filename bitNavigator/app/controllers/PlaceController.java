@@ -21,7 +21,7 @@ import play.Logger;
 /**
  * Created by ognjen.cetkovic on 08/09/15.
  */
-public class PlaceHandler extends Controller{
+public class PlaceController extends Controller{
 
     private static final Form<Place> placeForm = Form.form(Place.class);
     private static final Form<Image> imageForm = Form.form(Image.class);
@@ -119,7 +119,7 @@ public class PlaceHandler extends Controller{
 
 
         place.delete();
-        return redirect(routes.PlaceHandler.placeList());
+        return redirect(routes.PlaceController.placeList());
     }
 
     public Result editPlace(int id){
