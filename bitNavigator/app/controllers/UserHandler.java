@@ -125,19 +125,17 @@ public class UserHandler extends Controller {
         {
             return notFound(String.format("User %s does not exist.", email));
         }
-        Form <User> filledForm =  userForm.fill(user);
-        return ok(profile.render(filledForm));
+        return ok(profile.render(user));
 
     }
 
     public Result updateUser(String email) {
 
-        Form<User> boundForm = userForm.bindFromRequest();
+        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
 
         User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
 
-        if(user == null)
-        {
+        if(user == null) {
             return notFound(String.format("User %s does not exist.", email));
         }
 
@@ -150,6 +148,11 @@ public class UserHandler extends Controller {
 
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
+
+        if(boundForm.hasErrors()) {
+            flash("error", "Name can only hold letters!");
+            return badRequest(profile.render(user));
+        }
 
         user.update();
         List<Place> places = Place.findAll();
@@ -183,7 +186,7 @@ public class UserHandler extends Controller {
         return redirect("/");
     }
 
-    public static class SignUpForm  {
+    public static class UserNameForm {
         @Constraints.Email
         @Constraints.Required
         public String email;
@@ -191,6 +194,9 @@ public class UserHandler extends Controller {
         public String firstName;
         @Constraints.Pattern ("[a-zA-Z]+")
         public String lastName;
+    }
+
+    public static class SignUpForm  extends UserNameForm{
         @Constraints.MinLength (8)
         @Constraints.MaxLength (25)
         @Constraints.Required

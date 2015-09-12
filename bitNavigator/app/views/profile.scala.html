@@ -1,11 +1,11 @@
-@(userForm: Form[User])
+@(user: User)
 @import helper._
 
 @main("User profile") {
 
 
     <div class="container" style="padding-top : 60 px ;">
-        <h2 class="page-header">Hi @userForm("firstName").value  @userForm("lastName").value!</h2>
+        <h2 class="page-header">Hi @user.firstName  @user.lastName!</h2>
         <div class="row">
                 <!-- left column -->
                 <!-- User avatar image -->
@@ -23,7 +23,10 @@
                     <a class="panel-close close" data-dismiss="alert">×</a>
                     <i class="fa fa-coffee"></i>
                     <p><i class="glyphicon glyphicon-user"></i> Welcome to bitnavigator. You can't change your <strong>
-                        email</strong> address.</p>
+                        email</strong> address.
+
+
+                    </p>
                 </div>
                 <h3 class="user-info">User info:</h3>
                     <!--User info fields -->
@@ -32,21 +35,21 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">First name:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="@userForm("firstName").value" type="first_name" name="firstName" id="first_name">
+                            <input class="form-control" value="@user.firstName" type="first_name" name="firstName" id="first_name">
                         </div>
                     </div>
                         <!-- User last name field-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Last name:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="@userForm("lastName").value" type="last_name" name="lastName" id="last_name">
+                            <input class="form-control" value="@user.lastName" type="last_name" name="lastName" id="last_name">
                         </div>
                     </div>
                         <!-- User email filed-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Email:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="@userForm("email").value" type="email" name="email" id="email" readonly>
+                            <input class="form-control" value="@user.email" type="email" name="email" id="email" readonly>
                         </div>
                     </div>
                         <!-- Confirm and cancel buttons -->
@@ -57,10 +60,15 @@
                             <span></span>
                             <input class="btn btn-default" value="Cancel" type="reset" onclick="window.location='/';">
 
-</div>
-</div>
-</form>
-</div>
-</div>
-</div>
-    }
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> <p><br></p>
+        @if(flash.containsKey("error")) {
+            <div class="alert alert-danger">
+            @flash.get("error")
+            </div>
+        }
+    </div>
+}
