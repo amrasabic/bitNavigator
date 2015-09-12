@@ -17,7 +17,7 @@ public class Service extends Model {
     public static Finder<Integer, Service> finder = new Finder<>(Integer.class, Service.class);
 
     public static List<Service> findAll() {
-        return finder.all();
+        return finder.order("serviceType").findList();
     }
 
     public static Service findByType(String type) {

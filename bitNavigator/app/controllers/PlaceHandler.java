@@ -30,9 +30,7 @@ public class PlaceHandler extends Controller{
     private static List<String> imageLists = new ArrayList<>();
 
     public Result addPlace() {
-        List<Service> services = Service.findAll();
-
-        return ok(addplace.render(placeForm, services));
+        return ok(addplace.render(placeForm, Service.findAll()));
     }
 
 
@@ -140,13 +138,12 @@ public class PlaceHandler extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findByPlace(place);
-        return ok(viewplace.render(filledForm, services, comments, Image.findByPlace(place)));
+        return ok(viewplace.render(place, services, comments, Image.findByPlace(place)));
     }
 
-    public Result postComment(String id) {
+    public Result postComment(int id) {
         Form<Comment> boundForm = commentForm.bindFromRequest();
 
         if (boundForm.hasErrors()) {
@@ -159,7 +156,7 @@ public class PlaceHandler extends Controller{
             return TODO;
         }
         comment.user = user;
-        Place place = Place.findById(Integer.parseInt(id));
+        Place place = Place.findById(id);
         if (place == null) {
             return TODO;
         }
@@ -167,9 +164,8 @@ public class PlaceHandler extends Controller{
         comment.commentCreated = Calendar.getInstance();
         comment.save();
         List<Service> services = Service.findAll();
-        Form <Place> filledForm =  placeForm.fill(place);
         List<Comment> comments = Comment.findAll();
-        return ok(viewplace.render(filledForm, services, comments, Image.findByPlace(place)));
+        return ok(viewplace.render(place, services, comments, Image.findByPlace(place)));
     }
 
     public Result validateForm(){
