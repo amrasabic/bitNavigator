@@ -13,7 +13,4 @@ public class CommentController extends Controller {
 
     private static final Form<Comment> commentForm = Form.form(Comment.class);
 
-
-
-
 }
