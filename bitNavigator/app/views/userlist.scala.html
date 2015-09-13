@@ -5,17 +5,20 @@
     <div class="container-fluid">
         <h2>All users</h2>
         <script>
+
         function del(urlToDel) {
-            confirm('Are you sure you want to delete this user?');
+            if (confirm("Are you sure you want to delete user?")) {
             $.ajax({
 
                 url: '/ValidateApplication.php',
                 url: urlToDel,
                 type: 'DELETE',
                 success: function(results) {
+
                     location.reload();
                 }
             });
+            }
         }
     </script>
 
