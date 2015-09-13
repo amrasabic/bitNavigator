@@ -146,13 +146,13 @@ public class UserHandler extends Controller {
             }
         }
 
-        user.firstName = boundForm.bindFromRequest().field("firstName").value();
-        user.lastName = boundForm.bindFromRequest().field("lastName").value();
-
         if(boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
             return badRequest(profile.render(user));
         }
+
+        user.firstName = boundForm.bindFromRequest().field("firstName").value();
+        user.lastName = boundForm.bindFromRequest().field("lastName").value();
 
         user.update();
         List<Place> places = Place.findAll();
