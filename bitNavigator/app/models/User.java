@@ -3,15 +3,9 @@ package models;
 import javax.persistence.*;
 
 import com.avaje.ebean.Model;
-import controllers.UserHandler;
-import play.data.format.*;
-import play.data.validation.*;
+import controllers.UserController;
 import play.data.validation.Constraints;
 
-import play.Logger;
-import utillities.PasswordHash;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -66,7 +60,7 @@ public class User extends Model {
         this.password = password;
     }
 
-    public static void newUser(UserHandler.SignUpForm signUp) {
+    public static void newUser(UserController.SignUpForm signUp) {
         User user = new User();
         user.email = signUp.email;
         user.firstName = signUp.firstName;

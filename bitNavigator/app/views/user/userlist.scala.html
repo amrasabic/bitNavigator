@@ -6,7 +6,9 @@
         <h2>All users</h2>
         <script>
         function del(urlToDel) {
+            if(confirm('Are you sure you want to delete this user?')){
             $.ajax({
+
                 url: '/ValidateApplication.php',
                 url: urlToDel,
                 type: 'DELETE',
@@ -14,6 +16,7 @@
                     location.reload();
                 }
             });
+         }
         }
     </script>
 
@@ -37,7 +40,7 @@
                     <td>@user.lastName</td>
                     <td>@user.email</td>
                     <td>@if(user.email != session.get("email") ){
-                        <a onclick="del('@routes.UserHandler.delete(user.email)')"><i class="glyphicon glyphicon-trash"></i></a>
+                        <a onclick="del('@routes.UserController.delete(user.email)')"><i class="glyphicon glyphicon-trash"></i></a>
                     }</td>
                 </tr>
 

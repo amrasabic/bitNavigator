@@ -7,15 +7,19 @@
     <script>
         var marker;
         function initMap() {
+          var lat = 43.850;
+          var lng = 18.390;
+
+
           var map = new google.maps.Map(document.getElementById('map-add-place'), {
             zoom: 14,
-            center: {lat: 43.850, lng: 18.390}
+            center: {lat: lat, lng: lng}
           });
           var geocoder = new google.maps.Geocoder;
           var infowindow = new google.maps.InfoWindow;
 
           marker = new google.maps.Marker({
-                position: {lat: 43.850, lng: 18.390},
+                position: {lat: lat, lng: lng},
                 map: map,
                 draggable: true
           });
@@ -49,7 +53,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
 
 
-    <form method="post" action="@routes.PlaceHandler.savePlace()" enctype="multipart/form-data">
+    <form method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
         <div id="add-place-panel" class="container-fluid">
             <div class="col-md-6">
 
@@ -71,7 +75,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="usr">Address:</label>
-                                <input type="text" class="form-control" name="address" id="address" readonly>
+                                <input type="text" class="form-control" name="address" id="address">
                                 <span class="alert-danger" data-error-for="title" ></span>
                             </div>
                             <input id="longitude" name="longitude" type="hidden">
@@ -147,7 +151,7 @@
                 // data: the data to add to the request
 
                 $.ajax({
-                    url: "@routes.PlaceHandler.addPlace()",
+                    url: "@routes.PlaceController.addPlace()",
                     method: "post",
                     data: $(this).serialize()
                 }).success(function(response){
