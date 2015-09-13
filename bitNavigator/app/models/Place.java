@@ -36,6 +36,8 @@ public class Place extends Model {
     public User user;
     @ManyToOne
     public Service service;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Image> images;
 
     public static Finder<Integer, Place> finder = new Finder<>(Integer.class, Place.class);
     /**

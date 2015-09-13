@@ -46,7 +46,7 @@
 
     <div id="add-place-panel" class="container-fluid">
         <div class="col-md-6">
-            <form method="post" action="@routes.PlaceHandler.savePlace()" enctype="multipart/form-data">
+            <form method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
                 <div class="panel-body">
                     <div class="page-header">
                         <h3>@place.title</h3>
@@ -112,7 +112,7 @@
     }
     @if(!place.user.email.equals(session.get("email"))){
         <div id="container-comment" class="container-fluid">
-            <form method="post" action="@routes.PlaceHandler.postComment(place.id)">
+            <form method="post" action="@routes.PlaceController.postComment(place.id)">
                 <div class="panel-heading">
                     <h3 class="panel-title">Comment</h3>
                 </div>

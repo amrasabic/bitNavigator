@@ -1,25 +1,18 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
 import models.Place;
 import models.User;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
-import utillities.UserValidator;
+
 import views.html.index;
-import views.html.signin;
-import views.html.signup;
-import views.html.adminview;
-import views.html.userlist;
-import views.html.profile;
+import views.html.user.*;
+import views.html.admin.*;
 import play.Logger;
 import utillities.PasswordHash;
 
-import javax.persistence.Column;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -27,7 +20,7 @@ import java.util.List;
  * leads random user to other subpages. Paths to subpages are defined in routes.
  * Created by ognjen on 01-Sep-15.
  */
-public class UserHandler extends Controller {
+public class UserController extends Controller {
 
     public static final String ERROR_MESSAGE = "error";
     public static final String SUCCESS_MESSAGE = "success";
@@ -76,6 +69,7 @@ public class UserHandler extends Controller {
         }
         session().clear();
         session("email", user.email);
+
         List<Place> places = Place.findAll();
         return ok(index.render(places));
     }
@@ -170,7 +164,7 @@ public class UserHandler extends Controller {
             return notFound(String.format("User %s does not exists.", email));
         }
         user.delete();
-        return redirect(routes.UserHandler.userList());
+        return redirect(routes.UserController.userList());
     }
 
     public Result adminView() {

@@ -7,11 +7,14 @@ import play.mvc.Controller;
 
 import play.mvc.Result;
 import views.html.*;
+import views.html.place.*;
 import play.data.Form;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -21,7 +24,7 @@ import play.Logger;
 /**
  * Created by ognjen.cetkovic on 08/09/15.
  */
-public class PlaceHandler extends Controller{
+public class PlaceController extends Controller{
 
     private static final Form<Place> placeForm = Form.form(Place.class);
     private static final Form<Image> imageForm = Form.form(Image.class);
@@ -39,9 +42,6 @@ public class PlaceHandler extends Controller{
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
 
-
-
-
         if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
             flash("error", "Wrong input!");
             return badRequest(addplace.render(boundForm, Service.findAll()));
@@ -54,7 +54,10 @@ public class PlaceHandler extends Controller{
             return TODO;
         }
 
-        Place p = boundForm.get();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+        String formatted = format1.format(cal.getTime());
 
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
@@ -68,7 +71,7 @@ public class PlaceHandler extends Controller{
 
         if (pictures != null) {
             for (FilePart picture : pictures) {
-                String name = picture.getFilename();
+                String name = place.title + formatted;
                 File file = picture.getFile();
                 String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
 
@@ -119,7 +122,7 @@ public class PlaceHandler extends Controller{
 
 
         place.delete();
-        return redirect(routes.PlaceHandler.placeList());
+        return redirect(routes.PlaceController.placeList());
     }
 
     public Result editPlace(int id){
