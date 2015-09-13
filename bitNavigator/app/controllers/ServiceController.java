@@ -5,8 +5,8 @@ import models.Service;
 import play.mvc.Controller;
 import play.data.Form;
 import play.mvc.Result;
-import views.html.addservice;
-import views.html.index;
+import views.html.*;
+import views.html.admin.*;
 
 /**
  * Created by ognjen.cetkovic on 11/09/15.
