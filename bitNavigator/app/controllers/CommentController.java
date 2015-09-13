@@ -1,10 +1,8 @@
 package controllers;
 
 import models.Comment;
-import models.User;
 import play.data.Form;
 import play.mvc.Controller;
-import play.mvc.Result;
 
 /**
  * Created by ognje on 10-Sep-15.
