@@ -33,7 +33,6 @@ public class Place extends Model {
     public String address;
     public Calendar placeCreated;
     @ManyToOne
-    @Constraints.Required
     public User user;
     @ManyToOne
     public Service service;
