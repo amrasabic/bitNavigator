@@ -7,20 +7,28 @@
     <script>
         var marker;
         function initMap() {
-          var map = new google.maps.Map(document.getElementById('map-add-place'), {
-            zoom: 14,
-            center: {lat: 43.850, lng: 18.390}
-          });
-          var geocoder = new google.maps.Geocoder;
-          var infowindow = new google.maps.InfoWindow;
-          marker = new google.maps.Marker({
-                position: {lat: 43.850, lng: 18.390},
+            var lat = 43.850;
+            var lng = 18.390;
+
+            @if(placeForm("latitude").value != null && placeForm("longitude").value != null) {
+                lat = @placeForm("latitude").value;
+                lng = @placeForm("longitude").value;
+            }
+
+             var map = new google.maps.Map(document.getElementById('map-add-place'), {
+                zoom: 14,
+                center: {lat: lat, lng: lng}
+             });
+            var geocoder = new google.maps.Geocoder;
+            var infowindow = new google.maps.InfoWindow;
+            marker = new google.maps.Marker({
+                position: {lat: lat, lng: lng},
                 map: map,
                 draggable: true
-          });
-          document.getElementById('btn-add').addEventListener('click', function() {
-            geocodeLatLng(geocoder, map, infowindow, marker.getPosition().lat() + "," + marker.getPosition().lng());
-          });
+            });
+            document.getElementById('btn-add').addEventListener('click', function() {
+                geocodeLatLng(geocoder, map, infowindow, marker.getPosition().lat() + "," + marker.getPosition().lng());
+            });
         }
         function geocodeLatLng(geocoder, map, infowindow, ll) {
           var input = ll;
@@ -70,16 +78,16 @@
                         <!--Address field -->
                     <div class="form-group">
                         <label for="usr">Address:</label>
-                        <input type="text" class="form-control" name="address" id="address" readonly placeholder="Choose location with pin on map and generate address with button below">
+                        <input type="text" class="form-control" name="address" id="address" placeholder="Choose location with pin on map and generate address with button below">
                         <span class="alert-danger" data-error-for="title" ></span>
                     </div>
                     <input id="longitude" name="longitude" type="hidden">
                     <input id="latitude" name="latitude" type="hidden">
 
-                    <div class="dropdown" style="padding-top: 5px;">
+                    <div class="dropdown" style="padding-top : 5 px ;">
                         <label for="service-list">Service:</label>
                         <select id="service-list" class="btn btn-default dropdown-toggle" value="Services">
-                        @for(service <- services){
+                        @for(service <- services) {
                             <option>@service.serviceType</option>
                         }
                         </select>
@@ -104,7 +112,8 @@
                 <button class="btn btn-primary" id="btn-add">Submit address</button>
                 <button type="submit" class="btn btn-primary" id="btn-submit">
                     Create</button>
-                <button id="redirect" class="btn btn-default" data-dismiss="modal" onclick="javascript:location.href='/'">Cancel</button>
+                <button id="redirect" class="btn btn-default" data-dismiss="modal" onclick="javascript:location.href='/'">
+                    Cancel</button>
 
             </div>
         </div>
@@ -113,7 +122,8 @@
     @for(comment <- comments) {
         <div id="container-comment" class="container-fluid">
             <div class="panel-heading">
-                <h3 class="panel-title">@comment.user.firstName @comment.user.lastName - @comment.commentCreated.getTime</h3>
+                <h3 class="panel-title">@comment.user.firstName @comment.user.lastName
+                    - @comment.commentCreated.getTime</h3>
             </div>
             <div class="panel-body">
                 <textarea id="comment-content" class="form-control" rows="1" name="commentContent" id="commentContent" type="text" readonly>@comment.commentContent</textarea>

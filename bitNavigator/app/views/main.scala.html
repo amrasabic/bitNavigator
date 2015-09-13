@@ -43,9 +43,11 @@
                         @session.get("email") <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
+                        @if(User.findByEmail(session.get("email")).admin){
+                            <li><a href="@routes.UserHandler.adminView()"><i class="glyphicon glyphicon-user"></i> Admin view</a></li>
+                        }
                         <li><a href="@routes.UserHandler.profile(session.get("email"))"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                         <li><a href="@routes.PlaceHandler.addPlace()"><i class="glyphicon glyphicon-plus-sign"></i> Add place</a></li>
-
                         <li role="separator" class="divider"></li>
                         <li><a href="@routes.UserHandler.signOut()"><i class="glyphicon glyphicon-remove-sign"></i> Logout</a></li>
                     </ul>
