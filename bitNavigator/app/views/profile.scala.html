@@ -30,7 +30,7 @@
                 </div>
                 <h3 class="user-info">User info:</h3>
                     <!--User info fields -->
-                <form class="form-horizontal" role="form" method="post" action="@routes.UserHandler.updateUser(session.get("email"))">
+                <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser(session.get("email"))">
                         <!-- User first name filed-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">First name:</label>

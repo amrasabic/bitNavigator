@@ -27,7 +27,7 @@ import java.util.List;
  * leads random user to other subpages. Paths to subpages are defined in routes.
  * Created by ognjen on 01-Sep-15.
  */
-public class UserHandler extends Controller {
+public class UserController extends Controller {
 
     public static final String ERROR_MESSAGE = "error";
     public static final String SUCCESS_MESSAGE = "success";
@@ -170,7 +170,7 @@ public class UserHandler extends Controller {
             return notFound(String.format("User %s does not exists.", email));
         }
         user.delete();
-        return redirect(routes.UserHandler.userList());
+        return redirect(routes.UserController.userList());
     }
 
     public Result adminView() {

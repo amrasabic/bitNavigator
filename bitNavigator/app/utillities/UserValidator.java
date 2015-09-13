@@ -1,7 +1,6 @@
 package utillities;
 
-import controllers.UserHandler;
-import models.User;
+import controllers.UserController;
 
 /**
  * Class used to validate user`s attributes (e.g. if email is in valid format).
@@ -27,9 +26,9 @@ public class UserValidator {
      */
     public static String[] isPasswordValid(String password) {
         if (password.length() < PASSWORD_MIN_CHARACTERS) {
-            return new String[]{UserHandler.ERROR_MESSAGE, "Password must be at least " + PASSWORD_MIN_CHARACTERS + " characters long!"};
+            return new String[]{UserController.ERROR_MESSAGE, "Password must be at least " + PASSWORD_MIN_CHARACTERS + " characters long!"};
         } else if (password.length() > PASSWORD_MAX_CHARACTERS) {
-            return new String[]{UserHandler.ERROR_MESSAGE, "Password must be at most " + PASSWORD_MAX_CHARACTERS + " characters long!"};
+            return new String[]{UserController.ERROR_MESSAGE, "Password must be at most " + PASSWORD_MAX_CHARACTERS + " characters long!"};
         }
 
         boolean valid = false;
@@ -40,7 +39,7 @@ public class UserValidator {
             }
         }
         if (!valid) {
-            return new String[]{UserHandler.ERROR_MESSAGE, "Password must contain at least one letter!"};
+            return new String[]{UserController.ERROR_MESSAGE, "Password must contain at least one letter!"};
         }
 
         valid = false;
@@ -51,10 +50,10 @@ public class UserValidator {
             }
         }
         if (!valid) {
-            return new String[]{UserHandler.ERROR_MESSAGE, "Password must contain at least one digit!"};
+            return new String[]{UserController.ERROR_MESSAGE, "Password must contain at least one digit!"};
         }
 
-        return new String[]{UserHandler.SUCCESS_MESSAGE, "Password is good!"};
+        return new String[]{UserController.SUCCESS_MESSAGE, "Password is good!"};
     }
 
     /**
@@ -80,14 +79,14 @@ public class UserValidator {
     public static String[] isNameValid(String firstName, String lastName) {
         for (char c : firstName.toCharArray()) {
             if (!Character.isLetter(c)) {
-                return new String[]{UserHandler.ERROR_MESSAGE, "Name can only contain letters"};
+                return new String[]{UserController.ERROR_MESSAGE, "Name can only contain letters"};
             }
         }
         for (char c : lastName.toCharArray()) {
             if (!Character.isLetter(c)) {
-                return new String[]{UserHandler.ERROR_MESSAGE, "Name can only contain letters"};
+                return new String[]{UserController.ERROR_MESSAGE, "Name can only contain letters"};
             }
         }
-        return new String[]{UserHandler.SUCCESS_MESSAGE, "Name is good!"};
+        return new String[]{UserController.SUCCESS_MESSAGE, "Name is good!"};
     }
 }
