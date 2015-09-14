@@ -7,7 +7,7 @@
         <script>
 
         function del(urlToDel) {
-         if (confirm("Are you sure you want to delete user?")) {
+         if (confirm('Are you sure you want to delete this place?')) {
          $.ajax({
 
                 url: '/ValidateApplication.php',
@@ -28,7 +28,7 @@
                     <th>id</th>
                     <th>title</th>
                     <th>description</th>
-                    <th>address</th>
+                    <th style="min-width:220px">address</th>
                     <th>view</th>
                     <th>edit</th>
                     <th>delete</th>
@@ -41,7 +41,7 @@
                         <td>@place.id</td>
                         <td>@place.title</td>
                         <td>@place.description</td>
-                        <td>@place.address</td>
+                        <td style="min-width:220px">@place.address</td>
                         <td><a href="@routes.PlaceController.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
                         <td>
                         @if(place.user.email == session.get("email")){
