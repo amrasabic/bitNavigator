@@ -1,25 +1,18 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
 import models.Place;
 import models.User;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
-import utillities.UserValidator;
+
 import views.html.index;
-import views.html.signin;
-import views.html.signup;
-import views.html.adminview;
-import views.html.userlist;
-import views.html.profile;
+import views.html.user.*;
+import views.html.admin.*;
 import play.Logger;
 import utillities.PasswordHash;
 
-import javax.persistence.Column;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -27,7 +20,7 @@ import java.util.List;
  * leads random user to other subpages. Paths to subpages are defined in routes.
  * Created by ognjen on 01-Sep-15.
  */
-public class UserHandler extends Controller {
+public class UserController extends Controller {
 
     public static final String ERROR_MESSAGE = "error";
     public static final String SUCCESS_MESSAGE = "success";
@@ -63,7 +56,7 @@ public class UserHandler extends Controller {
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
-            return badRequest(signup.render(signUpForm));
+            return badRequest(signin.render(userForm));
         }
         try {
             if (!PasswordHash.validatePassword(boundForm.bindFromRequest().field(User.PASSWORD).value(), user.password)) {
@@ -72,10 +65,12 @@ public class UserHandler extends Controller {
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
-            return badRequest(signup.render(signUpForm));
+            return badRequest(signin.render(userForm));
+
         }
         session().clear();
         session("email", user.email);
+
         List<Place> places = Place.findAll();
         return ok(index.render(places));
     }
@@ -125,19 +120,17 @@ public class UserHandler extends Controller {
         {
             return notFound(String.format("User %s does not exist.", email));
         }
-        Form <User> filledForm =  userForm.fill(user);
-        return ok(profile.render(filledForm));
+        return ok(profile.render(user));
 
     }
 
     public Result updateUser(String email) {
 
-        Form<User> boundForm = userForm.bindFromRequest();
+        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
 
         User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
 
-        if(user == null)
-        {
+        if(user == null) {
             return notFound(String.format("User %s does not exist.", email));
         }
 
@@ -150,6 +143,11 @@ public class UserHandler extends Controller {
 
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
+
+        if(boundForm.hasErrors()) {
+            flash("error", "Name can only hold letters!");
+            return badRequest(profile.render(user));
+        }
 
         user.update();
         List<Place> places = Place.findAll();
@@ -167,7 +165,7 @@ public class UserHandler extends Controller {
             return notFound(String.format("User %s does not exists.", email));
         }
         user.delete();
-        return redirect(routes.UserHandler.userList());
+        return redirect(routes.UserController.userList());
     }
 
     public Result adminView() {
@@ -183,7 +181,7 @@ public class UserHandler extends Controller {
         return redirect("/");
     }
 
-    public static class SignUpForm  {
+    public static class UserNameForm {
         @Constraints.Email
         @Constraints.Required
         public String email;
@@ -191,6 +189,9 @@ public class UserHandler extends Controller {
         public String firstName;
         @Constraints.Pattern ("[a-zA-Z]+")
         public String lastName;
+    }
+
+    public static class SignUpForm  extends UserNameForm{
         @Constraints.MinLength (8)
         @Constraints.MaxLength (25)
         @Constraints.Required

@@ -3,15 +3,9 @@ package models;
 import javax.persistence.*;
 
 import com.avaje.ebean.Model;
-import controllers.UserHandler;
-import play.data.format.*;
-import play.data.validation.*;
+import controllers.UserController;
 import play.data.validation.Constraints;
 
-import play.Logger;
-import utillities.PasswordHash;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -41,9 +35,11 @@ public class User extends Model {
     public String firstName;
     @Constraints.Pattern ("[a-zA-Z]+")
     public String lastName;
+
     @Constraints.MinLength (8)
     @Constraints.MaxLength (25)
     @Constraints.Required
+
     public String password;
     public Calendar accountCreated;
     @OneToMany (cascade = CascadeType.ALL)
@@ -66,7 +62,7 @@ public class User extends Model {
         this.password = password;
     }
 
-    public static void newUser(UserHandler.SignUpForm signUp) {
+    public static void newUser(UserController.SignUpForm signUp) {
         User user = new User();
         user.email = signUp.email;
         user.firstName = signUp.firstName;
@@ -86,6 +82,7 @@ public class User extends Model {
      * @return User with given email or null if no account is linked to given email.
      */
     public static User findByEmail(String email) {
+
         return finder.where().eq(EMAIL, email).findUnique();
     }
 }

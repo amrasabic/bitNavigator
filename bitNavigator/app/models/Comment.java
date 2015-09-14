@@ -21,7 +21,6 @@ public class Comment extends Model {
     @ManyToOne
     public Place place;
     @ManyToOne
-    @Constraints.Required
     public User user;
 
     public static Finder<Integer, Comment> finder = new Finder<Integer, Comment>(Integer.class, Comment.class);

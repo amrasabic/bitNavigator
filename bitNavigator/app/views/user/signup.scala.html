@@ -1,12 +1,12 @@
-@(userForm: Form[UserHandler.SignUpForm])
+@(userForm: Form[UserController.SignUpForm])
 @import helper._
 
 @main("Sign up") {
 
-    @helper.form(action = routes.UserHandler.save()) {
+    @helper.form(action = routes.UserController.save()) {
 
         <div id="container-sign-up" class="container-fluid">
-            <form method="post" action="@routes.UserHandler.save()">
+            <form method="post" action="@routes.UserController.save()">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">First name</span>
                         <input type="text" class="form-control" value="@userForm("firstName").value" aria-describedby="basic-addon1" name="firstName"
@@ -25,7 +25,7 @@
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Password</span>
                     <input type="password" class="form-control" placeholder="" aria-describedby="basic-addon1" name="password"
-                    data-toggle="popover" data-trigger="focus" data-content="Password must contain between 8 and 25 characters. There has to be at least one letter and one digit character">
+                    data-toggle="popover" data-trigger="focus" data-content="Password must contain between 8 and 25 characters. There has to be at least one letter and one digit">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Confirm password</span>
