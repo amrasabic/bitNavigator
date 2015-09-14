@@ -1,25 +1,18 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
 import models.Place;
 import models.User;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
-import utillities.UserValidator;
+
 import views.html.index;
-import views.html.signin;
-import views.html.signup;
-import views.html.adminview;
-import views.html.userlist;
-import views.html.profile;
+import views.html.user.*;
+import views.html.admin.*;
 import play.Logger;
 import utillities.PasswordHash;
 
-import javax.persistence.Column;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -76,6 +69,7 @@ public class UserController extends Controller {
         }
         session().clear();
         session("email", user.email);
+
         List<Place> places = Place.findAll();
         return ok(index.render(places));
     }
@@ -146,13 +140,13 @@ public class UserController extends Controller {
             }
         }
 
-        user.firstName = boundForm.bindFromRequest().field("firstName").value();
-        user.lastName = boundForm.bindFromRequest().field("lastName").value();
-
         if(boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
             return badRequest(profile.render(user));
         }
+
+        user.firstName = boundForm.bindFromRequest().field("firstName").value();
+        user.lastName = boundForm.bindFromRequest().field("lastName").value();
 
         user.update();
         List<Place> places = Place.findAll();
