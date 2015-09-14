@@ -133,7 +133,7 @@ public class PlaceController extends Controller{
         Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findAll();
-        return ok(editplace.render(filledForm, services, comments));
+        return ok(editplace.render(place, services, comments));
     }
 
     public Result viewPlace(int id){
