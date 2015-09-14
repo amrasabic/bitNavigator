@@ -133,7 +133,7 @@ public class PlaceController extends Controller{
         Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findAll();
-        return ok(editplace.render(filledForm, services, comments));
+        return ok(editplace.render(place, services, comments));
     }
 
     public Result viewPlace(int id){
@@ -150,7 +150,7 @@ public class PlaceController extends Controller{
         Form<Comment> boundForm = commentForm.bindFromRequest();
 
         if (boundForm.hasErrors()) {
-            return unauthorized("Must be signed in to post a comment!");
+            return unauthorized("Can not post an emnpty comment!");
         }
 
         Comment comment = boundForm.get();
@@ -165,6 +165,9 @@ public class PlaceController extends Controller{
         }
         comment.place = place;
         comment.commentCreated = Calendar.getInstance();
+        if(comment.rate == 0) {
+            comment.rate = null;
+        }
         comment.save();
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findAll();
