@@ -17,6 +17,7 @@ public class Comment extends Model {
     public int id;
     @Constraints.Required
     public String commentContent;
+    public Integer rate;
     public Calendar commentCreated;
     @ManyToOne
     public Place place;

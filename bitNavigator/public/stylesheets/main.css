@@ -140,3 +140,24 @@ a:hover {
 .popover {
     width: 20%;
 }
+
+.glyphicon-star-empty {
+
+}
+
+.btn-rate {
+    float: left;
+}
+
+#btn-post-comment {
+
+}
+
+#comment-heading {
+    clear: both;
+}
+
+#comment-rate-label {
+    float: right;
+    font-size: 1.5em;
+}

@@ -6,6 +6,7 @@
 create table comment (
   id                        integer auto_increment not null,
   comment_content           varchar(255),
+  rate                      integer,
   comment_created           datetime(6),
   place_id                  integer,
   user_id                   integer,
