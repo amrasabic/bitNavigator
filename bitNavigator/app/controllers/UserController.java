@@ -147,6 +147,7 @@ public class UserController extends Controller {
 
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
+        user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
 
         user.update();
         List<Place> places = Place.findAll();
@@ -199,6 +200,7 @@ public class UserController extends Controller {
         @Constraints.MaxLength (25)
         @Constraints.Required
         public String confirmPassword;
+        public String phoneNumber;
     }
 
 }
