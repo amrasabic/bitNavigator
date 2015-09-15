@@ -1,9 +1,11 @@
+package models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import models.Service;
 import org.junit.*;
 
 import play.mvc.*;
@@ -21,24 +23,23 @@ import static org.junit.Assert.*;
 
 
 /**
-*
-* Simple (JUnit) tests that can call all parts of a play app.
-* If you are interested in mocking a whole application, see the wiki for more details.
-*
-*/
-public class ApplicationTest {
+ *
+ * Simple (JUnit) tests that can call all parts of a play app.
+ * If you are interested in mocking a whole application, see the wiki for more details.
+ *
+ */
+public class ServiceTest {
 
-    @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertEquals(2, a);
+    @Before
+    public void configureDatabase() {
+        fakeApplication(inMemoryDatabase());
     }
 
     @Test
-    public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
-        assertEquals("text/html", contentType(html));
-        assertTrue(contentAsString(html).contains("Your new application is ready."));
+    public void testSaveService() {
+        Service service = new Service();
+        service.serviceType = "Something";
+        service.save();
     }
 
 
