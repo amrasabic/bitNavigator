@@ -23,7 +23,7 @@ public class User extends Model {
     public static final String PASSWORD = "password";
     public static final String ACCOUNT_CREATED = "accountCreated";
 
-    public static Finder<Integer, User> finder = new Finder<>(Integer.class, User.class);
+    public static Finder<Integer, User> finder = new Finder<>(User.class);
 
     @Id
     public int id;

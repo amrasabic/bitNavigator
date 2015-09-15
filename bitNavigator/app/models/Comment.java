@@ -24,7 +24,7 @@ public class Comment extends Model {
     @ManyToOne
     public User user;
 
-    public static Finder<Integer, Comment> finder = new Finder<Integer, Comment>(Integer.class, Comment.class);
+    public static Finder<Integer, Comment> finder = new Finder<Integer, Comment>(Comment.class);
 
     public static List<Comment> findAll() {
         return finder.all();
@@ -34,4 +34,11 @@ public class Comment extends Model {
         return finder.where().eq("place", place).findList();
     }
 
+    public static Comment findById(int id) {
+        return finder.byId(id);
+    }
+
+    public static Comment findByUsersEmail(String email) {
+        return finder.where().eq("user", User.findByEmail(email)).findUnique();
+    }
 }
