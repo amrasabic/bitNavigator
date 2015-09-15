@@ -4,17 +4,17 @@
 # --- !Ups
 
 create table comment (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   comment_content           varchar(255),
   rate                      integer,
-  comment_created           timestamp,
+  comment_created           datetime(6),
   place_id                  integer,
   user_id                   integer,
   constraint pk_comment primary key (id))
 ;
 
 create table image (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   name                      varchar(255),
   path                      varchar(255),
   place_id                  integer,
@@ -22,51 +22,38 @@ create table image (
 ;
 
 create table place (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   title                     varchar(255),
   description               TEXT,
   longitude                 double,
   latitude                  double,
   address                   varchar(255),
-  place_created             timestamp,
+  place_created             datetime(6),
   user_id                   integer,
   service_id                integer,
   constraint pk_place primary key (id))
 ;
 
 create table service (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   service_type              varchar(255),
+  service_icon              varchar(255),
+  is_reservable             tinyint(1) default 0,
   constraint pk_service primary key (id))
 ;
 
 create table user (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   email                     varchar(255),
   first_name                varchar(255),
   last_name                 varchar(255),
   password                  varchar(255),
-<<<<<<< HEAD
   account_created           datetime(6),
   phone_number              varchar(255),
   admin                     tinyint(1) default 0,
-=======
-  account_created           timestamp,
-  admin                     boolean,
->>>>>>> 007bc908b2b436ee85e77347e9fe738e11ec3627
   constraint uq_user_email unique (email),
   constraint pk_user primary key (id))
 ;
-
-create sequence comment_seq;
-
-create sequence image_seq;
-
-create sequence place_seq;
-
-create sequence service_seq;
-
-create sequence user_seq;
 
 alter table comment add constraint fk_comment_place_1 foreign key (place_id) references place (id) on delete restrict on update restrict;
 create index ix_comment_place_1 on comment (place_id);
@@ -83,27 +70,17 @@ create index ix_place_service_5 on place (service_id);
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists comment;
+drop table comment;
 
-drop table if exists image;
+drop table image;
 
-drop table if exists place;
+drop table place;
 
-drop table if exists service;
+drop table service;
 
-drop table if exists user;
+drop table user;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists comment_seq;
-
-drop sequence if exists image_seq;
-
-drop sequence if exists place_seq;
-
-drop sequence if exists service_seq;
-
-drop sequence if exists user_seq;
+SET FOREIGN_KEY_CHECKS=1;
 
