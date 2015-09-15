@@ -34,6 +34,13 @@ create table place (
   constraint pk_place primary key (id))
 ;
 
+create table report (
+  id                        integer auto_increment not null,
+  comment_id                integer,
+  user_id                   integer,
+  constraint pk_report primary key (id))
+;
+
 create table service (
   id                        integer auto_increment not null,
   service_type              varchar(255),
@@ -63,6 +70,10 @@ alter table place add constraint fk_place_user_4 foreign key (user_id) reference
 create index ix_place_user_4 on place (user_id);
 alter table place add constraint fk_place_service_5 foreign key (service_id) references service (id) on delete restrict on update restrict;
 create index ix_place_service_5 on place (service_id);
+alter table report add constraint fk_report_comment_6 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
+create index ix_report_comment_6 on report (comment_id);
+alter table report add constraint fk_report_user_7 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_report_user_7 on report (user_id);
 
 
 
@@ -75,6 +86,14 @@ drop table comment;
 drop table image;
 
 drop table place;
+
+drop table comment;
+
+drop table image;
+
+drop table place;
+
+drop table report;
 
 drop table service;
 
