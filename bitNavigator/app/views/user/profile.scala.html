@@ -9,17 +9,52 @@
     <script>
         $(document).ready(function(){
            $("#mobile-number").intlTelInput({
-  defaultCountry: "auto",
-  geoIpLookup: function(callback) {
-    $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
-      var countryCode = (resp && resp.country) ? resp.country : "";
-      callback(countryCode);
-    });
-  },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
+          defaultCountry: "auto",
+          geoIpLookup: function(callback) {
+            $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+              var countryCode = (resp && resp.country) ? resp.country : "";
+             // var intlNumber = $("#mobile-number").intlTelInput("getNumber");
+             // var extension = $("#mobile-number").intlTelInput("getExtension");
+              callback(countryCode);
+            });
+          },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
 
-});
+         });
+
+
+            var telInput = $("#mobile-number"),
+                errorMsg = $("#error-msg"),
+                validMsg = $("#valid-msg");
+
+            telInput.intlTelInput({
+              utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
+            });
+
+            // on blur: validate
+            telInput.blur(function() {
+              if ($.trim(telInput.val())) {
+                if (telInput.intlTelInput("isValidNumber")) {
+                  validMsg.removeClass("hide");
+                } else {
+                  telInput.addClass("error");
+                  errorMsg.removeClass("hide");
+                  validMsg.addClass("hide");
+                }
+              }
+            });
+
+            // on keydown: reset
+            telInput.keydown(function() {
+              telInput.removeClass("error");
+              errorMsg.addClass("hide");
+              validMsg.addClass("hide");
+            });
+
+           // var error = $("#mobile-number").intlTelInput("getValidationError");
+            //if (error == intlTelInputUtils.validationError.TOO_SHORT) {
+
+            //}
         })
-
     </script>
 
 
@@ -76,6 +111,8 @@
                         <label class="col-lg-3 control-label">Phone number:</label>
                         <div class="col-lg-8">
                             <input class="form-control" value="@user.phoneNumber" type="tel" name="mobileNumber" id="mobile-number">
+                            <span id="valid-msg" class="hide">✓ Valid</span>
+                            <span id="error-msg" class="hide">Invalid number</span>
                         </div>
                     </div>
                         <!-- Confirm and cancel buttons -->
