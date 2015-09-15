@@ -181,9 +181,10 @@ public class UserController extends Controller {
                     image.name = name;
                     path ="/images/profileImages/" + user.firstName + "/" + name;
                     image.path = path;
-                    image.user = user;
-                    image.save();
 
+                    image.save();
+                    user.image = image;
+                    user.update();
                 } catch (IOException ex) {
                     Logger.info("Could not move file. " + ex.getMessage());
                     flash("error", "Could not move file.");
