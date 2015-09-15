@@ -82,12 +82,14 @@
                                 <label for="service-list">Service:</label>
                                 <select id="service-list" class="btn btn-block" value="Services">
                                     @for(service <- services){
-                                        <option>@service.serviceType</option>
+                                        <option>@service.serviceType  <img class="media-object" src="@routes.Assets.versioned(service.serviceIcon)" alt="..."></option>
+
                                     }
                                 </select>
                             </div>
                             <input id="service" name="serviceType" type="hidden">
                             <p><br/></p>
+
                                 <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
                             <span class="btn btn-default btn-file">
                                 <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*" multiple>
