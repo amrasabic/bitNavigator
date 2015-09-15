@@ -27,7 +27,7 @@
             <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
                 <div class="alert alert-info alert-dismissable">
                     <a class="panel-close close" data-dismiss="alert">×</a>
-                    <i class="fa fa-coffee"></i>
+                    @*<i class="fa fa-coffee"></i>*@
                     <p><i class="glyphicon glyphicon-user"></i> Welcome to bitnavigator. You can't change your <strong>
                         email</strong> address.
 
@@ -68,13 +68,14 @@
 
                         </div>
                     </div>
-                </form>
             </div>
-        </div> <p><br></p>
+            </form>
+        </div>
+    </div> <p><br></p>
         @if(flash.containsKey("error")) {
             <div class="alert alert-danger">
             @flash.get("error")
             </div>
         }
-    </div>
+
 }
