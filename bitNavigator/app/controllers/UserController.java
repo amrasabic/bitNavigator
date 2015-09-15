@@ -64,7 +64,7 @@ public class UserController extends Controller {
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
+
             return badRequest(signup.render(signUpForm));
         }
         try {
@@ -73,7 +73,7 @@ public class UserController extends Controller {
             }
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
+
             return badRequest(signup.render(signUpForm));
         }
 
