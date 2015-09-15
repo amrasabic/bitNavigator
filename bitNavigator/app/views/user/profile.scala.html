@@ -3,36 +3,23 @@
 
 @main("User profile") {
 
-    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/intlTelInput.css")">
-    <script src="@routes.Assets.versioned("javascripts/inputtel.js")"></script>
-    <script src="@routes.Assets.versioned("javascripts/intlTelInput.min.js")"></script>
-    <script>
-        $(document).ready(function(){
-           $("#mobile-number").intlTelInput({
-  defaultCountry: "auto",
-  geoIpLookup: function(callback) {
-    $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
-      var countryCode = (resp && resp.country) ? resp.country : "";
-      callback(countryCode);
-    });
-  },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
-
-});
-        })
-
-    </script>
-
 
     <div class="container" style="padding-top : 60 px ;">
         <h2 class="page-header">Hi @user.firstName  @user.lastName!</h2>
         <div class="row">
+            <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser(session.get("email"))"  enctype="multipart/form-data">
                 <!-- left column -->
                 <!-- User avatar image -->
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="text-center">
+                @if(user.image != null) {
+                    <img src="@routes.Assets.versioned(user.image.path)" class="avatar img-circle img-thumbnail" alt="avatar">
+                } else {
                     <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
+                }
                     <h6>Upload a different photo</h6>
-                    <input type="file" class="text-center center-block well well-sm">
+                    <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*">
+                    @*<input type="file" class="text-center center-block well well-sm">**@
                 </div>
             </div>
                 <!-- edit form column -->
@@ -40,7 +27,7 @@
             <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
                 <div class="alert alert-info alert-dismissable">
                     <a class="panel-close close" data-dismiss="alert">×</a>
-                    <i class="fa fa-coffee"></i>
+                    @*<i class="fa fa-coffee"></i>*@
                     <p><i class="glyphicon glyphicon-user"></i> Welcome to bitnavigator. You can't change your <strong>
                         email</strong> address.
 
@@ -49,7 +36,7 @@
                 </div>
                 <h3 class="user-info">User info:</h3>
                     <!--User info fields -->
-                <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser(session.get("email"))">
+
                         <!-- User first name filed-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">First name:</label>
@@ -71,13 +58,6 @@
                             <input class="form-control" value="@user.email" type="email" name="email" id="email" readonly>
                         </div>
                     </div>
-                        <!-- User phone number-->
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Phone number:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" value="@user.phoneNumber" type="tel" name="mobileNumber" id="mobile-number">
-                        </div>
-                    </div>
                         <!-- Confirm and cancel buttons -->
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
@@ -88,15 +68,14 @@
 
                         </div>
                     </div>
-
-
-                </form>
             </div>
-        </div> <p><br></p>
+            </form>
+        </div>
+    </div> <p><br></p>
         @if(flash.containsKey("error")) {
             <div class="alert alert-danger">
             @flash.get("error")
             </div>
         }
-    </div>
+
 }
