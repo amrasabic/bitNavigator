@@ -90,4 +90,5 @@ public class User extends Model {
         return finder.where().eq(EMAIL, email).findUnique();
     }
 
+
 }
