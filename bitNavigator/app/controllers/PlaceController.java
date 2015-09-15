@@ -21,6 +21,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
 
+import static views.html.place.addplace.*;
+
 /**
  * Created by ognjen.cetkovic on 08/09/15.
  */
@@ -51,7 +53,8 @@ public class PlaceController extends Controller{
         service = Service.findByType(service.serviceType);
 
         if (service == null) {
-            return TODO;
+            flash("error", "Must add service!");
+            return badRequest(addplace.render(boundForm, Service.findAll()));
         }
 
         Calendar cal = Calendar.getInstance();
@@ -172,6 +175,26 @@ public class PlaceController extends Controller{
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findAll();
         return ok(viewplace.render(place, services, comments, Image.findByPlace(place)));
+    }
+
+    public Result updateComment(int id) {
+        Form<Comment> boundForm = commentForm.bindFromRequest();
+        if (boundForm.hasErrors()) {
+            return unauthorized("Can not post an emnpty comment!");
+        }
+
+        Comment comment = Comment.findById(id);
+        comment.commentContent = boundForm.bindFromRequest().field("commentContent").value();
+        comment.rate = Integer.parseInt(boundForm.bindFromRequest().field("rate").value());
+
+        comment.commentCreated = Calendar.getInstance();
+        if(comment.rate == 0) {
+            comment.rate = null;
+        }
+        comment.update();
+        List<Service> services = Service.findAll();
+        List<Comment> comments = Comment.findAll();
+        return ok(viewplace.render(comment.place, services, comments, Image.findByPlace(comment.place)));
     }
 
     public Result validateForm(){

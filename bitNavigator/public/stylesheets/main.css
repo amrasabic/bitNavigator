@@ -80,7 +80,11 @@ body {
     height: 450px;
 }
 
-a:hover {
+#btn-sign-up-menu {
+    color: #2b669a;
+}
+
+#btn-sign-up-menu:hover {
     text-decoration: none;
     color: #2b669a;
 }
@@ -160,4 +164,12 @@ a:hover {
 #comment-rate-label {
     float: right;
     font-size: 1.5em;
+}
+
+.glyphicon-flag {
+    color: red;
+}
+
+#report-comment {
+    float: right;
 }
