@@ -158,7 +158,6 @@ public class UserController extends Controller {
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
         user.update();
-        List<Place> places = Place.findAll();
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
@@ -190,8 +189,7 @@ public class UserController extends Controller {
                     flash("error", "Could not move file.");
                 }
             }
-            return ok(index.render(places));
-            //return ok(index.render(Place.findAll()));
+            return redirect(routes.Application.index());
         } else {
             flash("error", "Files not present.");
             return badRequest("Picture missing.");
