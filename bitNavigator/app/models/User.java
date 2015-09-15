@@ -89,4 +89,10 @@ public class User extends Model {
     public static User findByEmail(String email) {
         return finder.where().eq(EMAIL, email).findUnique();
     }
+
+    public void setAdmin(boolean isAdmin) {
+        this.admin = isAdmin;
+        save();
+    }
+
 }

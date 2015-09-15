@@ -9,8 +9,6 @@
         function initMap() {
           var lat = 43.850;
           var lng = 18.390;
-
-
           var map = new google.maps.Map(document.getElementById('map-add-place'), {
             zoom: 14,
             center: {lat: lat, lng: lng}
@@ -125,7 +123,11 @@
     <script>
         var serviceValue = document.getElementById("service");
         var services = document.getElementById("service-list");
-        var a = serviceValue.value = services.options[services.selectedIndex].text;
+
+        function changeService() {
+            serviceValue.value = services.options[services.selectedIndex].text;
+        };
+        services.onchange = changeService;
     </script>
     @*</form> *@
     <script>

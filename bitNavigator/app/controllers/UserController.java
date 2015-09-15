@@ -56,7 +56,7 @@ public class UserController extends Controller {
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
-            return badRequest(signup.render(signUpForm));
+            return badRequest(signin.render(userForm));
         }
         try {
             if (!PasswordHash.validatePassword(boundForm.bindFromRequest().field(User.PASSWORD).value(), user.password)) {
@@ -65,7 +65,7 @@ public class UserController extends Controller {
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
-            return badRequest(signup.render(signUpForm));
+            return badRequest(signin.render(userForm));
         }
         session().clear();
         session("email", user.email);
