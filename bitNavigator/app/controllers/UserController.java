@@ -1,10 +1,14 @@
 package controllers;
 
+import models.Image;
 import models.Place;
 import models.User;
+import org.apache.commons.io.FileUtils;
+import play.Play;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import views.html.index;
@@ -13,6 +17,10 @@ import views.html.admin.*;
 import play.Logger;
 import utillities.PasswordHash;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -27,6 +35,7 @@ public class UserController extends Controller {
 
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
+    private static Image image;
 
     /**
      * Leads random user to signin subpage
@@ -67,6 +76,7 @@ public class UserController extends Controller {
             List<Place> places = Place.findAll();
             return badRequest(signup.render(signUpForm));
         }
+
         session().clear();
         session("email", user.email);
 
@@ -147,10 +157,46 @@ public class UserController extends Controller {
 
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
-
         user.update();
         List<Place> places = Place.findAll();
-        return ok(index.render(places));
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+        String formatted = format1.format(cal.getTime());
+
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        List<Http.MultipartFormData.FilePart> pictures = body.getFiles();
+
+        if (pictures != null) {
+            for (Http.MultipartFormData.FilePart picture : pictures) {
+                String name = user.firstName + formatted;
+                File file = picture.getFile();
+                String path = Play.application().path() + "/public/images/profileImages/" + user.firstName + "/" + name;
+
+                Logger.info(path);
+                try {
+                    FileUtils.moveFile(file, new File(path));
+                    image = new Image();
+                    image.name = name;
+                    path ="/images/profileImages/" + user.firstName + "/" + name;
+                    image.path = path;
+                    image.user = user;
+                    image.save();
+
+                } catch (IOException ex) {
+                    Logger.info("Could not move file. " + ex.getMessage());
+                    flash("error", "Could not move file.");
+                }
+            }
+            return ok(index.render(places));
+            //return ok(index.render(Place.findAll()));
+        } else {
+            flash("error", "Files not present.");
+            return badRequest("Picture missing.");
+        }
+
+
     }
 
     public Result userList(){

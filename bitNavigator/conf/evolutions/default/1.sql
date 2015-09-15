@@ -18,6 +18,8 @@ create table image (
   name                      varchar(255),
   path                      varchar(255),
   place_id                  integer,
+  user_id                   integer,
+  constraint uq_image_user_id unique (user_id),
   constraint pk_image primary key (id))
 ;
 
@@ -48,7 +50,9 @@ create table user (
   password                  varchar(255),
   account_created           datetime(6),
   admin                     tinyint(1) default 0,
+  image_id                  integer,
   constraint uq_user_email unique (email),
+  constraint uq_user_image_id unique (image_id),
   constraint pk_user primary key (id))
 ;
 
@@ -58,10 +62,14 @@ alter table comment add constraint fk_comment_user_2 foreign key (user_id) refer
 create index ix_comment_user_2 on comment (user_id);
 alter table image add constraint fk_image_place_3 foreign key (place_id) references place (id) on delete restrict on update restrict;
 create index ix_image_place_3 on image (place_id);
-alter table place add constraint fk_place_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_place_user_4 on place (user_id);
-alter table place add constraint fk_place_service_5 foreign key (service_id) references service (id) on delete restrict on update restrict;
-create index ix_place_service_5 on place (service_id);
+alter table image add constraint fk_image_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_image_user_4 on image (user_id);
+alter table place add constraint fk_place_user_5 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_place_user_5 on place (user_id);
+alter table place add constraint fk_place_service_6 foreign key (service_id) references service (id) on delete restrict on update restrict;
+create index ix_place_service_6 on place (service_id);
+alter table user add constraint fk_user_image_7 foreign key (image_id) references image (id) on delete restrict on update restrict;
+create index ix_user_image_7 on user (image_id);
 
 
 

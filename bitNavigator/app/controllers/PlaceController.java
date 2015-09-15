@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
+import views.html.place.addplace;
 
 /**
  * Created by ognjen.cetkovic on 08/09/15.

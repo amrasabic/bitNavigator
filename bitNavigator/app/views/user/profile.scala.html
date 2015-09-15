@@ -7,13 +7,16 @@
     <div class="container" style="padding-top : 60 px ;">
         <h2 class="page-header">Hi @user.firstName  @user.lastName!</h2>
         <div class="row">
+            <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser(session.get("email"))"  enctype="multipart/form-data">
                 <!-- left column -->
                 <!-- User avatar image -->
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="text-center">
-                    <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
+
+                    <img src="@routes.Assets.versioned(user.image.path)" class="avatar img-circle img-thumbnail" alt="avatar">
                     <h6>Upload a different photo</h6>
-                    <input type="file" class="text-center center-block well well-sm">
+                    <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*">
+                    @*<input type="file" class="text-center center-block well well-sm">**@
                 </div>
             </div>
                 <!-- edit form column -->
@@ -30,7 +33,7 @@
                 </div>
                 <h3 class="user-info">User info:</h3>
                     <!--User info fields -->
-                <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser(session.get("email"))">
+
                         <!-- User first name filed-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">First name:</label>
