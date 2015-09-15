@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 
 public class IntegrationTest {
 
+
     @Before
     public void setUp() {
         fakeApplication(inMemoryDatabase());

@@ -46,8 +46,14 @@ create table user (
   first_name                varchar(255),
   last_name                 varchar(255),
   password                  varchar(255),
+<<<<<<< HEAD
+  account_created           datetime(6),
+  phone_number              varchar(255),
+  admin                     tinyint(1) default 0,
+=======
   account_created           timestamp,
   admin                     boolean,
+>>>>>>> 007bc908b2b436ee85e77347e9fe738e11ec3627
   constraint uq_user_email unique (email),
   constraint pk_user primary key (id))
 ;

@@ -3,6 +3,25 @@
 
 @main("User profile") {
 
+    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/intlTelInput.css")">
+    <script src="@routes.Assets.versioned("javascripts/inputtel.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/intlTelInput.min.js")"></script>
+    <script>
+        $(document).ready(function(){
+           $("#mobile-number").intlTelInput({
+  defaultCountry: "auto",
+  geoIpLookup: function(callback) {
+    $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+      var countryCode = (resp && resp.country) ? resp.country : "";
+      callback(countryCode);
+    });
+  },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
+
+});
+        })
+
+    </script>
+
 
     <div class="container" style="padding-top : 60 px ;">
         <h2 class="page-header">Hi @user.firstName  @user.lastName!</h2>
@@ -52,6 +71,13 @@
                             <input class="form-control" value="@user.email" type="email" name="email" id="email" readonly>
                         </div>
                     </div>
+                        <!-- User phone number-->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Phone number:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" value="@user.phoneNumber" type="tel" name="mobileNumber" id="mobile-number">
+                        </div>
+                    </div>
                         <!-- Confirm and cancel buttons -->
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
@@ -62,6 +88,8 @@
 
                         </div>
                     </div>
+
+
                 </form>
             </div>
         </div> <p><br></p>
