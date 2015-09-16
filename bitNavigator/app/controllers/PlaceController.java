@@ -1,27 +1,26 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
 import models.*;
+import org.apache.commons.io.FileUtils;
+import play.Logger;
 import play.Play;
-import play.mvc.Controller;
-
-import play.mvc.Result;
-import views.html.*;
-import views.html.place.*;
 import play.data.Form;
+import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Result;
+import views.html.index;
+import views.html.place.addplace;
+import views.html.place.editplace;
+import views.html.place.placelist;
+import views.html.place.viewplace;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
-import play.Logger;
-
-import static views.html.place.addplace.*;
 
 /**
  * Created by ognjen.cetkovic on 08/09/15.
@@ -172,9 +171,7 @@ public class PlaceController extends Controller{
             comment.rate = null;
         }
         comment.save();
-        List<Service> services = Service.findAll();
-        List<Comment> comments = Comment.findAll();
-        return ok(viewplace.render(place, services, comments, Image.findByPlace(place)));
+        return redirect(routes.PlaceController.viewPlace(comment.place.id));
     }
 
     public Result updateComment(int id) {
@@ -192,9 +189,7 @@ public class PlaceController extends Controller{
             comment.rate = null;
         }
         comment.update();
-        List<Service> services = Service.findAll();
-        List<Comment> comments = Comment.findAll();
-        return ok(viewplace.render(comment.place, services, comments, Image.findByPlace(comment.place)));
+        return redirect(routes.PlaceController.viewPlace(comment.place.id));
     }
 
     public Result validateForm(){

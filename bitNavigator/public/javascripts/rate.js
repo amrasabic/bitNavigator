@@ -2,6 +2,11 @@
  * Created by ognjen on 14-Sep-15.
  */
 $(function(){
+
+    $(document).ready(function(){
+        $('.rating-select .btn').trigger("mouseleave");
+    });
+
     $('.rating-select .btn').on('mouseover', function(){
         $(this).removeClass('btn-default').addClass('btn-warning');
         $(this).prevAll().removeClass('btn-default').addClass('btn-warning');
