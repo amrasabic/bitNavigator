@@ -44,6 +44,8 @@ create table report (
 create table service (
   id                        integer auto_increment not null,
   service_type              varchar(255),
+  service_icon              varchar(255),
+  is_reservable             tinyint(1) default 0,
   constraint pk_service primary key (id))
 ;
 
