@@ -87,12 +87,6 @@ drop table image;
 
 drop table place;
 
-drop table comment;
-
-drop table image;
-
-drop table place;
-
 drop table report;
 
 drop table service;
