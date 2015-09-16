@@ -12,8 +12,10 @@ import java.util.List;
 public class Service extends Model {
 
     @Id
-    public int id;
+    public Integer id;
     public String serviceType;
+    public boolean isReservable;
+
     public static Finder<Integer, Service> finder = new Finder<>(Service.class);
 
     public static List<Service> findAll() {
@@ -23,18 +25,26 @@ public class Service extends Model {
     public static Service findByType(String type) {
         return finder.where().eq("serviceType", type).findUnique();
     }
+
+    public Boolean isReservable(){
+        if(isReservable){
+            return true;
+        } else {
+            return false;
+        }
+    }
     /*
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Accommodation');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Arts&Entertainment');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Attractions');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Business');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Coffee');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Food');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Night life');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Services');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Shopping');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Sport');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Transportation');
-INSERT INTO `bitNavigator`.`service` (`id`, `service_type`) VALUES (NULL, 'Other');
-     */
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Accommodation', 1);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Arts&Entertainment', 0);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Attractions', 0);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Business', 0);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Coffee', 1);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Food', 1);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Night life', 1);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Services', 0);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Shopping', 0);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Sport', 1);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Transportation', 1);
+    INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Other', 0);
+    */
 }
