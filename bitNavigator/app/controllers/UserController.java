@@ -13,6 +13,7 @@ import views.html.admin.*;
 import play.Logger;
 import utillities.PasswordHash;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
@@ -200,6 +201,7 @@ public class UserController extends Controller {
         @Constraints.MaxLength (25)
         @Constraints.Required
         public String confirmPassword;
+        @Constraints.Pattern ("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
         public String phoneNumber;
     }
 

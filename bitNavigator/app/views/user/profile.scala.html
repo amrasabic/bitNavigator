@@ -29,9 +29,9 @@
             telInput.intlTelInput({
               utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
             });
-
+            var a;
             // on blur: validate
-            telInput.blur(function() {
+            telInput.on("change keyup", function() {
               if ($.trim(telInput.val())) {
                 if (telInput.intlTelInput("isValidNumber")) {
                   validMsg.removeClass("hide");
@@ -50,10 +50,12 @@
               validMsg.addClass("hide");
             });
 
-           // var error = $("#mobile-number").intlTelInput("getValidationError");
-            //if (error == intlTelInputUtils.validationError.TOO_SHORT) {
+            $("#submit-profile").click(function(){
+                 a = $("#mobile-number").intlTelInput("getNumber");
+                  $("#mobile-number-id").val(a);
+            });
 
-            //}
+
         })
     </script>
 
@@ -110,16 +112,17 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Phone number:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="@user.phoneNumber" type="tel" name="mobileNumber" id="mobile-number">
+                            <input class="form-control" value="@user.phoneNumber" type="tel" id="mobile-number">
                             <span id="valid-msg" class="hide">✓ Valid</span>
                             <span id="error-msg" class="hide">Invalid number</span>
                         </div>
+                        <input id="mobile-number-id" name="mobileNumber" type="hidden">
                     </div>
                         <!-- Confirm and cancel buttons -->
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
-                            <input class="btn btn-primary" value="Save Changes" type="submit">
+                            <input id="submit-profile" class="btn btn-primary" value="Save Changes" type="submit">
                             <span></span>
                             <input class="btn btn-default" value="Cancel" type="reset" onclick="window.location='/';">
 
