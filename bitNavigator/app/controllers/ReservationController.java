@@ -7,6 +7,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import models.Status;
 
+import play.mvc.Security;
+import utillities.Authenticators;
 import views.html.place.*;
 import views.html.reservations.reservationlist;
 
@@ -19,6 +21,7 @@ public class ReservationController extends Controller {
 
     private static final Form<Reservation> reservationForm = Form.form(Reservation.class);
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result submitReservation(int id){
 
         DynamicForm boundForm = Form.form().bindFromRequest();
@@ -44,10 +47,12 @@ public class ReservationController extends Controller {
         return redirect(routes.Application.index());
     }
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result reservationsList() {
         return ok(reservationlist.render(Reservation.findAll(), models.Status.findAll()));
     }
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result changeStatus() {
         DynamicForm boundForm = Form.form().bindFromRequest();
         models.Status status = models.Status.getStatusById(Integer.parseInt(boundForm.data().get("statusId")));
