@@ -171,6 +171,7 @@ public class UserController extends Controller {
     public Result delete(String email) {
         User user = User.findByEmail(email);
         if (user == null) {
+            Logger.info("dsadasd     "+ email);
             return notFound(String.format("User %s does not exists.", email));
         }
         user.delete();

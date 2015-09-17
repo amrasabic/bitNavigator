@@ -148,9 +148,7 @@ public class PlaceController extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        List<Service> services = Service.findAll();
-        List<Comment> comments = Comment.findByPlace(place);
-        return ok(viewplace.render(place, services, comments, Image.findByPlace(place)));
+        return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place)));
     }
 
     @Security.Authenticated(Authenticators.User.class)
