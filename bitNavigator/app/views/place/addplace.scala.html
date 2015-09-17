@@ -79,12 +79,16 @@
                             </div>
                             <input id="longitude" name="longitude" type="hidden" value="@placeForm("longitude").value">
                             <input id="latitude" name="latitude" type="hidden" value="@placeForm("latitude").value">
-                            <div class="dropdown" style="padding-top: 5px;">
+                            <div class="dropdown" style="margin-top: 10px; padding-top: 5px ;">
                                 <label for="service-list">Service:</label>
-                                <select id="service-list" class="btn btn-block" value="Services">
-                                    @for(service <- services){
-                                        <option data-style="background-image:@routes.Assets.versioned(service.serviceIcon)">@service.serviceType <img class="img-responsive" src="@routes.Assets.versioned(service.serviceIcon)" ></option>
+                                <select id="service-list" class="btn btn-block" name="Services">
+                                @for(service <- services) {
+                                    @if(service.serviceType.equals(placeForm("service.serviceType").value)){
+                                        <option selected="selected">@service.serviceType</option>
+                                    }else{
+                                        <option>@service.serviceType</option>
                                     }
+                                }
                                 </select>
                             </div>
                             <input id="service" name="serviceType" type="hidden">
