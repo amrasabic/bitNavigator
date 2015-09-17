@@ -96,7 +96,7 @@ body {
 #add-place-panel {
     margin: 20px;
     padding: 15px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
 }
 
@@ -112,7 +112,7 @@ body {
 #container-sign-up {
     margin: 20%;
     margin-top: 100px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
     text-align: center;
     padding: 20px;
@@ -127,7 +127,7 @@ body {
 #container-comment {
     margin: 20px;
     padding: 15px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
     text-align: center;
 }
@@ -177,4 +177,8 @@ body {
 .img-responsive{
     height: 30px;
     width: 30px;
+}
+
+.navbar-collapse.in{
+    height: 270px;
 }
