@@ -63,18 +63,18 @@
                                 <!-- Title input field -->
                             <div class="form-group">
                                 <label for="usr">Title:</label>
-                                <input type="text" class="form-control" name="title" id="title" value="@placeForm("title").value">
+                                <input type="text" class="form-control" name="title" id="title" value="@placeForm("title").value" placeholder="Enter place Title">
                                 <span class="alert-danger" data-error-for="title" ></span>
                             </div>
                                 <!-- Description input field -->
                             <div class="form-group">
                                 <label for="comment">Description:</label>
-                                <textarea class="form-control" rows="5" name="description" id="description" type="text" value="@placeForm("description").value"></textarea>
+                                <textarea class="form-control" rows="5" name="description" id="description" type="text" value="@placeForm("description").value" placeholder="Enter place Description"></textarea>
                                 <span class="alert-danger" data-error-for="description" ></span>
                             </div>
                             <div class="form-group">
                                 <label for="usr">Address:</label>
-                                <input type="text" class="form-control" name="address" id="address">
+                                <input type="text" class="form-control" name="address" id="address" placeholder="Enter or Submit Address">
                                 <span class="alert-danger" data-error-for="title" ></span>
                             </div>
                             <input id="longitude" name="longitude" type="hidden">
@@ -83,7 +83,7 @@
                                 <label for="service-list">Service:</label>
                                 <select id="service-list" class="btn btn-block" value="Services">
                                     @for(service <- services){
-                                        <option>@service.serviceType</option>
+                                        <option data-style="background-image:@routes.Assets.versioned(service.serviceIcon)">@service.serviceType <img class="img-responsive" src="@routes.Assets.versioned(service.serviceIcon)" ></option>
                                     }
                                 </select>
                             </div>
@@ -120,6 +120,7 @@
             </div>
         }
     </div>
+
 
     <script>
         var serviceValue = document.getElementById("service");

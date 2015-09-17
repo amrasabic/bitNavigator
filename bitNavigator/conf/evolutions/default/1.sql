@@ -44,6 +44,8 @@ create table report (
 create table service (
   id                        integer not null,
   service_type              varchar(255),
+  service_icon              varchar(255),
+  is_reservable             tinyint(1) default 0,
   constraint pk_service primary key (id))
 ;
 
@@ -88,34 +90,20 @@ alter table report add constraint fk_report_user_7 foreign key (user_id) referen
 create index ix_report_user_7 on report (user_id);
 
 
-
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists comment;
+drop table comment;
 
-drop table if exists image;
+drop table image;
 
-drop table if exists place;
+drop table place;
 
-drop table if exists report;
+drop table report;
 
-drop table if exists service;
+drop table service;
 
-drop table if exists user;
+drop table user;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists comment_seq;
-
-drop sequence if exists image_seq;
-
-drop sequence if exists place_seq;
-
-drop sequence if exists report_seq;
-
-drop sequence if exists service_seq;
-
-drop sequence if exists user_seq;
-
+SET FOREIGN_KEY_CHECKS=1;

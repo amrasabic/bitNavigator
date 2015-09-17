@@ -173,3 +173,8 @@ body {
 #report-comment {
     float: right;
 }
+
+.img-responsive{
+    height: 30px;
+    width: 30px;
+}
