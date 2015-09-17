@@ -132,7 +132,7 @@
             </div>
             <p><br></p>
             <div>
-                @if(session().get("email") != null) {
+                @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email) {
                     <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
                 }
             </div>
