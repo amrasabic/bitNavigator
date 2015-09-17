@@ -8,6 +8,9 @@ import play.mvc.Result;
 import models.Status;
 
 import views.html.place.*;
+import views.html.reservations.reservationlist;
+
+import play.Logger;
 
 /**
  * Created by Amra on 9/17/2015.
@@ -35,7 +38,27 @@ public class ReservationController extends Controller {
         r.description = description;
         r.status = models.Status.getStatusById(3);
 
+        r.status = models.Status.getStatusById(1);
+
         r.save();
         return redirect(routes.Application.index());
+    }
+
+    public Result reservationsList() {
+        return ok(reservationlist.render(Reservation.findAll(), models.Status.findAll()));
+    }
+
+    public Result changeStatus() {
+        DynamicForm boundForm = Form.form().bindFromRequest();
+        models.Status status = models.Status.getStatusById(Integer.parseInt(boundForm.data().get("statusId")));
+        Reservation reservation = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
+        Logger.info(reservation.title);
+        if(status == null || reservation == null) {
+            return badRequest("Something went wrong");
+        }
+        reservation.status = status;
+        reservation.update();
+
+        return redirect(routes.ReservationController.reservationsList());
     }
 }

@@ -19,6 +19,9 @@ GET           /user/profile/:email             @controllers.UserController.profi
 POST          /user/profile/:email             @controllers.UserController.updateUser(email: String)
 DELETE        /user/profile/:email             @controllers.UserController.delete(email: String)
 
+GET           /user/reservations               @controllers.ReservationController.reservationsList()
+POST          /user/reservations               @controllers.ReservationController.changeStatus()
+
 GET           /place/add                       @controllers.PlaceController.addPlace()
 POST          /place/add                       @controllers.PlaceController.savePlace()
 

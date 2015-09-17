@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Amra on 9/16/2015.
@@ -24,8 +25,18 @@ public class Reservation extends Model {
     @ManyToOne
     public Status status;
 
+    public static Finder<Integer, Reservation> finder = new Finder<>(Reservation.class);
+
     public Reservation() {
 
+    }
+
+    public static Reservation findById(int id) {
+        return finder.byId(id);
+    }
+
+    public static List<Reservation> findAll() {
+        return finder.all();
     }
 
 }
