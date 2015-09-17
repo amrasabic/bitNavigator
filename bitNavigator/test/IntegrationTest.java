@@ -91,4 +91,64 @@ public class IntegrationTest {
                 });
     }
 
+    @Test
+    public void testSignOut() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                HTMLUNIT, new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("#logout");
+                        assertTrue(browser.pageSource().contains("bitNavigator"));
+                    }
+                });
+    }
+/////////
+    @Test
+    public void testRouteToProfile() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                HTMLUNIT, new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("#go-to-profile");
+                        assertTrue(browser.pageSource().contains("does not exist"));
+                    }
+                });
+    }/*
+////////////
+    @Test
+    public void testRouteToAddPlace() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                new HtmlUnitDriver(), new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("#add-place");
+                        assertTrue(browser.pageSource().contains("Add place"));
+                    }
+                });
+    }
+    ////////////////////////////
+    @Test
+    public void testRouteToAdmin() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                new HtmlUnitDriver(), new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("#admin");
+                        assertTrue(browser.pageSource().contains("Admin"));
+                    }
+                });
+    }
+
+    @Test
+    public void testRouteToPlaceList() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                new HtmlUnitDriver(), new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("#button-search");
+                        assertTrue(browser.pageSource().contains("Add place"));
+                    }
+                });
+    }
+*/
 }
