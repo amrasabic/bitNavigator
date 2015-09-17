@@ -9,6 +9,8 @@ import play.mvc.Controller;
 import play.data.Form;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Security;
+import utillities.Authenticators;
 import views.html.*;
 import views.html.admin.*;
 
@@ -23,10 +25,12 @@ public class ServiceController extends Controller {
 
     private static final Form<Service> serviceForm = Form.form(Service.class);
 
+    @Security.Authenticated(Authenticators.Admin.class)
     public Result addService() {
         return ok(addservice.render());
     }
 
+    @Security.Authenticated(Authenticators.Admin.class)
     public Result save() {
         Form<Service> boundForm = serviceForm.bindFromRequest();
         if (boundForm.hasErrors()) {
