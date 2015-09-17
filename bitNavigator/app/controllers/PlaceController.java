@@ -79,7 +79,6 @@ public class PlaceController extends Controller{
         place.service = service;
         place.save();
 
-
         MultipartFormData body = request().body().asMultipartFormData();
         List<FilePart> pictures = body.getFiles();
 
