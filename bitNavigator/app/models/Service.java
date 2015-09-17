@@ -34,6 +34,7 @@ public class Service extends Model {
             return false;
         }
     }
+
     /*
     INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Accommodation', 1);
     INSERT INTO `bitNavigator`.`service` (`id`, `service_type`,`is_reservable`) VALUES (NULL, 'Arts&Entertainment', 0);

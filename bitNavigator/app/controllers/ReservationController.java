@@ -30,6 +30,7 @@ public class ReservationController extends Controller {
         }
 
         User user = User.findByEmail(session().get("email"));
+
         Place place = Place.findById(id);
         String title = boundForm.data().get("title");
         String description = boundForm.data().get("description");
@@ -37,8 +38,12 @@ public class ReservationController extends Controller {
         Reservation r = new Reservation();
         r.place = place;
         r.user = user;
-        r.title = title;
-        r.description = description;
+        if(title == null || description == null) {
+            // nesto ?
+        } else {
+            r.title = title;
+            r.description = description;
+        }
         r.status = models.Status.getStatusById(3);
 
         r.status = models.Status.getStatusById(1);

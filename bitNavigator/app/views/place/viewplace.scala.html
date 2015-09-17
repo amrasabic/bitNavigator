@@ -1,7 +1,7 @@
 @import utillities.SessionHelper
 @(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])
 @import helper._
-
+@import play.mvc.Http.Session
 @main("View place") {
 
     <script>
@@ -101,10 +101,10 @@
                 <div class="modal-dialog">
                     <form method="post" action="@routes.ReservationController.submitReservation(place.id)">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                            <h4 class="modal-title">Create reservation</h4>
-                        </div>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                <h4 class="modal-title">Create reservation</h4>
+                            </div>
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Title:</label>
@@ -132,7 +132,9 @@
             </div>
             <p><br></p>
             <div>
-                <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
+                @if(session().get("email") != null) {
+                    <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
+                }
             </div>
             </div>
         </div>
