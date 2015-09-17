@@ -96,7 +96,7 @@ body {
 #add-place-panel {
     margin: 20px;
     padding: 15px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
 }
 
@@ -112,14 +112,14 @@ body {
 #container-sign-up {
     margin: 20%;
     margin-top: 100px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
     text-align: center;
     padding: 20px;
     background-color: white;
 }
 
-#white {
+.white {
     color: #666666;
     background-color: #ffffff;
 }
@@ -127,7 +127,7 @@ body {
 #container-comment {
     margin: 20px;
     padding: 15px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
     text-align: center;
 }
@@ -172,4 +172,35 @@ body {
 
 #report-comment {
     float: right;
+}
+
+textarea {
+    resize: none;
+}
+
+.img-responsive{
+    height: 30px;
+    width: 30px;
+}
+
+.navbar-collapse.in{
+    height: 270px;
+}
+
+#profile-panel {
+     margin: 20px;
+     padding: 15px;
+     /*border-radius: 10px;*/
+     border: 1px #2b669a solid;
+ }
+
+.page-header{
+    color:#2b669a;
+    font-style: normal;
+    font-family: Georgia;
+}
+.user-info{
+    color:#2b669a;
+    font-style: normal;
+    font-family: Georgia;
 }

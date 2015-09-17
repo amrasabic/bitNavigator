@@ -5,6 +5,11 @@
 @main("Edit place") {
 
     <script>
+        lat = @place.latitude;
+        lng = @place.longitude;
+    </script>
+
+    <script>
         var marker;
         function initMap() {
             var lat = 43.850;
@@ -132,6 +137,7 @@
                 <textarea id="comment-content" class="form-control" rows="1" name="commentContent" id="commentContent" type="text" readonly>@comment.commentContent</textarea>
             </div>
         </div>
+
     }
 
 }

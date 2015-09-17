@@ -14,6 +14,7 @@ public class Service extends Model {
     @Id
     public Integer id;
     public String serviceType;
+    public String serviceIcon;
     public boolean isReservable;
 
     public static Finder<Integer, Service> finder = new Finder<>(Service.class);
