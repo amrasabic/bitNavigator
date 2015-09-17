@@ -4,35 +4,33 @@
 
 @main("Comments list") {
 
-    <div class="container-fluid">
-        <h2>Reported comments</h2>
-        <table id="myTable" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>comment id</th>
-                    <th>content</th>
-                    <th>reports</th>
-                    <th>view</th>
-                    @if(SessionHelper.isAdmin) {
-                        <th>delete</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-            @for(report <- reports){
-                <tr>
-                    <td>@report.comment.id</td>
-                    <td>@report.comment.commentContent</td>
-                    <td>@report.reportsCount</td>
-                    <td><a href="@routes.PlaceController.viewPlace(report.comment.place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
-                    @if(SessionHelper.isAdmin) {
-                        <td><a href="@routes.CommentController.deleteComment(report.comment.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
-                    }
-                </tr>
-            }
-            </tbody>
-        </table>
-    </div>
+    <h2>Reported comments</h2>
+    <table id="myTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>comment id</th>
+                <th>content</th>
+                <th>reports</th>
+                <th>view</th>
+                @if(SessionHelper.isAdmin) {
+                    <th>delete</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+        @for(report <- reports){
+            <tr>
+                <td>@report.comment.id</td>
+                <td>@report.comment.commentContent</td>
+                <td>@report.reportsCount</td>
+                <td><a href="@routes.PlaceController.viewPlace(report.comment.place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
+                @if(SessionHelper.isAdmin) {
+                    <td><a href="@routes.CommentController.deleteComment(report.comment.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
 
     <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
     <script>
