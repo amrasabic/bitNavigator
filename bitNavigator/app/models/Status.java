@@ -29,9 +29,13 @@ public class Status {
         return finder.byId(id);
     }
 
+    public static List<Status> findAll() {
+        return finder.all();
+    }
+
     /*
-    INSERT INTO `status`(`id`, `status`) VALUES (1,'DENIED');
-    INSERT INTO `status`(`id`, `status`) VALUES (2,'ACCEPTED');
-    INSERT INTO `status`(`id`, `status`) VALUES (3,'WAITING');
+    INSERT INTO `status`(`id`, `status`) VALUES (null,'Denied');
+    INSERT INTO `status`(`id`, `status`) VALUES (null,'Approved');
+    INSERT INTO `status`(`id`, `status`) VALUES (null,'Waiting');
     */
 }
