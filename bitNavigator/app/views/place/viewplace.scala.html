@@ -1,3 +1,4 @@
+@import utillities.SessionHelper
 @(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])
 @import helper._
 
@@ -110,8 +111,8 @@
     </div>
     @for(comment <- comments) {
         <!-- Checks if user already posted a comment -->
-        @if(comment.user.email != session.get("email")){
-            @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(session.get("email")))){
+        @if(comment.user.email != SessionHelper.getCurrentUsersEmail){
+            @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))){
                 <div id="container-comment" class="container-fluid" data-comment="@comment.id" style="background-color: lightgrey">
                     @if(comment.rate == null){
                         <div id="comment-rate-label">n/a<span class="glyphicon glyphicon-star-empty"></span></div>
@@ -146,21 +147,23 @@
                     <div class="panel-body">
                         <textarea id="comment-content" class="form-control" rows="2" name="commentContent" id="commentContent" type="text" readonly>@comment.commentContent</textarea>
                     </div>
-                    <div id="report-comment" data-toggle="modal" data-target="#report-comment-modal"><a id="report-comment-link">Report comment <span class="glyphicon glyphicon-flag"></span></a></div>
+                    @if(SessionHelper.isAuthenticated){
+                        <div id="report-comment" data-toggle="modal" data-target="#report-comment-modal"><a id="report-comment-link">Report comment <span class="glyphicon glyphicon-flag"></span></a></div>
+                    }
                 </div>
 
             }
 
         }
     }
-    <!-- Checks if place`s owner is viewing place, and if so not giving option to comment-->
-    @if(!place.user.email.equals(session.get("email"))) {
-        @if(Comment.findByUsersEmail(session.get("email")) != null){
+    <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
+    @if(!place.user.email.equals(SessionHelper.getCurrentUsersEmail()) && SessionHelper.isAuthenticated) {
+        @if(Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()) != null){
             <div id="container-comment" class="container-fluid">
-                <form method="post" action="@routes.PlaceController.updateComment(Comment.findByUsersEmail(session.get("email")).id)">
+                <form method="post" action="@routes.PlaceController.updateComment(Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).id)">
                     <div class="rating-select">
                     @for(i <- 1 to 5){
-                        @if(Comment.findByUsersEmail(session.get("email")).rate != null && Comment.findByUsersEmail(session.get("email")).rate == i){
+                        @if(Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).rate != null && Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).rate == i){
                             <div class="btn btn-default btn-rate rating-selected selected" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
                         } else {
                             <div class="btn btn-default btn-rate" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
@@ -171,9 +174,9 @@
                         <h3 class="panel-title">Comment</h3>
                     </div>
                     <div class="panel-body">
-                        <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text">@Comment.findByUsersEmail(session.get("email")).commentContent</textarea>
+                        <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text">@Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).commentContent</textarea>
                     </div>
-                    <input id="comment-rate" value="@Comment.findByUsersEmail(session.get("email")).rate" name="rate" type="hidden">
+                    <input id="comment-rate" value="@Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).rate" name="rate" type="hidden">
                     <button class="btn btn-primary" id="btn-post-comment">Post</button>
 
                 </form>
@@ -234,7 +237,7 @@
                 $.ajax({
                     type: "post",
                     url: "@routes.CommentController.reportComment()",
-                    data: "commentId=" + $(reportedComment).data().comment + "&email=@session.get("email")"
+                    data: "commentId=" + $(reportedComment).data().comment + "&email=@SessionHelper.getCurrentUsersEmail()"
                 }).success(function(response) {
                     if(response == "error"){
                         alert("Could not report comment!")

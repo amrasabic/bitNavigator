@@ -5,6 +5,7 @@ import com.avaje.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,10 @@ public class Report extends Model {
         report.save();
     }
 
+    public static List<Report> findAll() {
+        return finder.order("comment").findList();
+    }
+
     public static List<Report> findByComment(Comment comment) {
         return finder.where().eq("comment", comment).findList();
     }
@@ -48,5 +53,34 @@ public class Report extends Model {
             }
         }
         return false;
+    }
+
+    public static List<ReportHelper> getAllReports() {
+        List<Report> reports = findAll();
+        List<ReportHelper> reportsHelper = new ArrayList<>();
+        int counter = 1;
+        for (int i = 0; i < reports.size() - 1; i++) {
+            if (reports.get(i).comment.id == reports.get(i + 1).comment.id) {
+                counter++;
+            } else {
+                reportsHelper.add(new ReportHelper(reports.get(i).comment, counter));
+                counter = 1;
+            }
+        }
+        if (reports.size() > 1 && reports.get(reports.size() - 1).comment.id != reports.get(reports.size() - 2 ).comment.id) {
+            reportsHelper.add(new ReportHelper(reports.get(reports.size() - 1).comment, counter));
+        }
+        return reportsHelper;
+    }
+
+    public static class ReportHelper {
+
+        public Comment comment;
+        public int reportsCount;
+
+        public ReportHelper(Comment comment, int reportsCount) {
+            this.comment = comment;
+            this.reportsCount = reportsCount;
+        }
     }
 }

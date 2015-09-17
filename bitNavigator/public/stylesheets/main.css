@@ -174,7 +174,11 @@ body {
     float: right;
 }
 
-.img-responsive{
-    height: 30px;
-    width: 30px;
+textarea {
+    resize: none;
 }
+
+.img-responsive{
+     height: 30px;
+     width: 30px;
+ }

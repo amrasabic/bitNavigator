@@ -90,20 +90,3 @@ alter table report add constraint fk_report_user_7 foreign key (user_id) referen
 create index ix_report_user_7 on report (user_id);
 
 
-# --- !Downs
-
-SET FOREIGN_KEY_CHECKS=0;
-
-drop table comment;
-
-drop table image;
-
-drop table place;
-
-drop table report;
-
-drop table service;
-
-drop table user;
-
-SET FOREIGN_KEY_CHECKS=1;

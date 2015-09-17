@@ -1,0 +1,51 @@
+@import utillities.SessionHelper
+@import models.Report.ReportHelper
+@(reports: java.util.List[ReportHelper])
+
+@main("Comments list") {
+
+    <div class="container-fluid">
+        <h2>All comments</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>comment id</th>
+                    <th>content</th>
+                    <th>reports</th>
+                    <th>view</th>
+                    @if(SessionHelper.isAdmin) {
+                        <th>delete</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+            @for(report <- reports){
+                <tr>
+                    <td>@report.comment.id</td>
+                    <td>@report.comment.commentContent</td>
+                    <td>@report.reportsCount</td>
+                    <td><a href="@routes.PlaceController.viewPlace(report.comment.place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
+                    @if(SessionHelper.isAdmin) {
+                        <td><a onclick="del('')"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/jquery-2.1.4.js")" type="text/javascript"></script>
+    <script>
+        function del(urlToDel) {
+         if (confirm('Are you sure you want to delete this comment?')) {
+         $.ajax({
+                url: '/ValidateApplication.php',
+                url: urlToDel,
+                type: 'DELETE',
+                success: function(results) {
+                    location.reload();
+                }
+            });
+          }
+    }
+    </script>
+}

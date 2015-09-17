@@ -5,6 +5,11 @@
 @main("Edit place") {
 
     <script>
+        lat = @place.latitude;
+        lng = @place.longitude;
+    </script>
+
+    <script>
         var marker;
         function initMap() {
             var lat = 43.850;
