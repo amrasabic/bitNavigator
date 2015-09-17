@@ -195,12 +195,12 @@
     }
     <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
     @if(!place.user.email.equals(SessionHelper.getCurrentUsersEmail()) && SessionHelper.isAuthenticated) {
-        @if(Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()) != null){
+        @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null){
             <div id="container-comment" class="container-fluid">
-                <form method="post" action="@routes.PlaceController.updateComment(Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).id)">
+                <form method="post" action="@routes.PlaceController.updateComment(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).id)">
                     <div class="rating-select">
                     @for(i <- 1 to 5){
-                        @if(Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).rate != null && Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).rate == i){
+                        @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).rate != null && Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).rate == i){
                             <div class="btn btn-default btn-rate rating-selected selected" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
                         } else {
                             <div class="btn btn-default btn-rate" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
@@ -211,9 +211,9 @@
                         <h3 class="panel-title">Comment</h3>
                     </div>
                     <div class="panel-body">
-                        <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text">@Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).commentContent</textarea>
+                        <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text">@Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).commentContent</textarea>
                     </div>
-                    <input id="comment-rate" value="@Comment.findByUsersEmail(SessionHelper.getCurrentUsersEmail()).rate" name="rate" type="hidden">
+                    <input id="comment-rate" value="@Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).rate" name="rate" type="hidden">
                     <button class="btn btn-primary" id="btn-post-comment">Post</button>
 
                 </form>

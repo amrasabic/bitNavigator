@@ -23,6 +23,8 @@ public class Comment extends Model {
     public Place place;
     @ManyToOne
     public User user;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Report> reports;
 
     public static Finder<Integer, Comment> finder = new Finder<Integer, Comment>(Comment.class);
 
@@ -38,7 +40,7 @@ public class Comment extends Model {
         return finder.byId(id);
     }
 
-    public static Comment findByUsersEmail(String email) {
-        return finder.where().eq("user", User.findByEmail(email)).findUnique();
+    public static Comment findByUserAndPlace(String email, Place place) {
+        return finder.where().eq("user", User.findByEmail(email)).eq("place", place).findUnique();
     }
 }
