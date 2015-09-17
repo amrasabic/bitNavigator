@@ -1,27 +1,28 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
 import models.*;
+import org.apache.commons.io.FileUtils;
+import play.Logger;
 import play.Play;
-import play.mvc.Controller;
-
-import play.mvc.Result;
-import views.html.*;
-import views.html.place.*;
 import play.data.Form;
+import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Result;
+import play.mvc.Security;
+import utillities.Authenticators;
+import views.html.index;
+import views.html.place.addplace;
+import views.html.place.editplace;
+import views.html.place.placelist;
+import views.html.place.viewplace;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
-import play.Logger;
-
-import static views.html.place.addplace.*;
 
 /**
  * Created by ognjen.cetkovic on 08/09/15.
@@ -34,11 +35,12 @@ public class PlaceController extends Controller{
     private static final Form<Comment> commentForm = Form.form(Comment.class);
     private static List<String> imageLists = new ArrayList<>();
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result addPlace() {
         return ok(addplace.render(placeForm, Service.findAll()));
     }
 
-
+    @Security.Authenticated(Authenticators.User.class)
     public Result savePlace() {
 
         Form<Place> boundForm = placeForm.bindFromRequest();
@@ -108,6 +110,7 @@ public class PlaceController extends Controller{
         return ok(placelist.render(places));
     }
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result delete(int id) {
         Place place = Place.findById(id);
         if (place == null) {
@@ -128,6 +131,7 @@ public class PlaceController extends Controller{
         return redirect(routes.PlaceController.placeList());
     }
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result editPlace(int id){
         Place place = Place.findById(id);
         if (place == null) {
@@ -149,11 +153,12 @@ public class PlaceController extends Controller{
         return ok(viewplace.render(place, services, comments, Image.findByPlace(place)));
     }
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result postComment(int id) {
         Form<Comment> boundForm = commentForm.bindFromRequest();
 
         if (boundForm.hasErrors()) {
-            return unauthorized("Can not post an emnpty comment!");
+            return unauthorized("Can not post an empty comment!");
         }
 
         Comment comment = boundForm.get();
@@ -172,11 +177,10 @@ public class PlaceController extends Controller{
             comment.rate = null;
         }
         comment.save();
-        List<Service> services = Service.findAll();
-        List<Comment> comments = Comment.findAll();
-        return ok(viewplace.render(place, services, comments, Image.findByPlace(place)));
+        return redirect(routes.PlaceController.viewPlace(comment.place.id));
     }
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result updateComment(int id) {
         Form<Comment> boundForm = commentForm.bindFromRequest();
         if (boundForm.hasErrors()) {
@@ -192,9 +196,7 @@ public class PlaceController extends Controller{
             comment.rate = null;
         }
         comment.update();
-        List<Service> services = Service.findAll();
-        List<Comment> comments = Comment.findAll();
-        return ok(viewplace.render(comment.place, services, comments, Image.findByPlace(comment.place)));
+        return redirect(routes.PlaceController.viewPlace(comment.place.id));
     }
 
     public Result validateForm(){
