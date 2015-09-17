@@ -7,6 +7,8 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
+import utillities.Authenticators;
 import views.html.comments.commentslist;
 import views.html.comments.reportedcommentslist;
 
@@ -15,6 +17,7 @@ import views.html.comments.reportedcommentslist;
  */
 public class CommentController extends Controller {
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result reportComment() {
         DynamicForm form = Form.form().bindFromRequest();
 
@@ -32,13 +35,24 @@ public class CommentController extends Controller {
         return ok("success");
     }
 
+    @Security.Authenticated(Authenticators.Admin.class)
     public Result commentsList() {
         return ok(commentslist.render(Comment.findAll()));
     }
 
+    @Security.Authenticated(Authenticators.Admin.class)
     public Result reportedComments() {
         return ok(reportedcommentslist.render(Report.getAllReports()));
     }
 
+    @Security.Authenticated(Authenticators.Admin.class)
+    public Result deleteComment(int id) {
+        Comment comment = Comment.findById(id);
+        if (comment == null) {
+           return badRequest("Comment does not exist!");
+        }
+        comment.delete();
+        return ok();
+    }
 
 }

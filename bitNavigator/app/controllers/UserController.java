@@ -7,6 +7,8 @@ import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import play.mvc.Security;
+import utillities.Authenticators;
 import views.html.index;
 import views.html.user.*;
 import views.html.admin.*;
@@ -56,7 +58,7 @@ public class UserController extends Controller {
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
-            return badRequest(signin.render(userForm));
+            return redirect(routes.Application.index());
         }
         try {
             if (!PasswordHash.validatePassword(boundForm.bindFromRequest().field(User.PASSWORD).value(), user.password)) {
@@ -65,13 +67,13 @@ public class UserController extends Controller {
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
-            return badRequest(signin.render(userForm));
+            return redirect(routes.Application.index());
         }
         session().clear();
         session("email", user.email);
 
         List<Place> places = Place.findAll();
-        return ok(index.render(places));
+        return redirect(routes.Application.index());
     }
 
     /**
@@ -110,9 +112,10 @@ public class UserController extends Controller {
         session().clear();
         session("email", singUp.email);
         List<Place> places = Place.findAll();
-        return ok(index.render(places));
+        return redirect(routes.Application.index());
     }
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result profile (String email) {
         final User user = User.findByEmail(email);
         if(user == null)
@@ -123,6 +126,7 @@ public class UserController extends Controller {
 
     }
 
+    @Security.Authenticated(Authenticators.User.class)
     public Result updateUser(String email) {
 
         Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
@@ -154,11 +158,13 @@ public class UserController extends Controller {
         return ok(index.render(places));
     }
 
+    @Security.Authenticated(Authenticators.Admin.class)
     public Result userList(){
         List<User> users = User.findAll();
         return ok(userlist.render(users));
     }
 
+    @Security.Authenticated(Authenticators.Admin.class)
     public Result delete(String email) {
         User user = User.findByEmail(email);
         if (user == null) {
@@ -168,6 +174,7 @@ public class UserController extends Controller {
         return redirect(routes.UserController.userList());
     }
 
+    @Security.Authenticated(Authenticators.Admin.class)
     public Result adminView() {
         User admin = User.findByEmail(session("email"));
         if(admin == null || !admin.admin){

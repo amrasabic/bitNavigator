@@ -173,3 +173,7 @@ body {
 #report-comment {
     float: right;
 }
+
+textarea {
+    resize: none;
+}
