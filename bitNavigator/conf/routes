@@ -33,3 +33,6 @@ POST          /place/comment/:id               @controllers.PlaceController.post
 GET           /admin                           @controllers.UserController.adminView()
 GET           /service/add                     @controllers.ServiceController.addService()
 POST          /service/add                     @controllers.ServiceController.save()
+
+GET           /comments/list                   @controllers.CommentController.commentsList()
+GET           /comments/reported               @controllers.CommentController.reportedComments()

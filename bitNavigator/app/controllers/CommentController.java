@@ -7,6 +7,8 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.comments.commentslist;
+import views.html.comments.reportedcommentslist;
 
 /**
  * Created by ognje on 10-Sep-15.
@@ -28,6 +30,14 @@ public class CommentController extends Controller {
 
         Report.addReport(comment, user);
         return ok("success");
+    }
+
+    public Result commentsList() {
+        return ok(commentslist.render(Comment.findAll()));
+    }
+
+    public Result reportedComments() {
+        return ok(reportedcommentslist.render(Report.getAllReports()));
     }
 
 
