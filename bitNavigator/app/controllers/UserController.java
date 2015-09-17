@@ -59,6 +59,7 @@ public class UserController extends Controller {
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
+
             return redirect(routes.Application.index());
         }
         try {
@@ -68,6 +69,7 @@ public class UserController extends Controller {
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             List<Place> places = Place.findAll();
+
             return redirect(routes.Application.index());
         }
         session().clear();
