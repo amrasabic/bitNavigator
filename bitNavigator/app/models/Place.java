@@ -61,4 +61,5 @@ public class Place extends Model {
         return finder.where().eq("title", title).findUnique();
     }
 
+
 }

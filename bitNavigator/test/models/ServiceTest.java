@@ -21,7 +21,9 @@ import play.twirl.api.Content;
 import static play.test.Helpers.*;
 import static org.junit.Assert.*;
 
-
+/**
+ * Created by Tomislav on 17.9.2015.
+ */
 
 public class ServiceTest {
 
@@ -37,5 +39,30 @@ public class ServiceTest {
         service.save();
     }
 
+    @Test
+    public void testFindByType(){
+        Service s = new Service();
+        s.serviceType = "Nothing";
+        s.save();
 
+        s = Service.findByType("Nothing");
+        assertNotNull(s);
+    }
+
+    @Test
+    public void testFindNonexistingService() {
+        Service s = Service.findByType("tfvtbhg");
+        assertNull(s);
+    }
+    @Test
+    public void testFindAll () {
+        List<Service> lists = Service.findAll();
+
+        assertNotNull(lists);
+    }
+    @Test
+    public void nonExistingType () {
+        Service s = Service.findByType("tyvdghwgbfxyfsgybg");
+        assertNull(s);
+    }
 }
