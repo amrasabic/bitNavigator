@@ -119,7 +119,7 @@ body {
     background-color: white;
 }
 
-#white {
+.white {
     color: #666666;
     background-color: #ffffff;
 }
@@ -177,3 +177,8 @@ body {
 textarea {
     resize: none;
 }
+
+.img-responsive{
+     height: 30px;
+     width: 30px;
+ }

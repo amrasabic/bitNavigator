@@ -15,6 +15,7 @@ import views.html.admin.*;
 import play.Logger;
 import utillities.PasswordHash;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
@@ -148,7 +149,7 @@ public class UserController extends Controller {
             flash("error", "Name can only hold letters!");
             return badRequest(profile.render(user));
         }
-
+        Logger.info(boundForm.bindFromRequest().field("mobileNumber").value());
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
         user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
@@ -196,6 +197,9 @@ public class UserController extends Controller {
         public String firstName;
         @Constraints.Pattern ("[a-zA-Z]+")
         public String lastName;
+        //@Constraints.Pattern ("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
+        @Constraints.Pattern ("^\\+387[3,6][1-6]\\d{6}")
+        public String mobileNumber;
     }
 
     public static class SignUpForm  extends UserNameForm{
@@ -207,7 +211,6 @@ public class UserController extends Controller {
         @Constraints.MaxLength (25)
         @Constraints.Required
         public String confirmPassword;
-        public String phoneNumber;
     }
 
 }
