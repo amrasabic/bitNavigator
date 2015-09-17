@@ -68,7 +68,7 @@ public class User extends Model {
         user.lastName = signUp.lastName;
         user.password = signUp.password;
         user.accountCreated = Calendar.getInstance();
-        user.phoneNumber = signUp.phoneNumber;
+        user.phoneNumber = signUp.mobileNumber;
         user.save();
     }
 

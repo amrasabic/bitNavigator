@@ -48,4 +48,47 @@ public class IntegrationTest {
                 });
     }
 
+    @Test
+    public void testSignIn() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                HTMLUNIT, new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333/");
+                        browser.fill("#email-signin").with("semir.sahman@bitcamp.ba");
+                        browser.fill("#password-signin").with("1234567a");
+                        browser.submit("btn-sign-in");
+                        assertTrue(browser.pageSource().contains("bitNavigator"));
+                    }
+                });
+    }
+
+    @Test
+    public void testRouteToSignUp() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                HTMLUNIT, new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("btn-sign-up-menu");
+                        assertTrue(browser.pageSource().contains("Sign up"));
+                    }
+                });
+    }
+
+    @Test
+    public void testSignUp() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                new HtmlUnitDriver(), new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                       browser.goTo("http://localhost:3333/user/signup");
+                       browser.fill("#firstName-signup").with("Leon");
+                        browser.fill("#lastName-signup").with("Benko");
+                        browser.fill("#email-signup").with("leon.benko@gmail.com");
+                        browser.fill("#password-signup").with("nekasifra1");
+                        browser.fill("#confirmPassword-signup").with("nekasifra1");
+                        browser.submit("#btn-sign-up");
+                        assertTrue(browser.pageSource().contains("bitNavigator"));
+                    }
+                });
+    }
+
 }
