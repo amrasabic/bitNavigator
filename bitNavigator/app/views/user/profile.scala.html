@@ -60,8 +60,9 @@
     </script>
 
 
-    <div class="container" style="padding-top : 60 px ;">
-        <h2 class="page-header">Hi @user.firstName  @user.lastName!</h2>
+
+    <div class="container-fluid" id="profile-panel">
+        <h3 class="page-header">Hi @user.firstName  @user.lastName!</h3>
         <div class="row">
                 <!-- left column -->
                 <!-- User avatar image -->
@@ -84,7 +85,7 @@
 
                     </p>
                 </div>
-                <h3 class="user-info">User info:</h3>
+                <h5 class="user-info">Profile info:</h5>
                     <!--User info fields -->
                 <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser(session.get("email"))">
                         <!-- User first name filed-->

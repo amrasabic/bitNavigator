@@ -187,3 +187,20 @@ textarea {
     height: 270px;
 }
 
+#profile-panel {
+     margin: 20px;
+     padding: 15px;
+     /*border-radius: 10px;*/
+     border: 1px #2b669a solid;
+ }
+
+.page-header{
+    color:#2b669a;
+    font-style: normal;
+    font-family: Georgia;
+}
+.user-info{
+    color:#2b669a;
+    font-style: normal;
+    font-family: Georgia;
+}
