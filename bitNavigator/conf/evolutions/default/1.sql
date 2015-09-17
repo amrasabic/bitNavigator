@@ -4,17 +4,17 @@
 # --- !Ups
 
 create table comment (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   comment_content           varchar(255),
   rate                      integer,
-  comment_created           datetime(6),
+  comment_created           timestamp,
   place_id                  integer,
   user_id                   integer,
   constraint pk_comment primary key (id))
 ;
 
 create table image (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   path                      varchar(255),
   place_id                  integer,
@@ -22,27 +22,27 @@ create table image (
 ;
 
 create table place (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   title                     varchar(255),
   description               TEXT,
   longitude                 double,
   latitude                  double,
   address                   varchar(255),
-  place_created             datetime(6),
+  place_created             timestamp,
   user_id                   integer,
   service_id                integer,
   constraint pk_place primary key (id))
 ;
 
 create table report (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   comment_id                integer,
   user_id                   integer,
   constraint pk_report primary key (id))
 ;
 
 create table service (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   service_type              varchar(255),
   service_icon              varchar(255),
   is_reservable             tinyint(1) default 0,
@@ -50,17 +50,29 @@ create table service (
 ;
 
 create table user (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   email                     varchar(255),
   first_name                varchar(255),
   last_name                 varchar(255),
   password                  varchar(255),
-  account_created           datetime(6),
+  account_created           timestamp,
   phone_number              varchar(255),
-  admin                     tinyint(1) default 0,
+  admin                     boolean,
   constraint uq_user_email unique (email),
   constraint pk_user primary key (id))
 ;
+
+create sequence comment_seq;
+
+create sequence image_seq;
+
+create sequence place_seq;
+
+create sequence report_seq;
+
+create sequence service_seq;
+
+create sequence user_seq;
 
 alter table comment add constraint fk_comment_place_1 foreign key (place_id) references place (id) on delete restrict on update restrict;
 create index ix_comment_place_1 on comment (place_id);
@@ -76,7 +88,6 @@ alter table report add constraint fk_report_comment_6 foreign key (comment_id) r
 create index ix_report_comment_6 on report (comment_id);
 alter table report add constraint fk_report_user_7 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_report_user_7 on report (user_id);
-
 
 
 # --- !Downs
@@ -96,4 +107,3 @@ drop table service;
 drop table user;
 
 SET FOREIGN_KEY_CHECKS=1;
-
