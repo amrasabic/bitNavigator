@@ -97,4 +97,22 @@ public class UserTest {
     }
 
 
+    @Test
+    public void checkingDatabase () {
+        List<User> lists = User.findAll();
+
+        assertNotNull(lists);
+    }
+    @Test
+    public void userexists() {
+        User u = new User();
+        u.email = "tyuigug22@uhneyg.ba";
+        u.firstName = "Jaka";
+        u.lastName = "Blazic";
+        u.password = "yfyseftcf235";
+        u.save();
+
+        u = User.findByEmail("tyuigug22@uhneyg.ba");
+        assertNotNull(u);
+    }
 }

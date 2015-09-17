@@ -49,5 +49,52 @@ public class CommentTest {
 
         assertNotNull(list);
     }
+    @Test
+    public void testFindByPlace() {
 
+        Place p = new Place();
+        p.title = "ybftyfxwtf";
+        p.description = "ybfkihutctygfd";
+
+        p.save();
+
+        Comment c = new Comment();
+        c.commentContent = "yfgrbycfbtydfyfcgeygcuygd";
+        c.commentCreated = Calendar.getInstance();
+        c.rate = 5;
+
+        c.place = p;
+        c.save();
+
+        List<Comment> lists = Comment.findByPlace(p);
+        assertNotNull(lists);
+    }
+    @Test
+    public void testFindById (){
+        Comment c = new Comment();
+        c.commentContent = "yfgyugyufg";
+        c.commentCreated = Calendar.getInstance();
+
+        Comment com = Comment.findById(5);
+        assertNotNull(com);
+    }
+    @Test
+    public void findByEmail() {
+        User u = new User();
+        u.firstName = "Hasib";
+        u.lastName = "Goodwill";
+        u.email = "hasib@jaaazzxqyq.com";
+        u.save();
+
+        Comment c = new Comment();
+        c.commentContent = "yuufytfgeuigyuf";
+        c.commentCreated = Calendar.getInstance();
+        c.rate = 4;
+        c.user = u;
+
+        c.save();
+
+        Comment comment = Comment.findByUsersEmail("hasib@jaaazzxyq.com");
+        assertNotNull(comment);
+    }
 }
