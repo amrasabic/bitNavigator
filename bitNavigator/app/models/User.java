@@ -44,6 +44,8 @@ public class User extends Model {
     @OneToMany (cascade = CascadeType.ALL)
     public List<Place> places;
     public boolean admin = false;
+    @OneToOne
+    public Image image;
 
     /**
      * Default constructor.

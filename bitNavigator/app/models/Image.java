@@ -21,7 +21,8 @@ public class Image extends Model {
     public String path;
     @ManyToOne
     public Place place;
-
+    @OneToOne
+    public User user;
     /**
      * Default constructor.
      */

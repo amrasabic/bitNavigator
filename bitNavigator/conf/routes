@@ -24,6 +24,7 @@ POST          /place/add                       @controllers.PlaceController.save
 
 GET           /place/list                      @controllers.PlaceController.placeList()
 GET           /place/profile/:id               @controllers.PlaceController.viewPlace(id: Integer)
+POST          /place/profile/:id               @controllers.ReservationController.submitReservation(id: Integer)
 GET           /place/edit/:id                  @controllers.PlaceController.editPlace(id: Integer)
 DELETE        /places/profile/:id              @controllers.PlaceController.delete(id: Integer)
 POST          /place/comment/report            @controllers.CommentController.reportComment()

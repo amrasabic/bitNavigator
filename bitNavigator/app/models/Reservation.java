@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.data.validation.Constraints;
 
 import javax.persistence.*;
 
@@ -16,8 +17,11 @@ public class Reservation extends Model {
     public User user;
     @ManyToOne
     public Place place;
+    @Constraints.Required
     public String title;
+    @Constraints.Required
     public String description;
+    @ManyToOne
     public Status status;
 
     public Reservation() {
