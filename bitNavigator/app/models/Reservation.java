@@ -40,7 +40,7 @@ public class Reservation extends Model {
     }
 
     public static List<Reservation> findByUser(User user) {
-        return finder.where().eq("user", user).findList();
+        return finder.where().eq("place.user", user).findList();
     }
 
     public static List<Reservation> findByStatus(User user, Status status) {
