@@ -47,6 +47,17 @@ public class IntegrationTest {
                     }
                 });
     }
+    @Test
+    public void testRouteToHomepage() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                HTMLUNIT, new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.click("#home-button");
+                        assertTrue(browser.pageSource().contains("bitNavigator"));
+                    }
+                });
+    }
 
     @Test
     public void testSignIn() {
@@ -102,7 +113,20 @@ public class IntegrationTest {
                     }
                 });
     }
-/////////
+
+    @Test
+    public void testSearch() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                HTMLUNIT, new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.fill("#srch-term").with("Kod Hasiba");
+                        browser.submit("#button-search");
+                        assertTrue(browser.pageSource().contains("Place list"));
+                    }
+                });
+    }
+/*
     @Test
     public void testRouteToProfile() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())),
@@ -113,7 +137,7 @@ public class IntegrationTest {
                         assertTrue(browser.pageSource().contains("does not exist"));
                     }
                 });
-    }/*
+    }
 ////////////
     @Test
     public void testRouteToAddPlace() {
