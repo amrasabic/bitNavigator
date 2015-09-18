@@ -58,7 +58,7 @@
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
-    <form method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
+    <form method="post" action="@routes.PlaceController.updatePlace(place.id)" enctype="multipart/form-data">
         <div id="add-place-panel" class="container-fluid">
             <div class="col-md-6">
                 <div class="panel-body">
@@ -100,7 +100,7 @@
                         }
                         </select>
                     </div>
-                    <input id="service" name="serviceType" type="hidden">
+                    <input id="service" name="serviceType" value="@place.service.serviceType" type="hidden">
 
                     <p><br/></p>
                         <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
@@ -117,9 +117,9 @@
 
                 <p><br/></p>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" id="btn-add">Submit address</button>
+                    <button class="btn btn-primary" id="btn-add" type="button">Submit address</button>
                     <button type="submit" class="btn btn-primary" id="btn-submit">Save</button>
-                    <button id="redirect" class="btn btn-default" data-dismiss="modal" onclick="javascript:location.href='/'">
+                    <button id="redirect" class="btn btn-default" type="button" data-dismiss="modal" onclick="javascript:location.href='/'">
                         Cancel</button>
 
                 </div>
@@ -139,5 +139,14 @@
         </div>
 
     }
+    <script>
+        var serviceValue = document.getElementById("service");
+        var services = document.getElementById("service-list");
+
+        function changeService() {
+            serviceValue.value = services.options[services.selectedIndex].text;
+        };
+        services.onchange = changeService;
+    </script>
 
 }

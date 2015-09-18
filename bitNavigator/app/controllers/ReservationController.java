@@ -44,9 +44,7 @@ public class ReservationController extends Controller {
             r.title = title;
             r.description = description;
         }
-        r.status = models.Status.getStatusById(3);
-
-        r.status = models.Status.getStatusById(1);
+        r.status = models.Status.getStatusById(models.Status.WAITING);
 
         r.save();
         return redirect(routes.Application.index());

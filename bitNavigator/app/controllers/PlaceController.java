@@ -84,8 +84,8 @@ public class PlaceController extends Controller{
 
         if (pictures != null) {
             for (FilePart picture : pictures) {
-                String name = place.title + formatted;
                 File file = picture.getFile();
+                String name = formatted + file.getName();
                 String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
 
                 Logger.info(name);
@@ -111,6 +111,73 @@ public class PlaceController extends Controller{
             return badRequest("Pictures missing.");
         }
 
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result updatePlace(int id) {
+
+        Form<Place> boundForm = placeForm.bindFromRequest();
+        Form<Service> boundServiceForm = serviceForm.bindFromRequest();
+
+        if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
+            flash("error", "Wrong input!");
+            return redirect(routes.PlaceController.editPlace(id));
+        }
+
+        Service service = boundServiceForm.get();
+        service = Service.findByType(service.serviceType);
+
+        if (service == null) {
+            flash("error", "Must add service!");
+            return badRequest(addplace.render(boundForm, Service.findAll()));
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+        String formatted = format1.format(cal.getTime());
+
+        Place place = boundForm.get();
+        place.user = User.findByEmail(session("email"));
+        place.placeCreated = Calendar.getInstance();
+        place.service = service;
+        if(Place.findById(id) == null) {
+            return internalServerError("Something went wrong");
+        }
+        place.id = id;
+        place.update();
+
+        MultipartFormData body = request().body().asMultipartFormData();
+        List<FilePart> pictures = body.getFiles();
+
+        if (pictures != null) {
+            for (FilePart picture : pictures) {
+                File file = picture.getFile();
+                String name = formatted + file.getName();
+                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
+
+                Logger.info(name);
+                try {
+                    FileUtils.moveFile(file, new File(path));
+                    imageLists.add(name);
+                    Image image = new Image();
+                    image.name = name;
+                    path ="/images/placeImages/" + place.title + "/" + name;
+                    image.path = path;
+                    image.place = place;
+                    image.save();
+
+                } catch (IOException ex) {
+                    Logger.info("Could not move file. " + ex.getMessage());
+                    flash("error", "Could not move file.");
+                }
+            }
+
+            return redirect(routes.PlaceController.viewPlace(id));
+        } else {
+            flash("error", "Files not present.");
+            return badRequest("Pictures missing.");
+        }
     }
 
     public Result placeList(){

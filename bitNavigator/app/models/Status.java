@@ -5,7 +5,6 @@ import com.avaje.ebean.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.util.List;
 
 /**
@@ -13,6 +12,10 @@ import java.util.List;
  */
 @Entity
 public class Status {
+
+    public static final int APPROVED = 1;
+    public static final int WAITING = 2;
+    public static final int DENIED = 3;
 
     @Id
     public Integer id;
@@ -34,8 +37,8 @@ public class Status {
     }
 
     /*
-    INSERT INTO `status`(`id`, `status`) VALUES (null,'Denied');
-    INSERT INTO `status`(`id`, `status`) VALUES (null,'Approved');
-    INSERT INTO `status`(`id`, `status`) VALUES (null,'Waiting');
+    INSERT INTO `status`(`id`, `status`) VALUES (3,'Denied');
+    INSERT INTO `status`(`id`, `status`) VALUES (1,'Approved');
+    INSERT INTO `status`(`id`, `status`) VALUES (2,'Waiting');
     */
 }
