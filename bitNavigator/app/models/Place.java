@@ -33,12 +33,15 @@ public class Place extends Model {
     public String address;
     public Calendar placeCreated;
     @ManyToOne
-    @Constraints.Required
     public User user;
     @ManyToOne
     public Service service;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Image> images;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Comment> comments;
 
-    public static Finder<Integer, Place> finder = new Finder<>(Integer.class, Place.class);
+    public static Finder<Integer, Place> finder = new Finder<>(Place.class);
     /**
      * Default constructor.
      */
@@ -57,5 +60,6 @@ public class Place extends Model {
     public static Place findByTitle(String title) {
         return finder.where().eq("title", title).findUnique();
     }
+
 
 }

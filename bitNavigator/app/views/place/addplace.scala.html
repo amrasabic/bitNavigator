@@ -1,0 +1,192 @@
+@(placeForm: Form[Place])(services: java.util.List[Service])
+@import helper._
+
+
+@main("Add place") {
+
+    <script>
+        var marker;
+        function initMap() {
+          var lat = 43.850;
+          var lng = 18.390;
+          var map = new google.maps.Map(document.getElementById('map-add-place'), {
+            zoom: 14,
+            center: {lat: lat, lng: lng}
+          });
+          var geocoder = new google.maps.Geocoder;
+          var infowindow = new google.maps.InfoWindow;
+
+          marker = new google.maps.Marker({
+                position: {lat: lat, lng: lng},
+                map: map,
+                draggable: true
+          });
+
+          document.getElementById('btn-add').addEventListener('click', function() {
+            geocodeLatLng(geocoder, map, infowindow, marker.getPosition().lat() + "," + marker.getPosition().lng());
+          });
+        }
+        function geocodeLatLng(geocoder, map, infowindow, ll) {
+          var input = ll;
+          var latlngStr = input.split(',', 2);
+          var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+          geocoder.geocode({'location': latlng}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+                //map.setZoom(11);
+                infowindow.setContent(results[0].formatted_address);
+                infowindow.open(map, marker);
+                console.log(results[0].formatted_address);
+                document.getElementById("address").value = results[0].formatted_address;
+                document.getElementById("latitude").value = latlng.lat;
+                document.getElementById("longitude").value = latlng.lng;
+              } else {
+                window.alert('No results found');
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+
+
+    <form method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
+        <div id="add-place-panel" class="container-fluid">
+            <div class="col-md-6">
+
+                        <div class="panel-body">
+                            <div class="page-header">
+                                <h3>Add Place</h3>
+                            </div>
+                                <!-- Title input field -->
+                            <div class="form-group">
+                                <label for="usr">Title:</label>
+                                <input type="text" class="form-control" name="title" id="title" value="@placeForm("title").value" placeholder="Enter place Title">
+                                <span class="alert-danger" data-error-for="title" ></span>
+                            </div>
+                                <!-- Description input field -->
+                            <div class="form-group">
+                                <label for="comment">Description:</label>
+                                <textarea class="form-control" rows="5" name="description" id="description" type="text" placeholder="Enter place Description">@placeForm("description").value</textarea>
+                                <span class="alert-danger" data-error-for="description" ></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">Address:</label>
+                                <input type="text" value="@placeForm("address").value" class="form-control" name="address" id="address" placeholder="Enter or Submit Address">
+                                <span class="alert-danger" data-error-for="title" ></span>
+                            </div>
+                            <input id="longitude" name="longitude" type="hidden" value="@placeForm("longitude").value">
+                            <input id="latitude" name="latitude" type="hidden" value="@placeForm("latitude").value">
+                            <div class="dropdown" style="margin-top: 10px; padding-top: 5px ;">
+                                <label for="service-list">Service:</label>
+                                <select id="service-list" class="btn btn-block" name="Services">
+                                @for(service <- services) {
+                                    @if(service.serviceType.equals(placeForm("service.serviceType").value)){
+                                        <option selected="selected">@service.serviceType</option>
+                                    }else{
+                                        <option>@service.serviceType</option>
+                                    }
+                                }
+                                </select>
+                            </div>
+                            <input id="service" name="serviceType" type="hidden">
+                            <p><br/></p>
+                                <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
+                            <span class="btn btn-default btn-file">
+                                <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*" multiple>
+                            </span>
+
+                        </div>
+
+
+            </div>
+            <div id="map-container" class="col-md-6"><div id="map-add-place"></div><div class="modal-footer">
+                <button class="btn btn-default" id="btn-add" type="button">Submit address</button>
+                <button type="submit" class="btn btn-primary" id="btn-submit">
+                    Create</button>
+                <button id="redirect" class="btn btn-default" data-dismiss="modal" type="button"><a href="/">Cancel</a></button>
+            </div></div>
+
+
+        </div>
+    </form>
+    <div class="container-fluid">
+        @if(flash.containsKey("error")) {
+            <div class="alert alert-danger">
+            @flash.get("error")
+            </div>
+        }
+        @if(flash.containsKey("success")) {
+            <div class="alert alert-success">
+            @flash.get("success")
+            </div>
+        }
+    </div>
+
+
+    <script>
+        var serviceValue = document.getElementById("service");
+        var services = document.getElementById("service-list");
+
+        function changeService() {
+            serviceValue.value = services.options[services.selectedIndex].text;
+        };
+        services.onchange = changeService;
+    </script>
+    @*</form> *@
+    <script>
+       /*$(document).ready(function(){
+            // for any form on this page do the follofing
+            $('form').submit(function(e, options){
+                //if options is not defined define it as a empty object
+                var options = options || {};
+                //if allow is true let the event propagate to the server
+                if(options.allow == true){
+                    return;
+                }
+                //prevent submiting the form
+                e.preventDefault();
+                //clean all error messages
+                $("[data-error-for]").html("");
+                //get a refference to the current form
+                $form = $(this);
+
+                // This will setup a AJAX call, the params are
+                // url: where to go
+                // method: what kind of request
+                // data: the data to add to the request
+
+                $.ajax({
+                    url: "@routes.PlaceController.addPlace()",
+                    method: "post",
+                    data: $(this).serialize()
+                }).success(function(response){
+                    //if the validation did not return an error, triger the form submit with options.allow = true
+                    $form.trigger("submit", {allow: true});
+                }).error(function(response){
+                    //if we got a bad request we take the JSON object from the response
+                    var errors = response.responseJSON;
+                    //get an array of all the keys in the error object
+                    var keys = Object.keys(errors);
+                    //itterate over the keys
+                    for(var i = 0; i < keys.length; i++){
+                        //get the error messages for the current key (which represents one input field)
+                        var errorMessages = errors[keys[i]];
+                        //a string of all the errors for the current input
+                        var allErrors = "";
+                        for(var j = 0; j < errorMessages.length; j++){
+                            allErrors += errorMessages[j];
+                        }
+                        //set the helper span message to the content of the error messages
+                        $('[data-error-for="'+keys[i]+'"]').html(allErrors);
+                    }
+                });
+            });
+        });*/
+    </script>
+
+
+
+}

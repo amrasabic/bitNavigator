@@ -3,15 +3,9 @@ package models;
 import javax.persistence.*;
 
 import com.avaje.ebean.Model;
-import controllers.UserHandler;
-import play.data.format.*;
-import play.data.validation.*;
+import controllers.UserController;
 import play.data.validation.Constraints;
 
-import play.Logger;
-import utillities.PasswordHash;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -29,7 +23,7 @@ public class User extends Model {
     public static final String PASSWORD = "password";
     public static final String ACCOUNT_CREATED = "accountCreated";
 
-    public static Finder<Integer, User> finder = new Finder<>(Integer.class, User.class);
+    public static Finder<Integer, User> finder = new Finder<>(User.class);
 
     @Id
     public int id;
@@ -46,9 +40,14 @@ public class User extends Model {
     @Constraints.Required
     public String password;
     public Calendar accountCreated;
+    public String phoneNumber;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Place> places;
     public boolean admin = false;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Comment> comments;
+    @OneToOne
+    public Image image;
 
     /**
      * Default constructor.
@@ -66,14 +65,20 @@ public class User extends Model {
         this.password = password;
     }
 
-    public static void newUser(UserHandler.SignUpForm signUp) {
+    public static void newUser(UserController.SignUpForm signUp) {
         User user = new User();
         user.email = signUp.email;
         user.firstName = signUp.firstName;
         user.lastName = signUp.lastName;
         user.password = signUp.password;
         user.accountCreated = Calendar.getInstance();
+        user.phoneNumber = signUp.mobileNumber;
         user.save();
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.admin = isAdmin;
+        save();
     }
 
     public static List<User> findAll() {
@@ -88,4 +93,6 @@ public class User extends Model {
     public static User findByEmail(String email) {
         return finder.where().eq(EMAIL, email).findUnique();
     }
+
+
 }

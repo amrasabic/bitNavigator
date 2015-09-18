@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class Image extends Model {
 
-    public static Finder<Integer, Image> finder = new Finder<>(Integer.class, Image.class);
+    public static Finder<Integer, Image> finder = new Finder<>(Image.class);
 
     @Id
     public Integer id;
@@ -21,7 +21,8 @@ public class Image extends Model {
     public String path;
     @ManyToOne
     public Place place;
-
+    @OneToOne
+    public User user;
     /**
      * Default constructor.
      */

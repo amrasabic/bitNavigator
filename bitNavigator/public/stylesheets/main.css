@@ -80,7 +80,11 @@ body {
     height: 450px;
 }
 
-a:hover {
+#btn-sign-up-menu {
+    color: #2b669a;
+}
+
+#btn-sign-up-menu:hover {
     text-decoration: none;
     color: #2b669a;
 }
@@ -92,7 +96,7 @@ a:hover {
 #add-place-panel {
     margin: 20px;
     padding: 15px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
 }
 
@@ -108,14 +112,14 @@ a:hover {
 #container-sign-up {
     margin: 20%;
     margin-top: 100px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
     text-align: center;
     padding: 20px;
     background-color: white;
 }
 
-#white {
+.white {
     color: #666666;
     background-color: #ffffff;
 }
@@ -123,7 +127,7 @@ a:hover {
 #container-comment {
     margin: 20px;
     padding: 15px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 1px #2b669a solid;
     text-align: center;
 }
@@ -135,4 +139,68 @@ a:hover {
 .media-object {
     width: 256px;
     height: 256px;
+}
+
+.popover {
+    width: 20%;
+}
+
+.glyphicon-star-empty {
+
+}
+
+.btn-rate {
+    float: left;
+}
+
+#btn-post-comment {
+
+}
+
+#comment-heading {
+    clear: both;
+}
+
+#comment-rate-label {
+    float: right;
+    font-size: 1.5em;
+}
+
+.glyphicon-flag {
+    color: red;
+}
+
+#report-comment {
+    float: right;
+}
+
+textarea {
+    resize: none;
+}
+
+.img-responsive{
+    height: 30px;
+    width: 30px;
+}
+
+.navbar-collapse.in{
+    height: 270px;
+}
+
+#profile-panel {
+     margin: 20px;
+     padding: 15px;
+     /*border-radius: 10px;*/
+     border: 1px #2b669a solid;
+ }
+
+.page-header{
+    color:#2b669a;
+    font-style: normal;
+    font-family: Georgia;
+}
+.user-info{
+    color:#2b669a;
+    font-style: normal;
+    font-family: Georgia;
 }

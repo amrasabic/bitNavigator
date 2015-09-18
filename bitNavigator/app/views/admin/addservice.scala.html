@@ -1,0 +1,35 @@
+@main("Add service") {
+
+    <div class="container" style="margin-top: 50px;">
+        <form method="post" action="@routes.ServiceController.save()"  enctype="multipart/form-data" >
+            <div class="form-group">
+                <label>Service type</label> <br>
+                <input type="text"  id="inputDefault" name="serviceType" placeholder="Input service type">
+                <p><br></p>
+            </div>
+            <div>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="isReservable"> Can reserve
+                </label>
+                <p><br></p>
+            </div>
+                <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
+            <div>
+                <label>Add service image:</label> <br>
+
+                <span class="btn btn-default btn-file">
+                    <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*" multiple>
+
+                </span>
+
+            </div>
+            <p><br/></p>
+
+            <button class="btn btn-default" type="submit">Submit</button>
+            <button id="redirect" class="btn btn-default" data-dismiss="modal" type="button"><a href="/">Cancel</a></button>
+        </form>
+    </div>
+
+
+
+}

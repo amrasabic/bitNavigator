@@ -17,14 +17,16 @@ public class Comment extends Model {
     public int id;
     @Constraints.Required
     public String commentContent;
+    public Integer rate;
     public Calendar commentCreated;
     @ManyToOne
     public Place place;
     @ManyToOne
-    @Constraints.Required
     public User user;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Report> reports;
 
-    public static Finder<Integer, Comment> finder = new Finder<Integer, Comment>(Integer.class, Comment.class);
+    public static Finder<Integer, Comment> finder = new Finder<Integer, Comment>(Comment.class);
 
     public static List<Comment> findAll() {
         return finder.all();
@@ -34,4 +36,11 @@ public class Comment extends Model {
         return finder.where().eq("place", place).findList();
     }
 
+    public static Comment findById(int id) {
+        return finder.byId(id);
+    }
+
+    public static Comment findByUserAndPlace(String email, Place place) {
+        return finder.where().eq("user", User.findByEmail(email)).eq("place", place).findUnique();
+    }
 }

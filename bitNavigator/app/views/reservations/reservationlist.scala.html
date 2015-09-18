@@ -1,0 +1,87 @@
+@(reservations: java.util.List[Reservation])(statuses: java.util.List[Status])
+@import utillities.SessionHelper
+
+@main("Comments list") {
+
+    <h2>All reservations</h2>
+    <table id="table-all-reservations" class="table table-striped">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>user</th>
+                <th>place title</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(reservation <- reservations) {
+            @if(SessionHelper.isAdmin || reservation.place.user.email == SessionHelper.getCurrentUsersEmail){
+                <tr>
+                    <td>@reservation.id</td>
+                    <td>@reservation.title</td>
+                    <td>@reservation.user.email</td>
+                    <td>@reservation.place.title</td>
+                    <td>
+                        <form action="@routes.ReservationController.changeStatus()" method="post">
+                            <select name="statusId">
+                            @for(status <- statuses){
+                                @if(status.id == reservation.status.id) {
+                                    <option value="@status.id" selected>@status.status</option>
+                                } else {
+                                    <option value="@status.id">@status.status</option>
+                                }
+                            }
+                            </select>
+                            <input type="hidden" name="reservationId" value="@reservation.id">
+                            <input type="submit" class="btn btn-xs btn-warning" value="Save Change">
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+
+    <h2>My reservations</h2>
+    <table id="table-my-reservations" class="table table-striped">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>place title</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(reservation <- reservations) {
+            @if(reservation.user.email == SessionHelper.getCurrentUsersEmail){
+                <tr>
+                    <td>@reservation.id</td>
+                    <td>@reservation.title</td>
+                    <td>@reservation.place.title</td>
+                    @if(reservation.status.id == Status.APPROVED) {
+                            <td style="color: green">@reservation.status.status</td>
+                    }
+                    @if(reservation.status.id == Status.WAITING){
+                            <td style="color: orange">@reservation.status.status</td>
+                    }
+                    @if(reservation.status.id == Status.DENIED){
+                            <td style="color: red">@reservation.status.status</td>
+                    }
+
+
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+
+    <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
+    <script>
+        $(document).ready(function(){
+            $('#table-all-reservations').DataTable();
+            $('#table-my-reservations').DataTable();
+        });
+    </script>
+}

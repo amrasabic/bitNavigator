@@ -3,27 +3,42 @@
 # ~~~~
 
 # Home page
-GET           /                      @controllers.Application.index()
+GET           /                                @controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file          controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
 
-GET           /signin                @controllers.UserHandler.signIn()
-GET           /signup                @controllers.UserHandler.signUp()
-POST          /signin                @controllers.UserHandler.checkSignIn()
-POST          /signup                @controllers.UserHandler.save()
-GET           /signout               @controllers.UserHandler.signOut()
-GET           /addplace              @controllers.PlaceHandler.addPlace()
-POST          /addplace              @controllers.PlaceHandler.savePlace()
-GET           /profile/:email        @controllers.UserHandler.profile(email: String)
-POST          /profile/:email        @controllers.UserHandler.updateUser(email: String)
-GET           /users/                @controllers.UserHandler.userList()
-DELETE        /users/:email          @controllers.UserHandler.delete(email: String)
-GET           /places/               @controllers.PlaceHandler.placeList()
-DELETE        /places/:id            @controllers.PlaceHandler.delete(id: Integer)
-GET           /place/edit/:id        @controllers.PlaceHandler.editPlace(id: Integer)
-GET           /place/:id             @controllers.PlaceHandler.viewPlace(id: Integer)
-POST          /place/:id             @controllers.PlaceHandler.postComment(id: String)
-GET           /admin                 @controllers.UserHandler.adminView()
-GET           /addservice            @controllers.ServiceController.addService()
-POST          /addservice            @controllers.ServiceController.save()
+GET           /user/signin                     @controllers.UserController.signIn()
+POST          /user/signin                     @controllers.UserController.checkSignIn()
+GET           /user/signup                     @controllers.UserController.signUp()
+POST          /user/signup                     @controllers.UserController.save()
+GET           /user/signout                    @controllers.UserController.signOut()
+GET           /user/list                       @controllers.UserController.userList()
+
+GET           /user/profile/:email             @controllers.UserController.profile(email: String)
+POST          /user/profile/:email             @controllers.UserController.updateUser(email: String)
+DELETE        /user/profile/:email             @controllers.UserController.delete(email: String)
+
+GET           /user/reservations               @controllers.ReservationController.reservationsList()
+POST          /user/reservations               @controllers.ReservationController.changeStatus()
+
+GET           /place/add                       @controllers.PlaceController.addPlace()
+POST          /place/add                       @controllers.PlaceController.savePlace()
+POST          /place/update/:id                @controllers.PlaceController.updatePlace(id: Integer)
+
+GET           /place/list                      @controllers.PlaceController.placeList()
+GET           /place/profile/:id               @controllers.PlaceController.viewPlace(id: Integer)
+POST          /place/profile/:id               @controllers.ReservationController.submitReservation(id: Integer)
+GET           /place/edit/:id                  @controllers.PlaceController.editPlace(id: Integer)
+DELETE        /places/profile/:id              @controllers.PlaceController.delete(id: Integer)
+POST          /place/comment/report            @controllers.CommentController.reportComment()
+POST          /place/comment/update/:id        @controllers.PlaceController.updateComment(id: Integer)
+POST          /place/comment/:id               @controllers.PlaceController.postComment(id: Integer)
+DELETE        /place/comment/:id               @controllers.CommentController.deleteComment(id: Integer)
+
+GET           /admin                           @controllers.UserController.adminView()
+GET           /service/add                     @controllers.ServiceController.addService()
+POST          /service/add                     @controllers.ServiceController.save()
+
+GET           /comments/list                   @controllers.CommentController.commentsList()
+GET           /comments/reported               @controllers.CommentController.reportedComments()

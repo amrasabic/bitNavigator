@@ -1,0 +1,40 @@
+@(users: java.util.List[User])
+
+@main("User list") {
+    <script src="@routes.Assets.versioned("javascripts/jquery-2.1.4.js")" type="text/javascript"></script>
+
+    <h2>All users</h2>
+
+    <table id="myTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>email</th>
+                <th>delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(user <- users) {
+            <tr>
+                <td>@user.id</td>
+                <td>@user.firstName</td>
+                <td>@user.lastName</td>
+                <td>@user.email</td>
+                <td>@if(user.email != session.get("email") ){
+                    <a href="@routes.UserController.delete(user.email)" role="button" data-role="delete" data-delete-parent="tr""><i class="glyphicon glyphicon-trash"></i></a>
+                }</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
+    <script>
+        $(document).ready(function(){
+            $('#myTable').DataTable();
+        });
+    </script>
+
+}

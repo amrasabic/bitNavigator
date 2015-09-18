@@ -1,0 +1,152 @@
+@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])
+@import helper._
+
+
+@main("Edit place") {
+
+    <script>
+        lat = @place.latitude;
+        lng = @place.longitude;
+    </script>
+
+    <script>
+        var marker;
+        function initMap() {
+            var lat = 43.850;
+            var lng = 18.390;
+
+            @if(place.latitude != null && place.longitude != null) {
+                lat = @place.latitude;
+                lng = @place.longitude;
+            }
+
+             var map = new google.maps.Map(document.getElementById('map-add-place'), {
+                zoom: 14,
+                center: {lat: lat, lng: lng}
+             });
+            var geocoder = new google.maps.Geocoder;
+            var infowindow = new google.maps.InfoWindow;
+            marker = new google.maps.Marker({
+                position: {lat: lat, lng: lng},
+                map: map,
+                draggable: true
+            });
+            document.getElementById('btn-add').addEventListener('click', function() {
+                geocodeLatLng(geocoder, map, infowindow, marker.getPosition().lat() + "," + marker.getPosition().lng());
+            });
+        }
+        function geocodeLatLng(geocoder, map, infowindow, ll) {
+          var input = ll;
+          var latlngStr = input.split(',', 2);
+          var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+          geocoder.geocode({'location': latlng}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+                //map.setZoom(11);
+                infowindow.setContent(results[0].formatted_address);
+                infowindow.open(map, marker);
+                document.getElementById("address").value = results[0].formatted_address;
+                document.getElementById("latitude").value = latlng.lat;
+                document.getElementById("longitude").value = latlng.lng;
+              } else {
+                window.alert('No results found');
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+    <form method="post" action="@routes.PlaceController.updatePlace(place.id)" enctype="multipart/form-data">
+        <div id="add-place-panel" class="container-fluid">
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <div class="page-header">
+                        <h3>Edit Place</h3>
+                    </div>
+                        <!-- Title input field -->
+                    <div class="form-group">
+                        <label for="usr">Title:</label>
+                        <input type="text" class="form-control" name="title" id="title" value="@place.title">
+                        <span class="alert-danger" data-error-for="title" ></span>
+                    </div>
+                    <p><br/></p>
+                        <!-- Description input field -->
+                    <div class="form-group">
+                        <label for="comment">Description:</label>
+                        <textarea class="form-control" rows="3" name="description" id="description" type="text" style="resize: none">@place.description</textarea>
+                        <span class="alert-danger" data-error-for="description" ></span>
+                    </div>
+                    <p><br/></p>
+                        <!--Address field -->
+                    <div class="form-group">
+                        <label for="usr">Address:</label>
+                        <input type="text" class="form-control" name="address" id="address" value="@place.address">
+                        <span class="alert-danger" data-error-for="title" ></span>
+                    </div>
+                    <input id="longitude" name="longitude" type="hidden">
+                    <input id="latitude" name="latitude" type="hidden">
+
+                    <div class="dropdown" style="margin-top: 10px; padding-top: 5px ;">
+                        <label for="service-list">Service:</label>
+                        <select id="service-list" class="btn btn-block" name="Services">
+                        @for(service <- services) {
+                            @if(service.serviceType.equals(place.service.serviceType)){
+                                <option selected="selected">@service.serviceType</option>
+                            }else{
+                                <option>@service.serviceType</option>
+                            }
+                        }
+                        </select>
+                    </div>
+                    <input id="service" name="serviceType" value="@place.service.serviceType" type="hidden">
+
+                    <p><br/></p>
+                        <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
+                    <span class="btn btn-default btn-file">
+                        <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*" multiple>
+                    </span>
+
+                </div>
+
+
+            </div>
+
+            <div id="map-container" class="col-md-6"><div id="map-add-place"></div>
+
+                <p><br/></p>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="btn-add" type="button">Submit address</button>
+                    <button type="submit" class="btn btn-primary" id="btn-submit">Save</button>
+                    <button id="redirect" class="btn btn-default" type="button" data-dismiss="modal" onclick="javascript:location.href='/'">
+                        Cancel</button>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+    @for(comment <- comments) {
+        <div id="container-comment" class="container-fluid">
+            <div class="panel-heading">
+                <h3 class="panel-title">@comment.user.firstName @comment.user.lastName
+                    - @comment.commentCreated.getTime</h3>
+            </div>
+            <div class="panel-body">
+                <textarea id="comment-content" class="form-control" rows="1" name="commentContent" id="commentContent" type="text" readonly>@comment.commentContent</textarea>
+            </div>
+        </div>
+
+    }
+    <script>
+        var serviceValue = document.getElementById("service");
+        var services = document.getElementById("service-list");
+
+        function changeService() {
+            serviceValue.value = services.options[services.selectedIndex].text;
+        };
+        services.onchange = changeService;
+    </script>
+
+}
