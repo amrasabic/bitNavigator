@@ -19,17 +19,21 @@ GET           /user/profile/:email             @controllers.UserController.profi
 POST          /user/profile/:email             @controllers.UserController.updateUser(email: String)
 DELETE        /user/profile/:email             @controllers.UserController.delete(email: String)
 
+GET           /user/reservations               @controllers.ReservationController.reservationsList()
+POST          /user/reservations               @controllers.ReservationController.changeStatus()
+
 GET           /place/add                       @controllers.PlaceController.addPlace()
 POST          /place/add                       @controllers.PlaceController.savePlace()
 
 GET           /place/list                      @controllers.PlaceController.placeList()
 GET           /place/profile/:id               @controllers.PlaceController.viewPlace(id: Integer)
+POST          /place/profile/:id               @controllers.ReservationController.submitReservation(id: Integer)
 GET           /place/edit/:id                  @controllers.PlaceController.editPlace(id: Integer)
 DELETE        /places/profile/:id              @controllers.PlaceController.delete(id: Integer)
 POST          /place/comment/report            @controllers.CommentController.reportComment()
 POST          /place/comment/update/:id        @controllers.PlaceController.updateComment(id: Integer)
 POST          /place/comment/:id               @controllers.PlaceController.postComment(id: Integer)
-DELETE         /place/comment/:id               @controllers.CommentController.deleteComment(id: Integer)
+DELETE        /place/comment/:id               @controllers.CommentController.deleteComment(id: Integer)
 
 GET           /admin                           @controllers.UserController.adminView()
 GET           /service/add                     @controllers.ServiceController.addService()

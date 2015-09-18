@@ -1,5 +1,6 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
@@ -20,9 +21,17 @@ import views.html.place.viewplace;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
+import play.Logger;
+import views.html.place.addplace;
+
+import static views.html.place.addplace.*;
+
+import static views.html.place.addplace.*;
 
 /**
  * Created by ognjen.cetkovic on 08/09/15.
@@ -69,7 +78,6 @@ public class PlaceController extends Controller{
         place.placeCreated = Calendar.getInstance();
         place.service = service;
         place.save();
-
 
         MultipartFormData body = request().body().asMultipartFormData();
         List<FilePart> pictures = body.getFiles();
@@ -148,9 +156,7 @@ public class PlaceController extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        List<Service> services = Service.findAll();
-        List<Comment> comments = Comment.findByPlace(place);
-        return ok(viewplace.render(place, services, comments, Image.findByPlace(place)));
+        return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place)));
     }
 
     @Security.Authenticated(Authenticators.User.class)

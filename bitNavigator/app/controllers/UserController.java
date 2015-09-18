@@ -1,11 +1,15 @@
 package controllers;
 
+import models.Image;
 import models.Place;
 import models.User;
+import org.apache.commons.io.FileUtils;
+import play.Play;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Http;
 
 import play.mvc.Security;
 import utillities.Authenticators;
@@ -16,7 +20,13 @@ import play.Logger;
 import utillities.PasswordHash;
 
 import javax.validation.constraints.Pattern;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.io.File;
+
+import java.util.Calendar;
+
 
 /**
  * Public class UserHandler extends Controller. Has methods within it that
@@ -30,6 +40,7 @@ public class UserController extends Controller {
 
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
+    private static Image image;
 
     /**
      * Leads random user to signin subpage
@@ -156,9 +167,41 @@ public class UserController extends Controller {
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
         user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
 
-        user.update();
-        List<Place> places = Place.findAll();
-        return ok(index.render(places));
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+        String formatted = format1.format(cal.getTime());
+
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        List<Http.MultipartFormData.FilePart> pictures = body.getFiles();
+
+        if (pictures != null) {
+            for (Http.MultipartFormData.FilePart picture : pictures) {
+                String name = user.firstName + formatted;
+                File file = picture.getFile();
+                String path = Play.application().path() + "/public/images/profileImages/" + user.firstName + "/" + name;
+
+                Logger.info(path);
+                try {
+                    FileUtils.moveFile(file, new File(path));
+                    image = new Image();
+                    image.name = name;
+                    path ="/images/profileImages/" + user.firstName + "/" + name;
+                    image.path = path;
+
+                    image.save();
+                    user.image = image;
+                    user.update();
+                } catch (IOException ex) {
+                    Logger.info("Could not move file. " + ex.getMessage());
+                    flash("error", "Could not move file.");
+                }
+            }
+            return redirect(routes.Application.index());
+        } else {
+            flash("error", "Files not present.");
+            return badRequest("Picture missing.");
+        }
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
@@ -171,6 +214,7 @@ public class UserController extends Controller {
     public Result delete(String email) {
         User user = User.findByEmail(email);
         if (user == null) {
+            Logger.info("dsadasd     "+ email);
             return notFound(String.format("User %s does not exists.", email));
         }
         user.delete();

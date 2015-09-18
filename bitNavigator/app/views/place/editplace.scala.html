@@ -58,10 +58,9 @@
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
-
-    <div id="add-place-panel" class="container-fluid">
-        <div class="col-md-6">
-            <form method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
+    <form method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
+        <div id="add-place-panel" class="container-fluid">
+            <div class="col-md-6">
                 <div class="panel-body">
                     <div class="page-header">
                         <h3>Edit Place</h3>
@@ -76,7 +75,7 @@
                         <!-- Description input field -->
                     <div class="form-group">
                         <label for="comment">Description:</label>
-                        <textarea class="form-control" rows="3" name="description" id="description" type="text">@place.description</textarea>
+                        <textarea class="form-control" rows="3" name="description" id="description" type="text" style="resize: none">@place.description</textarea>
                         <span class="alert-danger" data-error-for="description" ></span>
                     </div>
                     <p><br/></p>
@@ -110,23 +109,24 @@
                     </span>
 
                 </div>
-            </form>
 
-        </div>
-
-        <div id="map-container" class="col-md-6"><div id="map-add-place"></div>
-
-            <p><br/></p>
-            <div class="modal-footer">
-                <button class="btn btn-primary" id="btn-add">Submit address</button>
-                <button type="submit" class="btn btn-primary" id="btn-submit">Save</button>
-                <button id="redirect" class="btn btn-default" data-dismiss="modal" onclick="javascript:location.href='/'">
-                    Cancel</button>
 
             </div>
-        </div>
 
-    </div>
+            <div id="map-container" class="col-md-6"><div id="map-add-place"></div>
+
+                <p><br/></p>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="btn-add">Submit address</button>
+                    <button type="submit" class="btn btn-primary" id="btn-submit">Save</button>
+                    <button id="redirect" class="btn btn-default" data-dismiss="modal" onclick="javascript:location.href='/'">
+                        Cancel</button>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
     @for(comment <- comments) {
         <div id="container-comment" class="container-fluid">
             <div class="panel-heading">

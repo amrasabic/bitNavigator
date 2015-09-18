@@ -3,48 +3,40 @@
 
 @main("Comments list") {
 
-    <div class="container-fluid">
-        <h2>All comments</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>content</th>
-                    <th>place title</th>
-                    <th>user</th>
-                    <th>view</th>
-                    @if(SessionHelper.isAdmin) {
-                        <th>delete</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-            @for(comment <- comments) {
-                <tr>
-                    <td>@comment.id</td>
-                    <td>@comment.commentContent</td>
-                    <td>@comment.place.title</td>
-                    <td>@comment.user.email</td>
-                    <td><a href="@routes.PlaceController.viewPlace(comment.place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
-                    @if(SessionHelper.isAdmin) {
-                        <td><a href="/" role="button" data-role="delete" onclick="del('@routes.CommentController.deleteComment(comment.id)')"><i class="glyphicon glyphicon-trash"></i></a></td>
-                    }
-                </tr>
-            }
-            </tbody>
-        </table>
-    </div>
-    <script>
-        function del(urlToDel) {
-             $.ajax({
-                url: urlToDel,
-                type: 'DELETE',
-                success: function(results) {
-                    location.reload();
+    <h2>All comments</h2>
+    <table id="myTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>content</th>
+                <th>place title</th>
+                <th>user</th>
+                <th>view</th>
+                @if(SessionHelper.isAdmin) {
+                    <th>delete</th>
                 }
-             });
-        };
+            </tr>
+        </thead>
+        <tbody>
+        @for(comment <- comments) {
+            <tr>
+                <td>@comment.id</td>
+                <td>@comment.commentContent</td>
+                <td>@comment.place.title</td>
+                <td>@comment.user.email</td>
+                <td><a href="@routes.PlaceController.viewPlace(comment.place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
+                @if(SessionHelper.isAdmin) {
+                    <td><a href="@routes.CommentController.deleteComment(comment.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
 
-    </script>
     <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
+    <script>
+        $(document).ready(function(){
+            $('#myTable').DataTable();
+        });
+    </script>
 }

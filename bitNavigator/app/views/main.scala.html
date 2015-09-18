@@ -28,7 +28,8 @@
                     </button>
                     <a id="home-button" href="@routes.Application.index()"><i class="glyphicon glyphicon-globe"></i></a>
 
-                </div>
+        @navbar()
+
 
 
                 <div style="" aria-expanded="true" class="navbar-collapse collapse in" id="bs-example-navbar-collapse-2">
@@ -87,8 +88,11 @@
         </nav>
 
         <div class="container">
+        <div class="container-fluid">
+
         @content
         </div>
+
 
         <script src="@routes.Assets.versioned("javascripts/bootbox.min.js")"></script>
 
