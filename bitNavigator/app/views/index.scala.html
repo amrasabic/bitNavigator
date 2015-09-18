@@ -47,6 +47,13 @@
             Wrong input!
         </div>
     }
+        @if(flash.containsKey("warning")) {
+            <div class="alert alert-warning" style="width: 100%;margin-bottom: 0;text-align: center;height: 25px;padding-top: 0%">
+                <button type="btn btn-warning"  class="close" data-dismiss="alert">x</button>
+                @flash.get("warning")
+            </div>
+        }
+
     </div>
 
     <div id="map">
