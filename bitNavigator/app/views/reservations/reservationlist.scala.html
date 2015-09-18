@@ -3,6 +3,7 @@
 
 @main("Comments list") {
 
+    @if(SessionHelper.isAdmin){
     <h2>All reservations</h2>
     <table id="table-all-reservations" class="table table-striped">
         <thead>
@@ -15,8 +16,10 @@
             </tr>
         </thead>
         <tbody>
+
+        }
         @for(reservation <- reservations) {
-            @if(SessionHelper.isAdmin || reservation.place.user.email == SessionHelper.getCurrentUsersEmail){
+            @if(SessionHelper.isAdmin){
                 <tr>
                     <td>@reservation.id</td>
                     <td>@reservation.title</td>
@@ -60,7 +63,20 @@
                     <td>@reservation.id</td>
                     <td>@reservation.title</td>
                     <td>@reservation.place.title</td>
-                    <td style="color: red">@reservation.status.status</td>
+                    <td><form action="@routes.ReservationController.changeStatus()" method="post">
+                        <select name="statusId">
+                        @for(status <- statuses){
+                            @if(status.id == reservation.status.id) {
+                                <option value="@status.id" selected>@status.status</option>
+                            } else {
+                                <option value="@status.id">@status.status</option>
+                            }
+                        }
+                        </select>
+                        <input type="hidden" name="reservationId" value="@reservation.id">
+                        <input type="submit" class="btn btn-xs btn-warning" value="Save Change">
+                    </form></td>
+                    @*<td style="color: red">@reservation.status.status</td>*@
                 </tr>
             }
         }
