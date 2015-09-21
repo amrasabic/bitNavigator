@@ -272,11 +272,14 @@ public class PlaceController extends Controller{
     }
 
     public Result validateForm(){
-        Form<Place> binded = placeForm.bindFromRequest();
-        if(binded.hasErrors()){
-            return badRequest(binded.errorsAsJson());
+        Form<Place> boundPlaceForm = placeForm.bindFromRequest();
+        Form<Service> boundServiceForm = serviceForm.bindFromRequest();
+        if(boundPlaceForm.hasErrors()){
+            return badRequest(boundPlaceForm.errorsAsJson());
+        } else if (boundServiceForm.hasErrors()) {
+            return badRequest(boundServiceForm.errorsAsJson());
         } else {
-            return ok("we good, we good");
+            return ok();
         }
     }
 
