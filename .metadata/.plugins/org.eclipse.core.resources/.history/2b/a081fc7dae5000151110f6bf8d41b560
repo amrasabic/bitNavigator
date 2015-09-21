@@ -1,5 +1,0 @@
-package ba.bitcamp.passwordHashingAndSalting;
-
-public class PasswordHash {
-
-}
