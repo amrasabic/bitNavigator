@@ -74,27 +74,27 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
-            for (FilePart picture : pictures) {
-                File file = picture.getFile();
-                String name = formatted + file.getName();
-                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
-
-                Logger.info(name);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    imageLists.add(name);
-                    Image image = new Image();
-                    image.name = name;
-                    path ="/images/placeImages/" + place.title + "/" + name;
-                    image.path = path;
-                    image.place = place;
-                    image.save();
-
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
+//            for (FilePart picture : pictures) {
+//                File file = picture.getFile();
+//                String name = formatted + file.getName();
+//                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
+//
+//                Logger.info(name);
+//                try {
+//                    FileUtils.moveFile(file, new File(path));
+//                    imageLists.add(name);
+//                    Image image = new Image();
+//                    image.name = name;
+//                    path ="/images/placeImages/" + place.title + "/" + name;
+//                    image.path = path;
+//                    image.place = place;
+//                    image.save();
+//
+//                } catch (IOException ex) {
+//                    Logger.info("Could not move file. " + ex.getMessage());
+//                    flash("error", "Could not move file.");
+//                }
+//            }
 
             return ok(index.render(Place.findAll()));
         } else {
@@ -142,27 +142,27 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
-            for (FilePart picture : pictures) {
-                File file = picture.getFile();
-                String name = formatted + file.getName();
-                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
-
-                Logger.info(name);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    imageLists.add(name);
-                    Image image = new Image();
-                    image.name = name;
-                    path ="/images/placeImages/" + place.title + "/" + name;
-                    image.path = path;
-                    image.place = place;
-                    image.save();
-
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
+//            for (FilePart picture : pictures) {
+//                File file = picture.getFile();
+//                String name = formatted + file.getName();
+//                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
+//
+//                Logger.info(name);
+//                try {
+//                    FileUtils.moveFile(file, new File(path));
+//                    imageLists.add(name);
+//                    Image image = new Image();
+//                    image.name = name;
+//                    path ="/images/placeImages/" + place.title + "/" + name;
+//                    image.path = path;
+//                    image.place = place;
+//                    image.save();
+//
+//                } catch (IOException ex) {
+//                    Logger.info("Could not move file. " + ex.getMessage());
+//                    flash("error", "Could not move file.");
+//                }
+//            }
 
             return redirect(routes.PlaceController.viewPlace(id));
         } else {

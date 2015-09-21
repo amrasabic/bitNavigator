@@ -40,6 +40,7 @@ public class UserController extends Controller {
 
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
+
     private static Image image;
 
     /**
@@ -69,8 +70,6 @@ public class UserController extends Controller {
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
-
             return redirect(routes.Application.index());
         }
         try {
@@ -79,14 +78,10 @@ public class UserController extends Controller {
             }
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
-
             return redirect(routes.Application.index());
         }
         session().clear();
         session("email", user.email);
-
-        List<Place> places = Place.findAll();
         return redirect(routes.Application.index());
     }
 
@@ -114,8 +109,6 @@ public class UserController extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
-
-
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);
@@ -137,7 +130,6 @@ public class UserController extends Controller {
     public Result updateUser(String email) {
 
         Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
-
         User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
 
         if(user == null) {
@@ -155,47 +147,25 @@ public class UserController extends Controller {
             flash("error", "Name can only hold letters!");
             return badRequest(profile.render(user));
         }
-        Logger.info(boundForm.bindFromRequest().field("mobileNumber").value());
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
         user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
-
         Http.MultipartFormData body = request().body().asMultipartFormData();
-        List<Http.MultipartFormData.FilePart> pictures = body.getFiles();
-        user.update();
-        if (pictures != null) {
-            for (Http.MultipartFormData.FilePart picture : pictures) {
-                String name = user.firstName + formatted;
-                File file = picture.getFile();
-                String path = Play.application().path() + "/public/images/profileImages/" + user.firstName + "/" + name;
+        Http.MultipartFormData.FilePart filePart = body.getFile("image");
 
-                Logger.info(path);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    image = new Image();
-                    image.name = name;
-                    path ="/images/profileImages/" + user.firstName + "/" + name;
-                    image.path = path;
-
-                    image.save();
-                    user.image = image;
-                    user.update();
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
-            return redirect(routes.Application.index());
+        if(filePart != null){
+            Logger.debug("Content type: " + filePart.getContentType());
+            Logger.debug("Key: " + filePart.getKey());
+            File image = filePart.getFile();
+            user.image = Image.create(image);
         } else {
             flash("error", "Files not present.");
             return badRequest("Picture missing.");
         }
-
+      //  image.save();
+        user.update();
+        return redirect(routes.Application.index());
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
@@ -208,7 +178,7 @@ public class UserController extends Controller {
     public Result delete(String email) {
         User user = User.findByEmail(email);
         if (user == null) {
-            Logger.info("dsadasd     "+ email);
+
             return notFound(String.format("User %s does not exists.", email));
         }
         user.delete();

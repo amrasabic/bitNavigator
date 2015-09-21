@@ -144,7 +144,7 @@
         <h4>Gallery</h4>
         @for(image <- images) {
             <div class="media-left">
-                <img class="media-object" src="@routes.Assets.versioned(image.path)" alt="...">
+                <img class="media-object" src="@routes.Assets.versioned(image.image_url)" alt="...">
             </div>
         }
     </div>

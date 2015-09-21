@@ -15,8 +15,10 @@ create table comment (
 
 create table image (
   id                        integer auto_increment not null,
-  name                      varchar(255),
-  path                      varchar(255),
+  public_id                 varchar(255),
+  image_url                 varchar(255),
+  secret_image_url          varchar(255),
+  is_published              tinyint(1) default 0,
   place_id                  integer,
   user_id                   integer,
   constraint uq_image_user_id unique (user_id),
