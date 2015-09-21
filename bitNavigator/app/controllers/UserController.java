@@ -114,18 +114,11 @@ public class UserController extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
-        try {
-            singUp.password = PasswordHash.createHash(singUp.password);
-        } catch (Exception e) {
-            Logger.error("Could not create hash");
-            flash(ERROR_MESSAGE, "Password invalid!");
-            return badRequest(signup.render(boundForm));
-        }
+
 
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);
-        List<Place> places = Place.findAll();
         return redirect(routes.Application.index());
     }
 
@@ -174,7 +167,7 @@ public class UserController extends Controller {
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
         List<Http.MultipartFormData.FilePart> pictures = body.getFiles();
-
+        user.update();
         if (pictures != null) {
             for (Http.MultipartFormData.FilePart picture : pictures) {
                 String name = user.firstName + formatted;
@@ -202,6 +195,7 @@ public class UserController extends Controller {
             flash("error", "Files not present.");
             return badRequest("Picture missing.");
         }
+
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
