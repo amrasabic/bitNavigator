@@ -1,6 +1,6 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
+
 import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
@@ -13,25 +13,16 @@ import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
 import views.html.index;
-import views.html.place.addplace;
-import views.html.place.editplace;
-import views.html.place.placelist;
-import views.html.place.viewplace;
+import views.html.place.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
-import play.Logger;
-import views.html.place.addplace;
 
-import static views.html.place.addplace.*;
-
-import static views.html.place.addplace.*;
 
 /**
  * Created by ognjen.cetkovic on 08/09/15.
