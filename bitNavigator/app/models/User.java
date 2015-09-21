@@ -4,7 +4,10 @@ import javax.persistence.*;
 
 import com.avaje.ebean.Model;
 import controllers.UserController;
+import play.Logger;
 import play.data.validation.Constraints;
+import utillities.PasswordHash;
+import views.html.user.signup;
 
 import java.util.Calendar;
 import java.util.List;
@@ -70,6 +73,11 @@ public class User extends Model {
         user.email = signUp.email;
         user.firstName = signUp.firstName;
         user.lastName = signUp.lastName;
+        try {
+            signUp.password = PasswordHash.createHash(signUp.password);
+        } catch (Exception e) {
+            Logger.error("Could not create hash");
+        }
         user.password = signUp.password;
         user.accountCreated = Calendar.getInstance();
         user.phoneNumber = signUp.mobileNumber;

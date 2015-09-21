@@ -69,6 +69,7 @@ public class CommentTest {
         List<Comment> lists = Comment.findByPlace(p);
         assertNotNull(lists);
     }
+    /*
     @Test
     public void testFindById (){
         Comment c = new Comment();
@@ -78,6 +79,7 @@ public class CommentTest {
         Comment com = Comment.findById(5);
         assertNotNull(com);
     }
+    /*
     @Test
     public void findByEmail() {
         User u = new User();
@@ -97,4 +99,5 @@ public class CommentTest {
         Comment comment = Comment.findByUsersEmail("hasib@jaaazzxyq.com");
         assertNotNull(comment);
     }
+    */
 }
