@@ -27,6 +27,10 @@ public class Service extends Model {
         return finder.where().eq("serviceType", type).findUnique();
     }
 
+    public static Service findById(int id) {
+        return finder.byId(id);
+    }
+
     public Boolean isReservable(){
         if(isReservable){
             return true;
