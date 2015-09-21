@@ -6,7 +6,7 @@
     @helper.form(action = routes.UserController.save()) {
 
         <div id="container-sign-up" class="container-fluid">
-            <form method="post" action="@routes.UserController.save()">
+            <form id="sign-up-form" method="post" action="@routes.UserController.save()">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">First name</span>
                         <input id="firstName-signup" type="text" class="form-control" value="@userForm("firstName").value" aria-describedby="basic-addon1" name="firstName"
@@ -34,6 +34,7 @@
                 </div>
                 <button id="btn-sign-up" type="submit" class="btn btn-default">Sign up</button>
             </form>
+            <span class="alert-danger" data-error-for="" ></span>
 
             @if(flash.containsKey("error")) {
                 <div class="alert alert-danger">
@@ -57,6 +58,54 @@
                var body = document.getElementsByTagName("body")[0];
                body.style.backgroundColor = "lightgrey";
             </script>
+
+        <script>
+        var a;
+        $(document).ready(function(){
+            // for any form on this page do the follofing
+            $('form').submit(function(e, options){
+                //if options is not defined define it as a empty object
+                var options = options || {};
+                //if allow is true let the event propagate to the server
+                if(options.allow == true){
+                    return;
+                }
+                //prevent submiting the form
+                e.preventDefault();
+                //clean all error messages
+                $("[data-error-for]").html("");
+                //get a refference to the current form
+                $form = $(this);
+                /*
+                * This will setup a AJAX call, the params are
+                * url: where to go
+                * method: what kind of request
+                * data: the data to add to the request
+                 */
+                $.ajax({
+                    url: "@routes.UserController.validateForm()",
+                    method: "post",
+                    data: $(this).serialize()
+                }).success(function(response){
+                    $form.trigger("submit", {allow: true});
+                }).error(function(response){
+                    console.log(response);
+                    a = response;
+                    var errors = response.responseJSON;
+                    console.log(errors);
+                    var keys = Object.keys(errors);
+                    for(var i = 0; i < keys.length; i++){
+                        var errorMessages = errors[keys[i]];
+                        var allErrors = "";
+                        for(var j = 0; j < errorMessages.length; j++){
+                            allErrors += errorMessages[j];
+                        }
+                        $('[data-error-for="'+keys[i]+'"]').html(allErrors);
+                    }
+                });
+            });
+        });
+    </script>
 
     }
 }

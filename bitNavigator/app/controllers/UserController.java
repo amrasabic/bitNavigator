@@ -40,6 +40,7 @@ public class UserController extends Controller {
 
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
+    private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
     private static Image image;
 
     /**
@@ -251,6 +252,45 @@ public class UserController extends Controller {
         @Constraints.MaxLength (25)
         @Constraints.Required
         public String confirmPassword;
+    }
+
+    public Result formSubmit(){
+        //get the form data from the request - do this only once
+        Form<SignUpForm> binded = signUpForm.bindFromRequest();
+        //if we have errors just return a bad request
+        if(binded.hasErrors()){
+            flash("error", "check your inputs");
+            return badRequest(signup.render(binded));
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            SignUpForm signUp = binded.get();
+
+
+            flash("success", "user added");
+            return redirect("/");
+        }
+
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateForm(){
+        //get the form data from the request - do this only once
+        Form<SignUpForm> binded = signUpForm.bindFromRequest();
+        //if we have errors just return a bad request
+        if(binded.hasErrors()){
+            flash("error", "check your inputs");
+            return badRequest(binded.errorsAsJson());
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            SignUpForm signUp = binded.get();
+
+
+            flash("success", "user added");
+            return redirect("/");
+        }
     }
 
 }
