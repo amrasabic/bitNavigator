@@ -58,6 +58,7 @@ create table service (
   service_type              varchar(255),
   service_icon              varchar(255),
   is_reservable             tinyint(1) default 0,
+  constraint uq_service_service_type unique (service_type),
   constraint pk_service primary key (id))
 ;
 

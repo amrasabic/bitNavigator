@@ -33,14 +33,21 @@ public class ServiceController extends Controller {
 
     private static final Form<Service> serviceForm = Form.form(Service.class);
 
-
+    /**
+     *
+     * @return
+     */
     @Security.Authenticated(Authenticators.Admin.class)
     public Result serviceList(){
         List<Service> services = Service.findAll();
         return ok(servicelist.render(services));
     }
 
-
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Security.Authenticated(Authenticators.Admin.class)
     public Result delete(Integer id) {
         Service service = Service.findById(id);
@@ -52,6 +59,11 @@ public class ServiceController extends Controller {
         return redirect(routes.ServiceController.serviceList());
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Security.Authenticated(Authenticators.Admin.class)
     public Result editService(Integer id){
         Service service = Service.findById(id);
@@ -62,6 +74,11 @@ public class ServiceController extends Controller {
         return ok(editservice.render(service));
         }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Security.Authenticated(Authenticators.Admin.class)
     public  Result updateService(Integer id) {
 
@@ -129,13 +146,10 @@ public class ServiceController extends Controller {
 
         Form<Service> boundForm = serviceForm.bindFromRequest();
 
-
-
-
         MultipartFormData body = request().body().asMultipartFormData();
         List<FilePart> picture = body.getFiles();
 
-        if (boundForm.hasErrors() || !picture.isEmpty()) {
+        if (boundForm.hasErrors()) {
             flash("error", "Enter service type an icon.");
             return badRequest(addservice.render(boundForm));
         }
@@ -162,12 +176,13 @@ public class ServiceController extends Controller {
                 service.serviceIcon = imagepath;
 
                 service.save();
+                return redirect(routes.ServiceController.serviceList());
 
             } catch (IOException ex) {
-                Logger.info("Could not move file. " + ex.getMessage());
-                flash("error", "Could not move file.");
+//                Logger.info("Could not move file. " + ex.getMessage());
+                flash("error", "Service already exist.");
+                return badRequest(addservice.render(boundForm));
             }
-            return ok(index.render(Place.findAll()));
         } else {
             flash("error", "Enter service icon.");
             return badRequest(addservice.render(boundForm));
