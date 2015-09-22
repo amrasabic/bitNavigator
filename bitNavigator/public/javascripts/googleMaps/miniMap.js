@@ -1,9 +1,10 @@
 /**
  * Created by ognjen.cetkovic on 21/09/15.
  */
+
 var marker;
 function initMap() {
-
+    alert(lat);
     if(lat == undefined || lng == undefined){
         var lat = 43.850;
         var lng = 18.390;

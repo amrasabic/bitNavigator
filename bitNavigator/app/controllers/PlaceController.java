@@ -1,11 +1,14 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
 import play.Play;
+import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -180,7 +183,12 @@ public class PlaceController extends Controller{
     }
 
     public Result placeList(){
+        DynamicForm form = Form.form().bindFromRequest();
+        String srchTerm = form.data().get("srch-term");
         List<Place> places = Place.findAll();
+        if(srchTerm != null) {
+            places = Place.findByValue(srchTerm);
+        }
         return ok(placelist.render(places));
     }
 
@@ -283,4 +291,16 @@ public class PlaceController extends Controller{
         }
     }
 
+    public Result autoCompleteSearch() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String srchTerm = form.data().get("srch-term");
+        List<Place> places = Place.findAll();
+        if(srchTerm != null) {
+            places = Place.findByValue(srchTerm);
+
+        }Logger.info(srchTerm+"------------------------");
+        JsonNode object = Json.toJson(places);
+
+        return ok(object);
+    }
 }

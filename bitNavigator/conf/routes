@@ -26,6 +26,7 @@ GET           /place/add                       @controllers.PlaceController.addP
 POST          /place/add                       @controllers.PlaceController.savePlace()
 POST          /place/validate                  @controllers.PlaceController.validateForm()
 POST          /place/update/:id                @controllers.PlaceController.updatePlace(id: Integer)
+POST          /                                @controllers.PlaceController.autoCompleteSearch()
 
 GET           /place/list                      @controllers.PlaceController.placeList()
 GET           /place/profile/:id               @controllers.PlaceController.viewPlace(id: Integer)
