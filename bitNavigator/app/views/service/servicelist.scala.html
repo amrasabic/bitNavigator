@@ -11,9 +11,10 @@
         });
     </script>
 
-    <div class="container">
     <h2>All services</h2>
-
+    <a href="@routes.ServiceController.addService()" calss="btn btn-primary">
+        <i class="glyphicon glyphicon-plus"></i>Add service
+    </a>
     <table id="myTable" class="table table-striped">
         <thead>
             <tr>
@@ -47,5 +48,5 @@
         }
         </tbody>
     </table>
-    </div>
+
     }
