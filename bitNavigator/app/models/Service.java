@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +14,7 @@ public class Service extends Model {
 
     @Id
     public Integer id;
+    @Constraints.Required(message = "This field is required!")
     public String serviceType;
     public String serviceIcon;
     public boolean isReservable;

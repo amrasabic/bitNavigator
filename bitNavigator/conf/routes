@@ -25,6 +25,7 @@ POST          /user/reservations               @controllers.ReservationControlle
 
 GET           /place/add                       @controllers.PlaceController.addPlace()
 POST          /place/add                       @controllers.PlaceController.savePlace()
+POST          /place/validate                  @controllers.PlaceController.validateForm()
 POST          /place/update/:id                @controllers.PlaceController.updatePlace(id: Integer)
 
 GET           /place/list                      @controllers.PlaceController.placeList()
