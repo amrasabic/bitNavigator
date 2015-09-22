@@ -2,7 +2,95 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db1a7d02-6423-4e48-978a-ea628d0d3ded" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/PasswordEncryption/1.tree" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/SARAJEVO CITY CENTER/2015-09-19-11-22-47multipartBody7296670840356691869asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Umjetnička galerija BiH/2015-09-19-11-27-34multipartBody1334936933764799373asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Narodno pozorište/2015-09-19-11-29-38multipartBody7323700096660698907asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Latinska ćuprija/2015-09-19-11-32-47multipartBody2123199355675931548asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Olimpijski stadion Asim Ferhatovic - Hase/2015-09-19-11-37-27multipartBody594477990246596878asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Termalna rivijera Ilidza/2015-09-19-11-40-08multipartBody5741580972891513440asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Olimpijski bazen Otoka/2015-09-19-11-45-25multipartBody362021680557242591asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/McDonald's/2015-09-19-11-45-56multipartBody3806738214479372607asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Festina lente/2015-09-19-11-50-04multipartBody5924260488019428286asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Festina lente/2015-09-19-11-50-50multipartBody822615949441080100asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Festina lente/2015-09-19-11-52-19multipartBody2411914571619221908asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/dsadas/2015-09-22-03-05-50multipartBody5636834652636805963asTemporaryFile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/6.tree" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/profileImages/Kristina/Kristina2015-09-19-11-35-55" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/profileImages/Lena/Lena2015-09-19-11-35-08" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/profileImages/Ognjen/Ognjen2015-09-22-01-21-06" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/.indexes/properties.index" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/org.eclipse.egit.core/GitProjectData.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/javascripts/getService.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/javascripts/googleMaps/miniMap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.core.prefs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/javascripts/validateForm.js" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\1b\e0b21864ae5000151110f6bf8d41b560" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\2b\a081fc7dae5000151110f6bf8d41b560" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\2f\d0f4ae14ae5000151110f6bf8d41b560" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\59\d07638a5b25000151110f6bf8d41b560" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\61\50398be7b25000151110f6bf8d41b560" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\aa\a0ff2d52e4500015109dfea21b2d29c1" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\e4\40a0b94dbd5000151361f086ec2541cb" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\e9\b0321270bd5000151361f086ec2541cb" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\fc\60096a64bd5000151361f086ec2541cb" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\PasswordEncryption\.indexes\af\history.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\PasswordEncryption\.indexes\e4\3f\f2\ce\history.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\PasswordEncryption\.markers.snap" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\PasswordEncryption\.syncinfo.snap" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\RemoteSystemsTempFiles\.markers.snap" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\RemoteSystemsTempFiles\.syncinfo.snap" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.root\.markers.snap" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.root\5.tree" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\5.snap" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1106408436.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1217923329.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1248407149.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1442487239.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1543766311.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\2330857962.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\2623427843.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\2775202610.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\2963538765.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3004383119.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3184717171.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3398816544.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\349556966.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3544518797.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3793391456.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3867579341.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\4232502288.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\4237918392.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\963700148.index" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.team.cvs.core\.running" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/public/images/serviceImages/Coffee.png" afterPath="$PROJECT_DIR$/bitNavigator/public/images/serviceImages/Coffee.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.log" afterPath="$PROJECT_DIR$/.metadata/.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/Application.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/Application.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/test/models/CommentTest.java" afterPath="$PROJECT_DIR$/bitNavigator/test/models/CommentTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/Place.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/Place.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/PlaceController.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/PlaceController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/Reservation.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/Reservation.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/Service.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/Service.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/User.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/User.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/place/addplace.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/place/addplace.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/place/editplace.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/place/editplace.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/index.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/index.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/public/stylesheets/main.css" afterPath="$PROJECT_DIR$/bitNavigator/public/stylesheets/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/main.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/main.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/navbar.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/navbar.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/reservations/reservationlist.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/reservations/reservationlist.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/conf/routes" afterPath="$PROJECT_DIR$/bitNavigator/conf/routes" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/user/signup.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/user/signup.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/version.ini" afterPath="$PROJECT_DIR$/.metadata/version.ini" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/place/viewplace.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/place/viewplace.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" />
     </list>
     <ignored path="bitNavigator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,7 +131,7 @@
               <caret line="53" column="10" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
               <folding>
                 <element signature="e#118#143#0#HTML" expanded="true" />
-                <marker date="1442930926342" expanded="true" signature="156:183" placeholder="-- Adding se..." />
+                <marker date="1442935700578" expanded="true" signature="156:183" placeholder="-- Adding se..." />
               </folding>
             </state>
           </provider>
@@ -53,7 +141,7 @@
         <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/User.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="23" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="25" />
+              <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -97,8 +185,8 @@
       <file leaf-file-name="Service.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Service.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.54025424">
-              <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.21610169">
+              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -110,8 +198,10 @@
         <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="118" column="31" selection-start-line="118" selection-start-column="17" selection-end-line="118" selection-end-column="31" />
-              <folding />
+              <caret line="112" column="31" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
+              <folding>
+                <marker date="1442935743487" expanded="true" signature="10338:10344" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -633,6 +723,12 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
@@ -697,12 +793,12 @@
       <updated>1442425429224</updated>
       <workItem from="1442425428570" duration="286000" />
       <workItem from="1442768006446" duration="241000" />
-      <workItem from="1442913346014" duration="14874000" />
+      <workItem from="1442913346014" duration="15208000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15401000" />
+    <option name="totallyTimeSpent" value="15735000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
@@ -781,8 +877,10 @@
     <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="31" selection-start-line="118" selection-start-column="17" selection-end-line="118" selection-end-column="31" />
-          <folding />
+          <caret line="112" column="31" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
+          <folding>
+            <marker date="1442935743487" expanded="true" signature="10338:10344" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -829,7 +927,7 @@
           <caret line="53" column="10" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
           <folding>
             <element signature="e#118#143#0#HTML" expanded="true" />
-            <marker date="1442930926342" expanded="true" signature="156:183" placeholder="-- Adding se..." />
+            <marker date="1442935700578" expanded="true" signature="156:183" placeholder="-- Adding se..." />
           </folding>
         </state>
       </provider>
@@ -845,15 +943,15 @@
     <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="23" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="25" />
+          <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Service.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54025424">
-          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.21610169">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

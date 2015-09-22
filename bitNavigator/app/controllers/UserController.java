@@ -40,6 +40,7 @@ public class UserController extends Controller {
 
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
+    private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
     private static Image image;
 
     /**
@@ -114,18 +115,11 @@ public class UserController extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
-        try {
-            singUp.password = PasswordHash.createHash(singUp.password);
-        } catch (Exception e) {
-            Logger.error("Could not create hash");
-            flash(ERROR_MESSAGE, "Password invalid!");
-            return badRequest(signup.render(boundForm));
-        }
+
 
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);
-        List<Place> places = Place.findAll();
         return redirect(routes.Application.index());
     }
 
@@ -174,7 +168,7 @@ public class UserController extends Controller {
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
         List<Http.MultipartFormData.FilePart> pictures = body.getFiles();
-
+        user.update();
         if (pictures != null) {
             for (Http.MultipartFormData.FilePart picture : pictures) {
                 String name = user.firstName + formatted;
@@ -202,6 +196,7 @@ public class UserController extends Controller {
             flash("error", "Files not present.");
             return badRequest("Picture missing.");
         }
+
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
@@ -239,9 +234,9 @@ public class UserController extends Controller {
         @Constraints.Email
         @Constraints.Required
         public String email;
-        @Constraints.Pattern ("[a-zA-Z]+")
+        @Constraints.Pattern (value = "[a-zA-Z]+", message = "First name can only contain alphabetic characters")
         public String firstName;
-        @Constraints.Pattern ("[a-zA-Z]+")
+        @Constraints.Pattern (value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
         //@Constraints.Pattern ("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
         @Constraints.Pattern ("^\\+387[3,6][1-6]\\d{6}")
@@ -249,14 +244,53 @@ public class UserController extends Controller {
     }
 
     public static class SignUpForm  extends UserNameForm{
-        @Constraints.MinLength (8)
-        @Constraints.MaxLength (25)
-        @Constraints.Required
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required (message = "Password is required")
         public String password;
         @Constraints.MinLength (8)
         @Constraints.MaxLength (25)
-        @Constraints.Required
+        @Constraints.Required (message = "Passwords does not match")
         public String confirmPassword;
+    }
+
+    public Result formSubmit(){
+        //get the form data from the request - do this only once
+        Form<SignUpForm> binded = signUpForm.bindFromRequest();
+        //if we have errors just return a bad request
+        if(binded.hasErrors()){
+            flash("error", "check your inputs");
+            return badRequest(signup.render(binded));
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            SignUpForm signUp = binded.get();
+
+
+            flash("success", "user added");
+            return redirect("/");
+        }
+
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateForm(){
+        //get the form data from the request - do this only once
+        Form<SignUpForm> binded = signUpForm.bindFromRequest();
+        //if we have errors just return a bad request
+        if(binded.hasErrors()){
+            flash("error", "check your inputs");
+            return badRequest(binded.errorsAsJson());
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            SignUpForm signUp = binded.get();
+
+
+            flash("success", "user added");
+            return redirect("/");
+        }
     }
 
 }

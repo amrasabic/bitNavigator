@@ -15,7 +15,7 @@ public class Service extends Model {
     @Id
     public Integer id;
     @Column (unique = true)
-    @Constraints.Required
+    @Constraints.Required(message = "This field is required!")
     public String serviceType;
     public String serviceIcon;
     public boolean isReservable;

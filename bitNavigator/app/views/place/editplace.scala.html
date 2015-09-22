@@ -4,60 +4,7 @@
 
 @main("Edit place") {
 
-    <script>
-        lat = @place.latitude;
-        lng = @place.longitude;
-    </script>
 
-    <script>
-        var marker;
-        function initMap() {
-            var lat = 43.850;
-            var lng = 18.390;
-
-            @if(place.latitude != null && place.longitude != null) {
-                lat = @place.latitude;
-                lng = @place.longitude;
-            }
-
-             var map = new google.maps.Map(document.getElementById('map-add-place'), {
-                zoom: 14,
-                center: {lat: lat, lng: lng}
-             });
-            var geocoder = new google.maps.Geocoder;
-            var infowindow = new google.maps.InfoWindow;
-            marker = new google.maps.Marker({
-                position: {lat: lat, lng: lng},
-                map: map,
-                draggable: true
-            });
-            document.getElementById('btn-add').addEventListener('click', function() {
-                geocodeLatLng(geocoder, map, infowindow, marker.getPosition().lat() + "," + marker.getPosition().lng());
-            });
-        }
-        function geocodeLatLng(geocoder, map, infowindow, ll) {
-          var input = ll;
-          var latlngStr = input.split(',', 2);
-          var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
-          geocoder.geocode({'location': latlng}, function(results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-              if (results[1]) {
-                //map.setZoom(11);
-                infowindow.setContent(results[0].formatted_address);
-                infowindow.open(map, marker);
-                document.getElementById("address").value = results[0].formatted_address;
-                document.getElementById("latitude").value = latlng.lat;
-                document.getElementById("longitude").value = latlng.lng;
-              } else {
-                window.alert('No results found');
-              }
-            } else {
-              window.alert('Geocoder failed due to: ' + status);
-            }
-          });
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
     <form method="post" action="@routes.PlaceController.updatePlace(place.id)" enctype="multipart/form-data">
         <div id="add-place-panel" class="container-fluid">
             <div class="col-md-6">
@@ -104,9 +51,14 @@
 
                     <p><br/></p>
                         <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
-                    <span class="btn btn-default btn-file">
-                        <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*" multiple>
-                    </span>
+                    <div style="position:relative;">
+                        <a class='btn btn-primary' href='javascript:;'>
+                            Choose Images...
+                            <input type="file" name="pictures" name="file_source" accept="image/*" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' size="40"  onchange='$("#upload-file-info").html($(this).val());' multiple>
+                        </a>
+                            &nbsp;
+                        <span class='label label-info' id="upload-file-info"></span>
+                    </div>
 
                 </div>
 
@@ -139,14 +91,16 @@
         </div>
 
     }
+
     <script>
-        var serviceValue = document.getElementById("service");
-        var services = document.getElementById("service-list");
-
-        function changeService() {
-            serviceValue.value = services.options[services.selectedIndex].text;
-        };
-        services.onchange = changeService;
+        var lat;
+        var lng;
+        @if(place.latitude != null && place.longitude != null) {
+                lat = @place.latitude;
+                lng = @place.longitude;
+        }
     </script>
-
+    <script src="@routes.Assets.versioned("javascripts/googleMaps/miniMap.js")"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+    <script src="@routes.Assets.versioned("javascripts/getService.js")">></script>
 }
