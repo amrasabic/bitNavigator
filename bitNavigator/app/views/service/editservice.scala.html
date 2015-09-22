@@ -13,7 +13,7 @@
                         </div>
                         <p><br></p>
                     </div>
-                    <!-- Checkbox can reserve-->
+                    <!-- Checkbox can reserve -->
                     <div class="form-group" >
                         <label class="control-label col-sm-3"  for="pwd">Can reserve:</label>
                         <div class="col-sm-7">
@@ -35,11 +35,14 @@
                         </div>
                     </div>
                     <p><br/></p>
+                    <!-- Error div -->
+                    <div class="control-label col-sm-10">
                     @if(flash.containsKey("error")) {
                         <div class="alert alert-danger">
                         @flash.get("error")
                         </div>
                     }
+                    </div>
                     <!-- Buttons -->
                     <div calss="form-group">
                         <p><br/></p>

@@ -116,7 +116,6 @@ public class UserController extends Controller {
         }
 
 
-
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);

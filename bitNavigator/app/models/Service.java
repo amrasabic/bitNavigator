@@ -7,11 +7,11 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by ognjen on 09-Sep-15.
+ * This class represents Service model
  */
 @Entity
 public class Service extends Model {
-
+    // Declaring properties of Service model.
     @Id
     public Integer id;
     @Column (unique = true)

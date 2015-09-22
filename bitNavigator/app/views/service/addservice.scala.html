@@ -2,7 +2,6 @@
 @import helper._
 @main("Add service") {
 
-
     <div class="row">
     <div class="col-md-7" style="margin-top: 50px;">
         <! -- Adding service form -- >
@@ -35,7 +34,7 @@
             <p><br/></p>
             <p><br/></p>
                 <! -- Error div -- >
-            <div class="col-sm-7">
+            <div class="col-sm-10">
             @if(flash.containsKey("error")) {
                 <div class="alert alert-danger">
                 @flash.get("error")

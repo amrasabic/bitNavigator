@@ -2,95 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db1a7d02-6423-4e48-978a-ea628d0d3ded" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/PasswordEncryption/1.tree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/SARAJEVO CITY CENTER/2015-09-19-11-22-47multipartBody7296670840356691869asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Umjetnička galerija BiH/2015-09-19-11-27-34multipartBody1334936933764799373asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Narodno pozorište/2015-09-19-11-29-38multipartBody7323700096660698907asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Latinska ćuprija/2015-09-19-11-32-47multipartBody2123199355675931548asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Olimpijski stadion Asim Ferhatovic - Hase/2015-09-19-11-37-27multipartBody594477990246596878asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Termalna rivijera Ilidza/2015-09-19-11-40-08multipartBody5741580972891513440asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Olimpijski bazen Otoka/2015-09-19-11-45-25multipartBody362021680557242591asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/McDonald's/2015-09-19-11-45-56multipartBody3806738214479372607asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Festina lente/2015-09-19-11-50-04multipartBody5924260488019428286asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Festina lente/2015-09-19-11-50-50multipartBody822615949441080100asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/Festina lente/2015-09-19-11-52-19multipartBody2411914571619221908asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/placeImages/dsadas/2015-09-22-03-05-50multipartBody5636834652636805963asTemporaryFile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/6.tree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/profileImages/Kristina/Kristina2015-09-19-11-35-55" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/profileImages/Lena/Lena2015-09-19-11-35-08" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/images/profileImages/Ognjen/Ognjen2015-09-22-01-21-06" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/.indexes/properties.index" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/org.eclipse.egit.core/GitProjectData.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/javascripts/getService.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/javascripts/googleMaps/miniMap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.egit.core.prefs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bitNavigator/public/javascripts/validateForm.js" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\1b\e0b21864ae5000151110f6bf8d41b560" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\2b\a081fc7dae5000151110f6bf8d41b560" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\2f\d0f4ae14ae5000151110f6bf8d41b560" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\59\d07638a5b25000151110f6bf8d41b560" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\61\50398be7b25000151110f6bf8d41b560" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\aa\a0ff2d52e4500015109dfea21b2d29c1" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\e4\40a0b94dbd5000151361f086ec2541cb" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\e9\b0321270bd5000151361f086ec2541cb" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.history\fc\60096a64bd5000151361f086ec2541cb" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\PasswordEncryption\.indexes\af\history.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\PasswordEncryption\.indexes\e4\3f\f2\ce\history.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\PasswordEncryption\.markers.snap" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\PasswordEncryption\.syncinfo.snap" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\RemoteSystemsTempFiles\.markers.snap" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.projects\RemoteSystemsTempFiles\.syncinfo.snap" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.root\.markers.snap" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\.root\5.tree" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.core.resources\5.snap" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1106408436.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1217923329.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1248407149.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1442487239.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\1543766311.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\2330857962.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\2623427843.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\2775202610.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\2963538765.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3004383119.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3184717171.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3398816544.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\349556966.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3544518797.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3793391456.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\3867579341.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\4232502288.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\4237918392.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.jdt.core\963700148.index" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.metadata\.plugins\org.eclipse.team.cvs.core\.running" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/public/images/serviceImages/Coffee.png" afterPath="$PROJECT_DIR$/bitNavigator/public/images/serviceImages/Coffee.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.log" afterPath="$PROJECT_DIR$/.metadata/.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/Application.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/Application.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/test/models/CommentTest.java" afterPath="$PROJECT_DIR$/bitNavigator/test/models/CommentTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/Place.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/Place.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/PlaceController.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/PlaceController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/Reservation.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/Reservation.java" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.idea\libraries\SBT__junit_junit_4_12_jar.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql" afterPath="$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/Service.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/Service.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/User.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/User.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/test/models/ServiceTest.java" afterPath="$PROJECT_DIR$/bitNavigator/test/models/ServiceTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/place/addplace.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/place/addplace.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/place/editplace.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/place/editplace.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/index.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/index.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/public/stylesheets/main.css" afterPath="$PROJECT_DIR$/bitNavigator/public/stylesheets/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/main.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/main.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/navbar.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/navbar.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/reservations/reservationlist.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/reservations/reservationlist.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/conf/routes" afterPath="$PROJECT_DIR$/bitNavigator/conf/routes" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/user/signup.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/user/signup.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/version.ini" afterPath="$PROJECT_DIR$/.metadata/version.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/place/viewplace.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/place/viewplace.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" afterPath="$PROJECT_DIR$/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/play2_project_settings.xml" afterPath="$PROJECT_DIR$/.idea/play2_project_settings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bitNavigator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -124,46 +46,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="addservice.scala.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-20.423077">
-              <caret line="53" column="10" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
-              <folding>
-                <element signature="e#118#143#0#HTML" expanded="true" />
-                <marker date="1442935700578" expanded="true" signature="156:183" placeholder="-- Adding se..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="editservice.scala.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="editservice.scala.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.3076923">
-              <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-              <folding>
-                <element signature="e#106#131#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="servicelist.scala.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8846154">
-              <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="33" />
+            <state vertical-scroll-proportion="1.1053811">
+              <caret line="38" column="57" selection-start-line="38" selection-start-column="57" selection-end-line="38" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -173,34 +60,11 @@
         <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="6" selection-start-line="62" selection-start-column="6" selection-end-line="62" selection-end-column="6" />
-              <folding>
-                <element signature="e#4101#4102#0" expanded="true" />
-                <element signature="e#4158#4159#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Service.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Service.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21610169">
-              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+              <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="112" column="31" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
-              <folding>
-                <marker date="1442935743487" expanded="true" signature="10338:10344" placeholder="{...}" />
+                <element signature="e#4264#4265#0" expanded="true" />
+                <element signature="e#4321#4322#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -209,8 +73,8 @@
       <file leaf-file-name="2.sql" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.8271604">
-              <caret line="23" column="195" selection-start-line="23" selection-start-column="195" selection-end-line="23" selection-end-column="195" />
+            <state vertical-scroll-proportion="-3.9876542">
+              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -229,13 +93,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java" />
-        <option value="$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html" />
-        <option value="$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html" />
-        <option value="$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html" />
         <option value="$PROJECT_DIR$/bitNavigator/app/models/User.java" />
-        <option value="$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql" />
+        <option value="$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html" />
+        <option value="$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html" />
+        <option value="$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java" />
+        <option value="$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html" />
         <option value="$PROJECT_DIR$/bitNavigator/app/models/Service.java" />
+        <option value="$PROJECT_DIR$/bitNavigator/test/models/ServiceTest.java" />
+        <option value="$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql" />
+        <option value="$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java" />
       </list>
     </option>
   </component>
@@ -275,9 +141,9 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -293,38 +159,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="bitNavigator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitNavigator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitNavigator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitNavigator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitNavigator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="default" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -453,6 +287,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -755,7 +590,7 @@
     </configuration>
   </component>
   <component name="SbtLocalSettings">
-    <option name="lastUpdateTimestamp" value="1442913956592" />
+    <option name="lastUpdateTimestamp" value="1442959998814" />
     <option name="availableProjects">
       <map>
         <entry>
@@ -785,6 +620,9 @@
     </option>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="db1a7d02-6423-4e48-978a-ea628d0d3ded" name="Default" comment="" />
@@ -793,12 +631,13 @@
       <updated>1442425429224</updated>
       <workItem from="1442425428570" duration="286000" />
       <workItem from="1442768006446" duration="241000" />
-      <workItem from="1442913346014" duration="15208000" />
+      <workItem from="1442913346014" duration="15359000" />
+      <workItem from="1442954831462" duration="7988000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15735000" />
+    <option name="totallyTimeSpent" value="23874000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
@@ -807,19 +646,19 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14821124" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962063" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16084976" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -829,10 +668,18 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -842,101 +689,13 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.021857923">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Status.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="14" selection-start-line="39" selection-start-column="0" selection-end-line="41" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Report.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18008475">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="31" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
-          <folding>
-            <marker date="1442935743487" expanded="true" signature="10338:10344" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/place/placelist.scala.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4322034">
-          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="6" selection-start-line="62" selection-start-column="6" selection-end-line="62" selection-end-column="6" />
-          <folding>
-            <element signature="e#4101#4102#0" expanded="true" />
-            <element signature="e#4158#4159#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3076923">
-          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-          <folding>
-            <element signature="e#106#131#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.423077">
+        <state vertical-scroll-proportion="0.0">
           <caret line="53" column="10" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
           <folding>
-            <element signature="e#118#143#0#HTML" expanded="true" />
-            <marker date="1442935700578" expanded="true" signature="156:183" placeholder="-- Adding se..." />
+            <marker date="1442955930147" expanded="true" signature="-1:-1" placeholder="-- Adding se..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.8271604">
-          <caret line="23" column="195" selection-start-line="23" selection-start-column="195" selection-end-line="23" selection-end-column="195" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -948,13 +707,183 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="62" column="6" selection-start-line="62" selection-start-column="6" selection-end-line="62" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4264#4265#0" expanded="true" />
+            <element signature="e#4321#4322#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Service.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21610169">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="112" column="31" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
+          <folding>
+            <marker date="1442956958886" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="195" selection-start-line="23" selection-start-column="195" selection-end-line="23" selection-end-column="195" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Status.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="14" selection-start-line="39" selection-start-column="0" selection-end-line="41" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Report.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18008475">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/place/placelist.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4322034">
+          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3721973">
+          <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+          <folding>
+            <marker date="1442955930147" expanded="true" signature="-1:-1" placeholder="-- Adding se..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7914798">
+          <caret line="47" column="13" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1440678">
+          <caret line="116" column="8" selection-start-line="116" selection-start-column="8" selection-end-line="116" selection-end-column="8" />
+          <folding>
+            <marker date="1442956958886" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/build.sbt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/test/models/ServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#670#671#0" expanded="true" />
+            <element signature="e#721#722#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/models/Service.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32415253">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9876542">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4264#4265#0" expanded="true" />
+            <element signature="e#4321#4322#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1053811">
+          <caret line="38" column="57" selection-start-line="38" selection-start-column="57" selection-end-line="38" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
