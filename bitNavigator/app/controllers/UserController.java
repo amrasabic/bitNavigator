@@ -158,7 +158,7 @@ public class UserController extends Controller {
             Logger.debug("Content type: " + filePart.getContentType());
             Logger.debug("Key: " + filePart.getKey());
             File image = filePart.getFile();
-            user.image = Image.create(image);
+            user.avatar = Image.create(image);
         } else {
             flash("error", "Files not present.");
             return badRequest("Picture missing.");

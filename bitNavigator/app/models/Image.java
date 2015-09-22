@@ -31,10 +31,11 @@ public class Image extends Model {
     public String secret_image_url;
     public boolean isPublished;
     public static Cloudinary cloudinary;
-    @ManyToOne
-    public Place place;
-    @OneToOne
-    public User user;
+//    @ManyToOne
+//    public Place place;
+//    @OneToOne
+//    public User user;
+
     /**
      * Default constructor.
      */
@@ -72,10 +73,9 @@ public class Image extends Model {
         Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
         User u = User.findByEmail(boundForm.bindFromRequest().field("email").value());
 
-        if( u.image != null) {
-            Image image = findImageById(u.image.id);
-
-            u.image = null;
+        if( u.avatar != null) {
+            Image image = findImageById(u.avatar.id);
+            u.avatar = null;
             u.update();
             image.delete();
         }
@@ -87,7 +87,7 @@ public class Image extends Model {
         i.secret_image_url = (String) uploadResult.get("secure_url");
         Logger.debug(i.secret_image_url);
 
-        i.user = u;
+        u.avatar = i;
         i.save();
         return i;
     }
@@ -96,20 +96,15 @@ public class Image extends Model {
         return Image.find.where().eq("id", id).findUnique();
     }
 
-
-
-
     public static List<Image> all() {
         return find.all();
     }
-
 
     public String getSize(int width, int height) {
 
         String url = cloudinary.url().format("jpg")
                 .transformation(new Transformation().width(width).height(height).crop("fit").effect("sepia"))
                 .generate(public_id);
-
         return url;
     }
 
@@ -123,16 +118,11 @@ public class Image extends Model {
     }
 
     public void deleteImage() {
-
         try {
             cloudinary.uploader().destroy(public_id, null);
-
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
-
-
 }

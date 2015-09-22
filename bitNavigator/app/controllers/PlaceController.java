@@ -1,6 +1,5 @@
 package controllers;
 
-
 import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
@@ -14,10 +13,6 @@ import play.mvc.Security;
 import utillities.Authenticators;
 import views.html.index;
 import views.html.place.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,11 +53,6 @@ public class PlaceController extends Controller{
             flash("error", "Must add service!");
             return badRequest(addplace.render(boundForm, Service.findAll()));
         }
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
 
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
@@ -122,11 +112,6 @@ public class PlaceController extends Controller{
             flash("error", "Must add service!");
             return badRequest(addplace.render(boundForm, Service.findAll()));
         }
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
 
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
@@ -192,7 +177,6 @@ public class PlaceController extends Controller{
             }
         }
 
-
         place.delete();
         return redirect(routes.PlaceController.placeList());
     }
@@ -203,7 +187,7 @@ public class PlaceController extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        Form <Place> filledForm =  placeForm.fill(place);
+  //      Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findAll();
         return ok(editplace.render(place, services, comments));
