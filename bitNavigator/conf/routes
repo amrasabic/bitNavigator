@@ -14,11 +14,13 @@ GET           /user/signup                     @controllers.UserController.signU
 POST          /user/signup                     @controllers.UserController.save()
 GET           /user/signout                    @controllers.UserController.signOut()
 GET           /user/list                       @controllers.UserController.userList()
-POST            /user/validate                  @controllers.UserController.validateForm()
+POST          /user/validate                   @controllers.UserController.validateForm()
 
+POST          /user/profile/validate           @controllers.UserController.validateUserNameForm()
 GET           /user/profile/:email             @controllers.UserController.profile(email: String)
 POST          /user/profile/:email             @controllers.UserController.updateUser(email: String)
 DELETE        /user/profile/:email             @controllers.UserController.delete(email: String)
+
 
 GET           /user/reservations               @controllers.ReservationController.reservationsList()
 POST          /user/reservations               @controllers.ReservationController.changeStatus()
