@@ -31,10 +31,10 @@ public class Image extends Model {
     public String secret_image_url;
     public boolean isPublished;
     public static Cloudinary cloudinary;
-//    @ManyToOne
-//    public Place place;
-//    @OneToOne
-//    public User user;
+    @ManyToOne
+    public Place place;
+    @OneToOne
+    public User user;
 
     /**
      * Default constructor.
@@ -88,7 +88,7 @@ public class Image extends Model {
         Logger.debug(i.secret_image_url);
 
         u.avatar = i;
-        i.save();
+      //  i.save();
         return i;
     }
 

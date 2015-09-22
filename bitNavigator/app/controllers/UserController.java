@@ -41,7 +41,7 @@ public class UserController extends Controller {
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
 
-    private static Image image;
+  //  private static Image image;
 
     /**
      * Leads random user to signin subpage
@@ -157,13 +157,17 @@ public class UserController extends Controller {
         if(filePart != null){
             Logger.debug("Content type: " + filePart.getContentType());
             Logger.debug("Key: " + filePart.getKey());
-            File image = filePart.getFile();
-            user.avatar = Image.create(image);
+            File file = filePart.getFile();
+            Image image = Image.create(file);
+            user.avatar = image;
+            image.save();
+
         } else {
             flash("error", "Files not present.");
             return badRequest("Picture missing.");
         }
-      //  image.save();
+        Logger.info(user.avatar.image_url + "------------------------------------");
+     //   image.save();
         user.update();
         return redirect(routes.Application.index());
     }
