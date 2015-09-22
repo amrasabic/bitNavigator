@@ -234,9 +234,9 @@ public class UserController extends Controller {
         @Constraints.Email
         @Constraints.Required
         public String email;
-        @Constraints.Pattern ("[a-zA-Z]+")
+        @Constraints.Pattern (value = "[a-zA-Z]+", message = "First name can only contain alphabetic characters")
         public String firstName;
-        @Constraints.Pattern ("[a-zA-Z]+")
+        @Constraints.Pattern (value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
         //@Constraints.Pattern ("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
         @Constraints.Pattern ("^\\+387[3,6][1-6]\\d{6}")
@@ -244,13 +244,13 @@ public class UserController extends Controller {
     }
 
     public static class SignUpForm  extends UserNameForm{
-        @Constraints.MinLength (8)
-        @Constraints.MaxLength (25)
-        @Constraints.Required
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required (message = "Password is required")
         public String password;
         @Constraints.MinLength (8)
         @Constraints.MaxLength (25)
-        @Constraints.Required
+        @Constraints.Required (message = "Passwords does not match")
         public String confirmPassword;
     }
 

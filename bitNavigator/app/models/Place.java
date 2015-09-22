@@ -63,7 +63,4 @@ public class Place extends Model {
         return finder.where().eq("title", title).findUnique();
     }
 
-    public static List<Place> findByValue(String value) {
-        return finder.getExpressionFactory().contains("title", value);
-    }
 }

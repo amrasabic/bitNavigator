@@ -12,100 +12,50 @@
                         <input id="firstName-signup" type="text" class="form-control" value="@userForm("firstName").value" aria-describedby="basic-addon1" name="firstName"
                         data-toggle="popover" data-trigger="focus" data-content="Can only contain letters.">
                 </div>
+                <div class="alert alert-danger" data-error-for="firstName" role="alert" hidden></div>
+
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Last name</span>
                     <input id="lastName-signup" type="text" class="form-control" value="@userForm("lastName").value" aria-describedby="basic-addon1" name="lastName"
                     data-toggle="popover" data-trigger="focus" data-content="Can only contain letters.">
                 </div>
+                <div class="alert alert-danger" data-error-for="lastName" role="alert" hidden></div>
+
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Email</span>
                     <input id="email-signup" type="text" class="form-control" value="@userForm("email").value" aria-describedby="basic-addon1" name="email"
                     data-toggle="popover" data-trigger="focus" data-content="Input valid email address.">
                 </div>
+                <div class="alert alert-danger" data-error-for="email" role="alert" hidden></div>
+
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Password</span>
                     <input id="password-signup" type="password" class="form-control" placeholder="" aria-describedby="basic-addon1" name="password"
                     data-toggle="popover" data-trigger="focus" data-content="Password must contain between 8 and 25 characters. There has to be at least one letter and one digit">
                 </div>
+                <div class="alert alert-danger" data-error-for="password" role="alert" hidden></div>
+
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Confirm password</span>
                     <input id="confirmPassword-signup" type="password" class="form-control" placeholder="" aria-describedby="basic-addon1" name="confirmPassword"
                     data-toggle="popover" data-trigger="focus" data-content="Confirm password.">
                 </div>
+                <div class="alert alert-danger" data-error-for="confirmPassword" role="alert" hidden></div>
+
                 <button id="btn-sign-up" type="submit" class="btn btn-default">Sign up</button>
             </form>
-            <span class="alert-danger" data-error-for="" ></span>
-
-            @if(flash.containsKey("error")) {
-                <div class="alert alert-danger">
-                @flash.get("error")
-                </div>
-            }
-            @if(flash.containsKey("success")) {
-                <div class="alert alert-success">
-                @flash.get("success")
-                </div>
-            }
         </div>
         <script>
             $(document).ready(function(){
                 $('[data-toggle="popover"]').popover();
             });
+             var body = document.getElementsByTagName("body")[0];
+               body.style.backgroundColor = "lightgrey";
+               var urlToPost = "@routes.UserController.validateForm()";
         </script>
 
 
-            <script>
-               var body = document.getElementsByTagName("body")[0];
-               body.style.backgroundColor = "lightgrey";
-            </script>
-
-        <script>
-        var a;
-        $(document).ready(function(){
-            // for any form on this page do the follofing
-            $('form').submit(function(e, options){
-                //if options is not defined define it as a empty object
-                var options = options || {};
-                //if allow is true let the event propagate to the server
-                if(options.allow == true){
-                    return;
-                }
-                //prevent submiting the form
-                e.preventDefault();
-                //clean all error messages
-                $("[data-error-for]").html("");
-                //get a refference to the current form
-                $form = $(this);
-                /*
-                * This will setup a AJAX call, the params are
-                * url: where to go
-                * method: what kind of request
-                * data: the data to add to the request
-                 */
-                $.ajax({
-                    url: "@routes.UserController.validateForm()",
-                    method: "post",
-                    data: $(this).serialize()
-                }).success(function(response){
-                    $form.trigger("submit", {allow: true});
-                }).error(function(response){
-                    console.log(response);
-                    a = response;
-                    var errors = response.responseJSON;
-                    console.log(errors);
-                    var keys = Object.keys(errors);
-                    for(var i = 0; i < keys.length; i++){
-                        var errorMessages = errors[keys[i]];
-                        var allErrors = "";
-                        for(var j = 0; j < errorMessages.length; j++){
-                            allErrors += errorMessages[j];
-                        }
-                        $('[data-error-for="'+keys[i]+'"]').html(allErrors);
-                    }
-                });
-            });
-        });
-    </script>
+        <script src="@routes.Assets.versioned("javascripts/validateForm.js")"></script>
 
     }
 }
