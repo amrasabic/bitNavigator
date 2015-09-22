@@ -46,7 +46,7 @@ public class PlaceController extends Controller{
 
     @Security.Authenticated(Authenticators.User.class)
     public Result addPlace() {
-        return ok(addplace.render(placeForm, Service.findAll()));
+        return ok(addplace.render(new Place(), Service.findAll()));
     }
 
     @Security.Authenticated(Authenticators.User.class)
@@ -57,15 +57,14 @@ public class PlaceController extends Controller{
 
         if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
             flash("error", "Wrong input!");
-            return badRequest(addplace.render(boundForm, Service.findAll()));
+            return badRequest(addplace.render(boundForm.get(), Service.findAll()));
         }
 
-        Service service = boundServiceForm.get();
-        service = Service.findByType(service.serviceType);
+        Service service = Service.findByType(boundServiceForm.get().serviceType);
 
         if (service == null) {
             flash("error", "Must add service!");
-            return badRequest(addplace.render(boundForm, Service.findAll()));
+            return badRequest(addplace.render(boundForm.get(), Service.findAll()));
         }
 
         Calendar cal = Calendar.getInstance();
@@ -129,7 +128,7 @@ public class PlaceController extends Controller{
 
         if (service == null) {
             flash("error", "Must add service!");
-            return badRequest(addplace.render(boundForm, Service.findAll()));
+            return redirect(routes.PlaceController.editPlace(id));
         }
 
         Calendar cal = Calendar.getInstance();
@@ -273,11 +272,14 @@ public class PlaceController extends Controller{
     }
 
     public Result validateForm(){
-        Form<Place> binded = placeForm.bindFromRequest();
-        if(binded.hasErrors()){
-            return badRequest(binded.errorsAsJson());
+        Form<Place> boundPlaceForm = placeForm.bindFromRequest();
+        Form<Service> boundServiceForm = serviceForm.bindFromRequest();
+        if(boundPlaceForm.hasErrors()){
+            return badRequest(boundPlaceForm.errorsAsJson());
+        } else if (boundServiceForm.hasErrors()) {
+            return badRequest(boundServiceForm.errorsAsJson());
         } else {
-            return ok("we good, we good");
+            return ok();
         }
     }
 

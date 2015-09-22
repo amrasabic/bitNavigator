@@ -23,8 +23,8 @@ public class Place extends Model {
     // declaration of parameters
     @Id
     public Integer id;
-    @Constraints.Required
-    @Constraints.MaxLength(150)
+    @Constraints.Required(message = "This field is required!")
+    @Constraints.MaxLength(value = 150, message = "Title can not hold more than 150 characters!")
     public String title;
     @Column(columnDefinition = "TEXT")
     public String description;
@@ -40,6 +40,8 @@ public class Place extends Model {
     public List<Image> images;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Comment> comments;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Reservation> reservations;
 
     public static Finder<Integer, Place> finder = new Finder<>(Place.class);
     /**
@@ -60,6 +62,5 @@ public class Place extends Model {
     public static Place findByTitle(String title) {
         return finder.where().eq("title", title).findUnique();
     }
-
 
 }
