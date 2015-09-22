@@ -298,8 +298,18 @@ public class PlaceController extends Controller{
         if(srchTerm != null) {
             places = Place.findByValue(srchTerm);
 
-        }Logger.info(srchTerm+"------------------------");
-        JsonNode object = Json.toJson(places);
+        }
+        if (places.size() > 1){
+
+
+        }
+        String[] a = new String[places.size()];
+        for (int i=0; i < places.size(); i++) {
+            a[i] = places.get(i).title;
+            Logger.info(places.get(i).address+"------------------------");
+        }Logger.info("/*****************************************************");
+        JsonNode object = Json.toJson(a);
+
 
         return ok(object);
     }

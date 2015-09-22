@@ -224,3 +224,7 @@ textarea {
     background-color: transparent;
     color: transparent;
 }
+
+.ui-menu-item {
+    background-color: white;
+}
