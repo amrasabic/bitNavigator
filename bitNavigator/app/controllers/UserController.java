@@ -142,7 +142,7 @@ public class UserController extends Controller {
 
         if(boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
-            return badRequest(profile.render(user));
+            return badRequest(boundForm.errorsAsJson());
         }
         Logger.info(boundForm.bindFromRequest().field("mobileNumber").value());
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
