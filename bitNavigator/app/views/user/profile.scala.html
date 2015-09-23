@@ -59,9 +59,7 @@
         var urlToPost = "@routes.UserController.validateUserNameForm()";
     </script>
 
-
-
-    <div class="container" id="profile-panel">
+    <div class="container-fluid" id="profile-panel">
         <h3 class="page-header">Hi @user.firstName  @user.lastName!</h3>
         <div class="row">
             <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser()"  enctype="multipart/form-data">
@@ -69,13 +67,13 @@
                 <!-- User avatar image -->
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="text-center">
-                @if(user.image != null) {
-                    <img src="@routes.Assets.versioned(user.image.path)" class="avatar img-circle img-thumbnail" alt="avatar">
+                @if(user.avatar != null) {
+                    <img src="@user.avatar.getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
                 } else {
                     <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
                 }
                     <h6>Upload a different photo</h6>
-                    <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*">
+                    <input id="input-dim-1" name="image" type="file" class="file-loading" accept="image/*">
                     @*<input type="file" class="text-center center-block well well-sm">**@
                 </div>
             </div>

@@ -1,6 +1,5 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
 import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
@@ -13,25 +12,12 @@ import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
 import views.html.index;
-import views.html.place.addplace;
-import views.html.place.editplace;
-import views.html.place.placelist;
-import views.html.place.viewplace;
+import views.html.place.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
-import play.Logger;
-import views.html.place.addplace;
 
-import static views.html.place.addplace.*;
-
-import static views.html.place.addplace.*;
 
 /**
  * Created by ognjen.cetkovic on 08/09/15.
@@ -67,11 +53,6 @@ public class PlaceController extends Controller{
             return badRequest(addplace.render(boundForm.get(), Service.findAll()));
         }
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
-
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
         place.placeCreated = Calendar.getInstance();
@@ -82,27 +63,27 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
-            for (FilePart picture : pictures) {
-                File file = picture.getFile();
-                String name = formatted + file.getName();
-                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
-
-                Logger.info(name);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    imageLists.add(name);
-                    Image image = new Image();
-                    image.name = name;
-                    path ="/images/placeImages/" + place.title + "/" + name;
-                    image.path = path;
-                    image.place = place;
-                    image.save();
-
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
+//            for (FilePart picture : pictures) {
+//                File file = picture.getFile();
+//                String name = formatted + file.getName();
+//                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
+//
+//                Logger.info(name);
+//                try {
+//                    FileUtils.moveFile(file, new File(path));
+//                    imageLists.add(name);
+//                    Image image = new Image();
+//                    image.name = name;
+//                    path ="/images/placeImages/" + place.title + "/" + name;
+//                    image.path = path;
+//                    image.place = place;
+//                    image.save();
+//
+//                } catch (IOException ex) {
+//                    Logger.info("Could not move file. " + ex.getMessage());
+//                    flash("error", "Could not move file.");
+//                }
+//            }
 
             return ok(index.render(Place.findAll()));
         } else {
@@ -131,11 +112,6 @@ public class PlaceController extends Controller{
             return redirect(routes.PlaceController.editPlace(id));
         }
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
-
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
         place.placeCreated = Calendar.getInstance();
@@ -150,27 +126,27 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
-            for (FilePart picture : pictures) {
-                File file = picture.getFile();
-                String name = formatted + file.getName();
-                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
-
-                Logger.info(name);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    imageLists.add(name);
-                    Image image = new Image();
-                    image.name = name;
-                    path ="/images/placeImages/" + place.title + "/" + name;
-                    image.path = path;
-                    image.place = place;
-                    image.save();
-
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
+//            for (FilePart picture : pictures) {
+//                File file = picture.getFile();
+//                String name = formatted + file.getName();
+//                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
+//
+//                Logger.info(name);
+//                try {
+//                    FileUtils.moveFile(file, new File(path));
+//                    imageLists.add(name);
+//                    Image image = new Image();
+//                    image.name = name;
+//                    path ="/images/placeImages/" + place.title + "/" + name;
+//                    image.path = path;
+//                    image.place = place;
+//                    image.save();
+//
+//                } catch (IOException ex) {
+//                    Logger.info("Could not move file. " + ex.getMessage());
+//                    flash("error", "Could not move file.");
+//                }
+//            }
 
             return redirect(routes.PlaceController.viewPlace(id));
         } else {
@@ -200,7 +176,6 @@ public class PlaceController extends Controller{
             }
         }
 
-
         place.delete();
         return redirect(routes.PlaceController.placeList());
     }
@@ -211,7 +186,7 @@ public class PlaceController extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        Form <Place> filledForm =  placeForm.fill(place);
+  //      Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findAll();
         return ok(editplace.render(place, services, comments));

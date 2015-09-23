@@ -42,7 +42,7 @@ public class UserController extends Controller {
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
-    private static Image image;
+  //  private static Image image;
 
     /**
      * Leads random user to signin subpage
@@ -71,8 +71,6 @@ public class UserController extends Controller {
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
-
             return redirect(routes.Application.index());
         }
         try {
@@ -81,14 +79,10 @@ public class UserController extends Controller {
             }
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
-
             return redirect(routes.Application.index());
         }
         session().clear();
         session("email", user.email);
-
-        List<Place> places = Place.findAll();
         return redirect(routes.Application.index());
     }
 
@@ -107,12 +101,10 @@ public class UserController extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
-
         if (!singUp.password.equals(singUp.confirmPassword)) {
             flash(ERROR_MESSAGE, "Passwords do not match!");
             return badRequest(signup.render(boundForm));
         }
-
 
         User.newUser(singUp);
         session().clear();
@@ -150,45 +142,31 @@ public class UserController extends Controller {
             flash("error", "Name can only hold letters!");
             return redirect(routes.UserController.profile(user.email));
         }
+        user.firstName = boundForm.bindFromRequest().field("firstName").value();
+        user.lastName = boundForm.bindFromRequest().field("lastName").value();
+        user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
 
         user = User.updateUser(boundForm.get());
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
-
         Http.MultipartFormData body = request().body().asMultipartFormData();
-        List<Http.MultipartFormData.FilePart> pictures = body.getFiles();
-        user.update();
-        if (pictures != null) {
-            for (Http.MultipartFormData.FilePart picture : pictures) {
-                String name = user.firstName + formatted;
-                File file = picture.getFile();
-                String path = Play.application().path() + "/public/images/profileImages/" + user.firstName + "/" + name;
+        Http.MultipartFormData.FilePart filePart = body.getFile("image");
 
-                Logger.info(path);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    image = new Image();
-                    image.name = name;
-                    path ="/images/profileImages/" + user.firstName + "/" + name;
-                    image.path = path;
+        if(filePart != null){
+            Logger.debug("Content type: " + filePart.getContentType());
+            Logger.debug("Key: " + filePart.getKey());
+            File file = filePart.getFile();
+            Image image = Image.create(file);
+            user.avatar = image;
+            image.save();
 
-                    image.save();
-                    user.image = image;
-                    user.update();
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
-            return redirect(routes.Application.index());
         } else {
             flash("error", "Files not present.");
             return badRequest("Picture missing.");
         }
-
+        Logger.info(user.avatar.image_url + "------------------------------------");
+     //   image.save();
+        user.update();
+        return redirect(routes.Application.index());
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
@@ -230,7 +208,7 @@ public class UserController extends Controller {
         public String lastName;
         @Constraints.Pattern (value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
         public String mobileNumber;
-        public Image image;
+        public Image avatar;
 
         public UserNameForm() {
 
@@ -241,7 +219,7 @@ public class UserController extends Controller {
             this.firstName = u.firstName;
             this.lastName = u.lastName;
             this.mobileNumber = u.phoneNumber;
-            this.image = u.image;
+            this.avatar = u.avatar;
         }
     }
 

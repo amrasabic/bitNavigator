@@ -36,7 +36,7 @@ public class Place extends Model {
     public User user;
     @ManyToOne
     public Service service;
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Image> images;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Comment> comments;

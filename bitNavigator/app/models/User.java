@@ -59,7 +59,7 @@ public class User extends Model {
     @OneToMany (cascade = CascadeType.ALL)
     public List<Comment> comments;
     @OneToOne
-    public Image image;
+    public Image avatar;
 
     /**
      * Default constructor.
