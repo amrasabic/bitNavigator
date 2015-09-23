@@ -3,15 +3,44 @@
   <component name="ChangeListManager">
     <list default="true" id="db1a7d02-6423-4e48-978a-ea628d0d3ded" name="Default" comment="">
       <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\.idea\libraries\SBT__junit_junit_4_12_jar.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql" afterPath="$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/models/Service.java" afterPath="$PROJECT_DIR$/bitNavigator/app/models/Service.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/test/models/ServiceTest.java" afterPath="$PROJECT_DIR$/bitNavigator/test/models/ServiceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java" afterPath="$PROJECT_DIR$/bitNavigator/app/controllers/UserController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/play2_project_settings.xml" afterPath="$PROJECT_DIR$/.idea/play2_project_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html" afterPath="$PROJECT_DIR$/bitNavigator/app/views/service/servicelist.scala.html" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\4e5tryu.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\Coffee.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\Coffeefrgtjki.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\accommodation.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\arts.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\attractions.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\budi trueeeeeeeeeee.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\business.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\coffe.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\dfghj.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\drghjk.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\efrghjki.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\esrdthj.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\falseeeeeeeeeee.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\fdgh.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\fgh.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\food.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\hjdfchgf.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\hjfgfg.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\hyujikl.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\nightlife.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\other.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\r5t6y7ui.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\rfdgtyh.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\rftgyhujiop.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\rtyuio.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\services.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\shopping.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\sport.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\tgyhu.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\transportation.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\trebao bi biti true.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\trebao bi biti trueee.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\tyjukiop.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\tyui.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\werghj.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images\serviceImages\yjuki.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bitNavigator.iws" />
@@ -49,8 +78,8 @@
       <file leaf-file-name="editservice.scala.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1053811">
-              <caret line="38" column="57" selection-start-line="38" selection-start-column="57" selection-end-line="38" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.33235294">
+              <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -73,7 +102,7 @@
       <file leaf-file-name="2.sql" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.9876542">
+            <state vertical-scroll-proportion="0.0">
               <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding />
             </state>
@@ -141,9 +170,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -172,11 +198,47 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bitNavigator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bitNavigator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bitNavigator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bitNavigator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="serviceImages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -195,32 +257,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitNavigator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitNavigator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="place" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -276,6 +312,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -288,6 +327,11 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="FullScreen" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\public\images" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -590,7 +634,7 @@
     </configuration>
   </component>
   <component name="SbtLocalSettings">
-    <option name="lastUpdateTimestamp" value="1442959998814" />
+    <option name="lastUpdateTimestamp" value="1442993412189" />
     <option name="availableProjects">
       <map>
         <entry>
@@ -632,16 +676,17 @@
       <workItem from="1442425428570" duration="286000" />
       <workItem from="1442768006446" duration="241000" />
       <workItem from="1442913346014" duration="15359000" />
-      <workItem from="1442954831462" duration="7988000" />
+      <workItem from="1442954831462" duration="8352000" />
+      <workItem from="1442993268437" duration="850000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23874000" />
+    <option name="totallyTimeSpent" value="25088000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -649,28 +694,28 @@
       <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14821124" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32879046" sideWeight="0.5030349" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16084976" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16009104" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32879046" sideWeight="0.4969651" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -689,13 +734,39 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/app/controllers/ServiceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4264#4265#0" expanded="true" />
+            <element signature="e#4321#4322#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/addservice.scala.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="53" column="10" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
-          <folding>
-            <marker date="1442955930147" expanded="true" signature="-1:-1" placeholder="-- Adding se..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -749,9 +820,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="112" column="31" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
-          <folding>
-            <marker date="1442956958886" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -789,7 +858,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4322034">
           <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -797,9 +865,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.3721973">
           <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
-          <folding>
-            <marker date="1442955930147" expanded="true" signature="-1:-1" placeholder="-- Adding se..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -823,9 +889,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1440678">
           <caret line="116" column="8" selection-start-line="116" selection-start-column="8" selection-end-line="116" selection-end-column="8" />
-          <folding>
-            <marker date="1442956958886" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -833,7 +897,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -841,11 +904,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#670#671#0" expanded="true" />
-            <element signature="e#721#722#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -861,7 +919,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bitNavigator/conf/evolutions/default/2.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.9876542">
+        <state vertical-scroll-proportion="0.0">
           <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding />
         </state>
@@ -879,10 +937,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bitNavigator/public/images/serviceImages/arts.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bitNavigator/app/views/service/editservice.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1053811">
-          <caret line="38" column="57" selection-start-line="38" selection-start-column="57" selection-end-line="38" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.33235294">
+          <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
           <folding />
         </state>
       </provider>
