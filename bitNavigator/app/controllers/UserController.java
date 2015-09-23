@@ -13,6 +13,7 @@ import play.mvc.Http;
 
 import play.mvc.Security;
 import utillities.Authenticators;
+import utillities.SessionHelper;
 import views.html.index;
 import views.html.user.*;
 import views.html.admin.*;
@@ -122,40 +123,35 @@ public class UserController extends Controller {
     @Security.Authenticated(Authenticators.User.class)
     public Result profile (String email) {
         final User user = User.findByEmail(email);
-        if(user == null)
-        {
-            return notFound(String.format("User %s does not exist.", email));
-        }
-        return ok(profile.render(user));
-
-    }
-
-    @Security.Authenticated(Authenticators.User.class)
-    public Result updateUser(String email) {
-
-        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
-
-        User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
-
         if(user == null) {
             return notFound(String.format("User %s does not exist.", email));
         }
 
-        if (!email.equals(user.email)) {
-            User tmp = User.findByEmail(email);
-            if (tmp == null || !tmp.admin) {
-                return unauthorized("Permission denied!");
-            }
+        return ok(profile.render(new UserNameForm(user)));
+
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result updateUser() {
+
+        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
+
+        User user = SessionHelper.getCurrentUser();
+
+        if(user == null) {
+            return notFound(String.format("User does not exist."));
+        }
+
+        if(!user.email.equals(boundForm.bindFromRequest().field("email").value())){
+            return unauthorized("We good we good");
         }
 
         if(boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
-            return badRequest(boundForm.errorsAsJson());
+            return redirect(routes.UserController.profile(user.email));
         }
-        Logger.info(boundForm.bindFromRequest().field("mobileNumber").value());
-        user.firstName = boundForm.bindFromRequest().field("firstName").value();
-        user.lastName = boundForm.bindFromRequest().field("lastName").value();
-        user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
+
+        user = User.updateUser(boundForm.get());
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
@@ -232,9 +228,21 @@ public class UserController extends Controller {
         public String firstName;
         @Constraints.Pattern (value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
-        //@Constraints.Pattern ("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
         @Constraints.Pattern (value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
         public String mobileNumber;
+        public Image image;
+
+        public UserNameForm() {
+
+        }
+
+        public UserNameForm(User u) {
+            this.email = u.email;
+            this.firstName = u.firstName;
+            this.lastName = u.lastName;
+            this.mobileNumber = u.phoneNumber;
+            this.image = u.image;
+        }
     }
 
     public static class SignUpForm  extends UserNameForm{
@@ -297,7 +305,7 @@ public class UserController extends Controller {
         //if we have errors just return a bad request
         if(binded.hasErrors()){
             flash("error", "check your inputs");
-            Logger.info("jsadhjhd");
+            Logger.info("------------------" + binded.errorsAsJson().toString());
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
