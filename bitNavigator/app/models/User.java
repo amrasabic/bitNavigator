@@ -4,11 +4,20 @@ import javax.persistence.*;
 
 import com.avaje.ebean.Model;
 import controllers.UserController;
+import controllers.routes;
+import org.apache.commons.io.FileUtils;
 import play.Logger;
+import play.Play;
+import play.data.Form;
 import play.data.validation.Constraints;
+import play.mvc.Http;
 import utillities.PasswordHash;
+import utillities.SessionHelper;
 import views.html.user.signup;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -87,6 +96,17 @@ public class User extends Model {
     public void setAdmin(boolean isAdmin) {
         this.admin = isAdmin;
         save();
+    }
+
+    public static User updateUser(UserController.UserNameForm userNameForm){
+
+        User user = SessionHelper.getCurrentUser();
+
+        user.firstName = userNameForm.firstName;
+        user.lastName = userNameForm.lastName;
+        user.phoneNumber = userNameForm.mobileNumber;
+
+        return  user;
     }
 
     public static List<User> findAll() {

@@ -150,10 +150,8 @@ public class UserController extends Controller {
             flash("error", "Name can only hold letters!");
             return redirect(routes.UserController.profile(user.email));
         }
-        //TODO preko metode u user klasi
-        user.firstName = boundForm.bindFromRequest().field("firstName").value();
-        user.lastName = boundForm.bindFromRequest().field("lastName").value();
-        user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
+
+        user = User.updateUser(boundForm.get());
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
