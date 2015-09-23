@@ -72,6 +72,6 @@ public class ServiceTest {
         s.serviceType = "Type";
 
         s.update();
-        assetNotNull(s);
+        assertNotNull(s);
     }
 }

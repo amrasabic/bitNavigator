@@ -126,7 +126,7 @@ public class IntegrationTest {
                     }
                 });
     }
-/*
+
     @Test
     public void testRouteToProfile() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())),
@@ -138,7 +138,7 @@ public class IntegrationTest {
                     }
                 });
     }
-////////////
+
     @Test
     public void testRouteToAddPlace() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())),
@@ -150,7 +150,7 @@ public class IntegrationTest {
                     }
                 });
     }
-    ////////////////////////////
+
     @Test
     public void testRouteToAdmin() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())),
@@ -174,5 +174,5 @@ public class IntegrationTest {
                     }
                 });
     }
-*/
+
 }
