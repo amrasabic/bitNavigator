@@ -1,15 +1,11 @@
 @(service: Service)
 
 @main("Edit service") {
-    <script>
 
-        $('#input-dim-1').attr('title', '@service.serviceIcon.substring(21, service.serviceIcon.length)');
-    </script>
-
-    <div class="container">
         <div class="row">
             <div class="col-md-7" style="margin-top: 50px;">
                 <form method="post" action="@routes.ServiceController.updateService(service.id)"  enctype="multipart/form-data" >
+                    <!-- Service type -->
                     <div class="form-group">
                         <label class="control-label col-sm-3"  for="pwd">Service type:</label>
                         <div class="col-sm-7">
@@ -17,6 +13,7 @@
                         </div>
                         <p><br></p>
                     </div>
+                    <!-- Checkbox can reserve -->
                     <div class="form-group" >
                         <label class="control-label col-sm-3"  for="pwd">Can reserve:</label>
                         <div class="col-sm-7">
@@ -26,9 +23,7 @@
                             <input type="checkbox" name="isReservable">
                             }
                         </div>
-
                     </div>
-
                         <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
                     <div  class="form-group">
                         <p><br></p>
@@ -40,23 +35,23 @@
                         </div>
                     </div>
                     <p><br/></p>
-
+                    <!-- Error div -->
+                    <div class="control-label col-sm-10">
                     @if(flash.containsKey("error")) {
                         <div class="alert alert-danger">
                         @flash.get("error")
                         </div>
                     }
+                    </div>
+                    <!-- Buttons -->
                     <div calss="form-group">
                         <p><br/></p>
                         <div class="col-sm-offset-3 col-sm-7">
-                            <button class="btn btn-default" type="submit">Submit</button>
-                            <button id="redirect" class="btn btn-default" data-dismiss="modal" type="button"><a href="/">Cancel</a></button>
+                            <button type="submit" class="btn btn-primary" id="btn-submit">Edit</button>
+                            <button id="redirect" class="btn btn-default" data-dismiss="modal" type="button"><a href="@routes.ServiceController.serviceList()">Cancel</a></button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-
-
 }

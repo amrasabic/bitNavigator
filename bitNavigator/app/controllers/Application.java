@@ -15,7 +15,7 @@ public class Application extends Controller {
     public Result index() {
         List<Place> places = Place.findAll();
         User user = User.findByEmail(session().get("email"));
-        models.Status status = models.Status.getStatusById(3);
+        models.Status status = models.Status.getStatusById(2);
         List<Reservation> reservations = Reservation.findByStatus(user, status);
         Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
         for(int i = 0; i < reservations.size(); i++) {

@@ -1,19 +1,13 @@
 @(services: java.util.List[Service])
 
 @main("Service list") {
-    <script src="@routes.Assets.versioned("javascripts/jquery-2.1.4.js")" type="text/javascript"></script>
 
-
-    <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
-    <script>
-        $(document).ready(function(){
-        $('#myTable').DataTable();
-        });
-    </script>
-
-    <div class="container">
     <h2>All services</h2>
-
+    <! -- Add new service button -- >
+    <a href="@routes.ServiceController.addService()" calss="btn btn-primary">
+        <i class="glyphicon glyphicon-plus"></i>Add service
+    </a>
+    <!-- Table with services details -->
     <table id="myTable" class="table table-striped">
         <thead>
             <tr>
@@ -33,19 +27,23 @@
                     <td>@service.serviceType</td>
                     <td>@service.isReservable</td>
                     <td><img class="img-responsive" src="@routes.Assets.versioned(service.serviceIcon)" ></td>
-
                     <td>
                         <a href="@routes.ServiceController.editService(service.id)"> <i class="glyphicon glyphicon-edit"></i></a>
                     </td>
-
                     <td>
                         <a href="@routes.ServiceController.delete(service.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a>
                     </td>
-
                 </tr>
             }
         }
         </tbody>
     </table>
-    </div>
+    <! -- Scripts -- >
+    <script src="@routes.Assets.versioned("javascripts/jquery-2.1.4.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
+    <script>
+        $(document).ready(function(){
+        $('#myTable').DataTable();
+        });
+    </script>
     }

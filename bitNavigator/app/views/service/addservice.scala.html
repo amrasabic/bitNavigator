@@ -2,26 +2,25 @@
 @import helper._
 @main("Add service") {
 
-    <div class="container">
-        <div class="row">
+    <div class="row">
     <div class="col-md-7" style="margin-top: 50px;">
+        <! -- Adding service form -- >
         <form method="post" action="@routes.ServiceController.save()"  enctype="multipart/form-data" >
+            <! -- Adding service type -->
             <div class="form-group">
                 <label class="control-label col-sm-3"  for="pwd">Service type:</label>
                 <div class="col-sm-7">
                 <input class="form-control" type="text"  id="inputDefault" name="serviceType" placeholder="Input service type" value="@boundForm("serviceType").value">
                 </div>
                 <p><br></p>
-
             </div>
+                <! -- Checkbox can reserve-- >
             <div class="form-group" >
                 <label class="control-label col-sm-3"  for="pwd">Can reserve:</label>
                 <div class="col-sm-7">
                 <input type="checkbox" name="isReservable">
                 </div>
-
             </div>
-
                 <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
             <div  class="form-group">
                 <p><br></p>
@@ -34,24 +33,22 @@
             </div>
             <p><br/></p>
             <p><br/></p>
-            <div class="col-sm-7">
+                <! -- Error div -- >
+            <div class="col-sm-10">
             @if(flash.containsKey("error")) {
                 <div class="alert alert-danger">
                 @flash.get("error")
                 </div>
             }
             </div>
+                <! -- Buttons -- >
             <div calss="form-group">
-
                 <div class="col-sm-offset-3 col-sm-7">
-            <button class="btn btn-default" type="submit">Submit</button>
-            <button id="redirect" class="btn btn-default" data-dismiss="modal" type="button"><a href="/">Cancel</a></button>
+                    <button type="submit" class="btn btn-primary" id="btn-submit">Create</button>
+                    <button id="redirect" class="btn btn-default" data-dismiss="modal" type="button"><a href="@routes.ServiceController.serviceList()">Cancel</a></button>
                     </div>
             </div>
         </form>
         </div>
     </div>
-   </div>
-
-
 }

@@ -84,13 +84,13 @@ body {
     color: #2b669a;
 }
 
-#btn-sign-up-menu:hover {
+#btn-sign-up-menu:hover, #btn-go-to-index-add-place:hover {
     text-decoration: none;
     color: #2b669a;
 }
 
 #map-container {
-    
+    height: inherit;
 }
 
 #add-place-panel {
@@ -203,4 +203,29 @@ textarea {
     color:#2b669a;
     font-style: normal;
     font-family: Georgia;
+}
+
+#add-place-btns {
+    text-align: center;
+}
+
+#add-place-btns .btn {
+    width: 30%;
+}
+
+#upload-images-add-place {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity: 0;
+    background-color: transparent;
+    color: transparent;
+}
+
+.alert-danger{
+    height: 35px;
+    text-align: center;
 }
