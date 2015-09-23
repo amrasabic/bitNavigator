@@ -3,6 +3,7 @@ package controllers;
 import models.Comment;
 import models.Report;
 import models.User;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -11,6 +12,9 @@ import play.mvc.Security;
 import utillities.Authenticators;
 import views.html.comments.commentslist;
 import views.html.comments.reportedcommentslist;
+
+import java.util.List;
+
 
 /**
  * Created by ognje on 10-Sep-15.
@@ -42,7 +46,9 @@ public class CommentController extends Controller {
 
     @Security.Authenticated(Authenticators.Admin.class)
     public Result reportedComments() {
-        return ok(reportedcommentslist.render(Report.getAllReports()));
+        List<Report.ReportHelper> list = Report.getAllReports();
+        Logger.info(list.toString());
+        return ok(reportedcommentslist.render(list));
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
