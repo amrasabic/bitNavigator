@@ -4,7 +4,7 @@
 $(document).ready(function(){
 
     $('form').submit(function(e, options){
-
+        alert("ndsa" + lat);
         var options = options || {};
         if(options.allow == true){
             return;
@@ -25,6 +25,7 @@ $(document).ready(function(){
 
             var errors = response.responseJSON;
             var keys = Object.keys(errors);
+            console.log(errors);
             for(var i = 0; i < keys.length; i++){
                 var errorMessages = errors[keys[i]];
                 var allErrors = "";

@@ -307,7 +307,11 @@ public class PlaceController extends Controller{
         for (int i=0; i < places.size(); i++) {
             a[i] = places.get(i).title;
             Logger.info(places.get(i).address+"------------------------");
-        }Logger.info("/*****************************************************");
+        }
+        Logger.info("/*****************************************************");
+
+
+
         JsonNode object = Json.toJson(a);
 
 

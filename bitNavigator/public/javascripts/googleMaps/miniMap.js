@@ -4,30 +4,39 @@
 
 var marker;
 function initMap() {
-    alert(lat);
     if(lat == undefined || lng == undefined){
-        var lat = 43.850;
-        var lng = 18.390;
+        lat = 43.850;
+        lng = 18.390;
     }
     var map = new google.maps.Map(document.getElementById('map-add-place'), {
         zoom: 14,
         center: {lat: lat, lng: lng}
     });
+
     var geocoder = new google.maps.Geocoder;
     var infowindow = new google.maps.InfoWindow;
+
+    var draggable = true;
+    if(typeof markerDraggable != 'undefined') {
+        draggable = false;
+    }
+
     marker = new google.maps.Marker({
         position: {lat: lat, lng: lng},
         map: map,
-        draggable: true
+        draggable: draggable
     });
+
     document.getElementById('btn-add').addEventListener('click', function() {
         geocodeLatLng(geocoder, map, infowindow, marker.getPosition().lat() + "," + marker.getPosition().lng());
     });
 }
 function geocodeLatLng(geocoder, map, infowindow, ll) {
+
     var input = ll;
     var latlngStr = input.split(',', 2);
     var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+
     geocoder.geocode({'location': latlng}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
             if (results[1]) {

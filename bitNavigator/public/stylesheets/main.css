@@ -228,3 +228,12 @@ textarea {
 .ui-menu-item {
     background-color: white;
 }
+
+.alert-danger{
+    height: 35px;
+    text-align: center;
+}
+
+.dropdown-item {
+    width: 200px;
+}

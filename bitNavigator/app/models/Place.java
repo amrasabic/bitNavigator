@@ -60,7 +60,4 @@ public class Place extends Model {
         return finder.where().contains("title", value).findList();
     }
 
-
-
-
 }
