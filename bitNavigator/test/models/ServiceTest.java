@@ -65,4 +65,13 @@ public class ServiceTest {
         Service s = Service.findByType("tyvdghwgbfxyfsgybg");
         assertNull(s);
     }
+
+    @Test
+    public void testUpdate () {
+        Service s = new Service();
+        s.serviceType = "Type";
+
+        s.update();
+        assetNotNull(s);
+    }
 }

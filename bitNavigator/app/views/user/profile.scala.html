@@ -60,7 +60,7 @@
 
 
 
-    <div class="container-fluid" id="profile-panel">
+    <div class="container" id="profile-panel">
         <h3 class="page-header">Hi @user.firstName  @user.lastName!</h3>
         <div class="row">
             <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser(session.get("email"))"  enctype="multipart/form-data">

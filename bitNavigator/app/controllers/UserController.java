@@ -105,6 +105,14 @@ public class UserController extends Controller {
             flash(ERROR_MESSAGE, "Account already linked to given email!");
             return badRequest(signup.render(boundForm));
         }
+
+
+        if (!singUp.password.equals(singUp.confirmPassword)) {
+            flash(ERROR_MESSAGE, "Passwords do not match!");
+            return badRequest(signup.render(boundForm));
+        }
+
+
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);
@@ -234,8 +242,8 @@ public class UserController extends Controller {
         @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
         @Constraints.Required (message = "Password is required")
         public String password;
-        @Constraints.MinLength (8)
-        @Constraints.MaxLength (25)
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
         @Constraints.Required (message = "Passwords does not match")
         public String confirmPassword;
     }

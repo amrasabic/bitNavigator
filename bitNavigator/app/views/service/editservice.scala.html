@@ -1,0 +1,57 @@
+@(service: Service)
+
+@main("Edit service") {
+
+        <div class="row">
+            <div class="col-md-7" style="margin-top: 50px;">
+                <form method="post" action="@routes.ServiceController.updateService(service.id)"  enctype="multipart/form-data" >
+                    <!-- Service type -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-3"  for="pwd">Service type:</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" type="text"  id="inputDefault" name="serviceType" value="@service.serviceType">
+                        </div>
+                        <p><br></p>
+                    </div>
+                    <!-- Checkbox can reserve -->
+                    <div class="form-group" >
+                        <label class="control-label col-sm-3"  for="pwd">Can reserve:</label>
+                        <div class="col-sm-7">
+                            @if(service.isReservable()){
+                            <input type="checkbox" name="isReservable" checked>
+                            } else {
+                            <input type="checkbox" name="isReservable">
+                            }
+                        </div>
+                    </div>
+                        <!-- Adding image MINIMUM IMAGE DIMENSIONS -->
+                    <div  class="form-group">
+                        <p><br></p>
+                        <label class="control-label col-sm-3"  for="pwd">Edit service icon:</label>
+                        <div class="col-sm-7">
+                            <span class="btn btn-default btn-file">
+                                <img class="img-responsive" src="@routes.Assets.versioned(service.serviceIcon)"><input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*" multiple>
+                            </span>
+                        </div>
+                    </div>
+                    <p><br/></p>
+                    <!-- Error div -->
+                    <div class="control-label col-sm-10">
+                    @if(flash.containsKey("error")) {
+                        <div class="alert alert-danger">
+                        @flash.get("error")
+                        </div>
+                    }
+                    </div>
+                    <!-- Buttons -->
+                    <div calss="form-group">
+                        <p><br/></p>
+                        <div class="col-sm-offset-3 col-sm-7">
+                            <button type="submit" class="btn btn-primary" id="btn-submit">Edit</button>
+                            <button id="redirect" class="btn btn-default" data-dismiss="modal" type="button"><a href="@routes.ServiceController.serviceList()">Cancel</a></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+}
