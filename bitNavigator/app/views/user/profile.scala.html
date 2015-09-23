@@ -13,8 +13,6 @@
           geoIpLookup: function(callback) {
             $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
               var countryCode = (resp && resp.country) ? resp.country : "";
-             // var intlNumber = $("#mobile-number").intlTelInput("getNumber");
-             // var extension = $("#mobile-number").intlTelInput("getExtension");
               callback(countryCode);
             });
           },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
@@ -57,6 +55,7 @@
 
 
         })
+        var urlToPost = "@routes.UserController.validateUserNameForm()";
     </script>
 
 
@@ -99,7 +98,9 @@
                         <label class="col-lg-3 control-label">First name:</label>
                         <div class="col-lg-8">
                             <input class="form-control" value="@user.firstName" type="first_name" name="firstName" id="first_name">
+                            <div class="alert alert-danger" data-error-for="firstName" role="alert" hidden></div>
                         </div>
+
                     </div>
                         <!-- User last name field-->
                     <div class="form-group">
@@ -107,6 +108,7 @@
                         <div class="col-lg-8">
                             <input class="form-control" value="@user.lastName" type="last_name" name="lastName" id="last_name">
                         </div>
+                        <div class="alert alert-danger" data-error-for="lastName" role="alert" hidden></div>
                     </div>
                         <!-- User email filed-->
                     <div class="form-group">
@@ -124,7 +126,7 @@
                             <span id="error-msg" class="hide">Invalid number</span>
                             <input id="mobile-number-id" name="mobileNumber" type="hidden">
                         </div>
-
+                        <div class="alert alert-danger" data-error-for="mobileNumber" role="alert" hidden></div>
                     </div>
                     <p><br></p>
                         <!-- Confirm and cancel buttons -->
@@ -144,5 +146,7 @@
             @flash.get("error")
             </div>
         }
+
+    <script src="@routes.Assets.versioned("javascripts/validateForm.js")"></script>
 
 }

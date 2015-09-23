@@ -99,16 +99,13 @@ public class UserController extends Controller {
      */
     public Result save() {
         Form<SignUpForm> boundForm = signUpForm.bindFromRequest();
-        if(boundForm.hasErrors()) {
-            flash(ERROR_MESSAGE, "Wrong input");
-            return badRequest(signup.render(boundForm));
-        }
 
         SignUpForm singUp = boundForm.get();
         if(User.findByEmail(singUp.email) != null) {
             flash(ERROR_MESSAGE, "Account already linked to given email!");
             return badRequest(signup.render(boundForm));
         }
+
 
         if (!singUp.password.equals(singUp.confirmPassword)) {
             flash(ERROR_MESSAGE, "Passwords do not match!");
@@ -153,7 +150,7 @@ public class UserController extends Controller {
 
         if(boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
-            return badRequest(profile.render(user));
+            return badRequest(boundForm.errorsAsJson());
         }
         Logger.info(boundForm.bindFromRequest().field("mobileNumber").value());
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
@@ -200,15 +197,13 @@ public class UserController extends Controller {
 
     @Security.Authenticated(Authenticators.Admin.class)
     public Result userList(){
-        List<User> users = User.findAll();
-        return ok(userlist.render(users));
+        return ok(userlist.render(User.findAll()));
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
     public Result delete(String email) {
         User user = User.findByEmail(email);
         if (user == null) {
-            Logger.info("dsadasd     "+ email);
             return notFound(String.format("User %s does not exists.", email));
         }
         user.delete();
@@ -238,7 +233,7 @@ public class UserController extends Controller {
         @Constraints.Pattern (value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
         //@Constraints.Pattern ("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
-        @Constraints.Pattern ("^\\+387[3,6][1-6]\\d{6}")
+        @Constraints.Pattern (value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
         public String mobileNumber;
     }
 
@@ -247,8 +242,8 @@ public class UserController extends Controller {
         @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
         @Constraints.Required (message = "Password is required")
         public String password;
-        @Constraints.MinLength (8)
-        @Constraints.MaxLength (25)
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
         @Constraints.Required (message = "Passwords does not match")
         public String confirmPassword;
     }
@@ -288,6 +283,28 @@ public class UserController extends Controller {
 
 
             flash("success", "user added");
+            return redirect("/");
+        }
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateUserNameForm(){
+        //get the form data from the request - do this only once
+        Form<UserNameForm> binded = userNameForm.bindFromRequest();
+        //if we have errors just return a bad request
+        if(binded.hasErrors()){
+            flash("error", "check your inputs");
+            Logger.info("jsadhjhd");
+            return badRequest(binded.errorsAsJson());
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            UserNameForm unf = binded.get();
+
+
+            flash("success", "user edited");
             return redirect("/");
         }
     }
