@@ -17,7 +17,7 @@
 
         <div style="" aria-expanded="true" class="navbar-collapse collapse in" id="bs-example-navbar-collapse-2">
 
-            <form class="navbar-form navbar-left" role="search"  action="@routes.Application.index()">
+            <form class="navbar-form navbar-left dont-validate" role="search"  action="@routes.Application.index()">
 
                 <div id="srch-form" class="form-group dropdown">
                     <input id="srch-navbar" list="srch-data" class="form-control" autocomplete="off" placeholder="Search" type="text" name="srch-term">
@@ -27,7 +27,7 @@
 
             <ul class="nav navbar-nav navbar-right">
             @if(!SessionHelper.isAuthenticated) {
-                <form class="navbar-form navbar-right" method="post" action="@routes.UserController.checkSignIn()">
+                <form class="navbar-form navbar-right dont-validate" method="post" action="@routes.UserController.checkSignIn()">
                     <div class="form-group">
 
                         <input id="email-signin" type="email" class="form-control" placeholder=" Email" name="email">
@@ -69,49 +69,18 @@
     </div>
 
     <script>
-    var nesto;
         $(document).ready(function() {
-
             $("#srch-navbar").on("input", function(e){
-
                 $.ajax({
                     url: "@routes.PlaceController.autoCompleteSearch()",
                     method: "post",
                     data: "srch-term=" + $("#srch-navbar").val()
                 }).success(function(response) {
-
-                    /*
-                    var auto = $("#srch-form");
-                    auto.append("<ul class='dropdown-menu' aria-labelledby='srch-navbar'>")
-                    for(var i = 0;i < response.length; i++) {console.log(response.length)
-                        auto.append("<li class='dropdown-item'>" + response[i] + "</li>");
-
-                    }
-                    auto.append("</ul>");
-                    */
-
-                    /*
-                    var autocomplete = $("#srch-form");
-                    autocomplete.append("<datalist id='srch-data'>");
-                    for(var i = 0;i < response.length; i++) {
-                        autocomplete.append("<option class='dropdown-item' value='" + response[i] + "'>"+response[i]+"</option>");
-                        console.log(response[i]);
-                    }
-                    autocomplete.append("</datalist>");
-                    */
-
                     $("#srch-navbar").autocomplete({
                         source: response
                     });
-                    $(".ui-menu-item").addClass("dropdown-item");
-                    $(".ui-menu-item").width(200);
-                    nesto = response;
-
                 })
             });
-
-
-
         });
     </script>
 

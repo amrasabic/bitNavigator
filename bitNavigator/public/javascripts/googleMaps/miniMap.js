@@ -40,7 +40,6 @@ function geocodeLatLng(geocoder, map, infowindow, ll) {
     geocoder.geocode({'location': latlng}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
             if (results[1]) {
-                //map.setZoom(11);
                 infowindow.setContent(results[0].formatted_address);
                 infowindow.open(map, marker);
                 document.getElementById("address").value = results[0].formatted_address;

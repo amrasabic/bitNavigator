@@ -13,6 +13,7 @@ import play.mvc.Http;
 
 import play.mvc.Security;
 import utillities.Authenticators;
+import utillities.SessionHelper;
 import views.html.index;
 import views.html.user.*;
 import views.html.admin.*;
@@ -41,7 +42,7 @@ public class UserController extends Controller {
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
-    private static Image image;
+  //  private static Image image;
 
     /**
      * Leads random user to signin subpage
@@ -70,8 +71,6 @@ public class UserController extends Controller {
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
-
             return redirect(routes.Application.index());
         }
         try {
@@ -80,14 +79,10 @@ public class UserController extends Controller {
             }
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
-
             return redirect(routes.Application.index());
         }
         session().clear();
         session("email", user.email);
-
-        List<Place> places = Place.findAll();
         return redirect(routes.Application.index());
     }
 
@@ -106,12 +101,10 @@ public class UserController extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
-
         if (!singUp.password.equals(singUp.confirmPassword)) {
             flash(ERROR_MESSAGE, "Passwords do not match!");
             return badRequest(signup.render(boundForm));
         }
-
 
         User.newUser(singUp);
         session().clear();
@@ -122,77 +115,58 @@ public class UserController extends Controller {
     @Security.Authenticated(Authenticators.User.class)
     public Result profile (String email) {
         final User user = User.findByEmail(email);
-        if(user == null)
-        {
-            return notFound(String.format("User %s does not exist.", email));
-        }
-        return ok(profile.render(user));
-
-    }
-
-    @Security.Authenticated(Authenticators.User.class)
-    public Result updateUser(String email) {
-
-        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
-
-        User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
-
         if(user == null) {
             return notFound(String.format("User %s does not exist.", email));
         }
 
-        if (!email.equals(user.email)) {
-            User tmp = User.findByEmail(email);
-            if (tmp == null || !tmp.admin) {
-                return unauthorized("Permission denied!");
-            }
+        return ok(profile.render(new UserNameForm(user)));
+
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result updateUser() {
+
+        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
+
+        User user = SessionHelper.getCurrentUser();
+
+        if(user == null) {
+            return notFound(String.format("User does not exist."));
+        }
+
+        if(!user.email.equals(boundForm.bindFromRequest().field("email").value())){
+            return unauthorized("We good we good");
         }
 
         if(boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
-            return badRequest(boundForm.errorsAsJson());
+            return redirect(routes.UserController.profile(user.email));
         }
-        Logger.info(boundForm.bindFromRequest().field("mobileNumber").value());
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
         user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
+        user = User.updateUser(boundForm.get());
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
-        List<Http.MultipartFormData.FilePart> pictures = body.getFiles();
-        user.update();
-        if (pictures != null) {
-            for (Http.MultipartFormData.FilePart picture : pictures) {
-                String name = user.firstName + formatted;
-                File file = picture.getFile();
-                String path = Play.application().path() + "/public/images/profileImages/" + user.firstName + "/" + name;
+        Http.MultipartFormData.FilePart filePart = body.getFile("image");
 
-                Logger.info(path);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    image = new Image();
-                    image.name = name;
-                    path ="/images/profileImages/" + user.firstName + "/" + name;
-                    image.path = path;
+        if(filePart != null){
+            Logger.debug("Content type: " + filePart.getContentType());
+            Logger.debug("Key: " + filePart.getKey());
+            File file = filePart.getFile();
+            Image image = Image.create(file);
+            user.avatar = image;
+            image.save();
 
-                    image.save();
-                    user.image = image;
-                    user.update();
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
-            return redirect(routes.Application.index());
         } else {
             flash("error", "Files not present.");
             return badRequest("Picture missing.");
         }
-
+        Logger.info(user.avatar.image_url + "------------------------------------");
+     //   image.save();
+        user.update();
+        return redirect(routes.Application.index());
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
@@ -232,9 +206,21 @@ public class UserController extends Controller {
         public String firstName;
         @Constraints.Pattern (value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
-        //@Constraints.Pattern ("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
         @Constraints.Pattern (value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
         public String mobileNumber;
+        public Image avatar;
+
+        public UserNameForm() {
+
+        }
+
+        public UserNameForm(User u) {
+            this.email = u.email;
+            this.firstName = u.firstName;
+            this.lastName = u.lastName;
+            this.mobileNumber = u.phoneNumber;
+            this.avatar = u.avatar;
+        }
     }
 
     public static class SignUpForm  extends UserNameForm{
@@ -297,7 +283,7 @@ public class UserController extends Controller {
         //if we have errors just return a bad request
         if(binded.hasErrors()){
             flash("error", "check your inputs");
-            Logger.info("jsadhjhd");
+            Logger.info("------------------" + binded.errorsAsJson().toString());
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)

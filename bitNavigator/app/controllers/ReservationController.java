@@ -69,4 +69,20 @@ public class ReservationController extends Controller {
 
         return redirect(routes.ReservationController.reservationsList());
     }
+
+    public Result validateForm(){
+        //get the form data from the request - do this only once
+        Form<Reservation> binded = reservationForm.bindFromRequest();
+        //if we have errors just return a bad request
+        if(binded.hasErrors()){
+            flash("error", "check your inputs");
+            return badRequest(binded.errorsAsJson());
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            Reservation unf = binded.get();
+
+            flash("success", "user edited");
+            return redirect("/");
+        }
+    }
 }

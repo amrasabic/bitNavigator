@@ -33,29 +33,20 @@
 
             @for(place <- places){
                 @if(place.latitude != null && place.longitude != null){console.log("@place.title");
-                    /*var infowindow = new google.maps.InfoWindow({
-                        content: "@place.title"
-                    });*/
-
                     var marker = new google.maps.Marker({
                         position: {lat: @place.latitude, lng: @place.longitude},
                         map: map,
                         title: "@place.title",
                         icon: "@routes.Assets.versioned(place.service.serviceIcon)"
                     });
-
                     marker.addListener('click', function() {
                         window.location.href = "@routes.PlaceController.viewPlace(place.id)";
                     });
-
-                    //infowindow.open(map, marker);
                 }
-    }
+            }
         }
 
     </script>
-
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
-
 
 }

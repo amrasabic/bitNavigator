@@ -1,0 +1,76 @@
+@(place: Place)(services: java.util.List[Service])(title: String)
+
+<div id="add-place-panel" class="container-fluid">
+    <div id="info-container" class="col-md-6">
+
+        <div class="panel-body">
+            <div class="page-header">
+                <h3>@title</h3>
+            </div>
+                <!-- Title input -->
+            <div class="form-group">
+                <label for="usr">Title:</label>
+                <input type="text" class="form-control" name="title" id="title" value="@place.title" placeholder="Enter place Title">
+                <div class="alert alert-danger" data-error-for="title" role="alert" hidden></div>
+            </div>
+                <!-- Description input -->
+            <div class="form-group">
+                <label for="comment">Description:</label>
+                <textarea class="form-control" rows="5" name="description" id="description" type="text" placeholder="Enter place Description">@place.description</textarea>
+                <div class="alert alert-danger" data-error-for="description" role="alert" hidden></div>
+            </div>
+                <!-- Address input -->
+            <div class="form-group">
+                <label for="usr">Address:</label>
+                <input type="text" value="@place.address" class="form-control" name="address" id="address" placeholder="Enter or Submit Address">
+                <div class="alert alert-danger" data-error-for="address" role="alert" hidden></div>
+                <button class="btn btn-default" id="btn-add" type="button">Submit address</button>
+            </div>
+            <input id="longitude" name="longitude" type="hidden" value="@place.longitude">
+            <input id="latitude" name="latitude" type="hidden" value="@place.latitude">
+
+                <!-- Service input -->
+            <div class="dropdown" style="margin-top : 10 px ; padding-top : 5 px ;">
+                <label for="service-list">Service:</label>
+                <select id="service-list" class="btn btn-block" name="Services">
+                @for(service <- services) {
+                    @if(place.service != null && service.serviceType.equals(place.service.serviceType)) {
+                        <option selected="selected">@service.serviceType</option>
+                    } else {
+                        <option>@service.serviceType</option>
+                    }
+                }
+                </select>
+                <div class="alert alert-danger" data-error-for="serviceType" role="alert" hidden></div>
+            </div>
+            @if(place.service != null){
+                <input id="service" name="serviceType" type="hidden" value="@place.service.serviceType">
+            }else{
+                <input id="service" name="serviceType" type="hidden" value="@services.get(0).serviceType">
+            }
+
+            <p><br/></p>
+                <!-- Image input -->
+
+            <div style="position : relative ;">
+                <a class='btn btn-primary' href='javascript:;'>
+                                Choose Images...
+                    <input id="upload-images-add-place" type="file" name="pictures" name="file_source" accept="image/*" style='position : absolute ; z-index : 2 ; top : 0 ; left : 0 ; filter : alpha ( opacity = 0 ) ; -ms-filter : "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)" ; opacity : 0 ; background-color : transparent ; color : transparent ;' size="40" onchange='$("#upload-file-info").html($(this).val());' multiple>
+                </a>
+                    &nbsp;
+                <span class='label label-info' id="upload-file-info"></span>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div id="map-container" class="col-md-6">
+        <div id="map-add-place"></div>
+    </div>
+
+</div>
+<div id="add-place-btns" class="container-fluid">
+    <button type="submit" class="btn btn-primary btn-lg" id="btn-submit">@title</button>
+    <button id="redirect" class="btn btn-default btn-lg" type="button"><a id="btn-go-to-index-add-place" href="/">Go to index</a></button>
+</div>

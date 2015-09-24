@@ -18,7 +18,7 @@ POST          /user/validate                   @controllers.UserController.valid
 
 POST          /user/profile/validate           @controllers.UserController.validateUserNameForm()
 GET           /user/profile/:email             @controllers.UserController.profile(email: String)
-POST          /user/profile/:email             @controllers.UserController.updateUser(email: String)
+POST          /user/profile/                   @controllers.UserController.updateUser()
 DELETE        /user/profile/:email             @controllers.UserController.delete(email: String)
 
 
@@ -33,6 +33,7 @@ POST          /                                @controllers.PlaceController.auto
 
 GET           /place/list                      @controllers.PlaceController.placeList()
 GET           /place/profile/:id               @controllers.PlaceController.viewPlace(id: Integer)
+POST          /place/profile/validate          @controllers.ReservationController.validateForm()
 POST          /place/profile/:id               @controllers.ReservationController.submitReservation(id: Integer)
 GET           /place/edit/:id                  @controllers.PlaceController.editPlace(id: Integer)
 DELETE        /places/profile/:id              @controllers.PlaceController.delete(id: Integer)

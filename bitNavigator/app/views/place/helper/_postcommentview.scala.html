@@ -1,0 +1,31 @@
+@import utillities.SessionHelper
+@(place: Place)(comment: Comment)
+
+<div id="container-comment" class="container-fluid">
+    @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null) {
+        <form class="dont-validate" method="post" action="@routes.PlaceController.updateComment(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).id)">
+    }else{
+        <form class="dont-validate" method="post" action="@routes.PlaceController.postComment(place.id)">
+    }
+
+        <div class="rating-select">
+        @for(i <- 1 to 5) {
+            @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null && comment.rate != null && comment.rate == i) {
+                <div class="btn btn-default btn-rate rating-selected selected" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
+            } else {
+                <div class="btn btn-default btn-rate" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
+            }
+        }
+        </div>
+        <div id="comment-heading" class="panel-heading">
+            <h3 class="panel-title">Comment</h3>
+        </div>
+        <div class="panel-body">
+            <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text">@comment.commentContent</textarea>
+            <div class="alert alert-danger" data-error-for="commentContent" role="alert" hidden></div>
+        </div>
+        <input id="comment-rate" value="@comment.rate" name="rate" type="hidden">
+        <button class="btn btn-primary" id="btn-post-comment">Post</button>
+
+    </form>
+</div>

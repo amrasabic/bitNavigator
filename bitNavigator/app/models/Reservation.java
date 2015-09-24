@@ -18,9 +18,12 @@ public class Reservation extends Model {
     public User user;
     @ManyToOne
     public Place place;
-    @Constraints.Required
+    @Constraints.MinLength (value = 5, message = "Title should be minimum 5 characters long.")
+    @Constraints.MaxLength (value = 25, message = "Title should shorter. Write more details in description.")
+    @Constraints.Required (message = "Title is required.")
     public String title;
-    @Constraints.Required
+    @Constraints.MinLength (value = 25, message = "Description should contain more details.")
+    @Constraints.Required (message = "Description is required.")
     public String description;
     @ManyToOne
     public Status status;

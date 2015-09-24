@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.ExpressionFactory;
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
@@ -29,7 +30,7 @@ public class Place extends Model {
     public User user;
     @ManyToOne
     public Service service;
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Image> images;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Comment> comments;
@@ -56,8 +57,13 @@ public class Place extends Model {
         return finder.where().eq("title", title).findUnique();
     }
 
-    public static List<Place> findByValue(String value) {
+    public static List<Place> findByValueInTitle(String value) {
         return finder.where().contains("title", value).findList();
+    }
+
+    public static List<Place> findByValue(String value) {
+        ExpressionFactory exprFactory = finder.getExpressionFactory();
+        return finder.where().or(exprFactory.contains("title", value), exprFactory.contains("address", value)).findList();
     }
 
 }
