@@ -43,8 +43,8 @@ public class Report extends Model {
         return finder.where().eq("comment", comment).findList();
     }
 
-    public static Report findByUsersEmail(String email) {
-        return finder.where().eq("user", User.findByEmail(email)).findUnique();
+    public static List<Report> findByUser(User user) {
+        return finder.where().eq("user", user).findList();
     }
 
     public static boolean isReportedByUser(List<Report> reports, User user) {

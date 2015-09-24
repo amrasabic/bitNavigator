@@ -26,7 +26,6 @@ $(document).ready(function(){
         }).success(function(response){
             $form.trigger("submit", {allow: true});
         }).error(function(response){
-
             var errors = response.responseJSON;
             var keys = Object.keys(errors);
             console.log(errors);

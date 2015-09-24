@@ -88,18 +88,12 @@
                 <!-- Checks if user already posted a comment -->
             @if(comment.user.email != SessionHelper.getCurrentUsersEmail) {
                 @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
-                    <div id="container-comment" class="container-fluid" data-comment="@comment.id" style="background-color : lightgrey">
-                        @views.html.place.helper._commentview(comment)
-                    </div>
-                } else {
-                    <div id="container-comment" class="container-fluid" data-comment="@comment.id">
-                        @views.html.place.helper._commentview(comment)
-                        @if(SessionHelper.isAuthenticated) {
-                            <div id="report-comment" data-toggle="modal" data-target="#report-comment-modal"><a class="report-comment-link">
-                                Report comment <span class="glyphicon glyphicon-flag"></span></a></div>
-                        }
-                    </div>
+                    @views.html.place.helper._commentview(comment)(true)(false)
+                }else{
+                    @views.html.place.helper._commentview(comment)(false)(false)
                 }
+            }else{
+                @views.html.place.helper._commentview(comment)(false)(true)
             }
         }
             <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->

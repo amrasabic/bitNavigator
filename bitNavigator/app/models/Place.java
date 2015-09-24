@@ -66,4 +66,8 @@ public class Place extends Model {
         return finder.where().or(exprFactory.contains("title", value), exprFactory.contains("address", value)).findList();
     }
 
+    public static List<Place> findByUser(User user) {
+        return finder.where().eq("user", user).findList();
+    }
+
 }
