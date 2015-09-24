@@ -44,6 +44,10 @@ public class Comment extends Model {
         return finder.where().eq("user", User.findByEmail(email)).eq("place", place).findUnique();
     }
 
+    public static List<Comment> findByUser(User user) {
+        return finder.where().eq("user", user).findList();
+    }
+
     @Override
     public String toString() {
         return "(" + id + ") Comment: " + commentContent + " (" + rate + ")";

@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         @for(reservation <- reservations) {
-            @if(SessionHelper.isAdmin || reservation.user.email != SessionHelper.getCurrentUsersEmail){
+            @if(SessionHelper.isAdmin || reservation.place.user.email == SessionHelper.getCurrentUsersEmail){
                 <tr>
                     <td>@reservation.id</td>
                     <td>@reservation.title</td>

@@ -41,19 +41,15 @@ public class PlaceController extends Controller{
 
     @Security.Authenticated(Authenticators.User.class)
     public Result savePlace() {
-
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
 
         if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
-            flash("error", "Wrong input!");
             return badRequest(addplace.render(boundForm.get(), Service.findAll()));
         }
 
         Service service = Service.findByType(boundServiceForm.get().serviceType);
-
         if (service == null) {
-            flash("error", "Must add service!");
             return badRequest(addplace.render(boundForm.get(), Service.findAll()));
         }
 
@@ -67,31 +63,8 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
-//            for (FilePart picture : pictures) {
-//                File file = picture.getFile();
-//                String name = formatted + file.getName();
-//                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
-//
-//                Logger.info(name);
-//                try {
-//                    FileUtils.moveFile(file, new File(path));
-//                    imageLists.add(name);
-//                    Image image = new Image();
-//                    image.name = name;
-//                    path ="/images/placeImages/" + place.title + "/" + name;
-//                    image.path = path;
-//                    image.place = place;
-//                    image.save();
-//
-//                } catch (IOException ex) {
-//                    Logger.info("Could not move file. " + ex.getMessage());
-//                    flash("error", "Could not move file.");
-//                }
-//            }
-
-            return ok(index.render(Place.findAll()));
+            return redirect(routes.Application.index());
         } else {
-            flash("error", "Files not present.");
             return badRequest("Pictures missing.");
         }
 
@@ -99,9 +72,6 @@ public class PlaceController extends Controller{
 
     @Security.Authenticated(Authenticators.User.class)
     public Result updatePlace(int id) {
-
-
-
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
 
@@ -110,8 +80,7 @@ public class PlaceController extends Controller{
             return redirect(routes.PlaceController.editPlace(id));
         }
 
-        Service service = boundServiceForm.get();
-        service = Service.findByType(service.serviceType);
+        Service service = Service.findByType(boundServiceForm.get().serviceType);
 
         if (service == null) {
             flash("error", "Must add service!");
@@ -132,28 +101,6 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
-//            for (FilePart picture : pictures) {
-//                File file = picture.getFile();
-//                String name = formatted + file.getName();
-//                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
-//
-//                Logger.info(name);
-//                try {
-//                    FileUtils.moveFile(file, new File(path));
-//                    imageLists.add(name);
-//                    Image image = new Image();
-//                    image.name = name;
-//                    path ="/images/placeImages/" + place.title + "/" + name;
-//                    image.path = path;
-//                    image.place = place;
-//                    image.save();
-//
-//                } catch (IOException ex) {
-//                    Logger.info("Could not move file. " + ex.getMessage());
-//                    flash("error", "Could not move file.");
-//                }
-//            }
-
             return redirect(routes.PlaceController.viewPlace(id));
         } else {
             flash("error", "Files not present.");
@@ -216,7 +163,7 @@ public class PlaceController extends Controller{
         Form<Comment> boundForm = commentForm.bindFromRequest();
 
         if (boundForm.hasErrors()) {
-            return unauthorized("Can not post an empty comment!");
+            return redirect(routes.PlaceController.viewPlace(Comment.findById(id).place.id));
         }
 
         Comment comment = boundForm.get();
@@ -242,7 +189,7 @@ public class PlaceController extends Controller{
     public Result updateComment(int id) {
         Form<Comment> boundForm = commentForm.bindFromRequest();
         if (boundForm.hasErrors()) {
-            return unauthorized("Can not post an emnpty comment!");
+            return redirect(routes.PlaceController.viewPlace(Comment.findById(id).place.id));
         }
 
         Comment comment = Comment.findById(id);
@@ -277,20 +224,12 @@ public class PlaceController extends Controller{
             places = Place.findByValueInTitle(srchTerm);
 
         }
-        if (places.size() > 1){
 
-
-        }
         String[] titles = new String[places.size()];
         for (int i=0; i < places.size(); i++) {
             titles[i] = places.get(i).title;
         }
 
-
-
-        JsonNode titlesAsJSON = Json.toJson(titles);
-
-
-        return ok(titlesAsJSON);
+        return ok(Json.toJson(titles));
     }
 }
