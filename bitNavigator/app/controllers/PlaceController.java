@@ -178,7 +178,7 @@ public class PlaceController extends Controller{
         }
         comment.place = place;
         comment.commentCreated = Calendar.getInstance();
-        if(comment.rate == 0) {
+        if(comment.rate == null || comment.rate == 0) {
             comment.rate = null;
         }
         comment.save();
