@@ -1,16 +1,10 @@
 package models;
 
-import javax.persistence.*;
-
+import com.avaje.ebean.ExpressionFactory;
 import com.avaje.ebean.Model;
-import play.data.format.*;
-import play.data.validation.*;
 import play.data.validation.Constraints;
 
-import play.Logger;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
 
@@ -61,6 +55,15 @@ public class Place extends Model {
 
     public static Place findByTitle(String title) {
         return finder.where().eq("title", title).findUnique();
+    }
+
+    public static List<Place> findByValueInTitle(String value) {
+        return finder.where().contains("title", value).findList();
+    }
+
+    public static List<Place> findByValue(String value) {
+        ExpressionFactory exprFactory = finder.getExpressionFactory();
+        return finder.where().or(exprFactory.contains("title", value), exprFactory.contains("address", value)).findList();
     }
 
 }

@@ -4,73 +4,18 @@
 @import play.mvc.Http.Session
 @main("View place") {
 
-    <script>
-        var marker;
-        function initMap() {
-            var lat = 43.850;
-            var lng = 18.390;
-            @if(place.latitude != null && place.longitude != null) {
-                lat = @place.latitude;
-                lng = @place.longitude;
-                    }
-            var map = new google.maps.Map(document.getElementById('map-add-place'), {
-                zoom: 14,
-                center: {lat: lat, lng: lng}
-            });
-            var geocoder = new google.maps.Geocoder;
-            var infowindow = new google.maps.InfoWindow;
-            marker = new google.maps.Marker({
-                position: {lat: lat, lng: lng},
-                map: map
-            });
-            document.getElementById('btn-add').addEventListener('click', function() {
-                geocodeLatLng(geocoder, map, infowindow, marker.getPosition().lat() + "," + marker.getPosition().lng());
-            });
-        }
-        function geocodeLatLng(geocoder, map, infowindow, ll) {
-            var input = ll;
-            var latlngStr = input.split(',', 2);
-            var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
-            geocoder.geocode({'location': latlng}, function(results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-                        infowindow.setContent(results[0].formatted_address);
-                        infowindow.open(map, marker);
-                        document.getElementById("address").value = results[0].formatted_address;
-                        document.getElementById("latitude").value = latlng.lat;
-                        document.getElementById("longitude").value = latlng.lng;
-                    } else {
-                        window.alert('No results found');
-                    }
-                } else {
-                    window.alert('Geocoder failed due to: ' + status);
-                }
-            });
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
-    <script src="@routes.Assets.versioned("javascripts/rate.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.versioned("javascripts/reservations.js")" type="text/javascript"></script>
     <div class="container">
-    <div id="add-place-panel" class="container-fluid">
-        <div class="col-md-6">
-            <form method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
+        <div id="add-place-panel" class="container-fluid">
+            <div class="col-md-6">
                 <div class="panel-body">
-                    <div class="page-header">
+                    <div class="form-group">
                         <h3>@place.title</h3>
                     </div>
-                        <!-- Title input field -->
-                    <div class="form-group">
-                        <label for="usr">Title:</label>
-                        <input type="text" class="form-control" name="title" id="title" value="@place.title" placeholder="Enter title" readonly>
-                    </div>
-                    <p><br/></p>
-                        <!-- Description input field -->
+                        <!-- Description -->
                     <div class="form-group">
                         <label for="comment">Description:</label>
                         <textarea class="form-control" rows="3" name="description" id="description" type="text" readonly>@place.description</textarea>
                     </div>
-                    <p><br/></p>
                         <!--Address field -->
                     <div class="form-group">
                         <label for="usr">Address:</label>
@@ -89,202 +34,115 @@
                         </div>
 
                     </div>
-                </div>
-            </form>
-        </div>
-        <div id="map-container" class="col-md-6">
-             <div id="myModal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <form method="post" action="@routes.ReservationController.submitReservation(place.id)">
-                    <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                <h4 class="modal-title">Create reservation</h4>
-                            </div>
-                        <div class="modal-body">
-                            <div class="form-group" id="titleDiv">
-                                <label>Title:</label>
-                                <input type="text" class="form-control" name="title" id="rtitle" placeholder="Enter title" oninput="validateReservation()" onfocusout="validateTitle()">
-                                <p id="titleParagraph" data-error-for="title" style="color: red; font-size: 10px"></p>
-                            </div>
-                            <div class="form-group" id="descriptionDiv">
-                                <label>Description:</label>
-                                <textarea class="form-control" rows="3" name="description" id="rdescription" type="text" placeholder="I would like to reserve .." style="resize: inherit" oninput="validateReservation()" onfocusout="validateDescription()"></textarea>
-                                <p id="descParagraph" data-error-for="description" style="color: red; font-size: 10px"></p>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="reservation" onclick="validateReservation()">Submit reservation</button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-            </div>
-
-            <div>
-            <div id="map-add-place" style="height : 550 px ;">
-            </div>
-            <p><br></p>
-            <div>
-                @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email) {
-                    <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
-                }
-            </div>
-            </div>
-        </div>
-
-    </div>
-    <div id="container-comment" class="container-fluid">
-        <h4>Gallery</h4>
-        @for(image <- images) {
-            <div class="media-left">
-                <img class="media-object" src="@routes.Assets.versioned(image.image_url)" alt="...">
-            </div>
-        }
-    </div>
-    @for(comment <- comments) {
-        <!-- Checks if user already posted a comment -->
-        @if(comment.user.email != SessionHelper.getCurrentUsersEmail){
-            @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))){
-                <div id="container-comment" class="container-fluid" data-comment="@comment.id" style="background-color: lightgrey">
-                    @if(comment.rate == null){
-                        <div id="comment-rate-label">n/a<span class="glyphicon glyphicon-star-empty"></span></div>
-                    }else{
-                        <div id="comment-rate-label">@comment.rate<span class="glyphicon glyphicon-star-empty"></span></div>
-                    }
-                    <div class="panel-heading">
-                    @if(comment.user.firstName == "" || comment.user.lastName == ""){
-                        <h3 class="panel-title">Anonymous - @comment.commentCreated.getTime</h3>
-                    }else{
-                        <h3 class="panel-title">@comment.user.firstName @comment.user.lastName - @comment.commentCreated.getTime</h3>
-                    }
-                    </div>
-                    <div class="panel-body">
-                        <textarea id="comment-content" class="form-control" rows="2" name="commentContent" id="commentContent" type="text" readonly>@comment.commentContent</textarea>
-                    </div>
-                </div>
-            }else{
-                <div id="container-comment" class="container-fluid" data-comment="@comment.id">
-                    @if(comment.rate == null){
-                        <div id="comment-rate-label">n/a<span class="glyphicon glyphicon-star-empty"></span></div>
-                    }else{
-                        <div id="comment-rate-label">@comment.rate<span class="glyphicon glyphicon-star-empty"></span></div>
-                    }
-                    <div class="panel-heading">
-                    @if(comment.user.firstName == "" || comment.user.lastName == ""){
-                        <h3 class="panel-title">Anonymous - @comment.commentCreated.getTime</h3>
-                    }else{
-                        <h3 class="panel-title">@comment.user.firstName @comment.user.lastName - @comment.commentCreated.getTime</h3>
-                    }
-                    </div>
-                    <div class="panel-body">
-                        <textarea id="comment-content" class="form-control" rows="2" name="commentContent" id="commentContent" type="text" readonly>@comment.commentContent</textarea>
-                    </div>
-                    @if(SessionHelper.isAuthenticated){
-                        <div id="report-comment" data-toggle="modal" data-target="#report-comment-modal"><a id="report-comment-link">Report comment <span class="glyphicon glyphicon-flag"></span></a></div>
-                    }
-                </div>
-
-            }
-
-        }
-    }
-    <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
-    @if(!place.user.email.equals(SessionHelper.getCurrentUsersEmail()) && SessionHelper.isAuthenticated) {
-        @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null){
-            <div id="container-comment" class="container-fluid">
-                <form method="post" action="@routes.PlaceController.updateComment(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).id)">
-                    <div class="rating-select">
-                    @for(i <- 1 to 5){
-                        @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).rate != null && Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).rate == i){
-                            <div class="btn btn-default btn-rate rating-selected selected" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
-                        } else {
-                            <div class="btn btn-default btn-rate" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
+                    <p><br></p>
+                    <div>
+                        @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email) {
+                            <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
                         }
-                    }
                     </div>
-                    <div id="comment-heading" class="panel-heading">
-                        <h3 class="panel-title">Comment</h3>
-                    </div>
-                    <div class="panel-body">
-                        <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text">@Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).commentContent</textarea>
-                    </div>
-                    <input id="comment-rate" value="@Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).rate" name="rate" type="hidden">
-                    <button class="btn btn-primary" id="btn-post-comment">Post</button>
-
-                </form>
+                </div>
             </div>
-        }else{
-            <div id="container-comment" class="container-fluid">
-                <form method="post" action="@routes.PlaceController.postComment(place.id)">
-                    <div class="rating-select">
-                    @for(i <- 1 to 5){
-                        <div class="btn btn-default btn-rate" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
-                    }
+            <div id="map-container" class="col-md-6">
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <form method="post" action="@routes.ReservationController.submitReservation(place.id)">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                    <h4 class="modal-title">Create reservation</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group" id="titleDiv">
+                                        <label>Title:</label>
+                                        <input type="text" class="form-control" name="title" id="rtitle" placeholder="Enter title" oninput="validateReservation()" onfocusout="validateTitle()">
+                                        <p id="titleParagraph" data-error-for="title" style="color : red ; font-size : 10 px"></p>
+                                    </div>
+                                    <div class="form-group" id="descriptionDiv">
+                                        <label>Description:</label>
+                                        <textarea class="form-control" rows="3" name="description" id="rdescription" type="text" placeholder="I would like to reserve .." style="resize : inherit" oninput="validateReservation()" onfocusout="validateDescription()"></textarea>
+                                        <p id="descParagraph" data-error-for="description" style="color : red ; font-size : 10 px"></p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" id="reservation" onclick="validateReservation()">
+                                        Submit reservation</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div id="comment-heading" class="panel-heading">
-                        <h3 class="panel-title">Comment</h3>
-                    </div>
-                    <div class="panel-body">
-                        <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text" placeholder="Write a comment..."></textarea>
-                    </div>
-                    <input id="comment-rate" value="0" name="rate" type="hidden">
-                    <button class="btn btn-primary" id="btn-post-comment">Post</button>
-
-                </form>
+                </div>
+                <div><div id="map-add-place"></div></div>
             </div>
+
+        </div>
+        <div id="container-comment" class="container-fluid">
+            <h4>Gallery</h4>
+            @for(image <- images) {
+                <div class="media-left">
+                    <img class="media-object" src="@routes.Assets.versioned(image.image_url)" alt="...">
+                </div>
+            }
+        </div>
+        @for(comment <- comments) {
+                <!-- Checks if user already posted a comment -->
+            @if(comment.user.email != SessionHelper.getCurrentUsersEmail) {
+                @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
+                    <div id="container-comment" class="container-fluid" data-comment="@comment.id" style="background-color : lightgrey">
+                        @views.html.place.helper._commentview(comment)
+                    </div>
+                } else {
+                    <div id="container-comment" class="container-fluid" data-comment="@comment.id">
+                        @views.html.place.helper._commentview(comment)
+                        @if(SessionHelper.isAuthenticated) {
+                            <div id="report-comment" data-toggle="modal" data-target="#report-comment-modal"><a class="report-comment-link">
+                                Report comment <span class="glyphicon glyphicon-flag"></span></a></div>
+                        }
+                    </div>
+                }
+            }
+        }
+            <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
+        @if(!place.user.email.equals(SessionHelper.getCurrentUsersEmail()) && SessionHelper.isAuthenticated) {
+            @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null){
+                @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))
+            }else{
+                @views.html.place.helper._postcommentview(place)(new Comment)
+            }
         }
 
-    }
-
-    <!-- Modal -->
-    <div class="modal fade" id="report-comment-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Report comment</h4>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to report this comment?
-                </div>
-                <div class="modal-footer">
-                    <button id="report-comment-yes" type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            <!-- Modal -->
+        <div class="modal fade" id="report-comment-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Report comment</h4>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to report this comment?
+                    </div>
+                    <div class="modal-footer">
+                        <button id="report-comment-yes" type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        var reportedComment;
-        $(document).ready(function() {
-
-            $('#report-comment-link').click(function() {
-                reportedComment = this.parentNode.parentNode;
-            });
-
-            $('#report-comment-yes').click(function() {
-                reportedComment.style.backgroundColor = "lightgrey";
-                reportedComment.children[3].remove();
-
-                $.ajax({
-                    type: "post",
-                    url: "@routes.CommentController.reportComment()",
-                    data: "commentId=" + $(reportedComment).data().comment + "&email=@SessionHelper.getCurrentUsersEmail()"
-                }).success(function(response) {
-                    if(response == "error"){
-                        alert("Could not report comment!")
-                    }
-                });
-            });
-
-        });
-
-         var urlToPost = "@routes.ReservationController.validateForm()";
-
-    </script>
-
-        <script src="@routes.Assets.versioned("javascripts/validateForm.js")"></script>
+        <script>
+            var urlToReportComment = '@routes.CommentController.reportComment()';
+            var lat;
+            var lng;
+            var markerDraggable = false;
+            @if(place.latitude != null && place.longitude != null) {
+                lat = @place.latitude;
+                lng = @place.longitude;
+            }
+        </script>
+        <script src="@routes.Assets.versioned("javascripts/googleMaps/miniMap.js")"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+        <script src="@routes.Assets.versioned("javascripts/rate.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/reservations.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/reportComment.js")"></script>
 }

@@ -1,10 +1,14 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
 import play.Play;
+import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -96,6 +100,8 @@ public class PlaceController extends Controller{
     @Security.Authenticated(Authenticators.User.class)
     public Result updatePlace(int id) {
 
+
+
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
 
@@ -156,7 +162,12 @@ public class PlaceController extends Controller{
     }
 
     public Result placeList(){
+        DynamicForm form = Form.form().bindFromRequest();
+        String srchTerm = form.data().get("srch-term");
         List<Place> places = Place.findAll();
+        if(srchTerm != null) {
+            places = Place.findByValue(srchTerm);
+        }
         return ok(placelist.render(places));
     }
 
@@ -258,4 +269,28 @@ public class PlaceController extends Controller{
         }
     }
 
+    public Result autoCompleteSearch() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String srchTerm = form.data().get("srch-term");
+        List<Place> places = Place.findAll();
+        if(srchTerm != null) {
+            places = Place.findByValueInTitle(srchTerm);
+
+        }
+        if (places.size() > 1){
+
+
+        }
+        String[] titles = new String[places.size()];
+        for (int i=0; i < places.size(); i++) {
+            titles[i] = places.get(i).title;
+        }
+
+
+
+        JsonNode titlesAsJSON = Json.toJson(titles);
+
+
+        return ok(titlesAsJSON);
+    }
 }

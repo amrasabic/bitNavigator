@@ -3,7 +3,11 @@
  */
 $(document).ready(function(){
 
-    $('form').submit(function(e, options){
+    $("form").submit(function(e, options){
+
+        if($(this).hasClass("dont-validate")) {
+            return;
+        }
 
         var options = options || {};
         if(options.allow == true){
@@ -32,7 +36,7 @@ $(document).ready(function(){
                 for(var j = 0; j < errorMessages.length; j++){
                     allErrors += errorMessages[j];
                 }
-                //set the helper span message to the content of the error messages
+
                 $('[data-error-for="'+keys[i]+'"]').html(allErrors).show();
             }
 

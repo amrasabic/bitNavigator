@@ -10,6 +10,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
+import utillities.SessionHelper;
 import views.html.comments.commentslist;
 import views.html.comments.reportedcommentslist;
 
@@ -24,15 +25,13 @@ public class CommentController extends Controller {
     @Security.Authenticated(Authenticators.User.class)
     public Result reportComment() {
         DynamicForm form = Form.form().bindFromRequest();
-
         int commentId = -1;
-        String email = form.data().get("email");
         try {
             commentId = Integer.parseInt(form.data().get("commentId"));
         } catch (Exception e) {
-            return ok("error");
+            return badRequest("error");
         }
-        User user = User.findByEmail(email);
+        User user = SessionHelper.getCurrentUser();
         Comment comment = Comment.findById(commentId);
 
         Report.addReport(comment, user);
