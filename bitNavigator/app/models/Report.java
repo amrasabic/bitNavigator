@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.Logger;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -59,18 +60,25 @@ public class Report extends Model {
         List<Report> reports = findAll();
         List<ReportHelper> reportsHelper = new ArrayList<>();
         int counter = 1;
+
         for (int i = 0; i < reports.size() - 1; i++) {
             if (reports.get(i).comment.id == reports.get(i + 1).comment.id) {
                 counter++;
-            } else {
-                reportsHelper.add(new ReportHelper(reports.get(i).comment, counter));
-                counter = 1;
             }
         }
+
+        reportsHelper.add(new ReportHelper(reports.get(reports.size() - 1).comment, counter));
+
         if (reports.size() > 1 && reports.get(reports.size() - 1).comment.id != reports.get(reports.size() - 2 ).comment.id) {
             reportsHelper.add(new ReportHelper(reports.get(reports.size() - 1).comment, counter));
+            Logger.info("2");
         }
         return reportsHelper;
+    }
+
+    @Override
+    public String toString() {
+        return comment.toString();
     }
 
     public static class ReportHelper {
@@ -81,6 +89,11 @@ public class Report extends Model {
         public ReportHelper(Comment comment, int reportsCount) {
             this.comment = comment;
             this.reportsCount = reportsCount;
+        }
+
+        @Override
+        public String toString() {
+            return comment + " (" + reportsCount + ")";
         }
     }
 }
