@@ -1,8 +1,6 @@
 package controllers;
 
-import models.Image;
-import models.Place;
-import models.User;
+import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Play;
 import play.data.Form;
@@ -164,7 +162,7 @@ public class UserController extends Controller {
             return badRequest("Picture missing.");
         }
         Logger.info(user.avatar.image_url + "------------------------------------");
-     //   image.save();
+
         user.update();
         return redirect(routes.Application.index());
     }
@@ -179,6 +177,18 @@ public class UserController extends Controller {
         User user = User.findByEmail(email);
         if (user == null) {
             return notFound(String.format("User %s does not exists.", email));
+        }
+        for (Comment comment : Comment.findByUser(user)) {
+            comment.delete();
+        }
+        for (Report report : Report.findByUser(user)) {
+            report.delete();
+        }
+        for (Place place : Place.findByUser(user)) {
+            place.delete();
+        }
+        for (Reservation reservation : Reservation.findByUser(user)) {
+            reservation.delete();
         }
         user.delete();
         return redirect(routes.UserController.userList());

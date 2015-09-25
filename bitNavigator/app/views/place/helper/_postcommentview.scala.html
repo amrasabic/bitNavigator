@@ -1,11 +1,12 @@
 @import utillities.SessionHelper
 @(place: Place)(comment: Comment)
 
-<div id="container-comment" class="container-fluid">
     @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null) {
-        <form class="dont-validate" method="post" action="@routes.PlaceController.updateComment(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).id)">
+        <div id="container-comment" class="container-fluid" hidden>
+            <form class="dont-validate" method="post" action="@routes.PlaceController.updateComment(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).id)">
     }else{
-        <form class="dont-validate" method="post" action="@routes.PlaceController.postComment(place.id)">
+        <div id="container-comment" class="container-fluid">
+            <form class="dont-validate" method="post" action="@routes.PlaceController.postComment(place.id)">
     }
 
         <div class="rating-select">
@@ -21,11 +22,23 @@
             <h3 class="panel-title">Comment</h3>
         </div>
         <div class="panel-body">
-            <textarea class="form-control" rows="3" name="commentContent" id="commentContent" type="text">@comment.commentContent</textarea>
+            <textarea class="form-control new-comment" rows="3" name="commentContent" id="commentContent" type="text">@comment.commentContent</textarea>
             <div class="alert alert-danger" data-error-for="commentContent" role="alert" hidden></div>
         </div>
         <input id="comment-rate" value="@comment.rate" name="rate" type="hidden">
         <button class="btn btn-primary" id="btn-post-comment">Post</button>
-
     </form>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#btn-post-comment').click(function(e, options){
+            console.log($('.new-comment').val());
+            if($('.new-comment').val().length == 0){
+                e.preventDefault();
+                $('[data-error-for="commentContent"]').text('Can not post an empty comment!');
+                $('[data-error-for="commentContent"]').show();
+            }
+        });
+    });
+</script>

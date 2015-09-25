@@ -1,3 +1,4 @@
+@import utillities.SessionHelper
 @(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])
 @import helper._
 
@@ -9,15 +10,12 @@
         @views.html.place.helper._placeform(place)(services)("Edit place")
     </form>
     @for(comment <- comments) {
-        <div id="container-comment" class="container-fluid">
-            <div class="panel-heading">
-                <h3 class="panel-title">@comment.user.firstName @comment.user.lastName
-                    - @comment.commentCreated.getTime</h3>
-            </div>
-            <div class="panel-body">
-                <textarea id="comment-content" class="form-control" rows="1" name="commentContent" id="commentContent" type="text" readonly>@comment.commentContent</textarea>
-            </div>
-        </div>
+        @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
+            @views.html.place.helper._commentview(comment)(true)(false)
+        }else{
+            @views.html.place.helper._commentview(comment)(false)(false)
+        }
+
     }
 
     <script>
