@@ -1,3 +1,4 @@
+import models.User;
 import org.junit.*;
 
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -23,7 +24,15 @@ public class IntegrationTest {
     @Before
     public void setUp() {
         fakeApplication(inMemoryDatabase());
+
+        User u = new User();
+        u.email = "user@gmail.com";
+        u.firstName = "User";
+        u.lastName = "Users";
+        u.password = "user1234";
+        u.save();
     }
+
 
     @Test
     public void test() {
@@ -47,6 +56,7 @@ public class IntegrationTest {
                     }
                 });
     }
+
     @Test
     public void testRouteToHomepage() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())),
@@ -90,8 +100,8 @@ public class IntegrationTest {
         running(testServer(3333, fakeApplication(inMemoryDatabase())),
                 new HtmlUnitDriver(), new Callback<TestBrowser>() {
                     public void invoke(TestBrowser browser) {
-                       browser.goTo("http://localhost:3333/user/signup");
-                       browser.fill("#firstName-signup").with("Leon");
+                        browser.goTo("http://localhost:3333/user/signup");
+                        browser.fill("#firstName-signup").with("Leon");
                         browser.fill("#lastName-signup").with("Benko");
                         browser.fill("#email-signup").with("leon.benko@gmail.com");
                         browser.fill("#password-signup").with("nekasifra1");
@@ -151,6 +161,7 @@ public class IntegrationTest {
                 });
     }
 
+    ////////////////////////////
     @Test
     public void testRouteToAdmin() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())),
@@ -175,4 +186,44 @@ public class IntegrationTest {
                 });
     }
 
+
+    @Test
+    public void testRouteToAddService() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                new HtmlUnitDriver(), new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("#Add service");
+                        assertTrue(browser.pageSource().contains("Add service"));
+                    }
+
+                });
+    }
+
+    @Test
+    public void testRouteToCommentList() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                new HtmlUnitDriver(), new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("#Comment list");
+                        assertTrue(browser.pageSource().contains("All comments"));
+                    }
+
+                });
+    }
+
+    @Test
+    public void testRouteToViewPLace() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())),
+                new HtmlUnitDriver(), new Callback<TestBrowser>() {
+                    public void invoke(TestBrowser browser) {
+                        browser.goTo("http://localhost:3333");
+                        browser.submit("#button-search");
+                        browser.submit("#glyphicon glyphicon-eye-open");
+                        assertTrue(browser.pageSource().contains("Address"));
+                    }
+
+                });
+    }
 }
