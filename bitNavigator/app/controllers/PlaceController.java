@@ -1,11 +1,14 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
 import play.Play;
+import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -13,25 +16,12 @@ import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
 import views.html.index;
-import views.html.place.addplace;
-import views.html.place.editplace;
-import views.html.place.placelist;
-import views.html.place.viewplace;
+import views.html.place.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
-import play.Logger;
-import views.html.place.addplace;
 
-import static views.html.place.addplace.*;
-
-import static views.html.place.addplace.*;
 
 /**
  * Created by ognjen.cetkovic on 08/09/15.
@@ -46,32 +36,22 @@ public class PlaceController extends Controller{
 
     @Security.Authenticated(Authenticators.User.class)
     public Result addPlace() {
-        return ok(addplace.render(placeForm, Service.findAll()));
+        return ok(addplace.render(new Place(), Service.findAll()));
     }
 
     @Security.Authenticated(Authenticators.User.class)
     public Result savePlace() {
-
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
 
         if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
-            flash("error", "Wrong input!");
-            return badRequest(addplace.render(boundForm, Service.findAll()));
+            return badRequest(addplace.render(boundForm.get(), Service.findAll()));
         }
 
-        Service service = boundServiceForm.get();
-        service = Service.findByType(service.serviceType);
-
+        Service service = Service.findByType(boundServiceForm.get().serviceType);
         if (service == null) {
-            flash("error", "Must add service!");
-            return badRequest(addplace.render(boundForm, Service.findAll()));
+            return badRequest(addplace.render(boundForm.get(), Service.findAll()));
         }
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
 
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
@@ -83,31 +63,8 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
-            for (FilePart picture : pictures) {
-                File file = picture.getFile();
-                String name = formatted + file.getName();
-                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
-
-                Logger.info(name);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    imageLists.add(name);
-                    Image image = new Image();
-                    image.name = name;
-                    path ="/images/placeImages/" + place.title + "/" + name;
-                    image.path = path;
-                    image.place = place;
-                    image.save();
-
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
-
-            return ok(index.render(Place.findAll()));
+            return redirect(routes.Application.index());
         } else {
-            flash("error", "Files not present.");
             return badRequest("Pictures missing.");
         }
 
@@ -115,7 +72,6 @@ public class PlaceController extends Controller{
 
     @Security.Authenticated(Authenticators.User.class)
     public Result updatePlace(int id) {
-
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
 
@@ -124,18 +80,12 @@ public class PlaceController extends Controller{
             return redirect(routes.PlaceController.editPlace(id));
         }
 
-        Service service = boundServiceForm.get();
-        service = Service.findByType(service.serviceType);
+        Service service = Service.findByType(boundServiceForm.get().serviceType);
 
         if (service == null) {
             flash("error", "Must add service!");
-            return badRequest(addplace.render(boundForm, Service.findAll()));
+            return redirect(routes.PlaceController.editPlace(id));
         }
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
 
         Place place = boundForm.get();
         place.user = User.findByEmail(session("email"));
@@ -151,28 +101,6 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
-            for (FilePart picture : pictures) {
-                File file = picture.getFile();
-                String name = formatted + file.getName();
-                String path = Play.application().path() + "/public/images/placeImages/" + place.title + "/" + name;
-
-                Logger.info(name);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    imageLists.add(name);
-                    Image image = new Image();
-                    image.name = name;
-                    path ="/images/placeImages/" + place.title + "/" + name;
-                    image.path = path;
-                    image.place = place;
-                    image.save();
-
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
-
             return redirect(routes.PlaceController.viewPlace(id));
         } else {
             flash("error", "Files not present.");
@@ -181,7 +109,12 @@ public class PlaceController extends Controller{
     }
 
     public Result placeList(){
+        DynamicForm form = Form.form().bindFromRequest();
+        String srchTerm = form.data().get("srch-term");
         List<Place> places = Place.findAll();
+        if(srchTerm != null) {
+            places = Place.findByValue(srchTerm);
+        }
         return ok(placelist.render(places));
     }
 
@@ -201,7 +134,6 @@ public class PlaceController extends Controller{
             }
         }
 
-
         place.delete();
         return redirect(routes.PlaceController.placeList());
     }
@@ -212,7 +144,7 @@ public class PlaceController extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        Form <Place> filledForm =  placeForm.fill(place);
+  //      Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findAll();
         return ok(editplace.render(place, services, comments));
@@ -231,7 +163,7 @@ public class PlaceController extends Controller{
         Form<Comment> boundForm = commentForm.bindFromRequest();
 
         if (boundForm.hasErrors()) {
-            return unauthorized("Can not post an empty comment!");
+            return redirect(routes.PlaceController.viewPlace(Comment.findById(id).place.id));
         }
 
         Comment comment = boundForm.get();
@@ -246,7 +178,7 @@ public class PlaceController extends Controller{
         }
         comment.place = place;
         comment.commentCreated = Calendar.getInstance();
-        if(comment.rate == 0) {
+        if(comment.rate == null || comment.rate == 0) {
             comment.rate = null;
         }
         comment.save();
@@ -257,7 +189,7 @@ public class PlaceController extends Controller{
     public Result updateComment(int id) {
         Form<Comment> boundForm = commentForm.bindFromRequest();
         if (boundForm.hasErrors()) {
-            return unauthorized("Can not post an emnpty comment!");
+            return redirect(routes.PlaceController.viewPlace(Comment.findById(id).place.id));
         }
 
         Comment comment = Comment.findById(id);
@@ -273,12 +205,31 @@ public class PlaceController extends Controller{
     }
 
     public Result validateForm(){
-        Form<Place> binded = placeForm.bindFromRequest();
-        if(binded.hasErrors()){
-            return badRequest(binded.errorsAsJson());
+        Form<Place> boundPlaceForm = placeForm.bindFromRequest();
+        Form<Service> boundServiceForm = serviceForm.bindFromRequest();
+        if(boundPlaceForm.hasErrors()){
+            return badRequest(boundPlaceForm.errorsAsJson());
+        } else if (boundServiceForm.hasErrors()) {
+            return badRequest(boundServiceForm.errorsAsJson());
         } else {
-            return ok("we good, we good");
+            return ok();
         }
     }
 
+    public Result autoCompleteSearch() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String srchTerm = form.data().get("srch-term");
+        List<Place> places = Place.findAll();
+        if(srchTerm != null) {
+            places = Place.findByValueInTitle(srchTerm);
+
+        }
+
+        String[] titles = new String[places.size()];
+        for (int i=0; i < places.size(); i++) {
+            titles[i] = places.get(i).title;
+        }
+
+        return ok(Json.toJson(titles));
+    }
 }

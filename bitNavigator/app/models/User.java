@@ -4,8 +4,20 @@ import javax.persistence.*;
 
 import com.avaje.ebean.Model;
 import controllers.UserController;
+import controllers.routes;
+import org.apache.commons.io.FileUtils;
+import play.Logger;
+import play.Play;
+import play.data.Form;
 import play.data.validation.Constraints;
+import play.mvc.Http;
+import utillities.PasswordHash;
+import utillities.SessionHelper;
+import views.html.user.signup;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -47,7 +59,7 @@ public class User extends Model {
     @OneToMany (cascade = CascadeType.ALL)
     public List<Comment> comments;
     @OneToOne
-    public Image image;
+    public Image avatar;
 
     /**
      * Default constructor.
@@ -70,6 +82,11 @@ public class User extends Model {
         user.email = signUp.email;
         user.firstName = signUp.firstName;
         user.lastName = signUp.lastName;
+        try {
+            signUp.password = PasswordHash.createHash(signUp.password);
+        } catch (Exception e) {
+            Logger.error("Could not create hash");
+        }
         user.password = signUp.password;
         user.accountCreated = Calendar.getInstance();
         user.phoneNumber = signUp.mobileNumber;
@@ -79,6 +96,17 @@ public class User extends Model {
     public void setAdmin(boolean isAdmin) {
         this.admin = isAdmin;
         save();
+    }
+
+    public static User updateUser(UserController.UserNameForm userNameForm){
+
+        User user = SessionHelper.getCurrentUser();
+
+        user.firstName = userNameForm.firstName;
+        user.lastName = userNameForm.lastName;
+        user.phoneNumber = userNameForm.mobileNumber;
+
+        return  user;
     }
 
     public static List<User> findAll() {

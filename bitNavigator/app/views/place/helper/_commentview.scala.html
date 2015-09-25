@@ -1,0 +1,48 @@
+@import utillities.SessionHelper
+@(comment: Comment)(isReported: Boolean)(isEditable: Boolean)
+
+<div id="container-comment" class="container-fluid" data-comment="@comment.id">
+    @if(comment.rate == null) {
+        <div id="comment-rate-label">n/a<span class="glyphicon glyphicon-star-empty"></span></div>
+    } else {
+        <div id="comment-rate-label">@comment.rate <span class="glyphicon glyphicon-star-empty"></span></div>
+    }
+    <div class="panel-heading">
+    @if(comment.user.firstName == "" || comment.user.lastName == "") {
+        <h3 class="panel-title">Anonymous - @comment.commentCreated.getTime</h3>
+    } else {
+        <h3 class="panel-title">@comment.user.firstName @comment.user.lastName
+            - @comment.commentCreated.getTime</h3>
+    }
+    </div>
+    <div class="panel-body">
+        <textarea id="comment-content" class="form-control" rows="2" name="commentContent" id="commentContent" type="text" readonly>@comment.commentContent</textarea>
+    </div>
+    @if(!isReported && !isEditable && SessionHelper.isAuthenticated) {
+        <div id="report-comment" data-toggle="modal" data-target="#report-comment-modal"><a class="report-comment-link" href="#">
+            Report comment <span class="glyphicon glyphicon-flag"></span></a></div>
+    }else{
+        @if(isEditable){
+            <div id="edit-comment"><a href="#">
+                Edit comment <span class="glyphicon glyphicon-edit"></span></a></div>
+        }
+    }
+</div>
+
+<script>
+    @if(isReported){
+        $('[data-comment="@comment.id"]').css("background-color","lightgrey");
+    }
+
+    $(document).ready(function(){
+
+        $('#edit-comment').on("click", function() {
+            $('.container-fluid').show();
+            $(this).parent().hide();
+            var n = $(document).height();
+            $('html, body').animate({ scrollTop: n }, 50);
+        });
+
+    });
+
+</script>

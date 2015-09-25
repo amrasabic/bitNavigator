@@ -15,8 +15,10 @@ create table comment (
 
 create table image (
   id                        integer auto_increment not null,
-  name                      varchar(255),
-  path                      varchar(255),
+  public_id                 varchar(255),
+  image_url                 varchar(255),
+  secret_image_url          varchar(255),
+  is_published              tinyint(1) default 0,
   place_id                  integer,
   user_id                   integer,
   constraint uq_image_user_id unique (user_id),
@@ -58,6 +60,7 @@ create table service (
   service_type              varchar(255),
   service_icon              varchar(255),
   is_reservable             tinyint(1) default 0,
+  constraint uq_service_service_type unique (service_type),
   constraint pk_service primary key (id))
 ;
 
@@ -77,9 +80,9 @@ create table user (
   account_created           datetime(6),
   phone_number              varchar(255),
   admin                     tinyint(1) default 0,
-  image_id                  integer,
+  avatar_id                 integer,
   constraint uq_user_email unique (email),
-  constraint uq_user_image_id unique (image_id),
+  constraint uq_user_avatar_id unique (avatar_id),
   constraint pk_user primary key (id))
 ;
 
@@ -105,8 +108,8 @@ alter table reservation add constraint fk_reservation_place_10 foreign key (plac
 create index ix_reservation_place_10 on reservation (place_id);
 alter table reservation add constraint fk_reservation_status_11 foreign key (status_id) references status (id) on delete restrict on update restrict;
 create index ix_reservation_status_11 on reservation (status_id);
-alter table user add constraint fk_user_image_12 foreign key (image_id) references image (id) on delete restrict on update restrict;
-create index ix_user_image_12 on user (image_id);
+alter table user add constraint fk_user_avatar_12 foreign key (avatar_id) references image (id) on delete restrict on update restrict;
+create index ix_user_avatar_12 on user (avatar_id);
 
 
 

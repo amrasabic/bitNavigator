@@ -1,16 +1,10 @@
 package models;
 
-import javax.persistence.*;
-
+import com.avaje.ebean.ExpressionFactory;
 import com.avaje.ebean.Model;
-import play.data.format.*;
-import play.data.validation.*;
 import play.data.validation.Constraints;
 
-import play.Logger;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
 
@@ -23,8 +17,8 @@ public class Place extends Model {
     // declaration of parameters
     @Id
     public Integer id;
-    @Constraints.Required
-    @Constraints.MaxLength(150)
+    @Constraints.Required(message = "This field is required!")
+    @Constraints.MaxLength(value = 150, message = "Title can not hold more than 150 characters!")
     public String title;
     @Column(columnDefinition = "TEXT")
     public String description;
@@ -36,10 +30,12 @@ public class Place extends Model {
     public User user;
     @ManyToOne
     public Service service;
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Image> images;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Comment> comments;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Reservation> reservations;
 
     public static Finder<Integer, Place> finder = new Finder<>(Place.class);
     /**
@@ -61,5 +57,17 @@ public class Place extends Model {
         return finder.where().eq("title", title).findUnique();
     }
 
+    public static List<Place> findByValueInTitle(String value) {
+        return finder.where().contains("title", value).findList();
+    }
+
+    public static List<Place> findByValue(String value) {
+        ExpressionFactory exprFactory = finder.getExpressionFactory();
+        return finder.where().or(exprFactory.contains("title", value), exprFactory.contains("address", value)).findList();
+    }
+
+    public static List<Place> findByUser(User user) {
+        return finder.where().eq("user", user).findList();
+    }
 
 }

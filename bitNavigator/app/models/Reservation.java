@@ -18,9 +18,12 @@ public class Reservation extends Model {
     public User user;
     @ManyToOne
     public Place place;
-    @Constraints.Required
+    @Constraints.MinLength (value = 5, message = "Title should be minimum 5 characters long.")
+    @Constraints.MaxLength (value = 25, message = "Title should shorter. Write more details in description.")
+    @Constraints.Required (message = "Title is required.")
     public String title;
-    @Constraints.Required
+    @Constraints.MinLength (value = 25, message = "Description should contain more details.")
+    @Constraints.Required (message = "Description is required.")
     public String description;
     @ManyToOne
     public Status status;
@@ -40,7 +43,11 @@ public class Reservation extends Model {
     }
 
     public static List<Reservation> findByUser(User user) {
-        return finder.where().eq("place.user", user).findList();
+        return finder.where().eq("user", user).findList();
+    }
+
+    public static List<Reservation> findByStatus(User user, Status status) {
+        return finder.where().eq("place", user).where().eq("status", status).findList();
     }
 
 }

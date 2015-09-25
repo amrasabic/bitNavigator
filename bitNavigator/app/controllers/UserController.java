@@ -1,10 +1,6 @@
 package controllers;
 
-import models.Image;
-import models.Place;
-import models.User;
-import org.apache.commons.io.FileUtils;
-import play.Play;
+import models.*;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
@@ -13,16 +9,12 @@ import play.mvc.Http;
 
 import play.mvc.Security;
 import utillities.Authenticators;
-import views.html.index;
+import utillities.SessionHelper;
 import views.html.user.*;
 import views.html.admin.*;
 import play.Logger;
 import utillities.PasswordHash;
 
-import javax.validation.constraints.Pattern;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 import java.io.File;
 
 import java.util.Calendar;
@@ -40,7 +32,8 @@ public class UserController extends Controller {
 
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
-    private static Image image;
+    private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
+  //  private static Image image;
 
     /**
      * Leads random user to signin subpage
@@ -69,8 +62,6 @@ public class UserController extends Controller {
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
-
             return redirect(routes.Application.index());
         }
         try {
@@ -79,14 +70,10 @@ public class UserController extends Controller {
             }
         } catch (Exception e) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
-            List<Place> places = Place.findAll();
-
             return redirect(routes.Application.index());
         }
         session().clear();
         session("email", user.email);
-
-        List<Place> places = Place.findAll();
         return redirect(routes.Application.index());
     }
 
@@ -98,10 +85,6 @@ public class UserController extends Controller {
      */
     public Result save() {
         Form<SignUpForm> boundForm = signUpForm.bindFromRequest();
-        if(boundForm.hasErrors()) {
-            flash(ERROR_MESSAGE, "Wrong input");
-            return badRequest(signup.render(boundForm));
-        }
 
         SignUpForm singUp = boundForm.get();
         if(User.findByEmail(singUp.email) != null) {
@@ -114,108 +97,87 @@ public class UserController extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
-        try {
-            singUp.password = PasswordHash.createHash(singUp.password);
-        } catch (Exception e) {
-            Logger.error("Could not create hash");
-            flash(ERROR_MESSAGE, "Password invalid!");
-            return badRequest(signup.render(boundForm));
-        }
-
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);
-        List<Place> places = Place.findAll();
         return redirect(routes.Application.index());
     }
 
     @Security.Authenticated(Authenticators.User.class)
     public Result profile (String email) {
         final User user = User.findByEmail(email);
-        if(user == null)
-        {
-            return notFound(String.format("User %s does not exist.", email));
-        }
-        return ok(profile.render(user));
-
-    }
-
-    @Security.Authenticated(Authenticators.User.class)
-    public Result updateUser(String email) {
-
-        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
-
-        User user = User.findByEmail(boundForm.bindFromRequest().field("email").value());
-
         if(user == null) {
             return notFound(String.format("User %s does not exist.", email));
         }
 
-        if (!email.equals(user.email)) {
-            User tmp = User.findByEmail(email);
-            if (tmp == null || !tmp.admin) {
-                return unauthorized("Permission denied!");
-            }
+        return ok(profile.render(new UserNameForm(user)));
+
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result updateUser() {
+
+        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
+
+        User user = SessionHelper.getCurrentUser();
+
+        if(user == null) {
+            return notFound(String.format("User does not exist."));
+        }
+
+        if(!user.email.equals(boundForm.bindFromRequest().field("email").value())){
+            return unauthorized("We good we good");
         }
 
         if(boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
-            return badRequest(profile.render(user));
+            return redirect(routes.UserController.profile(user.email));
         }
-        Logger.info(boundForm.bindFromRequest().field("mobileNumber").value());
         user.firstName = boundForm.bindFromRequest().field("firstName").value();
         user.lastName = boundForm.bindFromRequest().field("lastName").value();
         user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-        String formatted = format1.format(cal.getTime());
+        user = User.updateUser(boundForm.get());
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
-        List<Http.MultipartFormData.FilePart> pictures = body.getFiles();
+        Http.MultipartFormData.FilePart filePart = body.getFile("image");
 
-        if (pictures != null) {
-            for (Http.MultipartFormData.FilePart picture : pictures) {
-                String name = user.firstName + formatted;
-                File file = picture.getFile();
-                String path = Play.application().path() + "/public/images/profileImages/" + user.firstName + "/" + name;
+        if(filePart != null){
+            Logger.debug("Content type: " + filePart.getContentType());
+            Logger.debug("Key: " + filePart.getKey());
+            File file = filePart.getFile();
+            Image image = Image.create(file);
+            user.avatar = image;
+            image.save();
 
-                Logger.info(path);
-                try {
-                    FileUtils.moveFile(file, new File(path));
-                    image = new Image();
-                    image.name = name;
-                    path ="/images/profileImages/" + user.firstName + "/" + name;
-                    image.path = path;
-
-                    image.save();
-                    user.image = image;
-                    user.update();
-                } catch (IOException ex) {
-                    Logger.info("Could not move file. " + ex.getMessage());
-                    flash("error", "Could not move file.");
-                }
-            }
-            return redirect(routes.Application.index());
-        } else {
-            flash("error", "Files not present.");
-            return badRequest("Picture missing.");
         }
+
+        user.update();
+        return redirect(routes.Application.index());
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
     public Result userList(){
-        List<User> users = User.findAll();
-        return ok(userlist.render(users));
+        return ok(userlist.render(User.findAll()));
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
     public Result delete(String email) {
         User user = User.findByEmail(email);
         if (user == null) {
-            Logger.info("dsadasd     "+ email);
             return notFound(String.format("User %s does not exists.", email));
+        }
+        for (Comment comment : Comment.findByUser(user)) {
+            comment.delete();
+        }
+        for (Report report : Report.findByUser(user)) {
+            report.delete();
+        }
+        for (Place place : Place.findByUser(user)) {
+            place.delete();
+        }
+        for (Reservation reservation : Reservation.findByUser(user)) {
+            reservation.delete();
         }
         user.delete();
         return redirect(routes.UserController.userList());
@@ -239,24 +201,74 @@ public class UserController extends Controller {
         @Constraints.Email
         @Constraints.Required
         public String email;
-        @Constraints.Pattern ("[a-zA-Z]+")
+        @Constraints.Pattern (value = "[a-zA-Z]+", message = "First name can only contain alphabetic characters")
         public String firstName;
-        @Constraints.Pattern ("[a-zA-Z]+")
+        @Constraints.Pattern (value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
-        //@Constraints.Pattern ("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
-        @Constraints.Pattern ("^\\+387[3,6][1-6]\\d{6}")
+        @Constraints.Pattern (value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
         public String mobileNumber;
+        public Image avatar;
+
+        public UserNameForm() {
+
+        }
+
+        public UserNameForm(User u) {
+            this.email = u.email;
+            this.firstName = u.firstName;
+            this.lastName = u.lastName;
+            this.mobileNumber = u.phoneNumber;
+            this.avatar = u.avatar;
+        }
     }
 
     public static class SignUpForm  extends UserNameForm{
-        @Constraints.MinLength (8)
-        @Constraints.MaxLength (25)
-        @Constraints.Required
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required (message = "Password is required")
         public String password;
-        @Constraints.MinLength (8)
-        @Constraints.MaxLength (25)
-        @Constraints.Required
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required (message = "Passwords do not match")
         public String confirmPassword;
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateForm(){
+        //get the form data from the request - do this only once
+        Form<SignUpForm> binded = signUpForm.bindFromRequest();
+        //if we have errors just return a bad request
+        if(binded.hasErrors()){
+            flash("error", "check your inputs");
+            return badRequest(binded.errorsAsJson());
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            SignUpForm signUp = binded.get();
+            flash("success", "user added");
+            return redirect("/");
+        }
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateUserNameForm(){
+        //get the form data from the request - do this only once
+        Form<UserNameForm> binded = userNameForm.bindFromRequest();
+        //if we have errors just return a bad request
+        if(binded.hasErrors()){
+            Logger.info("---------*--------" + binded.errorsAsJson().toString());
+            return badRequest(binded.errorsAsJson());
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            UserNameForm unf = binded.get();
+            flash("success", "user edited");
+            return redirect("/");
+        }
     }
 
 }

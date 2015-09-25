@@ -3,14 +3,19 @@ package controllers;
 import models.Comment;
 import models.Report;
 import models.User;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
+import utillities.SessionHelper;
 import views.html.comments.commentslist;
 import views.html.comments.reportedcommentslist;
+
+import java.util.List;
+
 
 /**
  * Created by ognje on 10-Sep-15.
@@ -20,15 +25,13 @@ public class CommentController extends Controller {
     @Security.Authenticated(Authenticators.User.class)
     public Result reportComment() {
         DynamicForm form = Form.form().bindFromRequest();
-
         int commentId = -1;
-        String email = form.data().get("email");
         try {
             commentId = Integer.parseInt(form.data().get("commentId"));
         } catch (Exception e) {
-            return ok("error");
+            return badRequest("error");
         }
-        User user = User.findByEmail(email);
+        User user = SessionHelper.getCurrentUser();
         Comment comment = Comment.findById(commentId);
 
         Report.addReport(comment, user);
@@ -42,7 +45,8 @@ public class CommentController extends Controller {
 
     @Security.Authenticated(Authenticators.Admin.class)
     public Result reportedComments() {
-        return ok(reportedcommentslist.render(Report.getAllReports()));
+        List<Report.ReportHelper> list = Report.getAllReports();
+        return ok(reportedcommentslist.render(list));
     }
 
     @Security.Authenticated(Authenticators.Admin.class)

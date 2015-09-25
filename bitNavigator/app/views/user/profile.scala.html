@@ -1,4 +1,5 @@
-@(user: User)
+@import controllers.UserController.UserNameForm
+@(user: UserNameForm)
 @import helper._
 
 @main("User profile") {
@@ -13,8 +14,6 @@
           geoIpLookup: function(callback) {
             $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
               var countryCode = (resp && resp.country) ? resp.country : "";
-             // var intlNumber = $("#mobile-number").intlTelInput("getNumber");
-             // var extension = $("#mobile-number").intlTelInput("getExtension");
               callback(countryCode);
             });
           },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
@@ -57,25 +56,24 @@
 
 
         })
+        var urlToPost = "@routes.UserController.validateUserNameForm()";
     </script>
-
-
 
     <div class="container-fluid" id="profile-panel">
         <h3 class="page-header">Hi @user.firstName  @user.lastName!</h3>
         <div class="row">
-            <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser(session.get("email"))"  enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser()"  enctype="multipart/form-data">
                 <!-- left column -->
                 <!-- User avatar image -->
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="text-center">
-                @if(user.image != null) {
-                    <img src="@routes.Assets.versioned(user.image.path)" class="avatar img-circle img-thumbnail" alt="avatar">
+                @if(user.avatar != null) {
+                    <img src="@user.avatar.getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
                 } else {
                     <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
                 }
                     <h6>Upload a different photo</h6>
-                    <input id="input-dim-1" name="pictures" type="file" class="file-loading" accept="image/*">
+                    <input id="input-dim-1" name="image" type="file" class="file-loading" accept="image/*">
                     @*<input type="file" class="text-center center-block well well-sm">**@
                 </div>
             </div>
@@ -99,7 +97,9 @@
                         <label class="col-lg-3 control-label">First name:</label>
                         <div class="col-lg-8">
                             <input class="form-control" value="@user.firstName" type="first_name" name="firstName" id="first_name">
+                            <div class="alert alert-danger" data-error-for="firstName" role="alert" hidden></div>
                         </div>
+
                     </div>
                         <!-- User last name field-->
                     <div class="form-group">
@@ -107,6 +107,7 @@
                         <div class="col-lg-8">
                             <input class="form-control" value="@user.lastName" type="last_name" name="lastName" id="last_name">
                         </div>
+                        <div class="alert alert-danger" data-error-for="lastName" role="alert" hidden></div>
                     </div>
                         <!-- User email filed-->
                     <div class="form-group">
@@ -119,12 +120,12 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Phone number:</label>
                         <div class="col-lg-8">
-                            <input class="form-control" value="@user.phoneNumber" type="tel" id="mobile-number">
+                            <input class="form-control" value="@user.mobileNumber" type="tel" id="mobile-number">
                             <span id="valid-msg" class="hide">✓ Valid</span>
                             <span id="error-msg" class="hide">Invalid number</span>
                             <input id="mobile-number-id" name="mobileNumber" type="hidden">
                         </div>
-
+                        <div class="alert alert-danger" data-error-for="mobileNumber" role="alert" hidden></div>
                     </div>
                     <p><br></p>
                         <!-- Confirm and cancel buttons -->
@@ -144,5 +145,50 @@
             @flash.get("error")
             </div>
         }
+
+    <script>
+        $(document).ready(function(){
+
+    $("form").submit(function(e, options){
+
+        if($(this).hasClass("dont-validate")) {
+            return;
+        }
+
+        var options = options || {};
+        if(options.allow == true){
+            return;
+        }
+
+        e.preventDefault();
+        $("[data-error-for]").html("");
+        $("[data-error-for]").hide();
+        $form = $(this);
+
+        $.ajax({
+            url: urlToPost,
+            method: "post",
+            data: $(this).serialize()
+        }).success(function(response){
+            $form.trigger("submit", {allow: true});
+        }).error(function(response){console.log(response);
+            var errors = response.responseJSON;
+
+            var keys = Object.keys(errors);
+
+            for(var i = 0; i < keys.length; i++){
+                var errorMessages = errors[keys[i]];
+                var allErrors = "";
+                for(var j = 0; j < errorMessages.length; j++){
+                    allErrors += errorMessages[j];
+                }
+
+                $('[data-error-for="'+keys[i]+'"]').html(allErrors).show();
+            }
+
+            });
+        });
+    });
+    </script>
 
 }
