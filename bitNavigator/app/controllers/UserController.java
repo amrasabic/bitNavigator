@@ -1,8 +1,6 @@
 package controllers;
 
 import models.*;
-import org.apache.commons.io.FileUtils;
-import play.Play;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
@@ -12,16 +10,11 @@ import play.mvc.Http;
 import play.mvc.Security;
 import utillities.Authenticators;
 import utillities.SessionHelper;
-import views.html.index;
 import views.html.user.*;
 import views.html.admin.*;
 import play.Logger;
 import utillities.PasswordHash;
 
-import javax.validation.constraints.Pattern;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 import java.io.File;
 
 import java.util.Calendar;
@@ -157,11 +150,7 @@ public class UserController extends Controller {
             user.avatar = image;
             image.save();
 
-        } else {
-            flash("error", "Files not present.");
-            return badRequest("Picture missing.");
         }
-        Logger.info(user.avatar.image_url + "------------------------------------");
 
         user.update();
         return redirect(routes.Application.index());
@@ -240,26 +229,8 @@ public class UserController extends Controller {
         public String password;
         @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
         @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
-        @Constraints.Required (message = "Passwords does not match")
+        @Constraints.Required (message = "Passwords do not match")
         public String confirmPassword;
-    }
-
-    public Result formSubmit(){
-        //get the form data from the request - do this only once
-        Form<SignUpForm> binded = signUpForm.bindFromRequest();
-        //if we have errors just return a bad request
-        if(binded.hasErrors()){
-            flash("error", "check your inputs");
-            return badRequest(signup.render(binded));
-        } else {
-            //get the object from the form, for revere take a look at someForm.fill(myObject)
-            SignUpForm signUp = binded.get();
-
-
-            flash("success", "user added");
-            return redirect("/");
-        }
-
     }
 
     /**
@@ -276,8 +247,6 @@ public class UserController extends Controller {
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
             SignUpForm signUp = binded.get();
-
-
             flash("success", "user added");
             return redirect("/");
         }
@@ -292,14 +261,11 @@ public class UserController extends Controller {
         Form<UserNameForm> binded = userNameForm.bindFromRequest();
         //if we have errors just return a bad request
         if(binded.hasErrors()){
-            flash("error", "check your inputs");
-            Logger.info("------------------" + binded.errorsAsJson().toString());
+            Logger.info("---------*--------" + binded.errorsAsJson().toString());
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
             UserNameForm unf = binded.get();
-
-
             flash("success", "user edited");
             return redirect("/");
         }

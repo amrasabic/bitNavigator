@@ -28,7 +28,7 @@ $(document).ready(function(){
         }).error(function(response){
             var errors = response.responseJSON;
             var keys = Object.keys(errors);
-            console.log(errors);
+            console.log(response);
             for(var i = 0; i < keys.length; i++){
                 var errorMessages = errors[keys[i]];
                 var allErrors = "";

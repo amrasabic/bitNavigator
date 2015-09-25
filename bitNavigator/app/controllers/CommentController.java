@@ -46,7 +46,6 @@ public class CommentController extends Controller {
     @Security.Authenticated(Authenticators.Admin.class)
     public Result reportedComments() {
         List<Report.ReportHelper> list = Report.getAllReports();
-        Logger.info(list.toString());
         return ok(reportedcommentslist.render(list));
     }
 
