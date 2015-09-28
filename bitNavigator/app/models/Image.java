@@ -67,6 +67,7 @@ public class Image extends Model {
         }
         return null;
     }
+
     @Security.Authenticated(Authenticators.User.class)
     public static Image create(Map uploadResult) {
         Image i = new Image();

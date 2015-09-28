@@ -251,3 +251,12 @@ textarea {
     margin-top: 15px;
     font-size: 2em;
 }
+
+#view-place-modal-body {
+    padding-top: 0px;
+    margin-bottom: 20px;
+}
+
+#view-place-modal-body div h3 {
+    margin-top: 0px;
+}

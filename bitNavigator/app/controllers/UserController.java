@@ -133,9 +133,6 @@ public class UserController extends Controller {
             flash("error", "Name can only hold letters!");
             return redirect(routes.UserController.profile(user.email));
         }
-        user.firstName = boundForm.bindFromRequest().field("firstName").value();
-        user.lastName = boundForm.bindFromRequest().field("lastName").value();
-        user.phoneNumber = boundForm.bindFromRequest().field("mobileNumber").value();
 
         user = User.updateUser(boundForm.get());
 
