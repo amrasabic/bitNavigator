@@ -22,7 +22,7 @@
                 <td>@user.firstName</td>
                 <td>@user.lastName</td>
                 <td>@user.email</td>
-                <td>@if(user.email != session.get("email") ){
+                <td>@if(user.email != session.get("email")){
                     <a href="@routes.UserController.delete(user.email)" role="button" data-role="delete" data-delete-parent="tr""><i class="glyphicon glyphicon-trash"></i></a>
                 }</td>
             </tr>

@@ -85,4 +85,14 @@ public class ReservationController extends Controller {
             return redirect("/");
         }
     }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result delete(Integer id){
+        Reservation reservation = Reservation.findById(id);
+        if(reservation.status.id == models.Status.WAITING) {
+            reservation.delete();
+        }
+
+        return redirect(routes.ReservationController.reservationsList());
+    }
 }
