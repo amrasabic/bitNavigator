@@ -1,11 +1,7 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
-import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
-import org.apache.commons.io.FileUtils;
 import play.Logger;
-import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -15,8 +11,11 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
-import views.html.index;
-import views.html.place.*;
+import views.html.place.addplace;
+import views.html.place.editplace;
+import views.html.place.helper._placeviewform;
+import views.html.place.placelist;
+import views.html.place.viewplace;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -151,6 +150,8 @@ public class PlaceController extends Controller{
     }
 
     public Result viewPlace(int id){
+        DynamicForm form = Form.form().bindFromRequest();
+
         Place place = Place.findById(id);
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
@@ -158,6 +159,9 @@ public class PlaceController extends Controller{
         String rating = "n/a";
         if (place.getRating() != null) {
             rating = String.format("%.2f", place.getRating());
+        }
+        if(form.data().get("isModal") != null) {
+            return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
         }
 
         return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
