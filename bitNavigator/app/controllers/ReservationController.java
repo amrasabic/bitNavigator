@@ -89,7 +89,10 @@ public class ReservationController extends Controller {
     @Security.Authenticated(Authenticators.User.class)
     public Result delete(Integer id){
         Reservation reservation = Reservation.findById(id);
-        reservation.delete();
+        if(reservation.status.id == 2) {
+            reservation.delete();
+        }
+
         return redirect(routes.ReservationController.reservationsList());
     }
 }

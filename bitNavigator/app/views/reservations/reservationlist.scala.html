@@ -71,8 +71,9 @@
                     @if(reservation.status.id == Status.DENIED){
                             <td style="color: red">@reservation.status.status</td>
                     }
-                    <td><a href="@routes.ReservationController.delete(reservation.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
-
+                    @if(reservation.status.id == Status.WAITING) {
+                        <td><a href="@routes.ReservationController.delete(reservation.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    }
                 </tr>
             }
         }
