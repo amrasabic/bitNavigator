@@ -155,7 +155,12 @@ public class PlaceController extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place)));
+        String rating = "n/a";
+        if (place.getRating() != null) {
+            rating = String.format("%.2f", place.getRating());
+        }
+
+        return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
     }
 
     @Security.Authenticated(Authenticators.User.class)

@@ -1,27 +1,28 @@
 @import utillities.SessionHelper
-@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])
+@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: String)
 @import helper._
 @import play.mvc.Http.Session
 @main("View place") {
 
     <div class="container">
         <div id="add-place-panel" class="container-fluid">
-            <div class="col-md-6">
+            <div id="info-container" class="col-md-6">
                 <div class="panel-body">
                     <div class="form-group">
                         <h3>@place.title</h3>
                     </div>
                         <!-- Description -->
                     <div class="form-group">
-                        <label for="comment">Description:</label>
+                        <label for="description">Description:</label>
                         <textarea class="form-control" rows="3" name="description" id="description" type="text" readonly>@place.description</textarea>
                     </div>
-                        <!--Address field -->
+                        <!--Address -->
                     <div class="form-group">
-                        <label for="usr">Address:</label>
+                        <label for="address">Address:</label>
                         <input type="text" class="form-control" name="address" id="address" value="@place.address" readonly>
                     </div>
                     <p><br/></p>
+                    <!-- Service -->
                     <div class="form-group">
                         <label for="service">Service:</label>
                         <div class="row">
@@ -32,7 +33,10 @@
                                 <img class="img-responsive" src="@routes.Assets.versioned(place.service.serviceIcon)" >
                             </div>
                         </div>
-
+                    </div>
+                    <!-- Rating -->
+                    <div class="form-group rating-group">
+                        <div class="label label-default">Rating:</div> @rating  <span class="glyphicon glyphicon-star"></span>
                     </div>
                     <p><br></p>
                     <div>
@@ -72,7 +76,9 @@
                         </form>
                     </div>
                 </div>
-                <div><div id="map-add-place"></div></div>
+                <div id="map-container">
+                    <div id="map-add-place"></div>
+                </div>
             </div>
 
         </div>
@@ -125,6 +131,9 @@
         </div>
 
         <script>
+        $(document).ready(function() {
+                $("#map-add-place").height($("#info-container").height());
+            });
             var urlToReportComment = '@routes.CommentController.reportComment()';
             var lat;
             var lng;

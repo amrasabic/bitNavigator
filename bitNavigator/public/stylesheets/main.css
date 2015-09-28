@@ -145,10 +145,6 @@ body {
     width: 20%;
 }
 
-.glyphicon-star-empty {
-
-}
-
 .btn-rate {
     float: left;
 }
@@ -236,4 +232,22 @@ textarea {
 
 .dropdown-item {
     width: 200px;
+}
+
+.rate-selected {
+    color: gold;
+    font-size: 2em;
+}
+.rate-not-selected {
+    color: black;
+    font-size: 2em;
+}
+
+#comment-rate-label .glyphicon-star, .rating-group .glyphicon-star {
+    color: gold;
+}
+
+.rating-group {
+    margin-top: 15px;
+    font-size: 2em;
 }
