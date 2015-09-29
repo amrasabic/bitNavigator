@@ -136,17 +136,13 @@ body {
     text-align: center;
 }
 
-.media-object {
-    width: 256px;
-    height: 256px;
+.media-left {
+    display: inline-block;
+    margin-bottom: 5px;
 }
 
 .popover {
     width: 20%;
-}
-
-.glyphicon-star-empty {
-
 }
 
 .btn-rate {
@@ -236,4 +232,31 @@ textarea {
 
 .dropdown-item {
     width: 200px;
+}
+
+.rate-selected {
+    color: gold;
+    font-size: 2em;
+}
+.rate-not-selected {
+    color: black;
+    font-size: 2em;
+}
+
+#comment-rate-label .glyphicon-star, .rating-group .glyphicon-star {
+    color: gold;
+}
+
+.rating-group {
+    margin-top: 15px;
+    font-size: 2em;
+}
+
+#view-place-modal-body {
+    padding-top: 0px;
+    margin-bottom: 20px;
+}
+
+#view-place-modal-body div h3 {
+    margin-top: 0px;
 }

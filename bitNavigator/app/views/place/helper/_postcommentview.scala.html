@@ -12,9 +12,9 @@
         <div class="rating-select">
         @for(i <- 1 to 5) {
             @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null && comment.rate != null && comment.rate == i) {
-                <div class="btn btn-default btn-rate rating-selected selected" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
+                <div class="stars rate-not-selected btn-rate rating-selected selected" data-rate="@i"><span class="glyphicon glyphicon-star"></span></div>
             } else {
-                <div class="btn btn-default btn-rate" data-rate="@i"><span class="glyphicon glyphicon-star-empty"></span></div>
+                <div class="stars rate-not-selected btn-rate" data-rate="@i"><span class="glyphicon glyphicon-star"></span></div>
             }
         }
         </div>

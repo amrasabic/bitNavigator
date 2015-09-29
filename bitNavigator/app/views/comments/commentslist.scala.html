@@ -9,6 +9,7 @@
             <tr>
                 <th>id</th>
                 <th>content</th>
+                <th>commented on</th>
                 <th>place title</th>
                 <th>user</th>
                 <th>view</th>
@@ -22,6 +23,7 @@
             <tr>
                 <td>@comment.id</td>
                 <td>@comment.commentContent</td>
+                <td>@comment.commentCreated.getTime</td>
                 <td>@comment.place.title</td>
                 <td>@comment.user.email</td>
                 <td><a href="@routes.PlaceController.viewPlace(comment.place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
