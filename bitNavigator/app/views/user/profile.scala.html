@@ -67,8 +67,8 @@
                 <!-- User avatar image -->
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="text-center">
-                @if(user.avatar != null) {
-                    <img src="@user.avatar.getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
+                @if(Image.findByUser(User.findByEmail(user.email)) != null) {
+                    <img src="@Image.findByUser(User.findByEmail(user.email)).getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
                 } else {
                     <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
                 }

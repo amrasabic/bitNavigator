@@ -27,6 +27,10 @@ function initMap() {
         draggable: draggable
     });
 
+    if(typeof markerDraggable != 'undefined') {
+        return;
+    }
+
     document.getElementById('btn-add').addEventListener('click', function() {
         geocodeLatLng(geocoder, map, infowindow, marker.getPosition().lat() + "," + marker.getPosition().lng());
     });

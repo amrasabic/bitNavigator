@@ -70,4 +70,21 @@ public class Place extends Model {
         return finder.where().eq("user", user).findList();
     }
 
+    public Double getRating() {
+
+        List<Comment> comments = Comment.findByPlace(this);
+        double rating = 0;
+        int counter = 0;
+        for (Comment comment : comments) {
+            if (comment.rate != null) {
+                counter++;
+                rating += comment.rate;
+            }
+        }
+        if (counter > 0) {
+            return rating / counter;
+        }
+        return null;
+    }
+
 }
