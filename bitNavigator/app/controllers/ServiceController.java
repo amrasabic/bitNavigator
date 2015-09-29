@@ -77,7 +77,7 @@ public class ServiceController extends Controller {
      * @return
      */
     @Security.Authenticated(Authenticators.Admin.class)
-    public  Result updateService(Integer id) {
+    public Result updateService(Integer id) {
 
         Form<Service> boundForm = serviceForm.bindFromRequest();
         Service service = Service.findById(id);
@@ -88,7 +88,7 @@ public class ServiceController extends Controller {
 
         if (boundForm.bindFromRequest().field("isReservable").value().equals("on")){
             service.isReservable = true;
-        }else{
+        } else {
             service.isReservable = false;
         }
 

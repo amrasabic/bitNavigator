@@ -39,7 +39,7 @@ public class ReservationController extends Controller {
         r.place = place;
         r.user = user;
         if(title == null || description == null) {
-            // nesto ?
+            // nesto >?
         } else {
             r.title = title;
             r.description = description;
@@ -93,6 +93,31 @@ public class ReservationController extends Controller {
             reservation.delete();
         }
 
+        return redirect(routes.ReservationController.reservationsList());
+    }
+
+//    public Result edit(Integer id) {
+//        Reservation reservation = Reservation.findById(id);
+//        if (reservation == null) {
+//            return notFound(String.format("Reservation %s does not exists.", id));
+//        }
+//
+//        return ok();
+//    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result updateReservation(Integer id) {
+
+        Form<Reservation> boundForm = reservationForm.bindFromRequest();
+
+        Reservation reservation = Reservation.findById(id);
+
+        reservation.title = boundForm.bindFromRequest().field("rtitle").value();
+        reservation.description = boundForm.bindFromRequest().field("rdescription").value();
+
+        Logger.info(reservation.description);
+        Logger.info(reservation.title);
+        reservation.update();
         return redirect(routes.ReservationController.reservationsList());
     }
 }
