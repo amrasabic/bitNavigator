@@ -55,7 +55,7 @@
         <h4>Gallery</h4>
         @for(image <- images) {
             <div class="media-left">
-                <img class="media-object" src="@routes.Assets.versioned(image.image_url)" alt="...">
+                <img class="media-object" src="@image.getSize(256, 256)" alt="...">
             </div>
         }
     </div>
@@ -73,11 +73,14 @@
     }
     <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
     @if(!place.user.email.equals(SessionHelper.getCurrentUsersEmail()) && SessionHelper.isAuthenticated) {
-        @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null){
-            @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))
-        }else{
-            @views.html.place.helper._postcommentview(place)(new Comment)
+        @if(Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place) != null && Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place).status.id == Status.APPROVED){
+            @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null){
+                @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))
+            }else{
+                @views.html.place.helper._postcommentview(place)(new Comment)
+            }
         }
+
     }
 
     <!-- Modal -->

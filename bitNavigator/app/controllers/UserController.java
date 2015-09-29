@@ -140,13 +140,8 @@ public class UserController extends Controller {
         Http.MultipartFormData.FilePart filePart = body.getFile("image");
 
         if(filePart != null){
-            Logger.debug("Content type: " + filePart.getContentType());
-            Logger.debug("Key: " + filePart.getKey());
             File file = filePart.getFile();
-            Image image = Image.create(file);
-            user.avatar = image;
-            image.save();
-
+            Image.createAvatar(file);
         }
 
         user.update();
@@ -204,7 +199,7 @@ public class UserController extends Controller {
         public String lastName;
         @Constraints.Pattern (value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
         public String mobileNumber;
-        public Image avatar;
+        //public Image avatar;
 
         public UserNameForm() {
 
@@ -215,7 +210,7 @@ public class UserController extends Controller {
             this.firstName = u.firstName;
             this.lastName = u.lastName;
             this.mobileNumber = u.phoneNumber;
-            this.avatar = u.avatar;
+            //this.avatar = u.avatar;
         }
     }
 

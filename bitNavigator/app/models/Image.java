@@ -9,6 +9,7 @@ import play.Logger;
 import play.data.Form;
 import play.mvc.Security;
 import utillities.Authenticators;
+import utillities.SessionHelper;
 
 import javax.persistence.*;
 import java.io.File;
@@ -22,7 +23,8 @@ import java.util.Map;
 @Entity
 public class Image extends Model {
 
-    public static Finder<Integer, Image> find = new Finder<>(Image.class);
+    public static Finder<Integer, Image> finder = new Finder<>(Image.class);
+    public static Cloudinary cloudinary;
 
     @Id
     public Integer id;
@@ -30,10 +32,9 @@ public class Image extends Model {
     public String image_url;
     public String secret_image_url;
     public boolean isPublished;
-    public static Cloudinary cloudinary;
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     public Place place;
-    @OneToOne
+    @OneToOne (cascade = CascadeType.PERSIST)
     public User user;
 
     /**
@@ -44,7 +45,7 @@ public class Image extends Model {
     }
 
     public static List<Image> findByPlace(Place place) {
-        return find.where().eq("place", place).findList();
+        return finder.where().eq("place", place).findList();
     }
 
     public static Image create(String public_id, String image_url, String secret_image_url) {
@@ -56,53 +57,68 @@ public class Image extends Model {
         return i;
     }
 
-    public static Image create(File image) {
-        Map result;
+    public static Image findByUser(User user) {
+        return finder.where().eq("user", user).findUnique();
+    }
+
+    public static void addImage(File file, Place place) {
+        Map uploadResult;
         try {
-            result = cloudinary.uploader().upload(image, null);
-            return create(result);
+            uploadResult = cloudinary.uploader().upload(file, null);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Logger.error(e.getStackTrace().toString());
+            return;
         }
-        return null;
+
+        Image image = new Image();
+
+        image.public_id = (String) uploadResult.get("public_id");
+        image.image_url = (String) uploadResult.get("url");
+        image.secret_image_url = (String) uploadResult.get("secure_url");
+
+        image.place = place;
+
+        image.save();
     }
 
     @Security.Authenticated(Authenticators.User.class)
-    public static Image create(Map uploadResult) {
-        Image i = new Image();
-        Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
-        User u = User.findByEmail(boundForm.bindFromRequest().field("email").value());
-
-        if( u.avatar != null) {
-            Image image = findImageById(u.avatar.id);
-            u.avatar = null;
-            u.update();
-            image.delete();
+    public static Image createAvatar(File image) {
+        Map uploadResult;
+        try {
+            uploadResult = cloudinary.uploader().upload(image, null);
+        } catch (IOException e) {
+            Logger.error(e.getStackTrace().toString());
+            return null;
         }
+        User user = SessionHelper.getCurrentUser();
 
-        i.public_id = (String) uploadResult.get("public_id");
-        Logger.debug(i.public_id);
-        i.image_url = (String) uploadResult.get("url");
-        Logger.debug(i.image_url);
-        i.secret_image_url = (String) uploadResult.get("secure_url");
-        Logger.debug(i.secret_image_url);
+        if(Image.findByUser(user) != null) {
+            Image.findByUser(user).deleteImage();
+            Image.findByUser(user).delete();
 
-        u.avatar = i;
-      //  i.save();
-        return i;
+        }
+        Image avatar = new Image();
+
+        avatar.public_id = (String) uploadResult.get("public_id");
+        avatar.image_url = (String) uploadResult.get("url");
+        avatar.secret_image_url = (String) uploadResult.get("secure_url");
+
+        avatar.user = SessionHelper.getCurrentUser();
+
+        avatar.save();
+        return avatar;
     }
 
     public static Image findImageById(Integer id){
-        return Image.find.where().eq("id", id).findUnique();
+        return Image.finder.where().eq("id", id).findUnique();
     }
 
     public static List<Image> all() {
-        return find.all();
+        return finder.all();
     }
 
     public String getSize(int width, int height) {
-
+        Logger.debug("-------------");
         String url = cloudinary.url().format("jpg")
                 .transformation(new Transformation().width(width).height(height).crop("fit").effect("sepia"))
                 .generate(public_id);

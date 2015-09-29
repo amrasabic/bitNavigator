@@ -46,6 +46,10 @@ public class Reservation extends Model {
         return finder.where().eq("user", user).findList();
     }
 
+    public static Reservation findByUserAndPlace(User user, Place place) {
+        return finder.where().eq("user", user).eq("place", place).findUnique();
+    }
+
     public static List<Reservation> findByStatus(User user, Status status) {
         return finder.where().eq("place", user).where().eq("status", status).findList();
     }

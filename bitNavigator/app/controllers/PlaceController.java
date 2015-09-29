@@ -17,6 +17,7 @@ import views.html.place.helper._placeviewform;
 import views.html.place.placelist;
 import views.html.place.viewplace;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -61,6 +62,11 @@ public class PlaceController extends Controller{
         MultipartFormData body = request().body().asMultipartFormData();
         List<FilePart> pictures = body.getFiles();
 
+        for (FilePart filePart : pictures) {
+            File file = filePart.getFile();
+            Image.addImage(file, place);
+        }
+
         if (pictures != null) {
             return redirect(routes.Application.index());
         } else {
@@ -100,6 +106,10 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
+            for (FilePart filePart : pictures) {
+                File file = filePart.getFile();
+                Image.addImage(file, place);
+            }
             return redirect(routes.PlaceController.viewPlace(id));
         } else {
             flash("error", "Files not present.");
