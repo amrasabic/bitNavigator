@@ -51,14 +51,11 @@
         </div>
 
     </div>
-    <div id="container-comment" class="container-fluid">
-        <h4>Gallery</h4>
-        @for(image <- images) {
-            <div class="media-left">
-                <img class="media-object" src="@image.getSize(256, 256)" alt="...">
-            </div>
-        }
+
+    <div id="gallery-panel" class="container-fluid">
+        @views.html.helpers._picturegallery(images)
     </div>
+
     @for(comment <- comments) {
         <!-- Checks if user already posted a comment -->
         @if(comment.user.email != SessionHelper.getCurrentUsersEmail) {
@@ -71,6 +68,7 @@
             @views.html.place.helper._commentview(comment)(false)(true)
         }
     }
+
     <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
     @if(!place.user.email.equals(SessionHelper.getCurrentUsersEmail()) && SessionHelper.isAuthenticated) {
         @if(Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place) != null && Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place).status.id == Status.APPROVED){
@@ -80,7 +78,6 @@
                 @views.html.place.helper._postcommentview(place)(new Comment)
             }
         }
-
     }
 
     <!-- Modal -->

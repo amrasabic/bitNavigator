@@ -124,7 +124,7 @@ body {
     background-color: #ffffff;
 }
 
-#container-comment {
+#container-comment, #gallery-panel {
     margin: 20px;
     padding: 15px;
     /*border-radius: 10px;*/
@@ -259,4 +259,12 @@ textarea {
 
 #view-place-modal-body div h3 {
     margin-top: 0px;
+}
+
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+
+#gallery-panel {
+    padding: 0px;
 }
