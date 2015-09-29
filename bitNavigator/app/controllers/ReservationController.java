@@ -96,15 +96,6 @@ public class ReservationController extends Controller {
         return redirect(routes.ReservationController.reservationsList());
     }
 
-//    public Result edit(Integer id) {
-//        Reservation reservation = Reservation.findById(id);
-//        if (reservation == null) {
-//            return notFound(String.format("Reservation %s does not exists.", id));
-//        }
-//
-//        return ok();
-//    }
-
     @Security.Authenticated(Authenticators.User.class)
     public Result updateReservation(Integer id) {
 
