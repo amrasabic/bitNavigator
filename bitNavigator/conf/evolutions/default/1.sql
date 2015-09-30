@@ -84,6 +84,27 @@ create table user (
   constraint pk_user primary key (id))
 ;
 
+create table working_hours (
+  id                        integer auto_increment not null,
+  place_id                  integer,
+  open1                     integer,
+  close1                    integer,
+  open2                     integer,
+  close2                    integer,
+  open3                     integer,
+  close3                    integer,
+  open4                     integer,
+  close4                    integer,
+  open5                     integer,
+  close5                    integer,
+  open6                     integer,
+  close6                    integer,
+  open7                     integer,
+  close7                    integer,
+  constraint uq_working_hours_place_id unique (place_id),
+  constraint pk_working_hours primary key (id))
+;
+
 alter table comment add constraint fk_comment_place_1 foreign key (place_id) references place (id) on delete restrict on update restrict;
 create index ix_comment_place_1 on comment (place_id);
 alter table comment add constraint fk_comment_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
@@ -106,6 +127,8 @@ alter table reservation add constraint fk_reservation_place_10 foreign key (plac
 create index ix_reservation_place_10 on reservation (place_id);
 alter table reservation add constraint fk_reservation_status_11 foreign key (status_id) references status (id) on delete restrict on update restrict;
 create index ix_reservation_status_11 on reservation (status_id);
+alter table working_hours add constraint fk_working_hours_place_12 foreign key (place_id) references place (id) on delete restrict on update restrict;
+create index ix_working_hours_place_12 on working_hours (place_id);
 
 
 
@@ -128,6 +151,8 @@ drop table service;
 drop table status;
 
 drop table user;
+
+drop table working_hours;
 
 SET FOREIGN_KEY_CHECKS=1;
 
