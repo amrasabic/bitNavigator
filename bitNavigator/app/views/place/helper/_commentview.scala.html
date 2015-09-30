@@ -3,9 +3,9 @@
 
 <div id="container-comment" class="container-fluid" data-comment="@comment.id">
     @if(comment.rate == null) {
-        <div id="comment-rate-label">n/a<span class="glyphicon glyphicon-star-empty"></span></div>
+        <div id="comment-rate-label">n/a<span class="glyphicon glyphicon-star"></span></div>
     } else {
-        <div id="comment-rate-label">@comment.rate <span class="glyphicon glyphicon-star-empty"></span></div>
+        <div id="comment-rate-label">@comment.rate <span class="glyphicon glyphicon-star"></span></div>
     }
     <div class="panel-heading">
     @if(comment.user.firstName == "" || comment.user.lastName == "") {
