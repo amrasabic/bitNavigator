@@ -52,6 +52,8 @@ create table reservation (
   title                     varchar(255),
   description               varchar(255),
   status_id                 integer,
+  reservation_created       datetime(6),
+  reservation_day           varchar(255),
   constraint pk_reservation primary key (id))
 ;
 
