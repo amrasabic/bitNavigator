@@ -17,14 +17,10 @@
               callback(countryCode);
             });
           },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
-
          });
-
-
             var telInput = $("#mobile-number"),
                 errorMsg = $("#error-msg"),
                 validMsg = $("#valid-msg");
-
             telInput.intlTelInput({
               utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
             });
@@ -41,20 +37,16 @@
                 }
               }
             });
-
             // on keydown: reset
             telInput.keydown(function() {
               telInput.removeClass("error");
               errorMsg.addClass("hide");
               validMsg.addClass("hide");
             });
-
             $("#submit-profile").click(function(){
                  a = $("#mobile-number").intlTelInput("getNumber");
                   $("#mobile-number-id").val(a);
             });
-
-
         })
         var urlToPost = "@routes.UserController.validateUserNameForm()";
     </script>
@@ -63,34 +55,38 @@
         <h3 class="page-header">Hi @user.firstName  @user.lastName!</h3>
         <div class="row">
             <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser()"  enctype="multipart/form-data">
-                <!-- left column -->
-                <!-- User avatar image -->
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="text-center">
-                @if(Image.findByUser(User.findByEmail(user.email)) != null) {
-                    <img src="@Image.findByUser(User.findByEmail(user.email)).getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
-                } else {
-                    <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
-                }
-                    <h6>Upload a different photo</h6>
-                    <input id="input-dim-1" name="image" type="file" class="file-loading" accept="image/*">
-                    @*<input type="file" class="text-center center-block well well-sm">**@
+
+                    <!-- left column -->
+                    <!-- User avatar image -->
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="text-center">
+                        @if(Image.findByUser(User.findByEmail(user.email)) != null) {
+                            <img src="@Image.findByUser(User.findByEmail(user.email)).getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
+                        } else {
+                            <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
+                        }
+                        <h6>Upload a different photo</h6>
+                        <input id="input-dim-1" name="image" type="file" class="file-loading" accept="image/*">
+                        @*<input type="file" class="text-center center-block well well-sm">**@
+                    </div>
                 </div>
-            </div>
-                <!-- edit form column -->
-                <!-- Message to User -->
-            <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-                <div class="alert alert-info alert-dismissable">
-                    <a class="panel-close close" data-dismiss="alert">×</a>
-                    @*<i class="fa fa-coffee"></i>*@
-                    <p><i class="glyphicon glyphicon-user"></i> Welcome to bitnavigator. You can't change your <strong>
-                        email</strong> address.
+
+                    <!-- edit form column -->
+                    <!-- Message to User -->
+                <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+                    <div class="alert alert-info alert-dismissable">
+                        <a class="panel-close close" data-dismiss="alert">×</a>
+                        @*<i class="fa fa-coffee"></i>*@
+                        <p><i class="glyphicon glyphicon-user"></i> Welcome to bitNavigator. You can't change your <strong>
+                            email</strong> address.
 
 
-                    </p>
-                </div>
-                <h5 class="user-info">Profile info:</h5>
-                    <!--User info fields -->
+                        </p>
+                    </div>
+
+                    <h5 class="user-info">Profile info:</h5>
+
+                        <!--User info fields -->
 
                         <!-- User first name filed-->
                     <div class="form-group">
@@ -101,6 +97,7 @@
                         </div>
 
                     </div>
+
                         <!-- User last name field-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Last name:</label>
@@ -109,6 +106,7 @@
                         </div>
                         <div class="alert alert-danger" data-error-for="lastName" role="alert" hidden></div>
                     </div>
+
                         <!-- User email filed-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Email:</label>
@@ -116,6 +114,7 @@
                             <input class="form-control" value="@user.email" type="email" name="email" id="email" readonly>
                         </div>
                     </div>
+
                         <!-- User phone number-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Phone number:</label>
@@ -128,43 +127,80 @@
                         <div class="alert alert-danger" data-error-for="mobileNumber" role="alert" hidden></div>
                     </div>
                     <p><br></p>
+
                         <!-- Confirm and cancel buttons -->
                     <div class="form-group">
                         <div>
                             <input id="submit-profile" class="btn btn-primary" value="Save Changes" type="submit">
                             <input class="btn btn-default" value="Cancel" type="reset" onclick="window.location='/';">
                         </div>
-                        </div>
                     </div>
+                </div>
 
             </form>
         </div>
+
+        <div class="row" style="margin:0 0 0 34%">
+            <form class="form-horizontal dont-validate" role="form" method="post" action="@routes.UserController.changePassword()">
+
+                    <!-- User old password -->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Old password:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="password" name="oldPassword" id="old_password">
+                        <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                    </div>
+                </div>
+
+                    <!-- User new password -->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">New password:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="password" name="newPassword" id="old_password">
+                        <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                    </div>
+                </div>
+
+                    <!-- User confirm password -->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Confirm password:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="password" name="confirmPassword" id="old_password">
+                        <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                    </div>
+                </div>
+
+                    <!-- Confirm and cancel buttons -->
+                <div class="form-group">
+                    <div>
+                        <input id="submit-profile" class="btn btn-primary" value="Save Changes" type="submit">
+                        <input class="btn btn-default" value="Cancel" type="reset" onclick="window.location='/';">
+                    </div>
+                </div>
+            </form>
+        </div>
+
     </div> <p><br></p>
-        @if(flash.containsKey("error")) {
-            <div class="alert alert-danger">
-            @flash.get("error")
-            </div>
-        }
+    @if(flash.containsKey("error")) {
+        <div class="alert alert-danger">
+        @flash.get("error")
+        </div>
+    }
 
     <script>
         $(document).ready(function(){
-
     $("form").submit(function(e, options){
-
         if($(this).hasClass("dont-validate")) {
             return;
         }
-
         var options = options || {};
         if(options.allow == true){
             return;
         }
-
         e.preventDefault();
         $("[data-error-for]").html("");
         $("[data-error-for]").hide();
         $form = $(this);
-
         $.ajax({
             url: urlToPost,
             method: "post",
@@ -173,19 +209,15 @@
             $form.trigger("submit", {allow: true});
         }).error(function(response){console.log(response);
             var errors = response.responseJSON;
-
             var keys = Object.keys(errors);
-
             for(var i = 0; i < keys.length; i++){
                 var errorMessages = errors[keys[i]];
                 var allErrors = "";
                 for(var j = 0; j < errorMessages.length; j++){
                     allErrors += errorMessages[j];
                 }
-
                 $('[data-error-for="'+keys[i]+'"]').html(allErrors).show();
             }
-
             });
         });
     });
