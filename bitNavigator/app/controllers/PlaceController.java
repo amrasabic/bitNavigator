@@ -32,6 +32,7 @@ public class PlaceController extends Controller{
     private static final Form<Image> imageForm = Form.form(Image.class);
     private static final Form<Service> serviceForm = Form.form(Service.class);
     private static final Form<Comment> commentForm = Form.form(Comment.class);
+    private static final Form<WorkingHours> workingHoursForm = Form.form(WorkingHours.class);
     private static List<String> imageLists = new ArrayList<>();
 
     @Security.Authenticated(Authenticators.User.class)
@@ -43,6 +44,11 @@ public class PlaceController extends Controller{
     public Result savePlace() {
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
+        Form<WorkingHours> boundWorkingHoursForm = workingHoursForm.bindFromRequest();
+
+        if(boundWorkingHoursForm.hasErrors()){
+            return redirect(routes.PlaceController.addPlace());
+        }
 
         if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
             return badRequest(addplace.render(boundForm.get(), Service.findAll()));
@@ -58,6 +64,10 @@ public class PlaceController extends Controller{
         place.placeCreated = Calendar.getInstance();
         place.service = service;
         place.save();
+
+        WorkingHours workingHours = boundWorkingHoursForm.get();
+        workingHours.place = place;
+        workingHours.save();
 
         MultipartFormData body = request().body().asMultipartFormData();
         List<FilePart> pictures = body.getFiles();
