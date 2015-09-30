@@ -4,27 +4,27 @@
 $(function(){
 
     $(document).ready(function(){
-        $('.rating-select .btn').trigger("mouseleave");
+        $('.rating-select .stars').trigger("mouseleave");
     });
 
-    $('.rating-select .btn').on('mouseover', function(){
-        $(this).removeClass('btn-default').addClass('btn-warning');
-        $(this).prevAll().removeClass('btn-default').addClass('btn-warning');
-        $(this).nextAll().removeClass('btn-warning').addClass('btn-default');
+    $('.rating-select .stars').on('mouseover', function(){
+        $(this).removeClass('rate-not-selected').addClass('rate-selected');
+        $(this).prevAll().removeClass('rate-not-selected').addClass('rate-selected');
+        $(this).nextAll().removeClass('rate-selected').addClass('rate-not-selected');
     });
 
     $('.rating-select').on('mouseleave', function(){
         active = $(this).parent().find('.selected');
         if(active.length) {
-            active.removeClass('btn-default').addClass('btn-warning');
-            active.prevAll().removeClass('btn-default').addClass('btn-warning');
-            active.nextAll().removeClass('btn-warning').addClass('btn-default');
+            active.removeClass('rate-not-selected').addClass('rate-selected');
+            active.prevAll().removeClass('rate-not-selected').addClass('rate-selected');
+            active.nextAll().removeClass('rate-selected').addClass('rate-not-selected');
         } else {
-            $(this).find('.btn').removeClass('btn-warning').addClass('btn-default');
+            $(this).find('.stars').removeClass('rate-selected').addClass('rate-not-selected');
         }
     });
 
-    $('.rating-select .btn').click(function(){
+    $('.rating-select .stars').click(function(){
         if($(this).hasClass('selected')) {
             $('.rating-select .selected').removeClass('selected');
             $('#comment-rate').val("0");

@@ -1,11 +1,7 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
-import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
-import org.apache.commons.io.FileUtils;
 import play.Logger;
-import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -15,9 +11,13 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
-import views.html.index;
-import views.html.place.*;
+import views.html.place.addplace;
+import views.html.place.editplace;
+import views.html.place.helper._placeviewform;
+import views.html.place.placelist;
+import views.html.place.viewplace;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -62,6 +62,11 @@ public class PlaceController extends Controller{
         MultipartFormData body = request().body().asMultipartFormData();
         List<FilePart> pictures = body.getFiles();
 
+        for (FilePart filePart : pictures) {
+            File file = filePart.getFile();
+            Image.addImage(file, place);
+        }
+
         if (pictures != null) {
             return redirect(routes.Application.index());
         } else {
@@ -101,6 +106,10 @@ public class PlaceController extends Controller{
         List<FilePart> pictures = body.getFiles();
 
         if (pictures != null) {
+            for (FilePart filePart : pictures) {
+                File file = filePart.getFile();
+                Image.addImage(file, place);
+            }
             return redirect(routes.PlaceController.viewPlace(id));
         } else {
             flash("error", "Files not present.");
@@ -151,11 +160,21 @@ public class PlaceController extends Controller{
     }
 
     public Result viewPlace(int id){
+        DynamicForm form = Form.form().bindFromRequest();
+
         Place place = Place.findById(id);
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place)));
+        String rating = "n/a";
+        if (place.getRating() != null) {
+            rating = String.format("%.2f", place.getRating());
+        }
+        if(form.data().get("isModal") != null) {
+            return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
+        }
+
+        return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
     }
 
     @Security.Authenticated(Authenticators.User.class)
