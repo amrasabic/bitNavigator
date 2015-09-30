@@ -16,10 +16,11 @@ GET           /user/signout                        @controllers.UserController.s
 GET           /user/list                           @controllers.UserController.userList()
 POST          /user/validate                       @controllers.UserController.validateForm()
 
-POST          /user/profile/validate               @controllers.UserController.validateUserNameForm()
-GET           /user/profile/:email                 @controllers.UserController.profile(email: String)
-POST          /user/profile/                       @controllers.UserController.updateUser()
-DELETE        /user/profile/:email                 @controllers.UserController.delete(email: String)
+POST          /user/profile/validate           @controllers.UserController.validateUserNameForm()
+GET           /user/profile/:email             @controllers.UserController.profile(email: String)
+POST          /user/profile/                   @controllers.UserController.updateUser()
+POST          /user/edit/password              @controllers.UserController.changePassword()
+DELETE        /user/profile/:email             @controllers.UserController.delete(email: String)
 
 
 GET           /user/reservations                   @controllers.ReservationController.reservationsList()
