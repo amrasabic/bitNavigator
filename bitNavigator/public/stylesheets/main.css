@@ -116,7 +116,6 @@ body {
     border: 1px #2b669a solid;
     text-align: center;
     padding: 20px;
-    background-color: white;
 }
 
 .white {
@@ -271,4 +270,10 @@ textarea {
 #logo{
     height: 5em;
     width: 5em;
+}
+.body{
+    background-image: url("logo2.png");
+    background-repeat: no-repeat;
+    background-position: right top;
+
 }
