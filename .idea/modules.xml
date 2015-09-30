@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/bitNavigator/.idea/modules/myProject.iml" filepath="$PROJECT_DIR$/bitNavigator/.idea/modules/myProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/bitNavigator/.idea/modules/myProject-build.iml" filepath="$PROJECT_DIR$/bitNavigator/.idea/modules/myProject-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bitNavigator/.idea/modules/myProject-build.iml" filepath="$PROJECT_DIR$/bitNavigator/.idea/modules/myProject-build.iml" />
     </modules>
   </component>
 </project>

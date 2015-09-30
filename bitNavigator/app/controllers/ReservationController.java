@@ -14,6 +14,8 @@ import views.html.reservations.reservationlist;
 
 import play.Logger;
 
+import java.util.Calendar;
+
 /**
  * Created by Amra on 9/17/2015.
  */
@@ -34,6 +36,7 @@ public class ReservationController extends Controller {
         Place place = Place.findById(id);
         String title = boundForm.data().get("title");
         String description = boundForm.data().get("description");
+        String reservationDay = boundForm.data().get("reservationDay");
 
         Reservation r = new Reservation();
         r.place = place;
@@ -43,6 +46,8 @@ public class ReservationController extends Controller {
         } else {
             r.title = title;
             r.description = description;
+            r.reservationCreated = Calendar.getInstance();
+            r.reservationDay = reservationDay;
         }
         r.status = models.Status.getStatusById(models.Status.WAITING);
 
