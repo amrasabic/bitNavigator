@@ -55,6 +55,7 @@
         <h3 class="page-header">Hi @user.firstName  @user.lastName!</h3>
         <div class="row">
             <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser()"  enctype="multipart/form-data">
+
                     <!-- left column -->
                     <!-- User avatar image -->
                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -69,19 +70,22 @@
                         @*<input type="file" class="text-center center-block well well-sm">**@
                     </div>
                 </div>
+
                     <!-- edit form column -->
                     <!-- Message to User -->
                 <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
                     <div class="alert alert-info alert-dismissable">
                         <a class="panel-close close" data-dismiss="alert">×</a>
                         @*<i class="fa fa-coffee"></i>*@
-                        <p><i class="glyphicon glyphicon-user"></i> Welcome to bitnavigator. You can't change your <strong>
+                        <p><i class="glyphicon glyphicon-user"></i> Welcome to bitNavigator. You can't change your <strong>
                             email</strong> address.
 
 
                         </p>
                     </div>
+
                     <h5 class="user-info">Profile info:</h5>
+
                         <!--User info fields -->
 
                         <!-- User first name filed-->
@@ -93,6 +97,7 @@
                         </div>
 
                     </div>
+
                         <!-- User last name field-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Last name:</label>
@@ -101,6 +106,7 @@
                         </div>
                         <div class="alert alert-danger" data-error-for="lastName" role="alert" hidden></div>
                     </div>
+
                         <!-- User email filed-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Email:</label>
@@ -108,6 +114,7 @@
                             <input class="form-control" value="@user.email" type="email" name="email" id="email" readonly>
                         </div>
                     </div>
+
                         <!-- User phone number-->
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Phone number:</label>
@@ -120,6 +127,7 @@
                         <div class="alert alert-danger" data-error-for="mobileNumber" role="alert" hidden></div>
                     </div>
                     <p><br></p>
+
                         <!-- Confirm and cancel buttons -->
                     <div class="form-group">
                         <div>
@@ -132,32 +140,32 @@
             </form>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin:0 0 0 34%">
             <form class="form-horizontal dont-validate" role="form" method="post" action="@routes.UserController.changePassword()">
 
                     <!-- User old password -->
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Old password:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="password" name="old-password" id="old_password">
+                        <input class="form-control" type="password" name="oldPassword" id="old_password">
                         <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
                     </div>
                 </div>
 
                     <!-- User new password -->
                 <div class="form-group">
-                    <label class="col-lg-3 control-label">Old password:</label>
+                    <label class="col-lg-3 control-label">New password:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="password" name="old-password" id="old_password">
+                        <input class="form-control" type="password" name="newPassword" id="old_password">
                         <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
                     </div>
                 </div>
 
                     <!-- User confirm password -->
                 <div class="form-group">
-                    <label class="col-lg-3 control-label">Old password:</label>
+                    <label class="col-lg-3 control-label">Confirm password:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="password" name="old-password" id="old_password">
+                        <input class="form-control" type="password" name="confirmPassword" id="old_password">
                         <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
                     </div>
                 </div>
@@ -169,7 +177,6 @@
                         <input class="btn btn-default" value="Cancel" type="reset" onclick="window.location='/';">
                     </div>
                 </div>
-
             </form>
         </div>
 

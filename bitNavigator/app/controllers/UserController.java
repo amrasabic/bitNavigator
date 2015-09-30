@@ -160,16 +160,9 @@ public class UserController extends Controller {
         if(user == null) {
             return notFound(String.format("User does not exist."));
         }
-
-        if(!user.email.equals(boundForm.bindFromRequest().field("email").value())){
-            return unauthorized("We good we good");
-        }
-
         if(boundForm.hasErrors()) {
-            flash("error", "Name can only hold letters!");
             return redirect(routes.UserController.profile(user.email));
         }
-
         try {
             if (!(PasswordHash.validatePassword(boundForm.bindFromRequest().field("oldPassword").value(),user.password))){
                 flash("error", "Incorrect password!");
@@ -180,12 +173,10 @@ public class UserController extends Controller {
         } catch (InvalidKeySpecException e) {
             e.printStackTrace();
         }
-
         if (!((boundForm.bindFromRequest().field("newPassword").value()).equals(boundForm.bindFromRequest().field("confirmPassword").value()))){
             flash("error", "Password does not match!");
             return redirect(routes.UserController.profile(user.email));
         }
-
         try {
             user.password = PasswordHash.createHash(boundForm.bindFromRequest().field("newPassword").value());
         } catch (NoSuchAlgorithmException e) {
@@ -319,7 +310,6 @@ public class UserController extends Controller {
         Form<UserNameForm> binded = userNameForm.bindFromRequest();
         //if we have errors just return a bad request
         if(binded.hasErrors()){
-            Logger.info("---------*--------" + binded.errorsAsJson().toString());
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
