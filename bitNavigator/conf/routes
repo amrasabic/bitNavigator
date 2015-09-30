@@ -19,11 +19,13 @@ POST          /user/validate                   @controllers.UserController.valid
 POST          /user/profile/validate           @controllers.UserController.validateUserNameForm()
 GET           /user/profile/:email             @controllers.UserController.profile(email: String)
 POST          /user/profile/                   @controllers.UserController.updateUser()
+POST          /user/profile/                   @controllers.UserController.changePassword()
 DELETE        /user/profile/:email             @controllers.UserController.delete(email: String)
 
 
 GET           /user/reservations               @controllers.ReservationController.reservationsList()
 POST          /user/reservations               @controllers.ReservationController.changeStatus()
+DELETE        /user/reservations/:id           @controllers.ReservationController.delete(id: Integer)
 
 GET           /place/add                       @controllers.PlaceController.addPlace()
 POST          /place/add                       @controllers.PlaceController.savePlace()

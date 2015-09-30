@@ -17,6 +17,8 @@ import utillities.PasswordHash;
 
 import java.io.File;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Calendar;
 
 
@@ -33,7 +35,7 @@ public class UserController extends Controller {
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
-  //  private static Image image;
+    //  private static Image image;
 
     /**
      * Leads random user to signin subpage
@@ -57,7 +59,7 @@ public class UserController extends Controller {
      * user is logged in. Method use password hashing.
      * @return
      */
-    public Result checkSignIn(){
+    public Result checkSignIn() {
         Form<User> boundForm = userForm.bindFromRequest();
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
@@ -154,6 +156,70 @@ public class UserController extends Controller {
 
         user.update();
         return redirect(routes.Application.index());
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result changePassword() {
+
+        Form<PasswordForm> boundForm = Form.form(PasswordForm.class).bindFromRequest();
+
+        User user = SessionHelper.getCurrentUser();
+
+        if(user == null) {
+            return notFound(String.format("User does not exist."));
+        }
+
+        if(!user.email.equals(boundForm.bindFromRequest().field("email").value())){
+            return unauthorized("We good we good");
+        }
+
+        if(boundForm.hasErrors()) {
+            flash("error", "Name can only hold letters!");
+            return redirect(routes.UserController.profile(user.email));
+        }
+
+        try {
+            if (!(PasswordHash.validatePassword(boundForm.bindFromRequest().field("oldPassword").value(),user.password))){
+                flash("error", "Incorrect password!");
+                return redirect(routes.UserController.profile(user.email));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        if (!((boundForm.bindFromRequest().field("newPassword").value()).equals(boundForm.bindFromRequest().field("confirmPassword").value()))){
+            flash("error", "Password does not match!");
+            return redirect(routes.UserController.profile(user.email));
+        }
+
+        try {
+            user.password = PasswordHash.createHash(boundForm.bindFromRequest().field("newPassword").value());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        user.update();
+        return redirect(routes.Application.index());
+
+    }
+
+    public static class PasswordForm {
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required (message = "Password is required")
+        public String oldPassword;
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required (message = "Password is required")
+        public String newPassword;
+        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required (message = "Passwords do not match")
+        public String confirmPassword;
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
