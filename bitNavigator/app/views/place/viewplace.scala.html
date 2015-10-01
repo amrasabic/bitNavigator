@@ -9,7 +9,7 @@
                 @views.html.place.helper._placeviewform(place)(services)(comments)(images)(rating)
                 <p><br></p>
                 <div>
-                @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email) {
+                @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email ) {
                     <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
                 }
                 </div>
@@ -26,14 +26,9 @@
                                 <h4 class="modal-title">Create reservation</h4>
                             </div>
                             <div class="modal-body">
-                                <div class="form-group" id="titleDiv">
-                                    <label>Title:</label>
-                                    <input type="text" class="form-control" name="title" id="rtitle" placeholder="Enter title" oninput="validateReservation()" onfocusout="validateTitle()">
-                                    <p id="titleParagraph" data-error-for="title" style="color : red ; font-size : 10 px"></p>
-                                </div>
                                 <div class="form-group" id="descriptionDiv">
-                                    <label>Description:</label>
-                                    <textarea class="form-control" rows="3" name="description" id="rdescription" type="text" placeholder="I would like to reserve .." style="resize : inherit" oninput="validateReservation()" onfocusout="validateDescription()"></textarea>
+                                    <label>Content:</label>
+                                    <textarea class="form-control" rows="3" name="content" id="rdescription" type="text" placeholder="I would like to reserve .." style="resize : inherit" oninput="validateReservation()" onfocusout="validateDescription()"></textarea>
                                     <p id="descParagraph" data-error-for="description" style="color : red ; font-size : 10 px"></p>
                                 </div>
                                 <div class="form-group">

@@ -28,13 +28,14 @@ public class Status {
 
     }
 
-    public static Status getStatusById(Integer id){
+    public static Status findById(Integer id){
         return finder.byId(id);
     }
 
     public static List<Status> findAll() {
         return finder.all();
     }
+
 
     /*
     INSERT INTO `status`(`id`, `status`) VALUES (3,'Denied');
