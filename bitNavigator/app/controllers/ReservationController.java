@@ -14,7 +14,10 @@ import views.html.reservations.reservationlist;
 
 import play.Logger;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Amra on 9/17/2015.
@@ -37,6 +40,15 @@ public class ReservationController extends Controller {
         String title = boundForm.data().get("title");
         String description = boundForm.data().get("description");
         String reservationDay = boundForm.data().get("reservationDay");
+        String reservationtime = boundForm.data().get("reservationTime");
+
+        SimpleDateFormat myDate = new SimpleDateFormat("dd/mm/yyyy");
+        Date date = new Date();
+        try {
+            date = myDate.parse(reservationDay);
+        }catch (ParseException e){
+
+        }
 
         Reservation r = new Reservation();
         r.place = place;
@@ -47,7 +59,7 @@ public class ReservationController extends Controller {
             r.title = title;
             r.description = description;
             r.reservationCreated = Calendar.getInstance();
-            r.reservationDay = reservationDay;
+            r.reservationDay = date + " " +reservationtime;
         }
         r.status = models.Status.getStatusById(models.Status.WAITING);
 
