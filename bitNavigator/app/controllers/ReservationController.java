@@ -50,10 +50,10 @@ public class ReservationController extends Controller {
         }
         r.reservationCreated = Calendar.getInstance();
         r.reservationDay = reservationDay;
-        r.status = models.Status.getStatusById(models.Status.WAITING);
+        r.status = models.Status.findById(models.Status.WAITING);
 
         r.messages.add(message);
-        r.status = models.Status.getStatusById(models.Status.WAITING);
+        r.status = models.Status.findById(models.Status.WAITING);
         r.save();
         message.messageCreated = Calendar.getInstance();
         message.reservation.id = r.id;
@@ -69,7 +69,7 @@ public class ReservationController extends Controller {
     @Security.Authenticated(Authenticators.User.class)
     public Result changeStatus() {
         DynamicForm boundForm = Form.form().bindFromRequest();
-        models.Status status = models.Status.getStatusById(Integer.parseInt(boundForm.data().get("statusId")));
+        models.Status status = models.Status.findById(Integer.parseInt(boundForm.data().get("statusId")));
         Reservation reservation = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
        // Logger.info(reservation.title);
         if(status == null || reservation == null) {

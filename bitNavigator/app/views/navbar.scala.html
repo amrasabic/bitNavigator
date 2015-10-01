@@ -39,7 +39,10 @@
 
             } else {
                 <div class="btn-group navbar-form navbar-right">
-                    <button id="btn-signed" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <button class="btn btn-default"><a href="@routes.MessageController.inbox()"><i class="glyphicon glyphicon-envelope" style="font-size: 16px"><span class="badge" style="color: white; font-weight: bold; background-color: red; font-size: 8px">@Reservation.reservationsOnWaiting()</span></i></a></button>
+
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @SessionHelper.getCurrentUsersEmail <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">

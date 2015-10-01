@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
+import utillities.SessionHelper;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -61,4 +62,13 @@ public class Reservation extends Model {
         return finder.where().eq("place", user).where().eq("status", status).findList();
     }
 
+    public static Integer reservationsOnWaiting(){
+        List<Reservation> reservations = Reservation.findByStatus(SessionHelper.getCurrentUser(), Status.findById(Status.WAITING));
+        return reservations.size();
+    }
+
+    public static Integer findByUser(){
+        List<Reservation> reservations = Reservation.findByUser(SessionHelper.getCurrentUser());
+        return reservations.size();
+    }
 }

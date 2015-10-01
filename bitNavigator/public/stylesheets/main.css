@@ -272,8 +272,7 @@ textarea {
     width: 5em;
 }
 .body{
-    background-image: url("logo3.png");
-    background-repeat: no-repeat;
-    background-position: 110% -5%;
-
+    /*background-image: url("logo3.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: 110% -5%;*/
 }
