@@ -35,6 +35,7 @@ public class ReservationController extends Controller {
         User user = User.findByEmail(session().get("email"));
 
         Place place = Place.findById(id);
+        String reservationDay = boundForm.data().get("reservationDay");
         String content = boundForm.data().get("content");
 
         Reservation r = new Reservation();
@@ -46,8 +47,10 @@ public class ReservationController extends Controller {
             // nesto >?
         } else {
             message.content = content;
-
         }
+        r.reservationCreated = Calendar.getInstance();
+        r.reservationDay = reservationDay;
+        r.status = models.Status.getStatusById(models.Status.WAITING);
 
         r.messages.add(message);
         r.status = models.Status.getStatusById(models.Status.WAITING);

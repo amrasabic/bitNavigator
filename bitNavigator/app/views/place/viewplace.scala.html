@@ -16,6 +16,7 @@
             </div>
         </div>
         <div id="map-container" class="col-md-6">
+            <!-- Modal reservation -->
             <div id="myModal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <form method="post" action="@routes.ReservationController.submitReservation(place.id)">
@@ -29,6 +30,10 @@
                                     <label>Content:</label>
                                     <textarea class="form-control" rows="3" name="content" id="rdescription" type="text" placeholder="I would like to reserve .." style="resize : inherit" oninput="validateReservation()" onfocusout="validateDescription()"></textarea>
                                     <p id="descParagraph" data-error-for="description" style="color : red ; font-size : 10 px"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Reservation day:</label>
+                                    <input type="date" name="reservationDay"/>
                                 </div>
                             </div>
                             <div class="modal-footer">

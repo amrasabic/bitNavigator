@@ -116,7 +116,6 @@ body {
     border: 1px #2b669a solid;
     text-align: center;
     padding: 20px;
-    background-color: white;
 }
 
 .white {
@@ -267,4 +266,14 @@ textarea {
 
 #gallery-panel {
     padding: 0px;
+}
+#logo{
+    height: 5em;
+    width: 5em;
+}
+.body{
+    background-image: url("logo3.png");
+    background-repeat: no-repeat;
+    background-position: 110% -5%;
+
 }
