@@ -116,6 +116,9 @@ body {
     border: 1px #2b669a solid;
     text-align: center;
     padding: 20px;
+    background-image: url("rsz_logo3.png");
+    background-repeat: no-repeat;
+    background-position: 105% 45%;
 }
 
 .white {
@@ -271,12 +274,7 @@ textarea {
     height: 5em;
     width: 5em;
 }
-.body{
-    /*background-image: url("logo3.png");*/
-    background-repeat: no-repeat;
-    background-position: 110% -5%;
 
-}
 
 #footer{
     display: table;
