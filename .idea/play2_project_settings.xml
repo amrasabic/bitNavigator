@@ -13,7 +13,7 @@
         <entry key="myProject">
           <value>
             <ProjectSettingsEntry>
-              <option name="sourceDir" value="C:\Users\Kristina Pupavac\Desktop\navigator\bitNavigator\bitNavigator\app" />
+              <option name="sourceDir" value="$PROJECT_DIR$/bitNavigator/app" />
               <option name="confDir" value="$PROJECT_DIR$/bitNavigator/app" />
               <option name="templateImports">
                 <list>

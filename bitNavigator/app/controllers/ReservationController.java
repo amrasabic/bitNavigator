@@ -9,6 +9,7 @@ import models.Status;
 
 import play.mvc.Security;
 import utillities.Authenticators;
+import utillities.SessionHelper;
 import views.html.place.*;
 import views.html.reservations.reservationlist;
 
@@ -21,7 +22,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by Amra on 9/17/2015.
+ * Created by amra.sabic on 9/17/2015.
  */
 public class ReservationController extends Controller {
 
@@ -29,7 +30,6 @@ public class ReservationController extends Controller {
 
     @Security.Authenticated(Authenticators.User.class)
     public Result submitReservation(int id){
-
         DynamicForm boundForm = Form.form().bindFromRequest();
         if (boundForm.hasErrors()) {
             return TODO;
@@ -38,8 +38,10 @@ public class ReservationController extends Controller {
         User user = User.findByEmail(session().get("email"));
 
         Place place = Place.findById(id);
-        String title = boundForm.data().get("title");
-        String description = boundForm.data().get("description");
+
+        String content = boundForm.data().get("content");
+
+
         String reservationDay = boundForm.data().get("reservationDay");
         String reservationtime = boundForm.data().get("reservationTime");
         SimpleDateFormat myDate = new SimpleDateFormat("yyyy-MM-dd kk:mm");
@@ -49,20 +51,28 @@ public class ReservationController extends Controller {
         }catch (ParseException e){
             return TODO;
         }
+
         Reservation r = new Reservation();
         r.place = place;
         r.user = user;
-        if(title == null || description == null) {
+
+        Message message = new Message();
+        message.sender = SessionHelper.getCurrentUser();
+        if(content == null) {
             return TODO;
         } else {
-            r.title = title;
-            r.description = description;
-            r.timestamp = Calendar.getInstance();
+            message.content = content;
         }
-        r.status = models.Status.getStatusById(models.Status.WAITING);
+
+        r.timestamp = Calendar.getInstance();
         r.reservationDate = date;
 
+        r.messages.add(message);
+        r.status = models.Status.findById(models.Status.WAITING);
         r.save();
+        message.messageCreated = Calendar.getInstance();
+        message.reservation.id = r.id;
+        message.save();
         return redirect(routes.Application.index());
     }
 
@@ -74,9 +84,9 @@ public class ReservationController extends Controller {
     @Security.Authenticated(Authenticators.User.class)
     public Result changeStatus() {
         DynamicForm boundForm = Form.form().bindFromRequest();
-        models.Status status = models.Status.getStatusById(Integer.parseInt(boundForm.data().get("statusId")));
+        models.Status status = models.Status.findById(Integer.parseInt(boundForm.data().get("statusId")));
         Reservation reservation = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
-        Logger.info(reservation.title);
+       // Logger.info(reservation.title);
         if(status == null || reservation == null) {
             return badRequest("Something went wrong");
         }
@@ -133,4 +143,18 @@ public class ReservationController extends Controller {
         return ok(response);
     }
 
+    public Result updateReservation(Integer id) {
+
+        Form<Reservation> boundForm = reservationForm.bindFromRequest();
+
+        Reservation reservation = Reservation.findById(id);
+
+//        reservation.title = boundForm.bindFromRequest().field("rtitle").value();
+//        reservation.description = boundForm.bindFromRequest().field("rdescription").value();
+
+//        Logger.info(reservation.description);
+//        Logger.info(reservation.title);
+        reservation.update();
+        return redirect(routes.ReservationController.reservationsList());
+    }
 }
