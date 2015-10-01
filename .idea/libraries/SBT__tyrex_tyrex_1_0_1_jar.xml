@@ -2,6 +2,7 @@
   <library name="SBT: tyrex:tyrex:1.0.1:jar">
     <CLASSES>
       <root url="jar://$USER_HOME$/.ivy2/cache/tyrex/tyrex/jars/tyrex-1.0.1.jar!/" />
+      <root url="jar:///usr/local/Cellar/typesafe-activator/1.2.12/libexec/repository/tyrex/tyrex/1.0.1/jars/tyrex.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
