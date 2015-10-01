@@ -1,0 +1,22 @@
+@(content: Html)
+@main("Messages") {
+
+  <div style="margin-top: 2em">
+    <div class="container">
+      <div id="info-container" class="col-md-3">
+        <ul class="list-group">
+          <li class="list-group-item"><a href="@routes.MessageController.inbox()" class="btn btn-primary btn-lg btn-block">Inbox <span class="badge">14</span></a></li>
+          @*<li class="list-group-item">*@
+            @*<a href="#" class="btn btn-primary btn-lg dropdown-toggle form-control" data-toggle="dropdown" aria-expanded="false">By status <span class="caret"></span></a>*@
+            @*<ul class="dropdown-menu drop">*@
+              @*<li><a href="#">Approved</a></li>*@
+              @*<li><a href="#">Pending</a></li>*@
+              @*<li><a href="#">Denied</a></li>*@
+            @*</ul>*@
+          @*</li>*@
+        </ul>
+      </div>
+      @content
+    </div>
+  </div>
+}

@@ -8,10 +8,10 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>title</th>
                 <th>user</th>
                 <th>place title</th>
                 <th>status</th>
+                <th></th>
                 <th>delete</th>
             </tr>
         </thead>
@@ -20,7 +20,6 @@
             @if(SessionHelper.isAdmin || reservation.place.user.email == SessionHelper.getCurrentUsersEmail){
                 <tr>
                     <td>@reservation.id</td>
-                    <td>@reservation.title</td>
                     <td>@reservation.user.email</td>
                     <td>@reservation.place.title</td>
                     <td>
@@ -37,7 +36,18 @@
                             <input type="hidden" name="reservationId" value="@reservation.id">
                             <input type="submit" class="btn btn-xs btn-warning" value="Save Change">
                         </form>
+
                     </td>
+                    @if(reservation.status.id == Status.DENIED) {
+                        <td><span class="glyphicon glyphicon-envelope"></span></td>
+                    } else {
+                        <td><a href="@routes.MessageController.messagesList(reservation.id)"><i class="glyphicon glyphicon-envelope"></i></a></td>
+                    }
+                    @if(reservation.status.id == Status.WAITING) {
+                        <td><a href="@routes.ReservationController.delete(reservation.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    } else {
+                        <td><span class="glyphicon glyphicon-trash"></span></td>
+                    }
                 </tr>
             }
         }
@@ -49,9 +59,10 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>title</th>
                 <th>place title</th>
                 <th>status</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -59,7 +70,6 @@
             @if(reservation.user.email == SessionHelper.getCurrentUsersEmail){
                 <tr>
                     <td>@reservation.id</td>
-                    <td>@reservation.title</td>
                     <td>@reservation.place.title</td>
                     @if(reservation.status.id == Status.APPROVED) {
                             <td style="color: green">@reservation.status.status</td>
@@ -70,42 +80,19 @@
                     @if(reservation.status.id == Status.DENIED){
                             <td style="color: red">@reservation.status.status</td>
                     }
+                    @if(reservation.status.id == Status.DENIED) {
+                        <td><span class="glyphicon glyphicon-envelope"></span></td>
+                    } else {
+                        <td><a href="@routes.MessageController.messagesList(reservation.id)"><i class="glyphicon glyphicon-envelope"></i></a></td>
+                    }
 
                     @if(reservation.status.id == Status.WAITING) {
-                        <td><a data-toggle="modal" data-target="#myModal" href="@routes.ReservationController.updateReservation(reservation.id)"> <i class="glyphicon glyphicon-edit"></i></a></td>
                         <td><a href="@routes.ReservationController.delete(reservation.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    } else {
+                        <td><span class="glyphicon glyphicon-trash"></span></td>
                     }
                 </tr>
 
-                <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <form method="post" action="@routes.ReservationController.updateReservation(reservation.id)">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                    <h4 class="modal-title">Create reservation</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group" id="titleDiv">
-                                        <label>Title:</label>
-                                        <input type="text" class="form-control" name="rtitle" id="rtitle" placeholder="Enter title" oninput="validateReservation()" onfocusout="validateTitle()" value="@reservation.title">
-                                        <p id="titleParagraph" data-error-for="title" style="color : red ; font-size : 10 px"></p>
-                                    </div>
-                                    <div class="form-group" id="descriptionDiv">
-                                        <label>Description:</label>
-                                        <textarea class="form-control" rows="3" name="rdescription" id="rdescription" type="text" placeholder="I would like to reserve .." style="resize : inherit" oninput="validateReservation()" onfocusout="validateDescription()" >@reservation.description</textarea>
-                                        <p id="descParagraph" data-error-for="description" style="color : red ; font-size : 10 px"></p>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" id="reservation" onclick="validateReservation()">
-                                        Save</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             }
         }
         </tbody>

@@ -1,0 +1,20 @@
+@(reservations: java.util.List[Reservation])
+
+@views.html.messages.messageview {
+
+  <div id="info-container" class="col-md-9">
+    <ul class="list-group">
+    @for(reservation <- reservations) {
+      <li class="list-group-item">
+        <div>
+          <div class="panel-heading"> <a href="@routes.MessageController.messagesList(reservation.id)" class="btn btn-primary btn-lg btn-block">
+            <h3 class="panel-title">@reservation.place.title</h3>
+            <h3 class="panel-title">@reservation.user.email</h3>
+            <h3 class="panel-title">@reservation.status.status</h3></a>
+          </div>
+        </div>
+      </li>
+    }
+    </ul>
+  </div>
+}
