@@ -122,11 +122,11 @@
                     var openMin = json[i-1].timeFrom.split(":")[1];
                     var open = parseInt(openHour) * 60 + parseInt(openMin);
 
-                    $('#add-place-form').append('<input name="open' + i + '" value="' + open + '">');
+                    $('#add-place-form').append('<input hidden name="open' + i + '" value="' + open + '">');
                     var closeHour = json[i-1].timeTill.split(":")[0];
                     var closeMin = json[i-1].timeTill.split(":")[1];
                     var close = parseInt(closeHour) * 60 + parseInt(closeMin);
-                    $('#add-place-form').append('<input name="close' + i + '" value="' + close + '">');
+                    $('#add-place-form').append('<input hidden name="close' + i + '" value="' + close + '">');
 
                 }
             }

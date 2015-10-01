@@ -38,9 +38,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Choose day:</label>
-                                    <input type="date" name="reservationDay"/>
+                                    <input id="reservation-datepicker" type="date" name="reservationDay"/>
                                     <label>Choose time:</label>
-                                    <input type="time" name="reservationTime"/>
+                                    <input id="reservation-timepicker" type="time" name="reservationTime"/>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -105,6 +105,35 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var tmp = document.getElementById('reservation-datepicker');
+
+        function parseDate(s) {
+            var b = s.split(/\D/);
+            return new Date(b[0], --b[1], b[2]);
+        }
+
+        var today = new Date();
+        document.getElementById('reservation-datepicker').valueAsDate = today;
+        var minDay = today.getDate();
+        if(minDay < 10){
+            minDay = "0" + minDay;
+        }
+        var minDate = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + minDay;
+        document.getElementById('reservation-datepicker').setAttribute("min", minDate);
+        $('#reservation-datepicker').on("keydown", function() {
+            return false;
+        });
+
+        $('#reservation-datepicker').on("change", function() {
+            var dayOfWeek = parseDate($('#reservation-datepicker').val()).getDay();
+            var open = @WorkingHours.getOpeningTime(place, 5);
+            console.log(@WorkingHours.getOpeningTime(place, tmp) + "")
+            document.getElementById('reservation-timepicker').setAttribute("min", );
+        });
+
+    </script>
 
     <script>
         $(document).ready(function() {

@@ -89,5 +89,13 @@ public class WorkingHours extends Model {
         }
     }
 
+    public static int getOpeningTime(Place place, int day) {
+        return WorkingHours.findByPlace(place).getWorkingHours(day).get(0);
+    }
+
+    public static int getClosingTime(Place place, int day) {
+        return WorkingHours.findByPlace(place).getWorkingHours(day).get(1);
+    }
+
 
 }

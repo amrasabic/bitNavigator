@@ -28,8 +28,8 @@ public class Reservation extends Model {
     public String description;
     @ManyToOne
     public Status status;
-    public Calendar reservationCreated;
-    public String reservationDay;
+    public Calendar timestamp;
+    public Calendar reservationDate;
 
     public static Finder<Integer, Reservation> finder = new Finder<>(Reservation.class);
 

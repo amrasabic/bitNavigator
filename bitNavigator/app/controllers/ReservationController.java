@@ -58,8 +58,7 @@ public class ReservationController extends Controller {
         } else {
             r.title = title;
             r.description = description;
-            r.reservationCreated = Calendar.getInstance();
-            r.reservationDay = date + " " +reservationtime;
+            r.timestamp = Calendar.getInstance();
         }
         r.status = models.Status.getStatusById(models.Status.WAITING);
 
