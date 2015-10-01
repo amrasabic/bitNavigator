@@ -3,11 +3,24 @@
 @main("Service list") {
 
     <h2>All services</h2>
+    <div calss="row">
+    <div class="btn-group-vertical col-md-3">
+        <a href="/user/list" class="btn btn-default">All users</a>
+        <a href="/place/list" class="btn btn-default">All places</a>
+        <a href="/comments/list" class="btn btn-default">All comments</a>
+        <a href="/comments/reported" class="btn btn-default">Reported comments</a>
+        <a href="/service/add" class="btn btn-default">Add services</a>
+        <a href="/service/list" class="btn btn-default">Service list</a>
+
+    </div>
+
+
     <! -- Add new service button -- >
     <a href="@routes.ServiceController.addService()" calss="btn btn-primary">
         <i class="glyphicon glyphicon-plus"></i>Add service
     </a>
     <!-- Table with services details -->
+        <div class="col-md-9">
     <table id="myTable" class="table table-striped">
         <thead>
             <tr>
@@ -38,6 +51,8 @@
         }
         </tbody>
     </table>
+        </div>
+        </div>
     <! -- Scripts -- >
     <script src="@routes.Assets.versioned("javascripts/jquery-2.1.4.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
