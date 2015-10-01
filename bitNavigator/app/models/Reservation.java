@@ -2,13 +2,14 @@ package models;
 
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
+import utillities.SessionHelper;
 
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by Amra on 9/16/2015.
+ * Created by amra.sabic on 9/16/2015.
  */
 @Entity
 public class Reservation extends Model {
@@ -19,15 +20,10 @@ public class Reservation extends Model {
     public User user;
     @ManyToOne
     public Place place;
-    @Constraints.MinLength (value = 5, message = "Title should be minimum 5 characters long.")
-    @Constraints.MaxLength (value = 25, message = "Title should shorter. Write more details in description.")
-    @Constraints.Required (message = "Title is required.")
-    public String title;
-    @Constraints.MinLength (value = 25, message = "Description should contain more details.")
-    @Constraints.Required (message = "Description is required.")
-    public String description;
     @ManyToOne
     public Status status;
+    @OneToMany (cascade = CascadeType.ALL)
+    public List<Message> messages;
     public Calendar reservationCreated;
     public String reservationDay;
 
@@ -66,4 +62,13 @@ public class Reservation extends Model {
         return finder.where().eq("place", user).where().eq("status", status).findList();
     }
 
+    public static Integer reservationsOnWaiting(){
+        List<Reservation> reservations = Reservation.findByStatus(SessionHelper.getCurrentUser(), Status.findById(Status.WAITING));
+        return reservations.size();
+    }
+
+    public static Integer findByUser(){
+        List<Reservation> reservations = Reservation.findByUser(SessionHelper.getCurrentUser());
+        return reservations.size();
+    }
 }

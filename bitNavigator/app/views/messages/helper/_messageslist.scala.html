@@ -1,0 +1,33 @@
+@(messages: java.util.List[Message])
+
+@views.html.messages.messageview {
+
+    <div id="info-container" class="col-md-9">
+      <ul class="list-group">
+      @for(message <- messages) {
+        <li class="list-group-item">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">@message.sender.firstName</h3>
+            </div>
+            <div class="panel-body">@message.content</div>
+          </div>
+        </li>
+        }
+      </ul>
+        <li class="list-group-item">
+          <div class="panel panel-default">
+            <form action="@routes.MessageController.sendMessage(messages.get(0).reservation.id)" method="POST">
+              <div class="form-group">
+                <div class="panel-body">
+                  <textarea class="form-control" style="resize : inherit" name="content" placeholder="Message ..."></textarea>
+                  <div>
+                    <input type="submit" class="btn btn-primary pull-right" value="Send" style="margin-top : 1em"/>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </li>
+    </div>
+}
