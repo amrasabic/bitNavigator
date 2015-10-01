@@ -18,19 +18,22 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/jquery.dataTables.min.css")">
     </head>
 
-    <body>
+    <body class="body">
 
         @navbar()
 
         <div class="container">
         @content
+
         </div>
 
+        <div id="footer">
+            <p>Copyright (c) 2015 bitNavigator All rights reserved</p>
+        </div>
 
         <script src="@routes.Assets.versioned("javascripts/bootbox.min.js")"></script>
 
     </body>
-
 
 
 </html>

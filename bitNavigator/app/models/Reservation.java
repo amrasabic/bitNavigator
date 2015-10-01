@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -27,6 +28,8 @@ public class Reservation extends Model {
     public String description;
     @ManyToOne
     public Status status;
+    public Calendar reservationCreated;
+    public String reservationDay;
 
     public static Finder<Integer, Reservation> finder = new Finder<>(Reservation.class);
 
