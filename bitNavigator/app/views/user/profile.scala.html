@@ -138,57 +138,53 @@
                     </div>
                 </div>
 
-                <div id="openModal" class="modalDialog">
-                    <div>
-                        <a href="#close" title="Close" class="close">X</a>
-                        <h2>Change password</h2>
-                        <form class="form-horizontal dont-validate" role="form" method="post" action="@routes.UserController.changePassword()">
-
-                                <!-- User old password -->
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Old password:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" type="password" name="oldPassword" id="old_password">
-                                    <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
-                                </div>
-                            </div>
-
-                                <!-- User new password -->
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">New password:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" type="password" name="newPassword" id="old_password">
-                                    <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
-                                </div>
-                            </div>
-
-                                <!-- User confirm password -->
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Confirm password:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" type="password" name="confirmPassword" id="old_password">
-                                    <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
-                                </div>
-                            </div>
-                            <p><br></p>
-
-                                <!-- Confirm button -->
-                            <div style="text-align:center" class="form-group">
-                                <div>
-                                    <input id="submit-password" class="btn btn-primary" value="Save Password" type="submit">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
             </form>
 
-        </div>
+            <div id="openModal" class="modalDialog">
+                <div>
+                    <a href="#close" title="Close" class="close">X</a>
+                    <h2>Change password</h2>
+                    <form class="form-horizontal dont-validate" role="form" method="post" action="@routes.UserController.changePassword()">
 
-        @*<div class="row" style="margin:0 0 0 34%">*@
-            @**@
-        @*</div>*@
+                            <!-- User old password -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Old password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" name="oldPassword" id="old_password">
+                                <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                            </div>
+                        </div>
+
+                            <!-- User new password -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">New password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" name="newPassword" id="old_password">
+                                <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                            </div>
+                        </div>
+
+                            <!-- User confirm password -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Confirm password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" name="confirmPassword" id="old_password">
+                                <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                            </div>
+                        </div>
+                        <p><br></p>
+
+                            <!-- Confirm button -->
+                        <div style="text-align:center" class="form-group">
+                            <div>
+                                <input id="submit-password" class="btn btn-primary" value="Save Changes" type="submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
 
     </div> <p><br></p>
     @if(flash.containsKey("error")) {

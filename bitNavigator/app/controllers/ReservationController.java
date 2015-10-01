@@ -9,15 +9,19 @@ import models.Status;
 
 import play.mvc.Security;
 import utillities.Authenticators;
+import utillities.SessionHelper;
 import views.html.place.*;
 import views.html.reservations.reservationlist;
 
 import play.Logger;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
- * Created by Amra on 9/17/2015.
+ * Created by amra.sabic on 9/17/2015.
  */
 public class ReservationController extends Controller {
 
@@ -34,24 +38,38 @@ public class ReservationController extends Controller {
         User user = User.findByEmail(session().get("email"));
 
         Place place = Place.findById(id);
-        String title = boundForm.data().get("title");
-        String description = boundForm.data().get("description");
         String reservationDay = boundForm.data().get("reservationDay");
+        String content = boundForm.data().get("content");
+        String reservationtime = boundForm.data().get("reservationTime");
+
+        SimpleDateFormat myDate = new SimpleDateFormat("dd/mm/yyyy");
+        Date date = new Date();
+        try {
+            date = myDate.parse(reservationDay);
+        }catch (ParseException e){
+
+        }
 
         Reservation r = new Reservation();
         r.place = place;
         r.user = user;
-        if(title == null || description == null) {
-            // nesto ?
+        Message message = new Message();
+        message.sender = SessionHelper.getCurrentUser();
+        if(content == null) {
+            // nesto >?
         } else {
-            r.title = title;
-            r.description = description;
-            r.reservationCreated = Calendar.getInstance();
-            r.reservationDay = reservationDay;
+            message.content = content;
         }
-        r.status = models.Status.getStatusById(models.Status.WAITING);
+        r.reservationCreated = Calendar.getInstance();
+        r.reservationDay = reservationDay;
+        r.status = models.Status.findById(models.Status.WAITING);
 
+        r.messages.add(message);
+        r.status = models.Status.findById(models.Status.WAITING);
         r.save();
+        message.messageCreated = Calendar.getInstance();
+        message.reservation.id = r.id;
+        message.save();
         return redirect(routes.Application.index());
     }
 
@@ -63,9 +81,9 @@ public class ReservationController extends Controller {
     @Security.Authenticated(Authenticators.User.class)
     public Result changeStatus() {
         DynamicForm boundForm = Form.form().bindFromRequest();
-        models.Status status = models.Status.getStatusById(Integer.parseInt(boundForm.data().get("statusId")));
+        models.Status status = models.Status.findById(Integer.parseInt(boundForm.data().get("statusId")));
         Reservation reservation = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
-        Logger.info(reservation.title);
+       // Logger.info(reservation.title);
         if(status == null || reservation == null) {
             return badRequest("Something went wrong");
         }
@@ -98,6 +116,22 @@ public class ReservationController extends Controller {
             reservation.delete();
         }
 
+        return redirect(routes.ReservationController.reservationsList());
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result updateReservation(Integer id) {
+
+        Form<Reservation> boundForm = reservationForm.bindFromRequest();
+
+        Reservation reservation = Reservation.findById(id);
+
+//        reservation.title = boundForm.bindFromRequest().field("rtitle").value();
+//        reservation.description = boundForm.bindFromRequest().field("rdescription").value();
+
+//        Logger.info(reservation.description);
+//        Logger.info(reservation.title);
+        reservation.update();
         return redirect(routes.ReservationController.reservationsList());
     }
 }
