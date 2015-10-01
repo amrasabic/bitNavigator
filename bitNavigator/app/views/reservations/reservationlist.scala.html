@@ -24,8 +24,8 @@
                     <td>@reservation.id</td>
                     <td>@reservation.user.email</td>
                     <td>@reservation.place.title</td>
-                    <th>@reservation.reservationCreated.getTime()</th>
-                    <th>@reservation.reservationDay</th>
+                    <th>@reservation.timestamp.getTime()</th>
+                    <th>@reservation.reservationDate.getTime()</th>
                     <td>
                         <form action="@routes.ReservationController.changeStatus()" method="post">
                             <select name="statusId">
@@ -65,7 +65,7 @@
                 <th>id</th>
                 <th>place title</th>
                 <th>Reservation created</th>
-                <th>Reservation day</th>
+                <th>Reservation date</th>
                 <th>status</th>
                 <th></th>
                 <th></th>
@@ -77,8 +77,8 @@
                 <tr>
                     <td>@reservation.id</td>
                     <td>@reservation.place.title</td>
-                    <th>@reservation.reservationCreated.getTime()</th>
-                    <th>@reservation.reservationDay</th>
+                    <th>@reservation.timestamp.getTime()</th>
+                    <th>@reservation.reservationDate.getTime()</th>
                     @if(reservation.status.id == Status.APPROVED) {
                             <td style="color: green">@reservation.status.status</td>
                     }

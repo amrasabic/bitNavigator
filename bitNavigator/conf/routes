@@ -26,7 +26,7 @@ DELETE        /user/profile/:email                    @controllers.UserControlle
 GET           /user/reservations                      @controllers.ReservationController.reservationsList()
 POST          /user/reservations                      @controllers.ReservationController.changeStatus()
 DELETE        /user/reservations/:id                  @controllers.ReservationController.delete(id: Integer)
-POST          /user/reservations/update/:id           @controllers.ReservationController.updateReservation(id: Integer)
+POST          /user/reservations/workingHours         @controllers.ReservationController.getWorkingHours()
 
 GET           /place/add                              @controllers.PlaceController.addPlace()
 POST          /place/add                              @controllers.PlaceController.savePlace()
@@ -59,8 +59,4 @@ GET           /comments/reported                      @controllers.CommentContro
 GET           /user/reservations/message              @controllers.MessageController.messagesList(id: Integer)
 GET           /user/reservations/message/inbox        @controllers.MessageController.inbox()
 POST          /user/reservations/message/sent         @controllers.MessageController.sendMessage(id: Integer)
-
-
-
-
 

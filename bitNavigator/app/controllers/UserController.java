@@ -306,10 +306,11 @@ public class UserController extends Controller {
      * @return ok if there are no errors or a JSON object representing the errors
      */
     public Result validateUserNameForm(){
-        //get the form data from the request - do this only once
+
+
         Form<UserNameForm> binded = userNameForm.bindFromRequest();
-        //if we have errors just return a bad request
         if(binded.hasErrors()){
+            Logger.debug(binded.errors().toString());
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)

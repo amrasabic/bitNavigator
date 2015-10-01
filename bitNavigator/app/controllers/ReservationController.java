@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by amra.sabic on 9/17/2015.
@@ -29,7 +30,6 @@ public class ReservationController extends Controller {
 
     @Security.Authenticated(Authenticators.User.class)
     public Result submitReservation(int id){
-
         DynamicForm boundForm = Form.form().bindFromRequest();
         if (boundForm.hasErrors()) {
             return TODO;
@@ -38,31 +38,34 @@ public class ReservationController extends Controller {
         User user = User.findByEmail(session().get("email"));
 
         Place place = Place.findById(id);
-        String reservationDay = boundForm.data().get("reservationDay");
+
         String content = boundForm.data().get("content");
+
+
+        String reservationDay = boundForm.data().get("reservationDay");
         String reservationtime = boundForm.data().get("reservationTime");
-
-        SimpleDateFormat myDate = new SimpleDateFormat("dd/mm/yyyy");
-        Date date = new Date();
+        SimpleDateFormat myDate = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        Calendar date = new GregorianCalendar();
         try {
-            date = myDate.parse(reservationDay);
+            date.setTime(myDate.parse(reservationDay + " " + reservationtime));
         }catch (ParseException e){
-
+            return TODO;
         }
 
         Reservation r = new Reservation();
         r.place = place;
         r.user = user;
+
         Message message = new Message();
         message.sender = SessionHelper.getCurrentUser();
         if(content == null) {
-            // nesto >?
+            return TODO;
         } else {
             message.content = content;
         }
-        r.reservationCreated = Calendar.getInstance();
-        r.reservationDay = reservationDay;
-        r.status = models.Status.findById(models.Status.WAITING);
+
+        r.timestamp = Calendar.getInstance();
+        r.reservationDate = date;
 
         r.messages.add(message);
         r.status = models.Status.findById(models.Status.WAITING);
@@ -120,6 +123,26 @@ public class ReservationController extends Controller {
     }
 
     @Security.Authenticated(Authenticators.User.class)
+    public Result getWorkingHours() {
+        DynamicForm form = Form.form().bindFromRequest();
+        Place place = Place.findById(Integer.parseInt(form.get("placeId")));
+        int dayOfWeek = Integer.parseInt(form.get("dayOfWeek"));
+        if (dayOfWeek == 0) {
+            dayOfWeek = 7;
+        }
+        String response = "";
+
+        Integer openingTime = WorkingHours.getOpeningTime(place, dayOfWeek);
+        Integer closingTime = WorkingHours.getClosingTime(place, dayOfWeek);
+        if(openingTime != null || closingTime != null) {
+            response = String.format("%02d:%02d:00-%02d:%02d:00", openingTime / 60, openingTime % 60, closingTime / 60, closingTime % 60);
+        }else{
+            response = "not working";
+        }
+
+        return ok(response);
+    }
+
     public Result updateReservation(Integer id) {
 
         Form<Reservation> boundForm = reservationForm.bindFromRequest();
