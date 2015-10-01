@@ -89,12 +89,20 @@ public class WorkingHours extends Model {
         }
     }
 
-    public static int getOpeningTime(Place place, int day) {
-        return WorkingHours.findByPlace(place).getWorkingHours(day).get(0);
+    public static Integer getOpeningTime(Place place, int day) {
+        List<Integer> workingHours = WorkingHours.findByPlace(place).getWorkingHours(day);
+        if (workingHours.get(0) == null) {
+            return null;
+        }
+        return workingHours.get(0);
     }
 
-    public static int getClosingTime(Place place, int day) {
-        return WorkingHours.findByPlace(place).getWorkingHours(day).get(1);
+    public static Integer getClosingTime(Place place, int day) {
+        List<Integer> workingHours = WorkingHours.findByPlace(place).getWorkingHours(day);
+        if (workingHours.get(1) == null) {
+            return null;
+        }
+        return workingHours.get(1);
     }
 
 

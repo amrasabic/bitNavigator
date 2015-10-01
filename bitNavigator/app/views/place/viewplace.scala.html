@@ -39,8 +39,7 @@
                                 <div class="form-group">
                                     <label>Choose day:</label>
                                     <input id="reservation-datepicker" type="date" name="reservationDay"/>
-                                    <label>Choose time:</label>
-                                    <input id="reservation-timepicker" type="time" name="reservationTime"/>
+                                    <div id="timepicker-form"></div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -115,6 +114,7 @@
         }
 
         var today = new Date();
+        today.setDate(today.getDate() + 1);
         document.getElementById('reservation-datepicker').valueAsDate = today;
         var minDay = today.getDate();
         if(minDay < 10){
@@ -126,15 +126,37 @@
             return false;
         });
 
+        var $timeForm = $('#timepicker-form');
+        var $timepicker = $('#reservation-timepicker');
+
         $('#reservation-datepicker').on("change", function() {
             var dayOfWeek = parseDate($('#reservation-datepicker').val()).getDay();
-            var open = @WorkingHours.getOpeningTime(place, 5);
-            console.log(@WorkingHours.getOpeningTime(place, tmp) + "")
-            document.getElementById('reservation-timepicker').setAttribute("min", );
+            console.log(dayOfWeek);
+            $.ajax({
+                url: "@routes.ReservationController.getWorkingHours()",
+                method: "post",
+                data: "dayOfWeek=" + dayOfWeek + "&placeId=" + @place.id
+            }).success(function(response){
+            if(response == 'not working'){
+                $timeForm.empty();
+                $timeForm.append('<label>Not working</label>');
+            }else{
+                $timeForm.empty();
+                $timeForm.append('<label>Choose time:</label><input id="reservation-timepicker"' +
+                     ' min="' + response.split("-")[0] + '" max="' + response.split("-")[1] + '" ' +
+                     ' value="' + response.split("-")[0] + '" type="time" name="reservationTime"/>');
+                $timeForm.append('<label style="margin-left: 10px;">Working hours from ' + response.split("-")[0] + ' till ' + response.split("-")[1] + '</label>');
+            }
+
+                console.log(response);
+            });
+            //document.getElementById('reservation-timepicker').setAttribute("min", );
         });
 
     </script>
+    <div hidden>
 
+    </div>
     <script>
         $(document).ready(function() {
                 $("#map-add-place").height($("#info-container").height());

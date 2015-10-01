@@ -26,6 +26,7 @@ DELETE        /user/profile/:email             @controllers.UserController.delet
 GET           /user/reservations               @controllers.ReservationController.reservationsList()
 POST          /user/reservations               @controllers.ReservationController.changeStatus()
 DELETE        /user/reservations/:id           @controllers.ReservationController.delete(id: Integer)
+POST          /user/reservations/workingHours  @controllers.ReservationController.getWorkingHours()
 
 GET           /place/add                       @controllers.PlaceController.addPlace()
 POST          /place/add                       @controllers.PlaceController.savePlace()

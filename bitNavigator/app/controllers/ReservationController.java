@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Amra on 9/17/2015.
@@ -41,26 +42,25 @@ public class ReservationController extends Controller {
         String description = boundForm.data().get("description");
         String reservationDay = boundForm.data().get("reservationDay");
         String reservationtime = boundForm.data().get("reservationTime");
-
-        SimpleDateFormat myDate = new SimpleDateFormat("dd/mm/yyyy");
-        Date date = new Date();
+        SimpleDateFormat myDate = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        Calendar date = new GregorianCalendar();
         try {
-            date = myDate.parse(reservationDay);
+            date.setTime(myDate.parse(reservationDay + " " + reservationtime));
         }catch (ParseException e){
-
+            return TODO;
         }
-
         Reservation r = new Reservation();
         r.place = place;
         r.user = user;
         if(title == null || description == null) {
-            // nesto ?
+            return TODO;
         } else {
             r.title = title;
             r.description = description;
             r.timestamp = Calendar.getInstance();
         }
         r.status = models.Status.getStatusById(models.Status.WAITING);
+        r.reservationDate = date;
 
         r.save();
         return redirect(routes.Application.index());
@@ -111,4 +111,26 @@ public class ReservationController extends Controller {
 
         return redirect(routes.ReservationController.reservationsList());
     }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result getWorkingHours() {
+        DynamicForm form = Form.form().bindFromRequest();
+        Place place = Place.findById(Integer.parseInt(form.get("placeId")));
+        int dayOfWeek = Integer.parseInt(form.get("dayOfWeek"));
+        if (dayOfWeek == 0) {
+            dayOfWeek = 7;
+        }
+        String response = "";
+
+        Integer openingTime = WorkingHours.getOpeningTime(place, dayOfWeek);
+        Integer closingTime = WorkingHours.getClosingTime(place, dayOfWeek);
+        if(openingTime != null || closingTime != null) {
+            response = String.format("%02d:%02d:00-%02d:%02d:00", openingTime / 60, openingTime % 60, closingTime / 60, closingTime % 60);
+        }else{
+            response = "not working";
+        }
+
+        return ok(response);
+    }
+
 }
