@@ -84,13 +84,12 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jquery.businessHours.css")">
 <link rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css">
 <script src="@routes.Assets.versioned("javascripts/jquery.timepicker.js")"></script>
-<!--script src="@routes.Assets.versioned("javascripts/jquery.businessHours.min.js")"></script-->
 <script src="@routes.Assets.versioned("javascripts/jquery.businessHours.js")"></script>
 <script>
     var tmp;
 
      $(document).ready(function() {
-         $("#businessHoursContainer").businessHours({
+         /*$("#businessHoursContainer").businessHours({
             postInit:function(){
                 $('.operationTimeFrom, .operationTimeTill').timepicker({
                     'timeFormat': 'H:i',
@@ -104,12 +103,12 @@
                         '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-sun-o"></i></span><input type="text" name="startTime" class="mini-time form-control operationTimeFrom" value=""></div>' +
                         '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-moon-o"></i></span><input type="text" name="endTime" class="mini-time form-control operationTimeTill" value=""></div>' +
                         '</div></div>'
-         });
-
+         });*/
+         var businessHoursManager = $("#businessHoursContainer").businessHours();
          $("#add-place-form").submit(function(e, options){
             //e.preventDefault();
 
-            var businessHoursManager = $("#businessHoursContainer").businessHours();
+
 
             var json = JSON.stringify(businessHoursManager.serialize());
             //console.log(opere);

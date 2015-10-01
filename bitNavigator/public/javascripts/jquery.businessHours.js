@@ -17,6 +17,10 @@
             preInit: function() {
             },
             postInit: function() {
+                $('.operationTimeFrom, .operationTimeTill').timepicker({
+                    'timeFormat': 'H:i',
+                    'step': 15
+                });
             },
             inputDisabled: false,
             checkedColorClass: "WorkingDayState",
@@ -74,7 +78,7 @@
                 this.initView(this.options);
 
                 if(typeof this.options.postInit === "function") {
-                    //$('.operationTimeFrom, .operationTimeTill').timepicker(options.timepickerOptions);
+                    $('.operationTimeFrom, .operationTimeTill').timepicker();
                     this.options.postInit();
                 }
 

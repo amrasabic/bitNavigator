@@ -153,6 +153,8 @@ public class PlaceController extends Controller{
             }
         }
 
+        WorkingHours.findByPlace(place).delete();
+
         place.delete();
         return redirect(routes.PlaceController.placeList());
     }

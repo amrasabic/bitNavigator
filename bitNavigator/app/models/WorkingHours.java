@@ -19,7 +19,7 @@ public class WorkingHours extends Model {
 
     @Id
     public int id;
-    @OneToOne (cascade = CascadeType.PERSIST)
+    @OneToOne (cascade = CascadeType.ALL)
     public Place place;
     public Integer open1;
     public Integer close1;
@@ -37,6 +37,10 @@ public class WorkingHours extends Model {
     public Integer close7;
 
     public static Finder<Integer, WorkingHours> finder = new Finder<>(WorkingHours.class);
+
+    public static WorkingHours findByPlace(Place place) {
+        return finder.where().eq("place", place).findUnique();
+    }
 
     public Map<Integer, List<Integer>> getWorkingHours() {
 
