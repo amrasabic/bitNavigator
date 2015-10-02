@@ -58,6 +58,7 @@ public class Report extends Model {
 
     public static List<ReportHelper> getAllReports() {
         List<Report> reports = findAll();
+        Logger.debug(reports.size() + "");
         List<ReportHelper> reportsHelper = new ArrayList<>();
         if (reports.size() > 0) {
             int counter = 1;
@@ -72,6 +73,10 @@ public class Report extends Model {
 
             if (reports.size() > 1 && reports.get(reports.size() - 1).comment.id != reports.get(reports.size() - 2 ).comment.id) {
                 reportsHelper.add(new ReportHelper(reports.get(reports.size() - 1).comment, counter));
+            } else if (reports.size() > 1 && reports.get(reports.size() - 1).comment.id == reports.get(reports.size() - 2 ).comment.id) {
+                reportsHelper.add(new ReportHelper(reports.get(reports.size() - 1).comment, counter));
+            } else if(reports.size() == 1){
+                reportsHelper.add(new ReportHelper(reports.get(0).comment, 1));
             }
         }
         return reportsHelper;

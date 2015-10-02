@@ -61,6 +61,12 @@
                 <span class='label label-info' id="upload-file-info"></span>
             </div>
 
+                <!-- Working hours -->
+            <div >
+                <label>Working hours:</label><br>
+                <div id="businessHoursContainer"></div>
+            </div>
+
         </div>
 
 
@@ -74,3 +80,64 @@
     <button type="submit" class="btn btn-primary btn-lg" id="btn-submit">@title</button>
     <button id="redirect" class="btn btn-default btn-lg" type="button"><a id="btn-go-to-index-add-place" href="/">Go to index</a></button>
 </div>
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jquery.timepicker.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jquery.businessHours.css")">
+<link rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css">
+<script src="@routes.Assets.versioned("javascripts/jquery.timepicker.js")"></script>
+<script src="@routes.Assets.versioned("javascripts/jquery.businessHours.js")"></script>
+<script>
+    var tmp;
+
+     $(document).ready(function() {
+         /*$("#businessHoursContainer").businessHours({
+            postInit:function(){
+                $('.operationTimeFrom, .operationTimeTill').timepicker({
+                    'timeFormat': 'H:i',
+                        'step': 15
+                    });
+                },
+                dayTmpl:'<div class="dayContainer" style="width: 80px;">' +
+                        '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"></div>' +
+                        '<div class="weekday"></div>' +
+                        '<div class="operationDayTimeContainer">' +
+                        '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-sun-o"></i></span><input type="text" name="startTime" class="mini-time form-control operationTimeFrom" value=""></div>' +
+                        '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-moon-o"></i></span><input type="text" name="endTime" class="mini-time form-control operationTimeTill" value=""></div>' +
+                        '</div></div>'
+         });*/
+         var businessHoursManager = $("#businessHoursContainer").businessHours();
+         $("#add-place-form").submit(function(e, options){
+            //e.preventDefault();
+
+
+
+            var json = JSON.stringify(businessHoursManager.serialize());
+            //console.log(opere);
+            json = $.parseJSON(json);
+
+            for(var i = 1; i <= 7; i++){
+
+                if(json[i-1].isActive == true){
+
+                    var openHour = json[i-1].timeFrom.split(":")[0];
+                    var openMin = json[i-1].timeFrom.split(":")[1];
+                    var open = parseInt(openHour) * 60 + parseInt(openMin);
+
+                    $('#add-place-form').append('<input hidden name="open' + i + '" value="' + open + '">');
+                    var closeHour = json[i-1].timeTill.split(":")[0];
+                    var closeMin = json[i-1].timeTill.split(":")[1];
+                    var close = parseInt(closeHour) * 60 + parseInt(closeMin);
+                    $('#add-place-form').append('<input hidden name="close' + i + '" value="' + close + '">');
+
+                }
+            }
+
+
+
+
+
+         });
+
+
+
+     });
+</script>
