@@ -39,7 +39,7 @@ public class CommentController extends Controller {
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
-    public Result commentsList() {
+    public Result commentsList(){
         return ok(commentslist.render(Comment.findAll()));
     }
 
