@@ -23,10 +23,10 @@ POST          /user/edit/password                                              @
 DELETE        /user/profile/:email                                             @controllers.UserController.delete(email: String)
 
 
-GET           /user/reservations                                               @controllers.ReservationController.reservationsList()
-POST          /user/reservations                                               @controllers.ReservationController.changeStatus()
-DELETE        /user/reservations/:id                                           @controllers.ReservationController.delete(id: Integer)
-POST          /user/reservations/update/:id                                    @controllers.ReservationController.updateReservation(id: Integer)
+GET           /user/reservations                      @controllers.ReservationController.reservationsList()
+POST          /user/reservations                      @controllers.ReservationController.changeStatus()
+DELETE        /user/reservations/:id                  @controllers.ReservationController.delete(id: Integer)
+POST          /user/reservations/workingHours         @controllers.ReservationController.getWorkingHours()
 
 GET           /place/add                                                       @controllers.PlaceController.addPlace()
 POST          /place/add                                                       @controllers.PlaceController.savePlace()

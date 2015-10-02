@@ -2,7 +2,7 @@
 
     @main("Add place") {
 
-        <form method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
+        <form id="add-place-form" method="post" action="@routes.PlaceController.savePlace()" enctype="multipart/form-data">
             @views.html.place.helper._placeform(place)(services)("Add place")
         </form>
 

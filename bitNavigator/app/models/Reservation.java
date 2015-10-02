@@ -22,10 +22,10 @@ public class Reservation extends Model {
     public Place place;
     @ManyToOne
     public Status status;
+    public Calendar timestamp;
+    public Calendar reservationDate;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Message> messages;
-    public Calendar reservationCreated;
-    public String reservationDay;
 
     public static Finder<Integer, Reservation> finder = new Finder<>(Reservation.class);
 
