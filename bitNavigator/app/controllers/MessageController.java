@@ -14,6 +14,7 @@ import utillities.SessionHelper;
 import views.html.messages.helper._inbox;
 import views.html.messages.helper._messageslist;
 
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,6 +38,9 @@ public class MessageController extends Controller {
         Message message = new Message();
 
         String content = boundForm.bindFromRequest().field("content").value();
+        if(content == null){
+            return badRequest();
+        }
         message.content = content;
 
         User user = SessionHelper.getCurrentUser();
@@ -57,4 +61,5 @@ public class MessageController extends Controller {
         List<Reservation> reservations = Reservation.findByUser(user);
         return ok(_inbox.render(reservations));
     }
+
 }

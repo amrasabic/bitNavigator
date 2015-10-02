@@ -40,7 +40,6 @@ public class Message extends Model{
         return finder.where().eq("user", user).findList();
     }
 
-
     public static List<Message> findByReservation(Integer id) {
         Reservation reservation = Reservation.findById(id);
         return finder.where().eq("reservation", reservation).findList();

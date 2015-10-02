@@ -71,4 +71,14 @@ public class Reservation extends Model {
         List<Reservation> reservations = Reservation.findByUser(SessionHelper.getCurrentUser());
         return reservations.size();
     }
+
+    public static Integer findByStatusInt(Integer status) {
+        List<Reservation> reservations = Reservation.findByStatus(SessionHelper.getCurrentUser(), Status.findById(status));
+        return reservations.size();
+    }
+
+    public static List<Reservation> findByReservationAndStatus(Integer id, Integer status) {
+        Reservation reservation = Reservation.findById(id);
+        return finder.where().eq("reservation", reservation).eq("status", status).findList();
+    }
 }
