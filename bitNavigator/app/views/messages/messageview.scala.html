@@ -5,13 +5,13 @@
   <div style="margin-top: 2em">
     <div class="container">
       <div id="info-container" class="col-md-3">
-
           <ul class="list-group">
-
             <li class="list-group-item"><a href="@routes.MessageController.inbox()" class="btn btn-primary btn-lg btn-block">Reservations <span class="badge">@Reservation.findByUser()</span></a></li>
-            <li class="list-group-item">
-              TO DO
-            </li>
+
+              <li class="list-group-item"><a class="btn btn-success btn-lg btn-block">Status: Approved <span class="badge">@Reservation.findByStatusInt(Status.APPROVED)</span></a></li>
+              <li class="list-group-item"><a class="btn btn-warning btn-lg btn-block">Status: on Waiting <span class="badge">@Reservation.findByStatusInt(Status.WAITING)</span></a></li>
+              <li class="list-group-item"><a class="btn btn-danger btn-lg btn-block">Status: Denied <span class="badge">@Reservation.findByStatusInt(Status.DENIED)</span></a></li>
+
           </ul>
       </div>
       @content
