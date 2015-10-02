@@ -20,7 +20,12 @@ import java.util.List;
 public class Application extends Controller {
 
     public Result index() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String srchTerm = form.data().get("srch-term");
         List<Place> places = Place.findAll();
+        if(srchTerm != null) {
+            places = Place.findByValue(srchTerm);
+        }
         return ok(index.render(places));
     }
 
