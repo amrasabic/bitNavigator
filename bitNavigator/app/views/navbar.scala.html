@@ -35,10 +35,11 @@
                     </div>
                     <button id="btn-sign-in" type="submit" class="btn btn-default" >Sign in</button>
                     <button type="button" class="btn btn-default btn-sign"><a id="btn-sign-up-menu" href="@routes.UserController.signUp()">Sign up</a></button>
-                </form>
+
+
 
             } else {
-                <div class="btn-group navbar-form navbar-right">
+                <form class="btn-group navbar-form navbar-right">
 
                     <button class="btn btn-default"><a href="@routes.MessageController.inbox()"><i class="glyphicon glyphicon-envelope" style="font-size: 16px"><span class="badge" style="color: white; font-weight: bold; background-color: red; font-size: 8px">@Reservation.reservationsOnWaiting()</span></i></a></button>
 
@@ -59,8 +60,9 @@
                         <li role="separator" class="divider"></li>
                         <li><a id="logout" href="@routes.UserController.signOut()"><i class="glyphicon glyphicon-remove-sign"></i> Logout</a></li>
                     </ul>
-                </div>
+
             }
+            <button type="button" class="btn btn-default btn-sign"><a id="contact-us" href="@routes.UserController.contactUs()">Contact us</a></button></form>
             </ul>
             <div class="dr"></div>
         </div>

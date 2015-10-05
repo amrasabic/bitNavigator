@@ -15,6 +15,8 @@ POST          /user/signup                                                     @
 GET           /user/signout                                                    @controllers.UserController.signOut()
 GET           /user/list                                                       @controllers.UserController.userList()
 POST          /user/validate                                                   @controllers.UserController.validateForm()
+GET           /user/contactus                                                  @controllers.UserController.contactUs()
+POST          /user/sendmail                                                   @controllers.Emails.sendMail()
 
 POST          /user/profile/validate                                           @controllers.UserController.validateUserNameForm()
 GET           /user/profile/:email                                             @controllers.UserController.profile(email: String)
@@ -23,10 +25,10 @@ POST          /user/edit/password                                              @
 DELETE        /user/profile/:email                                             @controllers.UserController.delete(email: String)
 
 
-GET           /user/reservations                      @controllers.ReservationController.reservationsList()
-POST          /user/reservations                      @controllers.ReservationController.changeStatus()
-DELETE        /user/reservations/:id                  @controllers.ReservationController.delete(id: Integer)
-POST          /user/reservations/workingHours         @controllers.ReservationController.getWorkingHours()
+GET           /user/reservations                                               @controllers.ReservationController.reservationsList()
+POST          /user/reservations                                               @controllers.ReservationController.changeStatus()
+DELETE        /user/reservations/:id                                           @controllers.ReservationController.delete(id: Integer)
+POST          /user/reservations/workingHours                                  @controllers.ReservationController.getWorkingHours()
 
 GET           /place/add                                                       @controllers.PlaceController.addPlace()
 POST          /place/add                                                       @controllers.PlaceController.savePlace()
