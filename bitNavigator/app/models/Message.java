@@ -16,21 +16,22 @@ public class Message extends Model{
 
     @Id
     public Integer id;
-    @Constraints.MinLength (value = 25, message = "Description should contain more details.")
-    @Constraints.Required (message = "Description is required.")
+    @Constraints.Required (message = "Can not send an empty message.")
     public String content;
     @Constraints.Required
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     public Reservation reservation;
-    public Calendar messageCreated;
-    @ManyToOne
+    public Calendar sent;
+    @ManyToOne (cascade = CascadeType.PERSIST)
     public User sender;
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    public User reciever;
 
     public Message() {
 
     }
 
-    public static Finder<Integer, Message> finder = new Finder<Integer, Message>(Message.class);
+    public static Finder<Integer, Message> finder = new Finder<>(Message.class);
 
     public static List<Message> findAll() {
         return finder.all();

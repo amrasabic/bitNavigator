@@ -48,7 +48,7 @@ public class MessageController extends Controller {
         Reservation reservation = Reservation.findById(reservationId);
         message.reservation = reservation;
 
-        message.messageCreated = Calendar.getInstance();
+        message.sent = Calendar.getInstance();
         message.save();
         messages.add(message);
 

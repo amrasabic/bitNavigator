@@ -70,7 +70,7 @@ public class ReservationController extends Controller {
         r.messages.add(message);
         r.status = models.Status.findById(models.Status.WAITING);
         r.save();
-        message.messageCreated = Calendar.getInstance();
+        message.sent = Calendar.getInstance();
         message.reservation.id = r.id;
         message.save();
         return redirect(routes.Application.index());

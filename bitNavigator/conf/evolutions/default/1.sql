@@ -29,8 +29,9 @@ create table message (
   id                        integer auto_increment not null,
   content                   varchar(255),
   reservation_id            integer,
-  message_created           datetime(6),
+  sent                      datetime(6),
   sender_id                 integer,
+  reciever_id               integer,
   constraint pk_message primary key (id))
 ;
 
@@ -126,22 +127,24 @@ alter table message add constraint fk_message_reservation_5 foreign key (reserva
 create index ix_message_reservation_5 on message (reservation_id);
 alter table message add constraint fk_message_sender_6 foreign key (sender_id) references user (id) on delete restrict on update restrict;
 create index ix_message_sender_6 on message (sender_id);
-alter table place add constraint fk_place_user_7 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_place_user_7 on place (user_id);
-alter table place add constraint fk_place_service_8 foreign key (service_id) references service (id) on delete restrict on update restrict;
-create index ix_place_service_8 on place (service_id);
-alter table report add constraint fk_report_comment_9 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
-create index ix_report_comment_9 on report (comment_id);
-alter table report add constraint fk_report_user_10 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_report_user_10 on report (user_id);
-alter table reservation add constraint fk_reservation_user_11 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_reservation_user_11 on reservation (user_id);
-alter table reservation add constraint fk_reservation_place_12 foreign key (place_id) references place (id) on delete restrict on update restrict;
-create index ix_reservation_place_12 on reservation (place_id);
-alter table reservation add constraint fk_reservation_status_13 foreign key (status_id) references status (id) on delete restrict on update restrict;
-create index ix_reservation_status_13 on reservation (status_id);
-alter table working_hours add constraint fk_working_hours_place_14 foreign key (place_id) references place (id) on delete restrict on update restrict;
-create index ix_working_hours_place_14 on working_hours (place_id);
+alter table message add constraint fk_message_reciever_7 foreign key (reciever_id) references user (id) on delete restrict on update restrict;
+create index ix_message_reciever_7 on message (reciever_id);
+alter table place add constraint fk_place_user_8 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_place_user_8 on place (user_id);
+alter table place add constraint fk_place_service_9 foreign key (service_id) references service (id) on delete restrict on update restrict;
+create index ix_place_service_9 on place (service_id);
+alter table report add constraint fk_report_comment_10 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
+create index ix_report_comment_10 on report (comment_id);
+alter table report add constraint fk_report_user_11 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_report_user_11 on report (user_id);
+alter table reservation add constraint fk_reservation_user_12 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_reservation_user_12 on reservation (user_id);
+alter table reservation add constraint fk_reservation_place_13 foreign key (place_id) references place (id) on delete restrict on update restrict;
+create index ix_reservation_place_13 on reservation (place_id);
+alter table reservation add constraint fk_reservation_status_14 foreign key (status_id) references status (id) on delete restrict on update restrict;
+create index ix_reservation_status_14 on reservation (status_id);
+alter table working_hours add constraint fk_working_hours_place_15 foreign key (place_id) references place (id) on delete restrict on update restrict;
+create index ix_working_hours_place_15 on working_hours (place_id);
 
 
 
