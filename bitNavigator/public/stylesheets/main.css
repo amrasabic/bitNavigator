@@ -230,6 +230,8 @@ textarea {
 .alert-danger{
     height: 35px;
     text-align: center;
+    color: red;
+    background-color: white;
 }
 
 .dropdown-item {
