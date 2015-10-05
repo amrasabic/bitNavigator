@@ -9,17 +9,24 @@ import play.mvc.Http;
 
 import play.mvc.Security;
 import utillities.Authenticators;
+import play.Play;
+import utillities.MailHelper;
 import utillities.SessionHelper;
 import views.html.user.*;
 import views.html.admin.*;
-import play.Logger;
+
 import utillities.PasswordHash;
+import utillities.MailHelper;
 
 import java.io.File;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Calendar;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.UUID;
 
 
 /**
@@ -35,6 +42,8 @@ public class UserController extends Controller {
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
+    final static Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static String url = Play.application().configuration().getString("url");
     //  private static Image image;
 
     /**
@@ -98,10 +107,14 @@ public class UserController extends Controller {
             flash(ERROR_MESSAGE, "Passwords do not match!");
             return badRequest(signup.render(boundForm));
         }
-
+        User.setToken(UUID.randomUUID().toString());
         User.newUser(singUp);
         session().clear();
         session("email", singUp.email);
+        // Sending Email To user
+        String host = url + "validate/" + User.getToken();
+        MailHelper.send(User.getEmail(), host);
+        session("username", User.FIRST_NAME);
         return redirect(routes.Application.index());
     }
 
@@ -310,13 +323,29 @@ public class UserController extends Controller {
 
         Form<UserNameForm> binded = userNameForm.bindFromRequest();
         if(binded.hasErrors()){
-            Logger.debug(binded.errors().toString());
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
             UserNameForm unf = binded.get();
             flash("success", "user edited");
             return redirect("/");
+        }
+    }
+
+    public Result emailValidation(String token) {
+        try {
+            User user = User.findUserByToken(token);
+            if (token == null) {
+                return redirect("/");
+            }
+            if (User.validateUser(user)) {
+                return redirect("/login");
+            } else {
+                return redirect("/");
+            }
+        } catch (Exception e){
+            logger.warn("Email Validation Exception:" + e);
+            return redirect("/login");
         }
     }
 

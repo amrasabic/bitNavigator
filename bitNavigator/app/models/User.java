@@ -56,10 +56,16 @@ public class User extends Model {
     @OneToMany (cascade = CascadeType.ALL)
     public List<Place> places;
     public boolean admin = false;
+    @Column(unique = true)
+    private String token;
+    private boolean validated = false;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Comment> comments;
     //@OneToOne (cascade = CascadeType.ALL)
     //public Image avatar;
+
+    public static final Finder<Long, User> find = new Finder<>(
+            User.class);
 
     /**
      * Default constructor.
@@ -120,6 +126,36 @@ public class User extends Model {
      */
     public static User findByEmail(String email) {
         return finder.where().eq(EMAIL, email).findUnique();
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setValidated(boolean validated) {
+        this.validated = validated;
+    }
+
+    public static User findUserByToken(String token) {
+        return find.where().eq("token", token).findUnique();
+    }
+
+    public static boolean validateUser(User user) {
+        if (user == null) {
+            return false;
+        }
+        user.setToken(null);
+        user.setValidated(true);
+        user.update();
+        return true;
     }
 
 
