@@ -8,11 +8,11 @@
     <table id="myTable" class="table table-striped">
         <thead>
             <tr>
-                <th>id</th>
                 <th>title</th>
+                <th>sevice</th>
                 <th>description</th>
                 <th>address</th>
-                <th>distance</th>
+                <th class="title-numeric">distance [km]</th>
                 <th>view</th>
             </tr>
         </thead>
@@ -20,11 +20,11 @@
         @for(place <- places) {
             @if(place.user != null) {
                 <tr>
-                    <td>@place.id</td>
                     <td>@place.title</td>
+                    <td><img class="img-responsive" src="@routes.Assets.versioned(place.service.serviceIcon)" title="@place.service.serviceType"></td>
                     <td>@place.description</td>
-                    <td style="min-width : 220 px">@place.address</td>
-                    <td id="distance-nearby-places"></td>
+                    <td>@place.address</td>
+                    <td id="distance-nearby-places-@place.id"></td>
                     <td><a href="@routes.PlaceController.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
                 </tr>
             }
@@ -34,15 +34,36 @@
 
     <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
     <script>
+        var table;
         $(document).ready(function(){
-            $('#myTable').DataTable();
+            table = $('#myTable').DataTable();
+            table.columns('.distance').order( 'asc' );
 
+            var mapCenter;
+            var index = 0;
             @for(place <- places){
-                        
-
+                latlng = new google.maps.LatLng(@place.latitude, @place.longitude);
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        mapCenter = new google.maps.LatLng(pos.lat, pos.lng);
+                        var distance = (google.maps.geometry.spherical.computeDistanceBetween(mapCenter, new google.maps.LatLng(@place.latitude, @place.longitude)) / 1000).toFixed(2);
+                        document.getElementById('distance-nearby-places-@place.id').innerText = distance;
+                        index++;
+                    }, function() {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    });
+                } else {
+                    // Browser doesn't support Geolocation
+                    handleLocationError(false, infoWindow, map.getCenter());
+                }
             }
-
-
         });
+    </script>
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7g-OtZDAo36PRHRxeDaaBUbTeC1AXnBs&libraries=geometry">
     </script>
 }
