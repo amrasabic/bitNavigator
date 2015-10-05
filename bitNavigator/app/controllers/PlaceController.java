@@ -11,11 +11,8 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
-import views.html.place.addplace;
-import views.html.place.editplace;
+import views.html.place.*;
 import views.html.place.helper._placeviewform;
-import views.html.place.placelist;
-import views.html.place.viewplace;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -263,4 +260,9 @@ public class PlaceController extends Controller{
 
         return ok(Json.toJson(titles));
     }
+
+    public Result nearbyPlaces() {
+        return ok(nearbyplaces.render(Place.findAll()));
+    }
+
 }

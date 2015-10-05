@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a id="home-button" href="@routes.Application.index()"><img src='@routes.Assets.versioned("images/logo.png")' id="logo" alt="" class="img-responsive"></a>
+            <a id="home-button" href="@routes.PlaceController.nearbyPlaces()"><img src='@routes.Assets.versioned("images/logo.png")' id="logo" alt="" class="img-responsive"></a>
 
         </div>
 
@@ -40,7 +40,7 @@
             } else {
                 <div class="btn-group navbar-form navbar-right">
 
-                    <button class="btn btn-default"><a href="@routes.MessageController.inbox()"><i class="glyphicon glyphicon-envelope" style="font-size: 16px"><span class="badge" style="color: white; font-weight: bold; background-color: red; font-size: 8px">@Reservation.reservationsOnWaiting()</span></i></a></button>
+                    <!--button class="btn btn-default"><a href="@routes.MessageController.inbox()"><span class="badge" style="color: white; font-weight: bold; background-color: red; font-size: 8px">@Reservation.reservationsOnWaiting()</span></a></button-->
 
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @SessionHelper.getCurrentUsersEmail <span class="caret"></span>

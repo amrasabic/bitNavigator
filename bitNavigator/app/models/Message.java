@@ -1,10 +1,12 @@
 package models;
 
 import com.avaje.ebean.Model;
-import com.avaje.ebean.Model.Finder;
 import play.data.validation.Constraints;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.Calendar;
 import java.util.List;
 
@@ -18,7 +20,6 @@ public class Message extends Model{
     public Integer id;
     @Constraints.Required (message = "Can not send an empty message.")
     public String content;
-    @Constraints.Required
     @ManyToOne (cascade = CascadeType.PERSIST)
     public Reservation reservation;
     public Calendar sent;
