@@ -74,33 +74,28 @@
             function drawMarkers() {
                 @for(place <- places){
                     @if(place.latitude != null && place.longitude != null){
-                        var latlng2 = new google.maps.LatLng(@place.latitude, @place.longitude);
-                        if(google.maps.geometry.spherical.computeDistanceBetween(mapCenter, latlng2) <= 7000){
-                            var marker = new google.maps.Marker({
-                                position: {lat: @place.latitude, lng: @place.longitude},
-                                map: map,
-                                title: "@place.title",
-                                icon: "@routes.Assets.versioned(place.service.serviceIcon)"
-                            });
-                            marker.addListener('click', function() {
-
-                                $.ajax({
-                                    method: 'get',
-                                    url: '@routes.PlaceController.viewPlace(place.id)',
-                                    data: 'isModal=true'
-                                }).success(function(response) {
-                                    var $modalBody = $('#view-place-modal-body');
-                                    $modalBody.empty();
-                                    $modalBody.append(response);
-                                    $modalBody.append('<button id="go-to-place-btn" class="btn btn-primary btn-lg">Go to place</button>')
-                                    $('#go-to-place-btn').on('click', function() {
-                                        window.location.href = "@routes.PlaceController.viewPlace(place.id)";
-                                    });
-                                    $('#view-place-modal').modal('show');
+                        var marker = new google.maps.Marker({
+                            position: {lat: @place.latitude, lng: @place.longitude},
+                            map: map,
+                            title: "@place.title",
+                            icon: "@routes.Assets.versioned(place.service.serviceIcon)"
+                        });
+                        marker.addListener('click', function() {
+                            $.ajax({
+                                method: 'get',
+                                url: '@routes.PlaceController.viewPlace(place.id)',
+                                data: 'isModal=true'
+                            }).success(function(response) {
+                                var $modalBody = $('#view-place-modal-body');
+                                $modalBody.empty();
+                                $modalBody.append(response);
+                                $modalBody.append('<button id="go-to-place-btn" class="btn btn-primary btn-lg">Go to place</button>')
+                                $('#go-to-place-btn').on('click', function() {
+                                    window.location.href = "@routes.PlaceController.viewPlace(place.id)";
                                 });
+                                $('#view-place-modal').modal('show');
                             });
-                        }
-
+                        });
                     }
                 }
             }

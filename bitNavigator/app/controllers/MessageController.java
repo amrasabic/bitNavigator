@@ -62,4 +62,13 @@ public class MessageController extends Controller {
         return ok(_inbox.render(reservations));
     }
 
+    @Security.Authenticated(Authenticators.User.class)
+    public Result validateForm() {
+        Form<Message> boundForm = messageForm.bindFromRequest();
+        if (boundForm.hasErrors()) {
+            return badRequest(boundForm.errorsAsJson());
+        }
+        return ok();
+    }
+
 }

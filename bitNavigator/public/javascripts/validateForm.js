@@ -26,16 +26,18 @@ $(document).ready(function(){
         }).success(function(response){
             $form.trigger("submit", {allow: true});
         }).error(function(response){
+            if(response.responseText == "Must choose date and time!"){
+                $('[data-error-for="date"]').html(response.responseText).show();
+                return;
+            }
             var errors = response.responseJSON;
             var keys = Object.keys(errors);
-            console.log(response);
             for(var i = 0; i < keys.length; i++){
                 var errorMessages = errors[keys[i]];
                 var allErrors = "";
                 for(var j = 0; j < errorMessages.length; j++){
                     allErrors += errorMessages[j];
                 }
-
                 $('[data-error-for="'+keys[i]+'"]').html(allErrors).show();
             }
 

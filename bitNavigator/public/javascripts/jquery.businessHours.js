@@ -12,7 +12,6 @@
 (function($) {
     $.fn.businessHours = function(opts) {
 
-        console.log("-----******-----*****------");
         var defaults = {
             preInit: function() {
             },

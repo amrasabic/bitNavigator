@@ -12,7 +12,7 @@
                 <th>sevice</th>
                 <th>description</th>
                 <th>address</th>
-                <th class="title-numeric">distance [km]</th>
+                <th>distance [km]</th>
                 <th>view</th>
             </tr>
         </thead>
@@ -24,7 +24,7 @@
                     <td><img class="img-responsive" src="@routes.Assets.versioned(place.service.serviceIcon)" title="@place.service.serviceType"></td>
                     <td>@place.description</td>
                     <td>@place.address</td>
-                    <td id="distance-nearby-places-@place.id"></td>
+                    <td id="distance-nearby-places-@place.id">@place.id</td>
                     <td><a href="@routes.PlaceController.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
                 </tr>
             }
@@ -36,13 +36,11 @@
     <script>
         var table;
         $(document).ready(function(){
-            table = $('#myTable').DataTable();
-            table.columns('.distance').order( 'asc' );
-
             var mapCenter;
             var index = 0;
             @for(place <- places){
-                latlng = new google.maps.LatLng(@place.latitude, @place.longitude);
+                @if(place.latitude != null || place.longitude != null){
+                    latlng = new google.maps.LatLng(@place.latitude, @place.longitude);
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
                         var pos = {
@@ -52,6 +50,7 @@
                         mapCenter = new google.maps.LatLng(pos.lat, pos.lng);
                         var distance = (google.maps.geometry.spherical.computeDistanceBetween(mapCenter, new google.maps.LatLng(@place.latitude, @place.longitude)) / 1000).toFixed(2);
                         document.getElementById('distance-nearby-places-@place.id').innerText = distance;
+                        //document.getElementById('distance-nearby-places-@place.id').innerText = parseInt(google.maps.geometry.spherical.computeDistanceBetween(mapCenter, new google.maps.LatLng(@place.latitude, @place.longitude)));
                         index++;
                     }, function() {
                         handleLocationError(true, infoWindow, map.getCenter());
@@ -60,7 +59,14 @@
                     // Browser doesn't support Geolocation
                     handleLocationError(false, infoWindow, map.getCenter());
                 }
+                }else{
+                    document.getElementById('distance-nearby-places-@place.id').innerText = "n/a";
+                }
             }
+
+            table = $('#myTable').DataTable({
+                "order": [[ 4, "asc" ]]
+            });
         });
     </script>
     <script type="text/javascript"
