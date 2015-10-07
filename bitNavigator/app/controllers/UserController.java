@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
@@ -39,6 +40,7 @@ public class UserController extends Controller {
 
     /**
      * Leads random user to signin subpage
+     *
      * @return
      */
     public Result signIn() {
@@ -47,6 +49,7 @@ public class UserController extends Controller {
 
     /**
      * Leads random user to signup page
+     *
      * @return
      */
     public Result signUp() {
@@ -57,6 +60,7 @@ public class UserController extends Controller {
      * Checks if all requirments are fullfiled to continue further. This method
      * gets email and password from database and compares them, if they match
      * user is logged in. Method use password hashing.
+     *
      * @return
      */
     public Result checkSignIn() {
@@ -83,13 +87,14 @@ public class UserController extends Controller {
      * Method sends all data from signup form to database and in that way
      * saves new user. This method use isValidEmailAddress method which checks
      * is form of entered email valid.
+     *
      * @return
      */
     public Result save() {
         Form<SignUpForm> boundForm = signUpForm.bindFromRequest();
 
         SignUpForm singUp = boundForm.get();
-        if(User.findByEmail(singUp.email) != null) {
+        if (User.findByEmail(singUp.email) != null) {
             flash(ERROR_MESSAGE, "Account already linked to given email!");
             return badRequest(signup.render(boundForm));
         }
@@ -106,14 +111,13 @@ public class UserController extends Controller {
     }
 
     @Security.Authenticated(Authenticators.User.class)
-    public Result profile (String email) {
+    public Result profile(String email, String msg) {
         final User user = User.findByEmail(email);
-        if(user == null) {
+        if (user == null) {
             return notFound(String.format("User %s does not exist.", email));
         }
-
-        return ok(profile.render(new UserNameForm(user)));
-
+        UserNameForm userFormm = new UserNameForm(user);
+        return ok(profile.render(userFormm, msg));
     }
 
     @Security.Authenticated(Authenticators.User.class)
@@ -123,17 +127,17 @@ public class UserController extends Controller {
 
         User user = SessionHelper.getCurrentUser();
 
-        if(user == null) {
+        if (user == null) {
             return notFound(String.format("User does not exist."));
         }
 
-        if(!user.email.equals(boundForm.bindFromRequest().field("email").value())){
+        if (!user.email.equals(boundForm.bindFromRequest().field("email").value())) {
             return unauthorized("We good we good");
         }
 
-        if(boundForm.hasErrors()) {
+        if (boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
-            return redirect(routes.UserController.profile(user.email));
+            return redirect(routes.UserController.profile(user.email, "Name can only hold letters!"));
         }
 
         user = User.updateUser(boundForm.get());
@@ -141,7 +145,7 @@ public class UserController extends Controller {
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = body.getFile("image");
 
-        if(filePart != null){
+        if (filePart != null) {
             File file = filePart.getFile();
             Image.createAvatar(file);
         }
@@ -157,25 +161,25 @@ public class UserController extends Controller {
 
         User user = SessionHelper.getCurrentUser();
 
-        if(user == null) {
+        if (user == null) {
             return notFound(String.format("User does not exist."));
         }
-        if(boundForm.hasErrors()) {
-            return redirect(routes.UserController.profile(user.email));
+        if (boundForm.hasErrors()) {
+            return redirect(routes.UserController.profile(user.email, "View & edit your BitNavigator profile"));
         }
         try {
-            if (!(PasswordHash.validatePassword(boundForm.bindFromRequest().field("oldPassword").value(),user.password))){
+            if (!(PasswordHash.validatePassword(boundForm.bindFromRequest().field("oldPassword").value(), user.password))) {
                 flash("error", "Incorrect password!");
-                return redirect(routes.UserController.profile(user.email));
+                return redirect(routes.UserController.profile(user.email, "View & edit your BitNavigator profile"));
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (InvalidKeySpecException e) {
             e.printStackTrace();
         }
-        if (!((boundForm.bindFromRequest().field("newPassword").value()).equals(boundForm.bindFromRequest().field("confirmPassword").value()))){
+        if (!((boundForm.bindFromRequest().field("newPassword").value()).equals(boundForm.bindFromRequest().field("confirmPassword").value()))) {
             flash("error", "Password does not match!");
-            return redirect(routes.UserController.profile(user.email));
+            return redirect(routes.UserController.profile(user.email, "View & edit your BitNavigator profile"));
         }
         try {
             user.password = PasswordHash.createHash(boundForm.bindFromRequest().field("newPassword").value());
@@ -186,27 +190,27 @@ public class UserController extends Controller {
         }
 
         user.update();
-        return redirect(routes.Application.index());
+        return redirect(routes.UserController.profile(user.email, "Password successfully changed"));
 
     }
 
     public static class PasswordForm {
-        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
-        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
-        @Constraints.Required (message = "Password is required")
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Password is required")
         public String oldPassword;
-        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
-        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
-        @Constraints.Required (message = "Password is required")
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Password is required")
         public String newPassword;
-        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
-        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
-        @Constraints.Required (message = "Passwords do not match")
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Passwords do not match")
         public String confirmPassword;
     }
 
     @Security.Authenticated(Authenticators.Admin.class)
-    public Result userList(){
+    public Result userList() {
         return ok(userlist.render(User.findAll()));
     }
 
@@ -235,7 +239,7 @@ public class UserController extends Controller {
     @Security.Authenticated(Authenticators.Admin.class)
     public Result adminView() {
         User admin = User.findByEmail(session("email"));
-        if(admin == null || !admin.admin){
+        if (admin == null || !admin.admin) {
             return unauthorized("Permission denied!");
         }
         return ok(adminview.render());
@@ -250,11 +254,11 @@ public class UserController extends Controller {
         @Constraints.Email
         @Constraints.Required
         public String email;
-        @Constraints.Pattern (value = "[a-zA-Z]+", message = "First name can only contain alphabetic characters")
+        @Constraints.Pattern(value = "[a-zA-Z]+", message = "First name can only contain alphabetic characters")
         public String firstName;
-        @Constraints.Pattern (value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
+        @Constraints.Pattern(value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
-        @Constraints.Pattern (value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
+        @Constraints.Pattern(value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
         public String mobileNumber;
         //public Image avatar;
 
@@ -271,26 +275,27 @@ public class UserController extends Controller {
         }
     }
 
-    public static class SignUpForm  extends UserNameForm{
-        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
-        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
-        @Constraints.Required (message = "Password is required")
+    public static class SignUpForm extends UserNameForm {
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Password is required")
         public String password;
-        @Constraints.MinLength (value = 8, message = "Password must be minimum 8 characters long")
-        @Constraints.MaxLength (value = 25, message = "Password can not be longer than 25 characters")
-        @Constraints.Required (message = "Passwords do not match")
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Passwords do not match")
         public String confirmPassword;
     }
 
     /**
      * This will just validate the form for the AJAX call
+     *
      * @return ok if there are no errors or a JSON object representing the errors
      */
-    public Result validateForm(){
+    public Result validateForm() {
         //get the form data from the request - do this only once
         Form<SignUpForm> binded = signUpForm.bindFromRequest();
         //if we have errors just return a bad request
-        if(binded.hasErrors()){
+        if (binded.hasErrors()) {
             flash("error", "check your inputs");
             return badRequest(binded.errorsAsJson());
         } else {
@@ -303,13 +308,14 @@ public class UserController extends Controller {
 
     /**
      * This will just validate the form for the AJAX call
+     *
      * @return ok if there are no errors or a JSON object representing the errors
      */
-    public Result validateUserNameForm(){
+    public Result validateUserNameForm() {
 
 
         Form<UserNameForm> binded = userNameForm.bindFromRequest();
-        if(binded.hasErrors()){
+        if (binded.hasErrors()) {
             Logger.debug(binded.errors().toString());
             return badRequest(binded.errorsAsJson());
         } else {
@@ -320,4 +326,17 @@ public class UserController extends Controller {
         }
     }
 
+    public Result checkPass() {
+        User u = SessionHelper.getCurrentUser();
+        DynamicForm form = Form.form().bindFromRequest();
+        String pass = form.data().get("oldPass");
+        String tmp = u.password;
+        try {
+            if (PasswordHash.validatePassword(pass, tmp))
+                return ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return badRequest();
+    }
 }

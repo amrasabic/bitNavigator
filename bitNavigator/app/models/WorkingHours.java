@@ -17,6 +17,8 @@ import java.util.Map;
 @Entity
 public class WorkingHours extends Model {
 
+    public static final String[] DAYS_OF_WEEK = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
     @Id
     public int id;
     @OneToOne (cascade = CascadeType.ALL)
@@ -103,6 +105,32 @@ public class WorkingHours extends Model {
             return null;
         }
         return workingHours.get(1);
+    }
+
+    public static List<String> getFormatedOpeningTimes(Place place) {
+        List<String> workingHours = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            Integer tmp = getOpeningTime(place, i);
+            if (tmp != null) {
+                workingHours.add(String.format("%02d:%02d", tmp / 60, tmp % 60));
+            } else {
+                workingHours.add("not working");
+            }
+        }
+        return workingHours;
+    }
+
+    public static List<String> getFormatedClosingTimes(Place place) {
+        List<String> workingHours = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            Integer tmp = getClosingTime(place, i);
+            if (tmp != null) {
+                workingHours.add(String.format("%02d:%02d", tmp / 60, tmp % 60));
+            } else {
+                workingHours.add("not working");
+            }
+        }
+        return workingHours;
     }
 
 

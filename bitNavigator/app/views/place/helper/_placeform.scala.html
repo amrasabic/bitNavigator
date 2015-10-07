@@ -86,32 +86,14 @@
 <script src="@routes.Assets.versioned("javascripts/jquery.timepicker.js")"></script>
 <script src="@routes.Assets.versioned("javascripts/jquery.businessHours.js")"></script>
 <script>
-    var tmp;
-
      $(document).ready(function() {
-         /*$("#businessHoursContainer").businessHours({
-            postInit:function(){
-                $('.operationTimeFrom, .operationTimeTill').timepicker({
-                    'timeFormat': 'H:i',
-                        'step': 15
-                    });
-                },
-                dayTmpl:'<div class="dayContainer" style="width: 80px;">' +
-                        '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"></div>' +
-                        '<div class="weekday"></div>' +
-                        '<div class="operationDayTimeContainer">' +
-                        '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-sun-o"></i></span><input type="text" name="startTime" class="mini-time form-control operationTimeFrom" value=""></div>' +
-                        '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-moon-o"></i></span><input type="text" name="endTime" class="mini-time form-control operationTimeTill" value=""></div>' +
-                        '</div></div>'
-         });*/
+
          var businessHoursManager = $("#businessHoursContainer").businessHours();
+
          $("#add-place-form").submit(function(e, options){
-            //e.preventDefault();
-
-
 
             var json = JSON.stringify(businessHoursManager.serialize());
-            //console.log(opere);
+
             json = $.parseJSON(json);
 
             for(var i = 1; i <= 7; i++){
@@ -131,13 +113,6 @@
                 }
             }
 
-
-
-
-
          });
-
-
-
      });
 </script>
