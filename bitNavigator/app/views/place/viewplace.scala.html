@@ -1,5 +1,5 @@
 @import utillities.SessionHelper
-@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: String)
+@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: Double)
 
 @main("View place") {
 
@@ -80,6 +80,11 @@
             }
         }
     }
+
+    <div id="similarPlaces" class="container-fluid">
+        <p style="font-size: 17px;">Suggested places</p>
+        @views.html.place.similarplacelist(Place.findByService(place.service, place.id))
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="report-comment-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

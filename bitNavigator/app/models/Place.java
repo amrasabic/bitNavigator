@@ -5,6 +5,7 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -70,8 +71,14 @@ public class Place extends Model {
         return finder.where().eq("user", user).findList();
     }
 
-    public Double getRating() {
+    public static List<Place> findByService(Service serv, Integer id) {
+        List<Place> list = finder.where().eq("service", serv).findList();
+        Place p = Place.findById(id);
+        list.remove(p);
+        return list;
+    }
 
+    public Double getRating() {
         List<Comment> comments = Comment.findByPlace(this);
         double rating = 0;
         int counter = 0;
