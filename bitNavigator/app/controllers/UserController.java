@@ -1,26 +1,27 @@
 package controllers;
 
 import models.*;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
-import play.mvc.Result;
 import play.mvc.Http;
-
+import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
-import utillities.SessionHelper;
-import views.html.user.*;
-import views.html.admin.*;
-import play.Logger;
 import utillities.PasswordHash;
+import utillities.SessionHelper;
+import utillities.UserValidator;
+import views.html.admin.adminview;
+import views.html.user.profile;
+import views.html.user.signin;
+import views.html.user.signup;
+import views.html.user.userlist;
 
 import java.io.File;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Calendar;
 
 
 /**
@@ -54,14 +55,6 @@ public class UserController extends Controller {
      */
     public Result signUp() {
         return ok(signup.render(signUpForm));
-    }
-
-    /**
-     * Leads random user to contact us page
-     * @return
-     */
-    public Result contactUs() {
-        return ok(contactus.render());
     }
 
     /**
@@ -109,6 +102,11 @@ public class UserController extends Controller {
 
         if (!singUp.password.equals(singUp.confirmPassword)) {
             flash(ERROR_MESSAGE, "Passwords do not match!");
+            return badRequest(signup.render(boundForm));
+        }
+
+        if (UserValidator.isPasswordValid(boundForm.field("password").value())[0] == UserController.ERROR_MESSAGE) {
+            flash(UserValidator.isPasswordValid(boundForm.field("password").value())[0], UserValidator.isPasswordValid(boundForm.field("password").value())[1]);
             return badRequest(signup.render(boundForm));
         }
 
