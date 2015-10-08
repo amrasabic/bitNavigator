@@ -1,0 +1,25 @@
+@(places: java.util.List[Place])
+@if(!places.isEmpty) {
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="naslov">title</th>
+        <th class="naslov">service</th>
+        <th class="naslov">address</th>
+        <th class="naslov">view</th>
+      </tr>
+    </thead>
+    <tbody>
+    @for(place <- places) {
+      <tr>
+        <td>@place.title</td>
+        <td>@place.service.serviceType</td>
+        <td>@place.address</td>
+        <td><a href="@routes.PlaceController.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}else{
+  <p>No suggested places</p>
+}

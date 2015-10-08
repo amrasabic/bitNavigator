@@ -1,6 +1,8 @@
 @import utillities.SessionHelper
-@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: String)
+@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: Double)
+<script>
 
+</script>
 <!--div class="container"-->
 <div class="form-group">
     <h3>@place.title</h3>
@@ -8,8 +10,11 @@
 <!-- Description -->
 <div class="form-group">
     <label for="description">Description:</label>
-    <textarea class="form-control" rows="3" name="description" id="description" type="text" readonly>@place.description</textarea>
+    <div id="description1">
+        @place.description
+    </div>
 </div>
+<p><br/></p>
 <!--Address -->
 <div class="form-group">
     <label for="address">Address:</label>
@@ -30,5 +35,10 @@
 </div>
 <!-- Rating -->
 <div class="form-group rating-group">
-    <div class="label label-default">Rating:</div> @rating  <span class="glyphicon glyphicon-star"></span>
+    @if(rating == null){
+    <div class="label label-default">Rating:</div> n/a
+    }  else {
+        <div class="label label-default">Rating:</div> @rating
+        <span class="glyphicon glyphicon-star"></span>
+    }
 </div>

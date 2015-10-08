@@ -175,9 +175,9 @@ public class PlaceController extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        String rating = "n/a";
+        Double rating = null;
         if (place.getRating() != null) {
-            rating = String.format("%.2f", place.getRating());
+            rating = place.getRating();
         }
         if(form.data().get("isModal") != null) {
             return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));

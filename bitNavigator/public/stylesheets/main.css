@@ -126,7 +126,7 @@ body {
     background-color: #ffffff;
 }
 
-#container-comment, #gallery-panel {
+#container-comment, #gallery-panel, #similarPlaces{
     margin: 20px;
     padding: 15px;
     /*border-radius: 10px;*/
@@ -347,3 +347,13 @@ textarea {
     display: inline;
     margin-left: 10px;
 }
+
+.naslov {
+    text-align: center;
+}
+
+#description1 {
+    font-size: 17px;
+}
+
+
