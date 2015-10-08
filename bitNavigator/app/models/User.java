@@ -55,14 +55,12 @@ public class User extends Model {
     public String phoneNumber;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Place> places;
-    public boolean admin = false;
+    private boolean admin = false;
     @Column(unique = true)
     private String token;
     private boolean validated = false;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Comment> comments;
-    //@OneToOne (cascade = CascadeType.ALL)
-    //public Image avatar;
 
     public static final Finder<Long, User> find = new Finder<>(
             User.class);
@@ -105,6 +103,10 @@ public class User extends Model {
         save();
     }
 
+    public boolean isAdmin() {
+        return admin;
+    }
+
     public static User updateUser(UserController.UserNameForm userNameForm){
 
         User user = SessionHelper.getCurrentUser();
@@ -135,10 +137,6 @@ public class User extends Model {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public boolean isValidated() {

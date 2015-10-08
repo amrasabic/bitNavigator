@@ -132,7 +132,7 @@ public class UserController extends Controller {
 
         // Sending Email To user
         String host = url + "validate/" + u.getToken();
-        MailHelper.send(u.getEmail(), host);
+        MailHelper.send(u.email, host);
         return redirect(routes.Application.index());
     }
 
@@ -265,7 +265,7 @@ public class UserController extends Controller {
     @Security.Authenticated(Authenticators.Admin.class)
     public Result adminView() {
         User admin = User.findByEmail(session("email"));
-        if (admin == null || !admin.admin) {
+        if (admin == null || !admin.isAdmin()) {
             return unauthorized("Permission denied!");
         }
         return ok(adminview.render());
@@ -373,7 +373,7 @@ public class UserController extends Controller {
             }
             if (User.validateUser(user)) {
                 session().clear();
-                session("email", user.getEmail());
+                session("email", user.email);
                 return redirect("/login");
             } else {
                 return redirect("/");

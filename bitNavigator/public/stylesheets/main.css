@@ -62,9 +62,6 @@
     color: white;
 }
 
-#map {
-    height: inherit;
-}
 body {
     height: 100%;
     width: 100%;
@@ -273,8 +270,8 @@ textarea {
     padding: 0px;
 }
 #logo{
-    height: 5em;
-    width: 5em;
+    height: 4.2em;
+    width: 4.2em;
 }
 .body {
     /*background-image: url("logo3.png");*/
@@ -336,11 +333,11 @@ textarea {
 
 .close:hover { background: #00d9ff; }
 
-#footer{
-    display: table;
+#footer {
+    width: inherit;
+    position: absolute;
+    bottom: 0px;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 #timepicker-form {

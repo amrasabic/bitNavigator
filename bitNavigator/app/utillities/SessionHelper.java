@@ -30,7 +30,7 @@ public class SessionHelper {
         User user = getUserFromSession();
         if (user == null)
             return false;
-        return user.admin;
+        return user.isAdmin();
     }
 
     public static boolean isAuthenticated() {

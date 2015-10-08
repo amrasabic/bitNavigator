@@ -142,10 +142,8 @@ public class PlaceController extends Controller{
         }
 
         User owner = User.findByEmail(session("email"));
-        Logger.info(owner.email);
-        Logger.info(place.user.email);
         if (owner == null || !place.user.equals(owner)) {
-            if (!owner.admin) {
+            if (!owner.isAdmin()) {
                 return unauthorized("Permission denied!");
             }
         }

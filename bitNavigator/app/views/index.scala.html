@@ -101,6 +101,9 @@
             }
 
         }
+        $('#map').height(function(index, height) {
+            return window.innerHeight - $(this).offset().top;
+        });
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=geometry" async defer></script>
