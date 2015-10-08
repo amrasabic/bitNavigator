@@ -15,6 +15,7 @@ POST          /user/signup                               @controllers.UserContro
 GET           /user/signout                              @controllers.UserController.signOut()
 GET           /user/list                                 @controllers.UserController.userList()
 POST          /user/validate                             @controllers.UserController.validateForm()
+GET           /validate/:token                           @controllers.UserController.emailValidation(token: String)
 
 POST          /user/profile/validate                     @controllers.UserController.validateUserNameForm()
 GET           /user/profile/:email                       @controllers.UserController.profile(email: String, msg: String)

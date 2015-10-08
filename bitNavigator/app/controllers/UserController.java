@@ -18,10 +18,20 @@ import views.html.user.profile;
 import views.html.user.signin;
 import views.html.user.signup;
 import views.html.user.userlist;
+import play.Play;
+import utillities.MailHelper;
+import utillities.SessionHelper;
+import views.html.user.*;
+import views.html.admin.*;
+
+import utillities.PasswordHash;
+import utillities.MailHelper;
 
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+
+import java.util.UUID;
 
 
 /**
@@ -37,7 +47,7 @@ public class UserController extends Controller {
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
-    //  private static Image image;
+    private static String url = Play.application().configuration().getString("url");
 
     /**
      * Leads random user to signin subpage
@@ -79,8 +89,14 @@ public class UserController extends Controller {
             flash(ERROR_MESSAGE, "Email or password invalid!");
             return redirect(routes.Application.index());
         }
-        session().clear();
-        session("email", user.email);
+
+        if (user.isValidated()) {
+            session().clear();
+            session("email", user.email);
+        } else {
+            flash(ERROR_MESSAGE, "Account is not validated!");
+        }
+
         return redirect(routes.Application.index());
     }
 
@@ -110,9 +126,13 @@ public class UserController extends Controller {
             return badRequest(signup.render(boundForm));
         }
 
-        User.newUser(singUp);
-        session().clear();
-        session("email", singUp.email);
+        User u = User.newUser(singUp);
+        u.setToken(UUID.randomUUID().toString());
+        u.update();
+
+        // Sending Email To user
+        String host = url + "validate/" + u.getToken();
+        MailHelper.send(u.getEmail(), host);
         return redirect(routes.Application.index());
     }
 
@@ -321,8 +341,7 @@ public class UserController extends Controller {
 
 
         Form<UserNameForm> binded = userNameForm.bindFromRequest();
-        if (binded.hasErrors()) {
-            Logger.debug(binded.errors().toString());
+        if(binded.hasErrors()){
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
@@ -344,5 +363,23 @@ public class UserController extends Controller {
             e.printStackTrace();
         }
         return badRequest();
+    }
+
+    public Result emailValidation(String token) {
+        try {
+            User user = User.findUserByToken(token);
+            if (token == null) {
+                return redirect("/");
+            }
+            if (User.validateUser(user)) {
+                session().clear();
+                session("email", user.getEmail());
+                return redirect("/login");
+            } else {
+                return redirect("/");
+            }
+        } catch (Exception e){
+            return redirect("/login");
+        }
     }
 }

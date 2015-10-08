@@ -90,7 +90,10 @@ create table user (
   account_created           datetime(6),
   phone_number              varchar(255),
   admin                     tinyint(1) default 0,
+  token                     varchar(255),
+  validated                 tinyint(1) default 0,
   constraint uq_user_email unique (email),
+  constraint uq_user_token unique (token),
   constraint pk_user primary key (id))
 ;
 
