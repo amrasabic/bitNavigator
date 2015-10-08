@@ -107,14 +107,15 @@ public class UserController extends Controller {
             flash(ERROR_MESSAGE, "Passwords do not match!");
             return badRequest(signup.render(boundForm));
         }
-        User.setToken(UUID.randomUUID().toString());
-        User.newUser(singUp);
+
+        User u = User.newUser(singUp);
+        u.setToken(UUID.randomUUID().toString());
+        u.update();
         session().clear();
         session("email", singUp.email);
         // Sending Email To user
-        String host = url + "validate/" + User.getToken();
-        MailHelper.send(User.getEmail(), host);
-        session("username", User.FIRST_NAME);
+        String host = url + "validate/" + u.getToken();
+        MailHelper.send(u.getEmail(), host);
         return redirect(routes.Application.index());
     }
 

@@ -12,6 +12,7 @@ GET           /user/signin                                                     @
 POST          /user/signin                                                     @controllers.UserController.checkSignIn()
 GET           /user/signup                                                     @controllers.UserController.signUp()
 POST          /user/signup                                                     @controllers.UserController.save()
+GET           /validate/:token                                                 @controllers.UserController.emailValidation(token: String)
 GET           /user/signout                                                    @controllers.UserController.signOut()
 GET           /user/list                                                       @controllers.UserController.userList()
 POST          /user/validate                                                   @controllers.UserController.validateForm()

@@ -19,8 +19,8 @@ public class MailHelper {
         try {
             HtmlEmail mail = new HtmlEmail();
             mail.setSubject("bitNavigator Welcome");
-            mail.setFrom("bitNavigator <bitNavigator@gmail.com>");
-            mail.addTo("Contact <bitNavigator@gmail.com>");
+            mail.setFrom("bitNavigator <semir_s94@hotmail.com>");
+            mail.addTo("Contact <semir_s94@hotmail.com>");
             mail.addTo(email);
             mail.setMsg(message);
             mail.setHtmlMsg(String
@@ -31,8 +31,8 @@ public class MailHelper {
             mail.setStartTLSEnabled(true);
             mail.setSSLOnConnect(true);
             mail.setAuthenticator(new DefaultAuthenticator(
-                    Play.application().configuration().getString("EMAIL_USERNAME_ENV"),
-                    Play.application().configuration().getString("EMAIL_PASSWORD_ENV")
+                    Play.application().configuration().reference().getString("EMAIL_USERNAME_ENV"),
+                    Play.application().configuration().reference().getString("EMAIL_PASSWORD_ENV")
             ));
             mail.send();
         } catch (Exception e) {

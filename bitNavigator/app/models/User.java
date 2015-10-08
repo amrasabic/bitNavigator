@@ -83,7 +83,7 @@ public class User extends Model {
         this.password = password;
     }
 
-    public static void newUser(UserController.SignUpForm signUp) {
+    public static User newUser(UserController.SignUpForm signUp) {
         User user = new User();
         user.email = signUp.email;
         user.firstName = signUp.firstName;
@@ -97,6 +97,7 @@ public class User extends Model {
         user.accountCreated = Calendar.getInstance();
         user.phoneNumber = signUp.mobileNumber;
         user.save();
+        return user;
     }
 
     public void setAdmin(boolean isAdmin) {
