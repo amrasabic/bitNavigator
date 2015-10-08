@@ -57,6 +57,14 @@ public class UserController extends Controller {
     }
 
     /**
+     * Leads random user to contact us page
+     * @return
+     */
+    public Result contactUs() {
+        return ok(contactus.render());
+    }
+
+    /**
      * Checks if all requirments are fullfiled to continue further. This method
      * gets email and password from database and compares them, if they match
      * user is logged in. Method use password hashing.
