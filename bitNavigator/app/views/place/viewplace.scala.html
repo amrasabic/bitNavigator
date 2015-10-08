@@ -115,7 +115,7 @@
     }
 
     <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
-    @if(!place.user.email.equals(SessionHelper.getCurrentUsersEmail()) && SessionHelper.isAuthenticated) {
+    @if(SessionHelper.isAuthenticated && !place.user.email.equals(SessionHelper.getCurrentUsersEmail())) {
         @if(Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place) != null && Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place).status.id == Status.APPROVED){
             @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null){
                 @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))

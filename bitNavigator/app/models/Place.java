@@ -27,7 +27,7 @@ public class Place extends Model {
     public Double latitude;
     public String address;
     public Calendar placeCreated;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     public User user;
     @ManyToOne
     public Service service;

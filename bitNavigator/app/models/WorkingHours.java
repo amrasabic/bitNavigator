@@ -25,7 +25,7 @@ public class WorkingHours extends Model {
 
     @Id
     public int id;
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne (cascade = CascadeType.PERSIST)
     public Place place;
     public Integer open1;
     public Integer close1;
