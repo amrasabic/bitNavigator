@@ -48,11 +48,14 @@ public class Emails extends Controller {
             } catch (EmailException e) {
                 e.printStackTrace();
             }
+            flash("success", "Your message was sent successfully!");
             return redirect(routes.Application.index());
         } else {
             flash("error", "Not validated");
             return redirect(routes.Application.index());
         }
+
+
     }
 }
 
