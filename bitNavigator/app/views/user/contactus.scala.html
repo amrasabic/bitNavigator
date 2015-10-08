@@ -4,7 +4,7 @@
         <div class="row">
             <div class="contact-caption clearfix">
                 <div class="contact-heading text-center">
-                    <h1 style="color : blue"><i>CONCTACT  US</i></h1>
+                    <h1 style="color : blue"><i>CONTACT US</i></h1>
                 </div>
 
                 <div class="col-md-5 contact-info text-left">
@@ -17,7 +17,7 @@
                             Hrasnicka cesta 15, 72000 Sarajevo</li></ul>
                         <ul><li><i class="phone"></i><span>Phone:</span>(000) 123-456</li></ul>
                         <ul><li><i class="fax"></i><span>Fax:</span>(000) 456-789</li></ul>
-                        <ul><li><i class="envelope"></i><span>Email: </span>@Constants.EMAIL</li></ul>
+                        <ul><li><i class="envelope"></i><span>Email: @Constants.EMAIL </span></li></ul>
                     </div>
                 </div>
 
@@ -25,7 +25,7 @@
                 <div class="col-md-6 col-md-offset-1 contact-form">
                     <h3>Leave us a message</h3>
 
-                    s<form method="post" action="@routes.Emails.sendMail()">
+                    <form method="post" action="@routes.Emails.sendMail()">
 
                     <input id="name" name="user_name" class="name" type="text" aria-required="true" placeholder="Name" required onblur="checkName()" onfocusout="checkNameLength()">
                     <div style="font-size : 20 px ; color : red" id="name_error"></div>
@@ -45,8 +45,7 @@
                         @flash.get("error")
                     }
                     </div>
-                    <div class="g-recaptcha" data-sitekey="6LfB5g0TAAAAAD3vjlDKc3MuTDGkZji-WiD_skWH"></div>
-
+                        <div class="g-recaptcha" data-sitekey="6LdiWg4TAAAAAAqkPPWJio0eiPIb2g72zNt69tNQ"></div>
                     <input href="@routes.Emails.sendMail()" class="submit-btn" style="background-color : #204d74 ; border-radius : 5 px ; width : 80 px ; " type="submit" value="SUBMIT">
 
                 </form>

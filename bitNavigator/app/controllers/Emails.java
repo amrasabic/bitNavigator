@@ -1,16 +1,14 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import models.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 import play.Play;
 import play.data.Form;
-import play.libs.F;
+import play.libs.ws.*;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.libs.ws.*;
-import play.libs.F.Function;
-import play.libs.F.Promise;
-import views.html.*;
+import views.helpers.GoogleRecaptcha;
 
 import javax.inject.Inject;
 
@@ -22,7 +20,6 @@ public class Emails extends Controller {
 
     @Inject
     WSClient ws;
-
     public Result sendMail() {
 
         String user_name = mailForm.bindFromRequest().field("user_name").value();
@@ -57,5 +54,5 @@ public class Emails extends Controller {
             return redirect(routes.Application.index());
         }
     }
-
 }
+
