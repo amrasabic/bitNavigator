@@ -65,4 +65,5 @@ POST          /user/reservations/message/validate        @controllers.MessageCon
 
 POST          /checkPass                                 @controllers.UserController.checkPass()
 
-
+POST          /contact                                   @controllers.UserController.sendMail()
+GET           /contact                                   @controllers.UserController.contactUs()
