@@ -145,6 +145,7 @@ public class UserController extends Controller {
         // Sending Email To user
         String host = url + "validate/" + u.getToken();
         MailHelper.send(u.email, host);
+        flash("success", "You have been registered. Verification mail has been sent to your address. To login you have to verify your email.");
         return redirect(routes.Application.index());
     }
 
@@ -386,6 +387,7 @@ public class UserController extends Controller {
             if (User.validateUser(user)) {
                 session().clear();
                 session("email", user.email);
+                flash("success", "Email verified !");
                 return redirect("/");
             } else {
                 return redirect("/");
