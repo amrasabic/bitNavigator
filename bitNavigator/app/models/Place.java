@@ -26,7 +26,7 @@ public class Place extends Model {
     public Double latitude;
     public String address;
     public Calendar placeCreated;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     public User user;
     @ManyToOne
     public Service service;
@@ -70,8 +70,14 @@ public class Place extends Model {
         return finder.where().eq("user", user).findList();
     }
 
-    public Double getRating() {
+    public static List<Place> findByService(Service serv, Integer id) {
+        List<Place> list = finder.where().eq("service", serv).findList();
+        Place p = Place.findById(id);
+        list.remove(p);
+        return list;
+    }
 
+    public Double getRating() {
         List<Comment> comments = Comment.findByPlace(this);
         double rating = 0;
         int counter = 0;
@@ -85,6 +91,11 @@ public class Place extends Model {
             return rating / counter;
         }
         return null;
+    }
+
+    public static int getLastId() {
+        int tmp = finder.order("id").findRowCount();
+        return finder.order("id").findList().get(tmp - 1).id;
     }
 
 }

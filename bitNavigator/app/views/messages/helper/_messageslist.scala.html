@@ -21,6 +21,7 @@
               <div class="form-group">
                 <div class="panel-body">
                   <textarea class="form-control" style="resize : inherit" name="content" placeholder="Message ..."></textarea>
+                  <div class="alert alert-danger" data-error-for="content" role="alert" hidden></div>
                   <div>
                     <input type="submit" class="btn btn-primary pull-right" value="Send" style="margin-top : 1em"/>
                   </div>
@@ -30,4 +31,8 @@
           </div>
         </li>
     </div>
+  <script>
+    var urlToPost = "@routes.MessageController.validateForm()";
+  </script>
+  <script src="@routes.Assets.versioned("javascripts/validateForm.js")"></script>
 }

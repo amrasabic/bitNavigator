@@ -1,15 +1,13 @@
 @import utillities.SessionHelper
-@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: String)
+@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: Double)
+<script>
 
+</script>
 <!--div class="container"-->
 <div class="form-group">
     <h3>@place.title</h3>
 </div>
-<!-- Description -->
-<div class="form-group">
-    <label for="description">Description:</label>
-    <textarea class="form-control" rows="3" name="description" id="description" type="text" readonly>@place.description</textarea>
-</div>
+
 <!--Address -->
 <div class="form-group">
     <label for="address">Address:</label>
@@ -28,7 +26,39 @@
         </div>
     </div>
 </div>
+<p><br/></p>
+@if(place.description != ""){
+    <!-- Description -->
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Description
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body" style="white-space: pre-line;">
+                @place.description
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <!-- Rating -->
 <div class="form-group rating-group">
-    <div class="label label-default">Rating:</div> @rating  <span class="glyphicon glyphicon-star"></span>
+    @if(rating == null){
+    <div class="label label-default">Rating:</div> n/a
+    }  else {
+        <div class="label label-default">Rating:</div> @rating
+        <span class="glyphicon glyphicon-star"></span>
+    }
 </div>
+<script>
+    $(document).ready(function() {
+        $(".accordion").accordion();
+    })
+
+</script>

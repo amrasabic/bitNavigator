@@ -32,7 +32,7 @@ public class ReservationController extends Controller {
     public Result submitReservation(int id){
         DynamicForm boundForm = Form.form().bindFromRequest();
         if (boundForm.hasErrors()) {
-            return TODO;
+            return badRequest("dsadas");
         }
 
         User user = User.findByEmail(session().get("email"));
@@ -49,7 +49,7 @@ public class ReservationController extends Controller {
         try {
             date.setTime(myDate.parse(reservationDay + " " + reservationtime));
         }catch (ParseException e){
-            return TODO;
+            return badRequest("qwe");
         }
 
         Reservation r = new Reservation();
@@ -70,7 +70,7 @@ public class ReservationController extends Controller {
         r.messages.add(message);
         r.status = models.Status.findById(models.Status.WAITING);
         r.save();
-        message.messageCreated = Calendar.getInstance();
+        message.sent = Calendar.getInstance();
         message.reservation.id = r.id;
         message.save();
         return redirect(routes.Application.index());
@@ -98,16 +98,23 @@ public class ReservationController extends Controller {
 
     public Result validateForm(){
         //get the form data from the request - do this only once
-        Form<Reservation> binded = reservationForm.bindFromRequest();
+        Form<Message> binded = Form.form(Message.class).bindFromRequest();
+        DynamicForm boundForm = Form.form().bindFromRequest();
+        String reservationDay = boundForm.data().get("reservationDay");
+        String reservationtime = boundForm.data().get("reservationTime");
+        SimpleDateFormat myDate = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        Calendar date = new GregorianCalendar();
+        try {
+            date.setTime(myDate.parse(reservationDay + " " + reservationtime));
+        }catch (ParseException e){
+            return badRequest("Must choose date and time!");
+        }
         //if we have errors just return a bad request
         if(binded.hasErrors()){
-            flash("error", "check your inputs");
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
-            Reservation unf = binded.get();
 
-            flash("success", "user edited");
             return redirect("/");
         }
     }

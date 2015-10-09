@@ -1,5 +1,7 @@
 @import utillities.SessionHelper
 
+
+
 <nav class="navbar navbar-inverse">
 
     <div class="container">
@@ -11,7 +13,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a id="home-button" href="@routes.Application.index()"><img src='@routes.Assets.versioned("images/logo.png")' id="logo" alt="" class="img-responsive"></a>
+            <a id="home-button" href="@routes.PlaceController.nearbyPlaces()"><img src='@routes.Assets.versioned("images/logo.png")' id="logo" alt="" class="img-responsive"></a>
 
         </div>
 
@@ -28,19 +30,23 @@
             @if(!SessionHelper.isAuthenticated) {
                 <form class="navbar-form navbar-right dont-validate" method="post" action="@routes.UserController.checkSignIn()">
                     <div class="form-group">
-                        <input id="email-signin" type="email" class="form-control" placeholder=" Email" name="email">
+                        <input id="email-signin" type="email" required="required" class="form-control" placeholder=" Email" name="email" onblur="checkEmail()">
+                        <span id="nameError" class="alert-danger" data-error-for="" ></span>
                     </div>
                     <div class="form-group" id="my_form">
-                        <input id="password-signin" type="password" class="form-control" placeholder=" Password" name="password">
+                        <input id="password-signin" type="password" required="required" class="form-control" placeholder=" Password" name="password">
                     </div>
                     <button id="btn-sign-in" type="submit" class="btn btn-default" >Sign in</button>
                     <button type="button" class="btn btn-default btn-sign"><a id="btn-sign-up-menu" href="@routes.UserController.signUp()">Sign up</a></button>
+                    <button type="button" class="btn btn-default btn-sign">
+                        <a id="btn-sign-up-menu" href="@routes.UserController.contactUs()"><span class="glyphicon glyphicon-envelope"></span> Contact Us</a>
+                    </button>
                 </form>
 
             } else {
                 <div class="btn-group navbar-form navbar-right">
 
-                    <button class="btn btn-default"><a href="@routes.MessageController.inbox()"><i class="glyphicon glyphicon-envelope" style="font-size: 16px"><span class="badge" style="color: white; font-weight: bold; background-color: red; font-size: 8px">@Reservation.reservationsOnWaiting()</span></i></a></button>
+                    <!--button class="btn btn-default"><a href="@routes.MessageController.inbox()"><span class="badge" style="color: white; font-weight: bold; background-color: red; font-size: 8px">@Reservation.reservationsOnWaiting()</span></a></button-->
 
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @SessionHelper.getCurrentUsersEmail <span class="caret"></span>
@@ -51,12 +57,13 @@
                             <li role="separator" class="divider"></li>
                         }
                         <li><a href="@routes.PlaceController.addPlace()"><i class="glyphicon glyphicon-plus-sign"></i> Add place</a></li>
-                        <li><a href="@routes.UserController.profile(SessionHelper.getCurrentUsersEmail)"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                        <li><a href="@routes.UserController.profile(SessionHelper.getCurrentUsersEmail, "View & edit your BitNavigator profile")"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                         <li><a href="@routes.PlaceController.placeList()"><i class="glyphicon glyphicon-heart"></i> Place list</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="@routes.MessageController.inbox()"><i class="glyphicon glyphicon-envelope"></i> Messages</a></li>
                         <li><a href="@routes.ReservationController.reservationsList()"><i class="glyphicon glyphicon-calendar"></i> Reservations</a></li>
                         <li role="separator" class="divider"></li>
+                        <li><a id="contact-us" href="@routes.UserController.contactUs()"><i class="glyphicon glyphicon-envelope"></i> Contact us</a></li>
                         <li><a id="logout" href="@routes.UserController.signOut()"><i class="glyphicon glyphicon-remove-sign"></i> Logout</a></li>
                     </ul>
                 </div>

@@ -1,3 +1,4 @@
+@import utillities.SessionHelper
 @(places: java.util.List[Place])
 
 @main("Place list") {
@@ -27,13 +28,13 @@
                     <td style="min-width : 220 px">@place.address</td>
                     <td><a href="@routes.PlaceController.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
                     <td>
-                    @if(place.user.email == session.get("email")) {
+                    @if(place.user.email == SessionHelper.getCurrentUsersEmail()) {
                         <a href="@routes.PlaceController.editPlace(place.id)"> <i class="glyphicon glyphicon-edit"></i></a>
                     }
                     </td>
 
                     <td>
-                    @if(place.user.email == session.get("email") || (User.findByEmail(session.get("email")) != null && User.findByEmail(session.get("email")).admin)) {
+                    @if(place.user.email == SessionHelper.getCurrentUsersEmail() || SessionHelper.isAdmin()) {
                         <a href="@routes.PlaceController.delete(place.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a>
                     }
                     </td>
