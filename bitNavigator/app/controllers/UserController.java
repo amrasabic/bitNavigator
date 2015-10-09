@@ -33,6 +33,18 @@ import java.security.spec.InvalidKeySpecException;
 
 import java.util.UUID;
 
+import play.libs.F.Function;
+import play.libs.F.Promise;
+import play.libs.Json;
+import play.libs.ws.WS;
+import play.libs.ws.WSResponse;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+
+
+
 
 /**
  * Public class UserHandler extends Controller. Has methods within it that
@@ -382,4 +394,87 @@ public class UserController extends Controller {
             return redirect("/login");
         }
     }
+
+    public Result contactUs() {
+
+        return ok(contact.render(new Form<Contact>(Contact.class)));
+    }
+
+    public Promise<Result> sendMail() {
+
+        //Getting recaptcha values
+        final DynamicForm temp = DynamicForm.form().bindFromRequest();
+
+        Promise<Result> promiseHolder = WS
+                .url("https://www.google.com/recaptcha/api/siteverify")
+                .setContentType("application/x-www-form-urlencoded")
+                .post(String.format(
+                        "secret=%s&response=%s",
+                        //getting API key from the config file
+                        "6LdiWg4TAAAAAAqkPPWJio0eiPIb2g72zNt69tNQ",
+                        temp.get("g-recaptcha-response")))
+                .map(new Function<WSResponse, Result>() {
+                    public Result apply(WSResponse response) {
+
+                        JsonNode json = response.asJson();
+                        Form<Contact> contactForm = Form.form(Contact.class)
+                                .bindFromRequest();
+
+                        if (json.findValue("success").asBoolean() == true
+                                && !contactForm.hasErrors()) {
+                            Contact newMessage = contactForm.get();
+                            String name = newMessage.name;
+                            String email = newMessage.email;
+                            String message = newMessage.message;
+
+                            if (message.equals("")) {
+                                flash("messageError", "Please fill this field");
+                                return redirect("/contact");
+                            }
+                            flash("success", "Message was sent successfuly!");
+                            MailHelper.sendContactMessage(name, email, message);
+
+                            return redirect("/contact");
+                        } else {
+                            System.out.println(json.asText());
+                            flash("errorMail", "Please verify that you are not a robot!");
+                            return redirect("/contact");
+                        }
+                    }
+                });
+
+        return promiseHolder;
+    }
+
+
+    public static class Contact {
+
+        public String name;
+        public String email;
+        public String message;
+
+        /**
+         * Default constructor that sets everything to NN;
+         */
+        public Contact() {
+            this.name= "NN";
+            this.email = "NN";
+            this.message = "NN";
+        }
+        /**
+         * Constructor with parameters;
+         * @param name
+         * @param email
+         * @param message
+         */
+        public Contact(String name, String email, String message) {
+            super();
+            this.name = name;
+            this.email = email;
+            this.message = message;
+        }
+    }
+
+
+
 }

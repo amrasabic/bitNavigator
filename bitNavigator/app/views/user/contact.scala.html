@@ -1,0 +1,58 @@
+@(contactForm: Form[UserController.Contact])
+
+@import helper._
+@main("Contact Us") {
+
+    <h2>Contact Us</h2> <br> <br>
+
+    @helper.form(routes.UserController.sendMail(), 'class -> "form-horizontal", 'id -> "contactForm") {
+        <div class="row">
+            <div class="col-md-12">
+            @if(flash.containsKey("errorMail")) {
+                <div class="alert alert-danger col-md-12">
+                    <b style="font-size : 18 px ; color : red"><center>@flash.get("errorMail")</center></b>
+                </div>
+            }
+            </div>
+            <div class="col-md-12">
+            @if(flash.containsKey("success")) {
+                <div class="alert alert-success col-md-12">
+                    <b style="font-size : 18 px ; color : red"><center>@flash.get("success")</center></b>
+                </div>
+            }
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    Name <abbr class="req" title="required" style="color : red"> * </abbr> </span>
+                <input name="name" value="@contactForm("name").value" type="text" class="form-control" id="inputName" required="required">
+                <span id="nameError" class="alert-danger" data-error-for="" ></span>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    Email <abbr class="req" title="required" style="color : red"> * </abbr> </span>
+                <input name="email" value="@contactForm("email").value" type="text" class="form-control" id="email" required="required">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    Message <abbr class="req" title="required" style="color : red"> * </abbr> </span>
+                <textarea style="resize : vertical" maxlength="250" name="message" value="@contactForm("message").value" type="text" class="form-control" id="message" required="required">@contactForm("message").value </textarea>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    Check <abbr class="req" title="required" style="color : red"> * </abbr> </span>
+                <div id="captcha" class="g-recaptcha" data-sitekey="6LdiWg4TAAAAAAqkPPWJio0eiPIb2g72zNt69tNQ"></div>
+            </div>
+            <div class="col-md-offset-2">
+                <input type="submit" value="Send Message" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+}
