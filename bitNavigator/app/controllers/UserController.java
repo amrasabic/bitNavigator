@@ -411,8 +411,7 @@ public class UserController extends Controller {
                 .post(String.format(
                         "secret=%s&response=%s",
                         //getting API key from the config file
-                        Play.application().configuration()
-                                .getString("recaptchaKey"),
+                        "6LdiWg4TAAAAAAqkPPWJio0eiPIb2g72zNt69tNQ",
                         temp.get("g-recaptcha-response")))
                 .map(new Function<WSResponse, Result>() {
                     public Result apply(WSResponse response) {
@@ -437,15 +436,8 @@ public class UserController extends Controller {
 
                             return redirect("/contact");
                         } else {
-//                            flash("errorMail", "Please verify that you are not a robot!");
-//
-                            Contact newMessage = contactForm.get();
-                            String name = newMessage.name;
-                            String email = newMessage.email;
-                            String message = newMessage.message;
-                            flash("success", "Message was sent successfuly!");
-                            MailHelper.sendContactMessage(name, email, message);
-
+                            System.out.println(json.asText());
+                            flash("errorMail", "Please verify that you are not a robot!");
                             return redirect("/contact");
                         }
                     }
@@ -454,9 +446,7 @@ public class UserController extends Controller {
         return promiseHolder;
     }
 
-    /**
-     * Inner class that is used for sending mail from user to bittracking
-     */
+
     public static class Contact {
 
         public String name;
