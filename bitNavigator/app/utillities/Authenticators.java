@@ -16,7 +16,7 @@ public class Authenticators {
             if (user == null)
                 return null;
 
-            if (user.admin)
+            if (user.isAdmin())
                 return user.email;
             return null;
         }

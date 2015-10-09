@@ -11,11 +11,8 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
-import views.html.place.addplace;
-import views.html.place.editplace;
+import views.html.place.*;
 import views.html.place.helper._placeviewform;
-import views.html.place.placelist;
-import views.html.place.viewplace;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -145,10 +142,8 @@ public class PlaceController extends Controller{
         }
 
         User owner = User.findByEmail(session("email"));
-        Logger.info(owner.email);
-        Logger.info(place.user.email);
         if (owner == null || !place.user.equals(owner)) {
-            if (!owner.admin) {
+            if (!owner.isAdmin()) {
                 return unauthorized("Permission denied!");
             }
         }
@@ -178,9 +173,9 @@ public class PlaceController extends Controller{
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-        String rating = "n/a";
+        Double rating = null;
         if (place.getRating() != null) {
-            rating = String.format("%.2f", place.getRating());
+            rating = place.getRating();
         }
         if(form.data().get("isModal") != null) {
             return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
@@ -263,4 +258,9 @@ public class PlaceController extends Controller{
 
         return ok(Json.toJson(titles));
     }
+
+    public Result nearbyPlaces() {
+        return ok(nearbyplaces.render(Place.findAll()));
+    }
+
 }

@@ -48,7 +48,7 @@ public class MessageController extends Controller {
         Reservation reservation = Reservation.findById(reservationId);
         message.reservation = reservation;
 
-        message.messageCreated = Calendar.getInstance();
+        message.sent = Calendar.getInstance();
         message.save();
         messages.add(message);
 
@@ -60,6 +60,15 @@ public class MessageController extends Controller {
         User user = SessionHelper.getCurrentUser();
         List<Reservation> reservations = Reservation.findByUser(user);
         return ok(_inbox.render(reservations));
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result validateForm() {
+        Form<Message> boundForm = messageForm.bindFromRequest();
+        if (boundForm.hasErrors()) {
+            return badRequest(boundForm.errorsAsJson());
+        }
+        return ok();
     }
 
 }

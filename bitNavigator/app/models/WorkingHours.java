@@ -1,6 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.databind.JsonNode;
+import play.Logger;
+import play.libs.Json;
+import utillities.SessionHelper;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,9 +21,11 @@ import java.util.Map;
 @Entity
 public class WorkingHours extends Model {
 
+    public static final String[] DAYS_OF_WEEK = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
     @Id
     public int id;
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne (cascade = CascadeType.PERSIST)
     public Place place;
     public Integer open1;
     public Integer close1;
@@ -105,5 +111,65 @@ public class WorkingHours extends Model {
         return workingHours.get(1);
     }
 
+    public static List<String> getFormatedOpeningTimes(Place place) {
+        List<String> workingHours = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            Integer tmp = getOpeningTime(place, i);
+            if (tmp != null) {
+                workingHours.add(String.format("%02d:%02d", tmp / 60, tmp % 60));
+            } else {
+                workingHours.add("not working");
+            }
+        }
+        return workingHours;
+    }
 
+    public static List<String> getFormatedClosingTimes(Place place) {
+        List<String> workingHours = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            Integer tmp = getClosingTime(place, i);
+            if (tmp != null) {
+                workingHours.add(String.format("%02d:%02d", tmp / 60, tmp % 60));
+            } else {
+                workingHours.add("not working");
+            }
+        }
+        return workingHours;
+    }
+
+    public static String getWorkingHoursAsJSON(Place place) {
+        List<WorkingHoursJSON> workingHours = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            if (getFormatedOpeningTimes(place).get(i).equals("not working")) {
+                workingHours.add(new WorkingHoursJSON());
+            } else {
+                workingHours.add(new WorkingHoursJSON(getFormatedOpeningTimes(place).get(i), getFormatedClosingTimes(place).get(i)));
+            }
+        }
+        String s = Json.toJson(workingHours).toString();
+        s = s.replaceAll("\"", "*");
+        Logger.info(s);
+        return s;
+    }
+
+    public static class WorkingHoursJSON extends Model{
+        public boolean isActive;
+        public String timeFrom;
+        public String timeTill;
+
+        public WorkingHoursJSON() {
+            this.isActive = false;
+        }
+
+        public WorkingHoursJSON(String from, String to) {
+            this.isActive = true;
+            this.timeFrom = from;
+            this.timeTill = to;
+        }
+
+        @Override
+        public String toString() {
+            return isActive + " - " + timeFrom + " - " + timeTill;
+        }
+    }
 }
