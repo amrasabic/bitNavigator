@@ -5,7 +5,6 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -92,6 +91,11 @@ public class Place extends Model {
             return rating / counter;
         }
         return null;
+    }
+
+    public static int getLastId() {
+        int tmp = finder.order("id").findRowCount();
+        return finder.order("id").findList().get(tmp - 1).id;
     }
 
 }

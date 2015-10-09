@@ -24,8 +24,8 @@
                     <td><img class="img-responsive" src="@routes.Assets.versioned(place.service.serviceIcon)" title="@place.service.serviceType"></td>
                     <td>@place.description</td>
                     <td>@place.address</td>
-                    <td id="distance-nearby-places-@place.id">@place.id</td>
-                    <td><a href="@routes.PlaceController.viewPlace(place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
+                    <td id="distance-nearby-places-@place.id"></td>
+                    <td><a href="@routes.PlaceController.viewPlace(place.id)"><i class="glyphicon glyphicon-eye-open"></i></a></td>
                 </tr>
             }
         }
@@ -62,11 +62,13 @@
                 }else{
                     document.getElementById('distance-nearby-places-@place.id').innerText = "n/a";
                 }
-            }
 
-            table = $('#myTable').DataTable({
-                "order": [[ 4, "asc" ]]
-            });
+            }
+            setTimeout(function(){
+                    table = $('#myTable').DataTable({
+                        "order": [[ 4, "asc" ]]
+                    });
+                }, 2000);
         });
     </script>
     <script type="text/javascript"

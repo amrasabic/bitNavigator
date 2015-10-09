@@ -386,7 +386,7 @@ public class UserController extends Controller {
             if (User.validateUser(user)) {
                 session().clear();
                 session("email", user.email);
-                return redirect("/login");
+                return redirect("/");
             } else {
                 return redirect("/");
             }
@@ -411,12 +411,13 @@ public class UserController extends Controller {
                 .post(String.format(
                         "secret=%s&response=%s",
                         //getting API key from the config file
-                        "6LdiWg4TAAAAAAqkPPWJio0eiPIb2g72zNt69tNQ",
+                        "6LeK6w0TAAAAAMHruSHZNybnEC5wdb0j-vQACDys",
                         temp.get("g-recaptcha-response")))
                 .map(new Function<WSResponse, Result>() {
                     public Result apply(WSResponse response) {
-
+                        Logger.info(response.toString());
                         JsonNode json = response.asJson();
+                        Logger.debug(json.toString());
                         Form<Contact> contactForm = Form.form(Contact.class)
                                 .bindFromRequest();
 
@@ -436,7 +437,7 @@ public class UserController extends Controller {
 
                             return redirect("/contact");
                         } else {
-                            System.out.println(json.asText());
+                            Logger.debug(json.toString());
                             flash("errorMail", "Please verify that you are not a robot!");
                             return redirect("/contact");
                         }
