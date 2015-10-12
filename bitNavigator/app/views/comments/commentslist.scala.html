@@ -20,21 +20,19 @@
             <table id="myTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>id</th>
-                        <th>content</th>
-                        <th>commented on</th>
-                        <th>place title</th>
-                        <th>user</th>
-                        <th>view</th>
+                        <th>Content</th>
+                        <th>Commented on</th>
+                        <th>Place title</th>
+                        <th>User</th>
+                        <th>View</th>
                         @if(SessionHelper.isAdmin) {
-                            <th>delete</th>
+                            <th>Delete</th>
                         }
                     </tr>
                 </thead>
                 <tbody>
                 @for(comment <- comments) {
                     <tr>
-                        <td>@comment.id</td>
                         <td>@comment.commentContent</td>
                         <td>@comment.commentCreated.getTime</td>
                         <td>@comment.place.title</td>
