@@ -11,6 +11,7 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Security;
 import utillities.Authenticators;
+import utillities.SessionHelper;
 import views.html.place.*;
 import views.html.place.helper._placeviewform;
 
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by ognjen.cetkovic on 08/09/15.
  */
-public class PlaceController extends Controller{
+public class PlaceController extends Controller {
 
     private static final Form<Place> placeForm = Form.form(Place.class);
     private static final Form<Image> imageForm = Form.form(Image.class);
@@ -43,7 +44,7 @@ public class PlaceController extends Controller{
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
         Form<WorkingHours> boundWorkingHoursForm = workingHoursForm.bindFromRequest();
 
-        if(boundWorkingHoursForm.hasErrors()){
+        if (boundWorkingHoursForm.hasErrors()) {
             return redirect(routes.PlaceController.addPlace());
         }
 
@@ -103,7 +104,7 @@ public class PlaceController extends Controller{
         place.user = User.findByEmail(session("email"));
         place.placeCreated = Calendar.getInstance();
         place.service = service;
-        if(Place.findById(id) == null) {
+        if (Place.findById(id) == null) {
             return internalServerError("Something went wrong");
         }
         place.id = id;
@@ -124,11 +125,11 @@ public class PlaceController extends Controller{
         }
     }
 
-    public Result placeList(){
+    public Result placeList() {
         DynamicForm form = Form.form().bindFromRequest();
         String srchTerm = form.data().get("srch-term");
         List<Place> places = Place.findAll();
-        if(srchTerm != null) {
+        if (srchTerm != null) {
             places = Place.findByValue(srchTerm);
         }
         return ok(placelist.render(places));
@@ -155,18 +156,18 @@ public class PlaceController extends Controller{
     }
 
     @Security.Authenticated(Authenticators.User.class)
-    public Result editPlace(int id){
+    public Result editPlace(int id) {
         Place place = Place.findById(id);
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
         }
-  //      Form <Place> filledForm =  placeForm.fill(place);
+        //      Form <Place> filledForm =  placeForm.fill(place);
         List<Service> services = Service.findAll();
         List<Comment> comments = Comment.findAll();
         return ok(editplace.render(place, services, comments));
     }
 
-    public Result viewPlace(int id){
+    public Result viewPlace(int id) {
         DynamicForm form = Form.form().bindFromRequest();
 
         Place place = Place.findById(id);
@@ -177,10 +178,15 @@ public class PlaceController extends Controller{
         if (place.getRating() != null) {
             rating = place.getRating();
         }
-        if(form.data().get("isModal") != null) {
+        if (form.data().get("isModal") != null) {
+            if (!SessionHelper.getCurrentUser().places.contains(place)) {
+                place.updateNumOfViews();
+            }
             return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
         }
-
+        if (!SessionHelper.getCurrentUser().places.contains(place)) {
+            place.updateNumOfViews();
+        }
         return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
     }
 
@@ -194,7 +200,7 @@ public class PlaceController extends Controller{
 
         Comment comment = boundForm.get();
         User user = User.findByEmail(session("email"));
-        if(user == null) {
+        if (user == null) {
             return TODO;
         }
         comment.user = user;
@@ -204,7 +210,7 @@ public class PlaceController extends Controller{
         }
         comment.place = place;
         comment.commentCreated = Calendar.getInstance();
-        if(comment.rate == null || comment.rate == 0) {
+        if (comment.rate == null || comment.rate == 0) {
             comment.rate = null;
         }
         comment.save();
@@ -223,17 +229,17 @@ public class PlaceController extends Controller{
         comment.rate = Integer.parseInt(boundForm.bindFromRequest().field("rate").value());
 
         comment.commentCreated = Calendar.getInstance();
-        if(comment.rate == 0) {
+        if (comment.rate == 0) {
             comment.rate = null;
         }
         comment.update();
         return redirect(routes.PlaceController.viewPlace(comment.place.id));
     }
 
-    public Result validateForm(){
+    public Result validateForm() {
         Form<Place> boundPlaceForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
-        if(boundPlaceForm.hasErrors()){
+        if (boundPlaceForm.hasErrors()) {
             return badRequest(boundPlaceForm.errorsAsJson());
         } else if (boundServiceForm.hasErrors()) {
             return badRequest(boundServiceForm.errorsAsJson());
@@ -246,13 +252,13 @@ public class PlaceController extends Controller{
         DynamicForm form = Form.form().bindFromRequest();
         String srchTerm = form.data().get("srch-term");
         List<Place> places = Place.findAll();
-        if(srchTerm != null) {
+        if (srchTerm != null) {
             places = Place.findByValueInTitle(srchTerm);
 
         }
 
         String[] titles = new String[places.size()];
-        for (int i=0; i < places.size(); i++) {
+        for (int i = 0; i < places.size(); i++) {
             titles[i] = places.get(i).title;
         }
 

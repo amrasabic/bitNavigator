@@ -21,15 +21,20 @@
 }
 
 .form-control {
-    margin: 0px;
+    margin-left: 11px;
     position: relative;
     height: 30px;
     padding: 5px;
+    
 }
 
 .input-group {
     margin: 5px;
-    width: 100%;
+    width: 90%;
+}
+
+#captcha{
+    margin-left: 11px;
 }
 
 .input-group-sm {
@@ -240,12 +245,13 @@ textarea {
     font-size: 2em;
 }
 .rate-not-selected {
-    color: black;
+    color: #a6a6a6;
     font-size: 2em;
 }
 
 #comment-rate-label .glyphicon-star, .rating-group .glyphicon-star {
     color: gold;
+
 }
 
 .rating-group {
@@ -353,25 +359,9 @@ textarea {
     font-size: 17px;
 }
 
-th.headerSortUp {
-    background-image: url('images/asc.gif');
-    background-color: #3399FF;
-}
-
-th.headerSortDown {
-    background-image: url('images/desc.gif');
-    background-color: #3399FF;
-}
-
-th.header {
-    background-image: url('images/bg.gif');
-    cursor: pointer;
-    font-weight: bold;
-    background-repeat: no-repeat;
-    background-position: center left;
-    padding-left: 20px;
-    border-right: 1px solid #dad9c7;
-    margin-left: -1px;
-}
+.required_field:after {
+            content: "  *";
+            color: red;
+        }
 
 

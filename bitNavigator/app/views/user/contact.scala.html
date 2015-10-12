@@ -3,21 +3,24 @@
 @import helper._
 @main("Contact Us") {
 
-    <h2>Contact Us</h2> <br> <br>
+    <h3 style="color: #0a68b4"> <i>Contact Us</i></h3>
+
+    <div class="col-md-12" STYLE="font-size: 13px; color: #0a68b4">Fields marked with an asterisk (<abbr class="req" title="required" style="color: red">*</abbr>) are required</div>
+    <br> <br>
 
     @helper.form(routes.UserController.sendMail(), 'class -> "form-horizontal", 'id -> "contactForm") {
         <div class="row">
             <div class="col-md-12">
             @if(flash.containsKey("errorMail")) {
-                <div class="alert alert-danger col-md-12">
-                    <b style="font-size : 18 px ; color : red"><center>@flash.get("errorMail")</center></b>
+                <div class="alert alert-danger fade in">
+                    <b style="font-size : 17px ; color : red"><center>@flash.get("errorMail")</center></b>
                 </div>
             }
             </div>
             <div class="col-md-12">
             @if(flash.containsKey("success")) {
-                <div class="alert alert-success col-md-12">
-                    <b style="font-size : 18 px ; color : red"><center>@flash.get("success")</center></b>
+                <div class="alert alert-success fade in">
+                    <b style="font-size : 17px ; color : white; background-color: #0a68b4"><center>@flash.get("success")</center></b>
                 </div>
             }
             </div>
@@ -25,29 +28,31 @@
         <div class="row">
 
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">
-                    Name <abbr class="req" title="required" style="color : red"> * </abbr> </span>
-                <input name="name" value="@contactForm("name").value" type="text" class="form-control" id="inputName" required="required">
-                <span id="nameError" class="alert-danger" data-error-for="" ></span>
+                <label for="inputName" class="input-group-addon required_field">
+                    Name</label>
+                   <input name="name" value="@contactForm("name").value" type="text" class="form-control" id="inputName" required="required">
+            </div>
+
+
+
+            <div class="input-group">
+                <span class="input-group-addon required_field">
+                    Email  </span>
+                <input name="email" value="@contactForm("email").value" type="email" class="form-control" id="email" required="required">
             </div>
 
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">
-                    Email <abbr class="req" title="required" style="color : red"> * </abbr> </span>
-                <input name="email" value="@contactForm("email").value" type="text" class="form-control" id="email" required="required">
-            </div>
-
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">
-                    Message <abbr class="req" title="required" style="color : red"> * </abbr> </span>
+                <span class="input-group-addon required_field">
+                    Message </span>
                 <textarea style="resize : vertical" maxlength="250" name="message" value="@contactForm("message").value" type="text" class="form-control" id="message" required="required">@contactForm("message").value </textarea>
             </div>
 
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">
-                    Check <abbr class="req" title="required" style="color : red"> * </abbr> </span>
+                <span class="input-group-addon required_field">
+                    Security check </span>
                 <div id="captcha" class="g-recaptcha" data-sitekey="6LeK6w0TAAAAAHLerAgambJDtnxgDkKMOb4Vg43a"></div>
             </div>
+            <br>
             <div class="col-md-offset-2">
                 <input type="submit" value="Send Message" class="btn btn-primary" />
             </div>
