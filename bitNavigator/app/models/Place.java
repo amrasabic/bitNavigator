@@ -26,6 +26,8 @@ public class Place extends Model {
     public Double latitude;
     public String address;
     public Calendar placeCreated;
+    public Integer numOfViews;
+    public Integer numOfReservations;
     @ManyToOne(cascade = CascadeType.PERSIST)
     public User user;
     @ManyToOne
@@ -42,7 +44,8 @@ public class Place extends Model {
      * Default constructor.
      */
     public Place() {
-
+        this.numOfViews = 0;
+        this.numOfReservations = 0;
     }
 
     public static List<Place> findAll() {
@@ -96,6 +99,11 @@ public class Place extends Model {
     public static int getLastId() {
         int tmp = finder.order("id").findRowCount();
         return finder.order("id").findList().get(tmp - 1).id;
+    }
+
+    public void updateNumOfViews(){
+        this.numOfViews++;
+        this.update();
     }
 
 }

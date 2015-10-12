@@ -27,7 +27,7 @@
     </div>
 </div>
 <p><br/></p>
-@if(place.description != ""){
+@if(place.description != "") {
     <!-- Description -->
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
@@ -39,7 +39,7 @@
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body" style="white-space: pre-line;">
+                <div class="panel-body" style="white-space : pre-line ;">
                 @place.description
                 </div>
             </div>
@@ -47,14 +47,29 @@
     </div>
 }
 
+<!-- Number of views -->
+<div class="form-group">
+    <label for="views">Views:</label>
+    <input type="text" class="form-control" name="views" id="views" value="@place.numOfViews" readonly>
+</div>
+<p><br/></p>
+
+<!-- Number of reservations -->
+@if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail == place.user.email || SessionHelper.getCurrentUser().isAdmin && place.service.isReservable()) {
+    <div class="form-group">
+        <label for="views">Reservations:</label>
+        <input type="text" class="form-control" name="views" id="views" value="@place.numOfReservations" readonly>
+    </div>
+    <p><br/></p>
+}
 <!-- Rating -->
 <div class="form-group rating-group">
-    @if(rating == null){
+@if(rating == null) {
     <div class="label label-default">Rating:</div> n/a
-    }  else {
-        <div class="label label-default">Rating:</div> @rating
-        <span class="glyphicon glyphicon-star"></span>
-    }
+} else {
+    <div class="label label-default">Rating:</div> @rating
+    <span class="glyphicon glyphicon-star"></span>
+}
 </div>
 <script>
     $(document).ready(function() {
