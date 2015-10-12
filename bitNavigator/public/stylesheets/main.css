@@ -353,4 +353,35 @@ textarea {
     font-size: 17px;
 }
 
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    color: black;
+    margin-top: 5px;
+}
 
+.strike span {
+    position: relative;
+    display: inline-block;
+}
+
+#sign-up-modal .modal-content{
+    width: 353px;
+}
+
+#sign-up-modal-body {
+    text-align: center;
+}
+
+#btn-sign-in-modal {
+    margin-top: 10px;
+    width: 321px;
+}
+
+.sign-in-modal-alert {
+    margin: 0px;
+    padding: 2px;
+    height: 20px;
+}

@@ -88,6 +88,9 @@ public class UserController extends Controller {
      */
     public Result checkSignIn() {
         Form<User> boundForm = userForm.bindFromRequest();
+        if (boundForm.hasErrors()) {
+            return badRequest(boundForm.errorsAsJson());
+        }
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
@@ -110,6 +113,32 @@ public class UserController extends Controller {
         }
 
         return redirect(routes.Application.index());
+    }
+
+    public Result validateSignIn() {
+        Form<User> boundForm = userForm.bindFromRequest();
+        if (boundForm.hasErrors()) {
+            return badRequest(boundForm.errorsAsJson());
+        }
+        User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
+        if (user == null) {
+            String msg = "{\"password\":\"Email and/or password invalid!\"}";
+            return badRequest(msg);
+        }
+        try {
+            if (!PasswordHash.validatePassword(boundForm.bindFromRequest().field(User.PASSWORD).value(), user.password)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (Exception e) {
+            String msg = "{\"password\":\"Email and/or password invalid!\"}";
+            return badRequest(msg);
+        }
+
+        if (!user.isValidated()) {
+            String msg = "{\"password\":\"Account is not validated!\"}";
+            return badRequest(msg);
+        }
+        return ok();
     }
 
     /**

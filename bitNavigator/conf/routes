@@ -10,6 +10,7 @@ GET           /assets/*file                              controllers.Assets.vers
 
 GET           /user/signin                               @controllers.UserController.signIn()
 POST          /user/signin                               @controllers.UserController.checkSignIn()
+POST          /user/validatesignup                       @controllers.UserController.validateSignIn()
 GET           /user/signup                               @controllers.UserController.signUp()
 POST          /user/signup                               @controllers.UserController.save()
 GET           /user/signout                              @controllers.UserController.signOut()
