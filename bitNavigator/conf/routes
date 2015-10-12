@@ -67,3 +67,4 @@ POST          /checkPass                                 @controllers.UserContro
 
 POST          /contact                                   @controllers.UserController.sendMail()
 GET           /contact                                   @controllers.UserController.contactUs()
+POST          /resendVerificationMail                    @controllers.UserController.resendVerificationEmail()

@@ -360,8 +360,8 @@ textarea {
 }
 
 .required_field:after {
-    content: "  *";
-    color: red;
-}
+            content: "  *";
+            color: red;
+        }
 
 

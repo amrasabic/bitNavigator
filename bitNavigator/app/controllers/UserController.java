@@ -57,6 +57,7 @@ public class UserController extends Controller {
 
     public static final String ERROR_MESSAGE = "error";
     public static final String SUCCESS_MESSAGE = "success";
+    public static final String WARNING_MESSAGE = "warning";
 
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
@@ -147,7 +148,9 @@ public class UserController extends Controller {
         // Sending Email To user
         String host = url + "validate/" + u.getToken();
         MailHelper.send(u.email, host);
-        return ok(index.render(new ArrayList<Place>()));
+
+        flash("success", "You have been registered. Verification mail has been sent to your address. To login you have to verify your email.");
+        return redirect(routes.Application.index());
     }
 
     @Security.Authenticated(Authenticators.User.class)
@@ -388,6 +391,7 @@ public class UserController extends Controller {
             if (User.validateUser(user)) {
                 session().clear();
                 session("email", user.email);
+                flash("success", "Email verified !");
                 return redirect("/");
             } else {
                 return redirect("/");
@@ -476,6 +480,25 @@ public class UserController extends Controller {
             this.email = email;
             this.message = message;
         }
+    }
+
+    public Result resendVerificationEmail(){
+        Form<resendVerificationMailForm> boundForm = Form.form(resendVerificationMailForm.class).bindFromRequest();
+        User u = User.findByEmail(boundForm.bindFromRequest().field("verificationEmail").value());
+        if (u == null){
+            flash("error", "User with email you entered does not exist");
+            return redirect(routes.Application.index());
+        }
+        String host = url + "validate/" + u.getToken();
+        MailHelper.send(u.email, host);
+        flash("success", "Verification email sent");
+        return redirect(routes.Application.index());
+    }
+
+    public static class resendVerificationMailForm {
+        @Constraints.Required(message = "Email is required")
+        public String verificationEmail;
+
     }
 
 
