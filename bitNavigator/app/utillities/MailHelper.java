@@ -6,6 +6,8 @@ import org.apache.commons.mail.HtmlEmail;
 import play.Logger;
 import play.Play;
 
+import static play.mvc.Controller.flash;
+
 
 /**
  * Created by Semir on 5.10.2015.
@@ -60,7 +62,7 @@ public class MailHelper {
                 ));
                 mail.send();
             } catch (Exception e) {
-
+                flash("error", "Could not send verification mail");
                 e.printStackTrace();
             }
 
