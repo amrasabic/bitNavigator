@@ -14,6 +14,7 @@ import utillities.PasswordHash;
 import utillities.SessionHelper;
 import utillities.UserValidator;
 import views.html.admin.adminview;
+import views.html.index;
 import views.html.user.profile;
 import views.html.user.signin;
 import views.html.user.signup;
@@ -31,6 +32,7 @@ import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import play.libs.F.Function;
@@ -145,7 +147,7 @@ public class UserController extends Controller {
         // Sending Email To user
         String host = url + "validate/" + u.getToken();
         MailHelper.send(u.email, host);
-        return redirect(routes.Application.index());
+        return ok(index.render(new ArrayList<Place>()));
     }
 
     @Security.Authenticated(Authenticators.User.class)
