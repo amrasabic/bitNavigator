@@ -43,6 +43,8 @@ create table place (
   latitude                  double,
   address                   varchar(255),
   place_created             datetime(6),
+  num_of_views              integer,
+  num_of_reservations       integer,
   user_id                   integer,
   service_id                integer,
   constraint pk_place primary key (id))

@@ -21,15 +21,20 @@
 }
 
 .form-control {
-    margin: 0px;
+    margin-left: 11px;
     position: relative;
     height: 30px;
     padding: 5px;
+    
 }
 
 .input-group {
     margin: 5px;
-    width: 100%;
+    width: 90%;
+}
+
+#captcha{
+    margin-left: 11px;
 }
 
 .input-group-sm {
@@ -240,12 +245,13 @@ textarea {
     font-size: 2em;
 }
 .rate-not-selected {
-    color: black;
+    color: #a6a6a6;
     font-size: 2em;
 }
 
 #comment-rate-label .glyphicon-star, .rating-group .glyphicon-star {
     color: gold;
+
 }
 
 .rating-group {
@@ -352,5 +358,10 @@ textarea {
 #description1 {
     font-size: 17px;
 }
+
+.required_field:after {
+            content: "  *";
+            color: red;
+        }
 
 
