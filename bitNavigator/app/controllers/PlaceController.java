@@ -179,13 +179,8 @@ public class PlaceController extends Controller {
             rating = place.getRating();
         }
         if (form.data().get("isModal") != null) {
-            if (!SessionHelper.getCurrentUser().places.contains(place)) {
-                place.updateNumOfViews();
-            }
-            return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
-        }
-        if (!SessionHelper.getCurrentUser().places.contains(place)) {
             place.updateNumOfViews();
+            return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
         }
         return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
     }

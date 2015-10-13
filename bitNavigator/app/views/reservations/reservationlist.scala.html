@@ -60,7 +60,6 @@
     <table id="table-my-reservations" class="table table-striped">
         <thead>
             <tr>
-                <th>id</th>
                 <th>place title</th>
                 <th>Reservation created</th>
                 <th>Reservation date</th>
@@ -73,7 +72,6 @@
         @for(reservation <- reservations) {
             @if(reservation.user.email == SessionHelper.getCurrentUsersEmail){
                 <tr>
-                    <td>@reservation.id</td>
                     <td>@reservation.place.title</td>
                     <th>@reservation.timestamp.getTime()</th>
                     <th>@reservation.reservationDate.getTime()</th>
