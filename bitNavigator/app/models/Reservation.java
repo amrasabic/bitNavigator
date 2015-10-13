@@ -62,6 +62,12 @@ public class Reservation extends Model {
         return finder.where().eq("place", user).where().eq("status", status).findList();
     }
 
+    public static List<Reservation> findByStatus1(User user, int s) {
+        Status status = Status.findById(s);
+        System.out.println("Status= "+status.status);
+        return finder.where().eq("status", status).findList();
+    }
+
     public static Integer reservationsOnWaiting(){
         List<Reservation> reservations = Reservation.findByStatus(SessionHelper.getCurrentUser(), Status.findById(Status.WAITING));
         return reservations.size();
