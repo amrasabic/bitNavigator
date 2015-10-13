@@ -15,7 +15,6 @@ import utillities.SessionHelper;
 import utillities.UserValidator;
 import views.html.admin.adminview;
 import views.html.user.profile;
-import views.html.user.signin;
 import views.html.user.signup;
 import views.html.user.userlist;
 import play.Play;
@@ -31,6 +30,7 @@ import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+import java.util.Calendar;
 import java.util.UUID;
 
 import play.libs.F.Function;
@@ -61,13 +61,27 @@ public class UserController extends Controller {
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
     private static String url = Play.application().configuration().getString("url");
 
-    /**
-     * Leads random user to signin subpage
-     *
-     * @return
-     */
-    public Result signIn() {
-        return ok(signin.render(userForm));
+    public Result connectWithFB() {
+        DynamicForm boundForm = Form.form().bindFromRequest();
+        if (User.findByEmail(boundForm.data().get("email")) != null) {
+            if (User.findByEmail(boundForm.data().get("email")).isValidated()) {
+                session().clear();
+                session("email", boundForm.data().get("email"));
+            } else {
+                flash(ERROR_MESSAGE, "Account is not validated!");
+            }
+            return ok();
+        }
+        User user = new User();
+        user.email = boundForm.data().get("email");
+        user.firstName = boundForm.data().get("first_name");
+        user.lastName = boundForm.data().get("last_name");
+        user.accountCreated = Calendar.getInstance();
+        user.setToken(UUID.randomUUID().toString());
+        String host = url + "validate/" + user.getToken();
+        MailHelper.send(user.email, host);
+        user.save();
+        return ok();
     }
 
     /**

@@ -29,8 +29,9 @@
             <ul class="nav navbar-nav navbar-right">
             @if(!SessionHelper.isAuthenticated) {
                 <div class="navbar-form navbar-right dont-validate">
-                    <button id="btn-sign-in" class="btn btn-default" type="button" data-toggle="modal" data-target="#sign-up-modal">Sign in</button>
-                    <button type="button" class="btn btn-default btn-sign"><a id="btn-sign-up-menu" href="@routes.UserController.signUp()">Sign up</a></button>
+                    <button id="btn-sign-in" class="btn btn-default" type="button" data-toggle="modal" data-target="#sign-in-modal">Sign in</button>
+                    <button id="btn-sign-in" class="btn btn-default" type="button" data-toggle="modal" data-target="#sign-up-modal">Sign up</button>
+                    <!--button type="button" class="btn btn-default btn-sign"><a id="btn-sign-up-menu" href="@routes.UserController.signUp()">Sign up</a></button-->
                     <button type="button" class="btn btn-default btn-sign">
                         <a id="btn-sign-up-menu" href="@routes.UserController.contactUs()"><span class="glyphicon glyphicon-envelope"></span> Contact Us</a>
                     </button>
@@ -67,24 +68,24 @@
     </div>
 
         <!-- Sign in modal -->
-    <div class="modal fade" id="sign-up-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="sign-in-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div id="sign-up-modal-body" class="modal-body">
-                    <fb:login-button class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true"
+                <div id="sign-in-modal-body" class="modal-body"><!--data-auto-logout-link="true"-->
+                    <fb:login-button class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false"
                     scope="public_profile,email" onlogin="checkLoginState();">
                         Connect with Facebook
                     </fb:login-button>
                     <div class="strike">
                         <span>Or</span>
                     </div>
-                    <form class="sign-in-modal-form" method="post" action="@routes.UserController.checkSignIn()">
-                        <input id="email-signin" type="text" required="required" class="form-control" placeholder=" Email" name="email">
+                    <form class="sign-in-modal-form dont-validate" method="post" action="@routes.UserController.checkSignIn()">
+                        <input id="email-signin" type="text" required="required" class="form-control moadal-input" placeholder=" Email" name="email">
                         <div class="alert alert-danger sign-in-modal-alert" data-error-for="email" role="alert" hidden></div>
-                        <input id="password-signin" type="password" required="required" class="form-control" placeholder=" Password" name="password">
+                        <input id="password-signin" type="password" required="required" class="form-control modal-input" placeholder=" Password" name="password">
                         <div class="alert alert-danger sign-in-modal-alert" data-error-for="password" role="alert" hidden></div>
                         <button id="btn-sign-in-modal" type="submit" class="btn btn-primary btn-lg" >Sign in</button>
                     </form>
@@ -92,9 +93,56 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function(){
 
+        <!-- Sign up modal -->
+    <div class="modal fade" id="sign-up-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div id="sign-up-modal-body" class="modal-body"><!--data-auto-logout-link="true"-->
+                    <fb:login-button class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false"
+                    scope="public_profile,email" onlogin="checkLoginState();">
+                        Connect with Facebook
+                    </fb:login-button>
+                    <div class="strike">
+                        <span>Or</span>
+                    </div>
+                    <form class="sign-up-modal-form" method="post" action="@routes.UserController.save()">
+
+                        <input id="first-name-signup" type="text" class="form-control moadal-input" placeholder=" First name" name="firstName"
+                        data-toggle="popover" data-trigger="focus" data-content="Can only contain letters.">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="firstName" role="alert" hidden></div>
+
+                        <input id="last-name-signup" type="text" class="form-control moadal-input" placeholder=" Last name" name="lastName"
+                        data-toggle="popover" data-trigger="focus" data-content="Can only contain letters.">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="lastName" role="alert" hidden></div>
+
+                        <input id="email-signup" type="text" required="required" class="form-control moadal-input" placeholder=" Email" name="email"
+                        data-toggle="popover" data-trigger="focus" data-content="Input valid email address.">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="email" role="alert" hidden></div>
+
+                        <input id="password-signup" type="password" required="required" class="form-control modal-input" placeholder=" Password" name="password"
+                        data-toggle="popover" data-trigger="focus" data-content="Password must contain between 8 and 25 characters. There has to be at least one letter and one digit">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="password" role="alert" hidden></div>
+
+                        <input id="confirm-password-signup" type="password" required="required" class="form-control modal-input" placeholder=" Confirm password" name="confirmPassword"
+                        data-toggle="popover" data-trigger="focus" data-content="Confirm password.">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="confirmPassword" role="alert" hidden></div>
+
+                        <button id="btn-sign-in-modal" type="submit" class="btn btn-primary btn-lg" >Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var connectWithFB = "@routes.UserController.connectWithFB()";
+        var urlToPost = "@routes.UserController.validateForm()"
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
             $(".sign-in-modal-form").submit(function(e, options){
 
                 var options = options || {};
@@ -109,7 +157,7 @@
 
                 $.ajax({
                     url: "@routes.UserController.validateSignIn()",
-                    method: "post",
+                    type: "post",
                     data: $(this).serialize()
                 }).success(function(response){
                     $form.trigger("submit", {allow: true});
@@ -132,6 +180,7 @@
         });
     </script>
     <script src="@routes.Assets.versioned("javascripts/fb-login.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/validateForm.js")"></script>
 
 
     <script>
