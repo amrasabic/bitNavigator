@@ -8,7 +8,7 @@
         <li class="list-group-item">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">@message.sender.firstName</h3>
+              <h3 class="panel-title">@(message.sender.firstName + " " + message.sent.getTime())</h3>
             </div>
             <div class="panel-body">@message.content</div>
           </div>

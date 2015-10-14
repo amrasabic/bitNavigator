@@ -45,6 +45,9 @@ public class Message extends Model{
     public static List<Message> findByReservation(Integer id) {
         Reservation reservation = Reservation.findById(id);
         return finder.where().eq("reservation", reservation).findList();
+
     }
+
+
 
 }

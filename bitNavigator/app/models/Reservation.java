@@ -87,4 +87,6 @@ public class Reservation extends Model {
         Reservation reservation = Reservation.findById(id);
         return finder.where().eq("reservation", reservation).eq("status", status).findList();
     }
+
+
 }
