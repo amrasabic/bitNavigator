@@ -21,7 +21,7 @@
 }
 
 .form-control {
-    margin-left: 11px;
+    margin-left: 0px;
     position: relative;
     height: 30px;
     padding: 5px;
@@ -146,7 +146,8 @@ body {
 }
 
 .popover {
-    width: 20%;
+    width: 200px;
+    max-width: 200px;
 }
 
 .btn-rate {
@@ -359,9 +360,47 @@ textarea {
     font-size: 17px;
 }
 
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    color: black;
+    margin-top: 5px;
+}
+
+.strike span {
+    position: relative;
+    display: inline-block;
+}
+
+#sign-up-modal .modal-content, #sign-in-modal .modal-content{
+    width: 353px;
+}
+
 .required_field:after {
-            content: "  *";
-            color: red;
-        }
+    content: "  *";
+    color: red;
+}
 
 
+#sign-up-modal-body, #sign-in-modal-body {
+    text-align: center;
+}
+
+#btn-sign-in-modal {
+    margin-top: 10px;
+    width: 321px;
+}
+
+.sign-in-modal-alert {
+    margin: 0px;
+    padding: 2px;
+    height: 20px;
+}
+
+#email-signin, #password-signin, #email-signup, #password-signup,
+#first-name-signup, #last-name-signup, #confirm-password-signup {
+    color: black;
+    padding-left: 5px;
+}

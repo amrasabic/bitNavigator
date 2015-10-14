@@ -8,8 +8,9 @@ GET           /                                          @controllers.Applicatio
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                              controllers.Assets.versioned(path="/public", file: Asset)
 
-GET           /user/signin                               @controllers.UserController.signIn()
+POST          /user/fb                                   @controllers.UserController.connectWithFB()
 POST          /user/signin                               @controllers.UserController.checkSignIn()
+POST          /user/validatesignup                       @controllers.UserController.validateSignIn()
 GET           /user/signup                               @controllers.UserController.signUp()
 POST          /user/signup                               @controllers.UserController.save()
 GET           /user/signout                              @controllers.UserController.signOut()
