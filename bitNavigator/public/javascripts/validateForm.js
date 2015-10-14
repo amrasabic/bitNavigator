@@ -18,7 +18,7 @@ $(document).ready(function(){
         $("[data-error-for]").html("");
         $("[data-error-for]").hide();
         $form = $(this);
-        alert("dasd");
+
         $.ajax({
             url: urlToPost,
             method: "post",

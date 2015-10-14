@@ -61,6 +61,7 @@
                             <table id="myTable" class="table">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                     @for(day <- WorkingHours.DAYS_OF_WEEK){
                                         <th>@day</th>
                                     }
@@ -70,6 +71,7 @@
                                 <tbody>
 
                                     <tr>
+                                    <td><strong>From</strong></td>
                                     @for(opening <- WorkingHours.getFormatedOpeningTimes(place)){
                                         <td>
                                         @opening
@@ -77,6 +79,7 @@
                                     }
                                     </tr>
                                     <tr>
+                                        <td><strong>To</strong></td>
                                     @for(closing <- WorkingHours.getFormatedClosingTimes(place)){
                                         <td>
                                         @closing
@@ -126,7 +129,8 @@
     }
 
     <div id="similarPlaces" class="container-fluid">
-        <p style="font-size: 17px;">Suggested places</p>
+        <h5>Suggested places</h5>
+        <br>
         @views.html.place.similarplacelist(Place.findByService(place.service, place.id))
     </div>
 
