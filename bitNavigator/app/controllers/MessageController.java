@@ -65,9 +65,7 @@ public class MessageController extends Controller {
 
     @Security.Authenticated(Authenticators.User.class)
     public Result inbox(){
-        User user = SessionHelper.getCurrentUser();
-        List<Reservation> reservations = Reservation.findByUser(user);
-        return ok(_inbox.render(reservations));
+        return ok(_inbox.render(Reservation.getAllUsersReservations()));
     }
 
     @Security.Authenticated(Authenticators.User.class)

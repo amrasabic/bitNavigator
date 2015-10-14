@@ -75,8 +75,11 @@ public class Reservation extends Model {
     }
 
     public static List<Reservation> getAllUsersReservations() {
-        //TODO prodji kroz sve userove placeove i vrati sve rez + njegove rez
-        return null;
+        List<Reservation> reservations = new ArrayList<>(Reservation.findByUser(SessionHelper.getCurrentUser()));
+        for (Place place : Place.findByUser(SessionHelper.getCurrentUser())) {
+            reservations.addAll(Reservation.findByPlace(place));
+        }
+        return reservations;
     }
 
 }
