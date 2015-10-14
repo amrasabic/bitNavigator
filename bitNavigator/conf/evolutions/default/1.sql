@@ -64,6 +64,8 @@ create table reservation (
   status_id                 integer,
   timestamp                 datetime(6),
   reservation_date          datetime(6),
+  price                     double,
+  payment_id                varchar(255),
   constraint pk_reservation primary key (id))
 ;
 

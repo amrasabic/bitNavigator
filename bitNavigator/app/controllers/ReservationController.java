@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by amra.sabic on 9/17/2015.
@@ -95,6 +96,25 @@ public class ReservationController extends Controller {
         reservation.status = status;
         reservation.update();
 
+        return redirect(routes.ReservationController.reservationsList());
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result setPrice(){
+        DynamicForm boundForm = Form.form().bindFromRequest();
+        Reservation r = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
+        List<Message> messages = Message.findByReservation(Integer.parseInt(boundForm.data().get("reservationId")));
+        String prc = boundForm.data().get("priceId");
+        Double price = Double.parseDouble(prc);
+        r.price=price;
+        r.update();
+        Message message = new Message();
+        message.sender = SessionHelper.getCurrentUser();
+        String msg = "Da bi rezervisali "+r.place.title+" morate platiti "+price+" KM.";
+        message.content = msg;
+        message.reservation = r;
+        message.save();
+        messages.add(message);
         return redirect(routes.ReservationController.reservationsList());
     }
 

@@ -26,6 +26,7 @@ DELETE        /user/profile/:email                       @controllers.UserContro
 
 GET           /user/reservations                         @controllers.ReservationController.reservationsList()
 POST          /user/reservations                         @controllers.ReservationController.changeStatus()
+POST          /user/reservations/price                   @controllers.ReservationController.setPrice()
 DELETE        /user/reservations/:id                     @controllers.ReservationController.delete(id: Integer)
 POST          /user/reservations/workingHours            @controllers.ReservationController.getWorkingHours()
 
@@ -68,3 +69,7 @@ POST          /checkPass                                 @controllers.UserContro
 POST          /contact                                   @controllers.UserController.sendMail()
 GET           /contact                                   @controllers.UserController.contactUs()
 POST          /resendVerificationMail                    @controllers.UserController.resendVerificationEmail()
+
+POST          /paypal/:id                                @controllers.Application.paypal(id: Integer)
+GET           /paypal/success                            @controllers.Application.paypalSuccess()
+GET           /paypal/pdf:id                             @controllers.Application.payPdf(id: Integer)

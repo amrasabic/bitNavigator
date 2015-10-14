@@ -7,27 +7,29 @@
     <table id="table-all-reservations" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>User</th>
-                <th>Place title</th>
-                <th>Reservation created</th>
-                <th>Reservation day</th>
-                <th>Status</th>
-                <th></th>
-                <th>Delete</th>
+                <th class="naslov">User</th>
+                <th class="naslov">Place title</th>
+                <th class="naslov">Reservation created</th>
+                <th class="naslov">Reservation day</th>
+                <th class="naslov">Status</th>
+                <th class="naslov">Price</th>
+                <th class="naslov">Messages</th>
+                <th class="naslov">Delete</th>
             </tr>
         </thead>
         <tbody>
         @for(reservation <- reservations) {
-            @if(SessionHelper.isAdmin || reservation.place.user.email == SessionHelper.getCurrentUsersEmail){
+            @if(SessionHelper.isAdmin || reservation.place.user.email == SessionHelper.getCurrentUsersEmail) {
                 <tr>
                     <td>@reservation.user.email</td>
                     <td>@reservation.place.title</td>
                     <th>@reservation.timestamp.getTime()</th>
                     <th>@reservation.reservationDate.getTime()</th>
-                    <td>
+                    <td class="naslov">
+                    @if(reservation.status.status != "Approved") {
                         <form action="@routes.ReservationController.changeStatus()" method="post">
-                            <select name="statusId">
-                            @for(status <- statuses){
+                            <select name="statusId" style="border: 1px solid #999999">
+                            @for(status <- statuses) {
                                 @if(status.id == reservation.status.id) {
                                     <option value="@status.id" selected>@status.status</option>
                                 } else {
@@ -38,17 +40,30 @@
                             <input type="hidden" name="reservationId" value="@reservation.id">
                             <input type="submit" class="btn btn-xs btn-warning" value="Save Change">
                         </form>
-
+                    </td>
+                    }else{
+                        @reservation.status.status
+                    }
+                    <td class="naslov">
+                    @if(reservation.price == null && reservation.status.status != "Approved") {
+                        <form action="@routes.ReservationController.setPrice()" method="post">
+                            <input type="number" style="border: 1px solid #999999" required="required" name="priceId" id="priceId" step="0.01" min="1.00" max="100000.00">
+                            <input type="hidden" name="reservationId" value="@reservation.id">
+                            <input type="submit" class="btn btn-xs btn-warning" value="Set price">
+                        </form>
+                    } else {
+                        @reservation.price
+                    }
                     </td>
                     @if(reservation.status.id == Status.DENIED) {
-                        <td><span class="glyphicon glyphicon-envelope"></span></td>
+                        <td class="naslov"><span class="glyphicon glyphicon-envelope"></span></td>
                     } else {
-                        <td><a href="@routes.MessageController.messagesList(reservation.id)"><i class="glyphicon glyphicon-envelope"></i></a></td>
+                        <td class="naslov"><a href="@routes.MessageController.messagesList(reservation.id)"><i class="glyphicon glyphicon-envelope"></i></a></td>
                     }
                     @if(reservation.status.id == Status.WAITING) {
-                        <td><a href="@routes.ReservationController.delete(reservation.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                        <td class="naslov"><a href="@routes.ReservationController.delete(reservation.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
                     } else {
-                        <td><span class="glyphicon glyphicon-trash"></span></td>
+                        <td class="naslov"><span class="glyphicon glyphicon-trash"></span></td>
                     }
                 </tr>
             }
@@ -57,43 +72,50 @@
     </table>
 
     <h2>My reservations</h2>
-    <table id="table-my-reservations" class="table table-striped">
+    <table id="table-my-reservations" class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>place title</th>
-                <th>Reservation created</th>
-                <th>Reservation date</th>
-                <th>status</th>
-                <th></th>
-                <th></th>
+                <th class="naslov">Place title</th>
+                <th class="naslov">Reservation created</th>
+                <th class="naslov">Reservation date</th>
+                <th class="naslov">Status</th>
+                <th class="naslov">Messages</th>
+                <th class="naslov">Pay</th>
+                <th class="naslov">Delete</th>
             </tr>
         </thead>
         <tbody>
         @for(reservation <- reservations) {
-            @if(reservation.user.email == SessionHelper.getCurrentUsersEmail){
-                <tr>
-                    <td>@reservation.place.title</td>
-                    <th>@reservation.timestamp.getTime()</th>
-                    <th>@reservation.reservationDate.getTime()</th>
+            @if(reservation.user.email == SessionHelper.getCurrentUsersEmail) {
+                <tr class="naslov">
+                    <td class="naslov">@reservation.place.title</td>
+                    <th class="naslov">@reservation.timestamp.getTime()</th>
+                    <th class="naslov">@reservation.reservationDate.getTime()</th>
                     @if(reservation.status.id == Status.APPROVED) {
-                            <td style="color: green">@reservation.status.status</td>
+                        <td style="color : green" class="naslov">@reservation.status.status</td>
                     }
-                    @if(reservation.status.id == Status.WAITING){
-                            <td style="color: orange">@reservation.status.status</td>
-                    }
-                    @if(reservation.status.id == Status.DENIED){
-                            <td style="color: red">@reservation.status.status</td>
+                    @if(reservation.status.id == Status.WAITING) {
+                        <td style="color : orange" class="naslov">@reservation.status.status</td>
                     }
                     @if(reservation.status.id == Status.DENIED) {
-                        <td><span class="glyphicon glyphicon-envelope"></span></td>
-                    } else {
-                        <td><a href="@routes.MessageController.messagesList(reservation.id)"><i class="glyphicon glyphicon-envelope"></i></a></td>
+                        <td style="color : red" class="naslov">@reservation.status.status</td>
                     }
-
-                    @if(reservation.status.id == Status.WAITING) {
-                        <td><a href="@routes.ReservationController.delete(reservation.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    @if(reservation.status.id == Status.DENIED) {
+                        <td class="naslov"><span class="glyphicon glyphicon-envelope"></span></td>
                     } else {
-                        <td><span class="glyphicon glyphicon-trash"></span></td>
+                        <td class="naslov"><a href="@routes.MessageController.messagesList(reservation.id)"><i class="glyphicon glyphicon-envelope"></i></a></td>
+                    }
+                    <td class="naslov">
+                        @if(reservation.price != null && reservation.status.status.equals("Waiting")){
+                            <form method="post" action="@routes.Application.paypal(reservation.id)">
+                                <button class="btn btn-primary">Pay now</button>
+                                </form>
+                                }
+                    </td>
+                    @if(reservation.status.id == Status.WAITING) {
+                        <td class="naslov"><a href="@routes.ReservationController.delete(reservation.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    } else {
+                        <td class="naslov"><span class="glyphicon glyphicon-trash"></span></td>
                     }
                 </tr>
 
