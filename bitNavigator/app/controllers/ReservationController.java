@@ -5,20 +5,14 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import models.Status;
-
 import play.mvc.Security;
 import utillities.Authenticators;
 import utillities.SessionHelper;
-import views.html.place.*;
 import views.html.reservations.reservationlist;
-
-import play.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -58,6 +52,11 @@ public class ReservationController extends Controller {
 
         Message message = new Message();
         message.sender = SessionHelper.getCurrentUser();
+        if (user.equals(r.place.user)) {
+            message.reciever = r.user;
+        } else {
+            message.reciever = r.place.user;
+        }
         if(content == null) {
             return TODO;
         } else {
@@ -66,7 +65,6 @@ public class ReservationController extends Controller {
 
         r.timestamp = Calendar.getInstance();
         r.reservationDate = date;
-
         r.messages.add(message);
         r.status = models.Status.findById(models.Status.WAITING);
         r.save();
@@ -116,15 +114,18 @@ public class ReservationController extends Controller {
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
-
             return redirect("/");
         }
+
     }
 
     @Security.Authenticated(Authenticators.User.class)
     public Result delete(Integer id){
         Reservation reservation = Reservation.findById(id);
         if(reservation.status.id == models.Status.WAITING) {
+            for (Message message : Message.findByReservation(id)) {
+                message.delete();
+            }
             reservation.delete();
         }
 

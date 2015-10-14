@@ -4,6 +4,7 @@ import models.Comment;
 import models.Message;
 import models.Reservation;
 import models.User;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -33,6 +34,7 @@ public class MessageController extends Controller {
 
     @Security.Authenticated(Authenticators.User.class)
     public Result sendMessage(Integer reservationId){
+        Reservation reservation = Reservation.findById(reservationId);
         List<Message> messages = Message.findByReservation(reservationId);
         Form<Message> boundForm = messageForm.bindFromRequest();
         Message message = new Message();
@@ -44,8 +46,14 @@ public class MessageController extends Controller {
         message.content = content;
 
         User user = SessionHelper.getCurrentUser();
+
         message.sender = user;
-        Reservation reservation = Reservation.findById(reservationId);
+        if (user.equals(reservation.place.user)) {
+            message.reciever = reservation.user;
+        } else {
+            message.reciever = reservation.place.user;
+        }
+
         message.reservation = reservation;
 
         message.sent = Calendar.getInstance();

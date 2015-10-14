@@ -27,7 +27,7 @@
                     <th>@reservation.timestamp.getTime()</th>
                     <th>@reservation.reservationDate.getTime()</th>
                     <td>
-                        <form action="@routes.ReservationController.changeStatus()" method="post">
+                        <form class="dont-validate" action="@routes.ReservationController.changeStatus()" method="post">
                             <select name="statusId">
                             @for(status <- statuses){
                                 @if(status.id == reservation.status.id) {

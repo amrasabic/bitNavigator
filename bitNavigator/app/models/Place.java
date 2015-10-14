@@ -96,11 +96,6 @@ public class Place extends Model {
         return null;
     }
 
-    public static int getLastId() {
-        int tmp = finder.order("id").findRowCount();
-        return finder.order("id").findList().get(tmp - 1).id;
-    }
-
     public void updateNumOfViews(){
         this.numOfViews++;
         this.update();

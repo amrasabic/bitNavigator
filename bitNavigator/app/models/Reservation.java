@@ -1,10 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
-import play.data.validation.Constraints;
 import utillities.SessionHelper;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -45,6 +45,10 @@ public class Reservation extends Model {
         return finder.where().eq("user", user).findList();
     }
 
+    public static List<Reservation> findByPlace(Place place) {
+        return finder.where().eq("place", place).findList();
+    }
+
     public static Reservation findByUserAndPlace(User user, Place place) {
         List<Reservation> reservations = finder.where().eq("user", user).eq("place", place).findList();
         for (Reservation reservation : reservations) {
@@ -58,27 +62,21 @@ public class Reservation extends Model {
         return null;
     }
 
-    public static List<Reservation> findByStatus(User user, Status status) {
-        return finder.where().eq("place", user).where().eq("status", status).findList();
+    public static List<Reservation> getAllReservationsWithStatusWaiting() {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for (Place place : Place.findByUser(SessionHelper.getCurrentUser())) {
+            for (Reservation reservation : Reservation.findByPlace(place)) {
+                if (reservation.status.id == Status.WAITING) {
+                    reservations.add(reservation);
+                }
+            }
+        }
+        return reservations;
     }
 
-    public static Integer reservationsOnWaiting(){
-        List<Reservation> reservations = Reservation.findByStatus(SessionHelper.getCurrentUser(), Status.findById(Status.WAITING));
-        return reservations.size();
+    public static List<Reservation> getAllUsersReservations() {
+        //TODO prodji kroz sve userove placeove i vrati sve rez + njegove rez
+        return null;
     }
 
-    public static Integer findByUser(){
-        List<Reservation> reservations = Reservation.findByUser(SessionHelper.getCurrentUser());
-        return reservations.size();
-    }
-
-    public static Integer findByStatusInt(Integer status) {
-        List<Reservation> reservations = Reservation.findByStatus(SessionHelper.getCurrentUser(), Status.findById(status));
-        return reservations.size();
-    }
-
-    public static List<Reservation> findByReservationAndStatus(Integer id, Integer status) {
-        Reservation reservation = Reservation.findById(id);
-        return finder.where().eq("reservation", reservation).eq("status", status).findList();
-    }
 }

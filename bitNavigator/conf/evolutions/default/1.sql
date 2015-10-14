@@ -32,6 +32,7 @@ create table message (
   sent                      datetime(6),
   sender_id                 integer,
   reciever_id               integer,
+  seen                      tinyint(1) default 0,
   constraint pk_message primary key (id))
 ;
 

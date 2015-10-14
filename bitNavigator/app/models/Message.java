@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
+import utillities.SessionHelper;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,6 +28,7 @@ public class Message extends Model{
     public User sender;
     @ManyToOne (cascade = CascadeType.PERSIST)
     public User reciever;
+    public boolean seen = false;
 
     public Message() {
 
@@ -38,13 +40,27 @@ public class Message extends Model{
         return finder.all();
     }
 
-    public static List<Message> findByUser(User user) {
-        return finder.where().eq("user", user).findList();
-    }
 
     public static List<Message> findByReservation(Integer id) {
         Reservation reservation = Reservation.findById(id);
         return finder.where().eq("reservation", reservation).findList();
+
+    }
+
+    public static void seen(Message message) {
+        message.seen = true;
+        message.update();
+    }
+
+    public static boolean isNewMessage(Message message) {
+        if (message.reciever.equals(SessionHelper.getCurrentUser())) {
+            return !message.seen;
+        }
+        return false;
+    }
+
+    public static List<Message> getNewMessages(User reciever) {
+        return finder.where().eq("reciever", reciever).eq("seen", 1).findList();
     }
 
 }
