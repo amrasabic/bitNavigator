@@ -43,7 +43,6 @@ public class Reservation extends Model {
     }
 
     public static List<Reservation> findByUser(User user) {
-        Logger.debug("----------------------------------dasdasd----------------------------------------------------------");
         return finder.where().eq("user", user).findList();
     }
 

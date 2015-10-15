@@ -168,10 +168,6 @@ public class User extends Model {
         for (Place place : Place.findByUser(this)) {
             place.delete();
         }
-        Logger.info("/********++++++++++++++++65655+65+++++++++++++++++++++++++++++dasdasdasdasd+++++++++");
-        Logger.info(Message.findBySenderAndReciever(this).toString());
-
-        Logger.error("dsadasdfdsf*/*/*/************************/*/*/*/************/////////***************////////////////////////////////////////");
         for (Reservation reservation : Reservation.findByUser(this)) {
             reservation.delete();
         }
