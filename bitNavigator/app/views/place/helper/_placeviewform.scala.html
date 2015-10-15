@@ -50,7 +50,11 @@
 <!-- Number of views -->
 <div class="form-group">
     <label for="views">Views:</label>
-    <input type="text" class="form-control" name="views" id="views" value="@place.numOfViews" readonly>
+    @if(place.numOfViews == null) {
+        <input type="text" class="form-control" name="views" id="views" value="0" readonly>
+    } else {
+        <input type="text" class="form-control" name="views" id="views" value="@place.numOfViews" readonly>
+        }
 </div>
 <p><br/></p>
 
@@ -59,7 +63,11 @@
     @if(SessionHelper.getCurrentUsersEmail == place.user.email || SessionHelper.getCurrentUser().isAdmin && place.service.isReservable()) {
         <div class="form-group">
             <label for="views">Reservations:</label>
-            <input type="text" class="form-control" name="views" id="views" value="@place.numOfReservations" readonly>
+            @if(place.numOfReservations == null) {
+                <input type="text" class="form-control" name="reservations"  value="0" readonly>
+            } else {
+                <input type="text" class="form-control" name="reservations" value="@place.numOfReservations" readonly>
+                }
         </div>
         <p><br/></p>
     }

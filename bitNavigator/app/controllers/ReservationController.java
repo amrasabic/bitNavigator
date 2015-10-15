@@ -74,6 +74,9 @@ public class ReservationController extends Controller {
         message.sent = Calendar.getInstance();
         message.reservation.id = r.id;
         message.save();
+        if(place.numOfReservations == null){
+            place.numOfReservations = 0;
+        }
         place.numOfReservations++;
         place.update();
         return redirect(routes.Application.index());
