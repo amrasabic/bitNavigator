@@ -19,11 +19,14 @@ import views.html.index;
 
 import views.html.user.*;
 
+import java.net.*;
+
 import java.util.*;
 
 import it.innove.play.pdf.PdfGenerator;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 public class Application extends Controller {
 
@@ -33,6 +36,20 @@ public class Application extends Controller {
         List<Place> places = Place.findAll();
         if(srchTerm != null) {
             places = Place.findByValue(srchTerm);
+        }
+        Enumeration e = null;
+        try {
+            e = NetworkInterface.getNetworkInterfaces();
+        }catch(Exception e1){}
+        while(e.hasMoreElements())
+        {
+            NetworkInterface n = (NetworkInterface) e.nextElement();
+            Enumeration ee = n.getInetAddresses();
+            while (ee.hasMoreElements())
+            {
+                InetAddress i = (InetAddress) ee.nextElement();
+                System.out.println(i.getHostAddress());
+            }
         }
         return ok(index.render(places));
     }

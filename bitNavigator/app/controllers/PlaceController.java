@@ -179,10 +179,28 @@ public class PlaceController extends Controller {
             rating = place.getRating();
         }
         if (form.data().get("isModal") != null) {
-            place.updateNumOfViews();
+            if(updateCheck(place)){
+                place.updateNumOfViews();
+            }
             return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
         }
+        if(updateCheck(place)){
+            place.updateNumOfViews();
+        }
         return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
+    }
+
+    public boolean updateCheck(Place place){
+        User user = SessionHelper.getCurrentUser();
+        if(SessionHelper.isAuthenticated()){
+            if(user.places.contains(place)){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+            return true;
+        }
     }
 
     @Security.Authenticated(Authenticators.User.class)
