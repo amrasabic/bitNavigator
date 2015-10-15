@@ -1,7 +1,9 @@
 package models;
 
+import com.avaje.ebean.ExpressionFactory;
 import com.avaje.ebean.Model;
 import controllers.MessageController;
+import play.Logger;
 import play.data.validation.Constraints;
 import utillities.SessionHelper;
 
@@ -97,6 +99,11 @@ public class Message extends Model{
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+    public static List<Message> findBySenderAndReciever(User user) {
+        ExpressionFactory exprFactory = finder.getExpressionFactory();
+        return finder.where().or(exprFactory.eq("sender", user), exprFactory.eq("reciever", user)).findList();
     }
 
 }

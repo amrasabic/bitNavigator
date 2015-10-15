@@ -313,18 +313,7 @@ public class UserController extends Controller {
         if (user == null) {
             return notFound(String.format("User %s does not exists.", email));
         }
-        for (Comment comment : Comment.findByUser(user)) {
-            comment.delete();
-        }
-        for (Report report : Report.findByUser(user)) {
-            report.delete();
-        }
-        for (Place place : Place.findByUser(user)) {
-            place.delete();
-        }
-        for (Reservation reservation : Reservation.findByUser(user)) {
-            reservation.delete();
-        }
+
         user.delete();
         return redirect(routes.UserController.userList());
     }

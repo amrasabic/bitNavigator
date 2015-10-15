@@ -156,4 +156,28 @@ public class User extends Model {
         User u = (User) obj;
         return this.id == u.id;
     }
+
+    @Override
+    public void delete() {
+        for (Comment comment : Comment.findByUser(this)) {
+            comment.delete();
+        }
+        for (Report report : Report.findByUser(this)) {
+            report.delete();
+        }
+        for (Place place : Place.findByUser(this)) {
+            place.delete();
+        }
+        Logger.info("/********++++++++++++++++65655+65+++++++++++++++++++++++++++++dasdasdasdasd+++++++++");
+        Logger.info(Message.findBySenderAndReciever(this).toString());
+
+        Logger.error("dsadasdfdsf*/*/*/************************/*/*/*/************/////////***************////////////////////////////////////////");
+        for (Reservation reservation : Reservation.findByUser(this)) {
+            reservation.delete();
+        }
+        for (Message message : Message.findBySenderAndReciever(this)) {
+            message.delete();
+        }
+        super.delete();
+    }
 }

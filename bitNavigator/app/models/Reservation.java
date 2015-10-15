@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.Logger;
 import utillities.SessionHelper;
 
 import javax.persistence.*;
@@ -16,11 +17,11 @@ public class Reservation extends Model {
 
     @Id
     public Integer id;
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     public User user;
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     public Place place;
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     public Status status;
     public Calendar timestamp;
     public Calendar reservationDate;
@@ -42,6 +43,7 @@ public class Reservation extends Model {
     }
 
     public static List<Reservation> findByUser(User user) {
+        Logger.debug("----------------------------------dasdasd----------------------------------------------------------");
         return finder.where().eq("user", user).findList();
     }
 

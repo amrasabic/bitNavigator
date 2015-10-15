@@ -101,4 +101,9 @@ public class Place extends Model {
         this.update();
     }
 
+    @Override
+    public void delete() {
+        WorkingHours.findByPlace(this).delete();
+        super.delete();
+    }
 }

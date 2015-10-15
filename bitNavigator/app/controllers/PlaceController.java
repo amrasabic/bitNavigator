@@ -156,9 +156,6 @@ public class PlaceController extends Controller {
                 return unauthorized("Permission denied!");
             }
         }
-
-        WorkingHours.findByPlace(place).delete();
-
         place.delete();
         return redirect(routes.PlaceController.placeList());
     }
