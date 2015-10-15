@@ -87,6 +87,7 @@ public class PlaceController extends Controller {
     public Result updatePlace(int id) {
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
+        Form<WorkingHours> boundWorkingHoursForm = workingHoursForm.bindFromRequest();
 
         if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
             flash("error", "Wrong input!");
@@ -108,6 +109,12 @@ public class PlaceController extends Controller {
             return internalServerError("Something went wrong");
         }
         place.id = id;
+
+        WorkingHours workingHours = boundWorkingHoursForm.get();
+        workingHours.id = WorkingHours.findByPlace(place).id;
+        workingHours.place = place;
+        workingHours.update();
+
         place.update();
 
         MultipartFormData body = request().body().asMultipartFormData();

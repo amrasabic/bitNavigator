@@ -53,7 +53,7 @@
                         <div class="message-content-container">
                             <span class="chat-img pull-left">
                                 @if(Image.findByUser(message.sender) != null) {
-                                    <img src="@Image.findByUser(message.sender).getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
+                                    <img src="@Image.findByUser(message.sender).getSize(100, 100)" class="avatar img-circle img-thumbnail" alt="avatar">
                                 } else {
                                     <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
                                 }
@@ -74,7 +74,7 @@
                         <div class="message-content-container">
                             <span class="chat-img pull-right">
                                 @if(Image.findByUser(message.sender) != null) {
-                                    <img src="@Image.findByUser(message.sender).getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
+                                    <img src="@Image.findByUser(message.sender).getSize(100, 100)" class="avatar img-circle img-thumbnail" alt="avatar">
                                 } else {
                                     <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
                                 }

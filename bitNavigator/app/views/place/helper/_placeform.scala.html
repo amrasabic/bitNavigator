@@ -95,7 +95,6 @@
             var json = JSON.stringify(businessHoursManager.serialize());
 
             json = $.parseJSON(json);
-
             for(var i = 1; i <= 7; i++){
 
                 if(json[i-1].isActive == true){
@@ -109,6 +108,32 @@
                     var closeMin = json[i-1].timeTill.split(":")[1];
                     var close = parseInt(closeHour) * 60 + parseInt(closeMin);
                     $('#add-place-form').append('<input hidden name="close' + i + '" value="' + close + '">');
+
+                }
+            }
+
+         });
+
+         $("#edit-place-form").submit(function(e, options){
+            e.preventDefault();
+            var json = JSON.stringify(businessHoursManager.serialize());
+
+            json = $.parseJSON(json);
+            
+
+            for(var i = 1; i <= 7; i++){
+
+                if(json[i-1].isActive == true){
+
+                    var openHour = json[i-1].timeFrom.split(":")[0];
+                    var openMin = json[i-1].timeFrom.split(":")[1];
+                    var open = parseInt(openHour) * 60 + parseInt(openMin);
+
+                    $('#edit-place-form').append('<input name="open' + i + '" value="' + open + '">');
+                    var closeHour = json[i-1].timeTill.split(":")[0];
+                    var closeMin = json[i-1].timeTill.split(":")[1];
+                    var close = parseInt(closeHour) * 60 + parseInt(closeMin);
+                    $('#edit-place-form').append('<input name="close' + i + '" value="' + close + '">');
 
                 }
             }
