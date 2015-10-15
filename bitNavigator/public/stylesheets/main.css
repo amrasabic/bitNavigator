@@ -421,3 +421,7 @@ textarea {
 .message-content-container {
     margin: 10px;
 }
+
+.badge-red, #navbar-badge {
+    background-color: red;
+}

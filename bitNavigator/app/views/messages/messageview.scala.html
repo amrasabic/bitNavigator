@@ -7,12 +7,31 @@
         <div class="row">
             <div class="col-sm-3 col-md-2">
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="@routes.MessageController.inbox()"><span class="badge pull-right">@Message.getNewMessages(SessionHelper.getCurrentUser).size()</span>
+                    <li class="active"><a href="@routes.MessageController.inbox(MessageController.ALL)">
+                        @if(Message.numberOfNewMessages(MessageController.ALL) != 0){
+                            <span class="badge pull-right">@Message.numberOfNewMessages(MessageController.ALL)</span>
+                        }
                         All reservations </a></li>
-                    <li><a href="#">With status approved</a></li>
-                    <li><a href="#">With status waiting</a></li>
-                    <li><a href="#">With status denied</a></li>
-                    <li class="active"><a href="#"><span class="badge pull-right">32</span> My reservations </a></li>
+                    <li><a href="@routes.MessageController.inbox(MessageController.APPROVED)">
+                        @if(Message.numberOfNewMessages(MessageController.APPROVED) != 0){
+                            <span class="badge pull-right">@Message.numberOfNewMessages(MessageController.APPROVED)</span>
+                        }
+                        With status approved</a></li>
+                    <li><a href="@routes.MessageController.inbox(MessageController.WAITING)">
+                        @if(Message.numberOfNewMessages(MessageController.WAITING) != 0){
+                            <span class="badge pull-right">@Message.numberOfNewMessages(MessageController.WAITING)</span>
+                        }
+                        With status waiting</a></li>
+                    <li><a href="@routes.MessageController.inbox(MessageController.DENIED)">
+                        @if(Message.numberOfNewMessages(MessageController.DENIED) != 0){
+                            <span class="badge pull-right">@Message.numberOfNewMessages(MessageController.DENIED)</span>
+                        }
+                        With status denied</a></li>
+                    <li class="active"><a href="@routes.MessageController.inbox(MessageController.ANSWERS)">
+                        @if(Message.numberOfNewMessages(MessageController.ANSWERS) != 0){
+                            <span class="badge pull-right">@Message.numberOfNewMessages(MessageController.ANSWERS)</span>
+                        }
+                        My reservations</a></li>
                 </ul>
             </div>
             <div class="col-sm-9 col-md-10">

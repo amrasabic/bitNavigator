@@ -42,7 +42,10 @@
                 <div class="btn-group navbar-form navbar-right">
 
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @SessionHelper.getCurrentUsersEmail <span class="caret"></span>
+                        @if(SessionHelper.numberOfNotifications() != 0){
+                            <span id="navbar-badge" class="badge badge-red">@SessionHelper.numberOfNotifications()</span>
+                        }
+                        @SessionHelper.getCurrentUsersEmail
                     </button>
                     <ul class="dropdown-menu">
                         @if(SessionHelper.isAdmin) {
@@ -57,12 +60,21 @@
                         <li><a href="@routes.PlaceController.placeList()"><i class="glyphicon glyphicon-heart"></i>
                             Place list</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="@routes.MessageController.inbox()"><i class="glyphicon glyphicon-envelope"></i>
-                            Messages <span class="badge badge-notify" style="color: red">@Message.getNewMessages(SessionHelper.getCurrentUser).size()</span></a></li>
+                        <li><a href="@routes.MessageController.inbox(MessageController.ALL)"><i class="glyphicon glyphicon-envelope"></i>
+                            Messages
+                            @if(Message.getNewMessages(SessionHelper.getCurrentUser).size() != 0){
+                                <span class="badge badge-red">@Message.getNewMessages(SessionHelper.getCurrentUser).size()</span>
+                            }
+                        </a></li>
                         <li>
                         <li>
                             <a href="@routes.ReservationController.reservationsList()"><i class="glyphicon glyphicon-calendar"></i>
-                                Reservations <span class="badge badge-notify" style="color: red">@Reservation.getAllReservationsWithStatusWaiting().size()</span></a>
+                                Reservations
+                                @if(Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size() != 0){
+                                    <span class="badge badge-red">@Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size()</span>
+                                }
+
+                            </a>
                         </li>
 
                         <li role="separator" class="divider"></li>

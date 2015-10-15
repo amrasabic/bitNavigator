@@ -93,7 +93,6 @@
          $("#add-place-form").submit(function(e, options){
 
             var json = JSON.stringify(businessHoursManager.serialize());
-
             json = $.parseJSON(json);
             for(var i = 1; i <= 7; i++){
 
@@ -115,12 +114,8 @@
          });
 
          $("#edit-place-form").submit(function(e, options){
-            e.preventDefault();
             var json = JSON.stringify(businessHoursManager.serialize());
-
             json = $.parseJSON(json);
-            
-
             for(var i = 1; i <= 7; i++){
 
                 if(json[i-1].isActive == true){
@@ -135,9 +130,16 @@
                     var close = parseInt(closeHour) * 60 + parseInt(closeMin);
                     $('#edit-place-form').append('<input name="close' + i + '" value="' + close + '">');
 
+                }else{
+                    $('#edit-place-form').append('<input name="open' + i + '" value="">');
+                    $('#edit-place-form').append('<input name="close' + i + '" value="">');
                 }
             }
 
          });
+
+         $('.mini-time').on("keydown", function() {
+            return false;
+        });
      });
 </script>

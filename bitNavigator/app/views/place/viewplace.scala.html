@@ -170,7 +170,7 @@
         }
         var minDate = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + minDay;
         document.getElementById('reservation-datepicker').setAttribute("min", minDate);
-        $('#reservation-datepicker').on("keydown", function() {
+        $('#reservation-datepicker, #reservation-timepicker').on("keydown", function() {
             return false;
         });
 

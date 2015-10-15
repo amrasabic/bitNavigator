@@ -114,6 +114,7 @@ public class PlaceController extends Controller {
         workingHours.id = WorkingHours.findByPlace(place).id;
         workingHours.place = place;
         workingHours.update();
+        Logger.debug(boundWorkingHoursForm.toString());
 
         place.update();
 

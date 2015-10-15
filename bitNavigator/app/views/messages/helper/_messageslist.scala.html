@@ -3,47 +3,6 @@
 
     @views.html.messages.messageview {
 
-        <!--div id="info-container" class="col-md-9">
-      <ul class="list-group">
-          @for(message <- messages) {
-            <li class="list-group-item">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                    @if(Message.isNewMessage(message)) {
-                        <h3 class="panel-title">@(message.sender.firstName + " " + message.sent.getTime()) <strong style="color : red">
-                            NEW!</strong> </h3>
-                        @Message.seen(message)
-                    } else {
-                        <h3 class="panel-title">@(message.sender.firstName + " " + message.sent.getTime())</h3>
-                    }
-                    </div>
-                    <div class="panel-body">@message.content</div>
-                </div>
-            </li>
-        }
-        </ul>
-        <li class="list-group-item">
-            <div class="panel panel-default">
-                <form action="@routes.MessageController.sendMessage(messages.get(0).reservation.id)" method="POST">
-                    <div class="form-group">
-                        <div class="panel-body">
-                            <textarea class="form-control" style="resize : inherit" name="content" placeholder="Message ..."></textarea>
-                            <div class="alert alert-danger" data-error-for="content" role="alert" hidden></div>
-                            <div>
-                                <input type="submit" class="btn btn-primary pull-right" value="Send" style="margin-top : 1 em"/>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </li>
-        </div>
-        <script>
-    var urlToPost = "@routes.MessageController.validateForm()";
-  </script-->
-
-
-
     <div class="panel-body">
         <div class="chat">
 
@@ -61,11 +20,15 @@
                             <div class="chat-body clearfix">
                                 <div class="header">
                                     <strong class="primary-font">@message.sender.firstName @message.sender.lastName</strong>
+                                    @if(Message.isNewMessage(message)){
+                                        @Message.seen(message)
+                                        <span class="badge badge-red">NEW!</span>
+                                    }
                                     <small class="pull-right text-muted">
                                         <span class="glyphicon glyphicon-time"></span>@message.sent.getTime()
                                     </small>
                                 </div>
-                                <p> @message.content </p>
+                                <p style="white-space: pre-line"> @message.content </p>
                             </div>
                         </div>
                     </div>
@@ -86,7 +49,7 @@
                                     </small>
                                     <strong class="pull-right primary-font">@message.sender.firstName @message.sender.lastName</strong>
                                 </div>
-                                <p> @message.content </p>
+                                <p style="white-space: pre-line"> @message.content </p>
                             </div>
                         </div>
                     </div>
@@ -116,6 +79,10 @@
 
     <script>
         var urlToPost = "@routes.MessageController.validateForm()";
+        $(document).ready(function() {
+            var n = $(document).height();
+            $('html, body').animate({ scrollTop: n }, 50);
+        });
     </script>
 
 

@@ -62,11 +62,11 @@ public class Reservation extends Model {
         return null;
     }
 
-    public static List<Reservation> getAllReservationsWithStatusWaiting() {
+    public static List<Reservation> getAllReservationsOnUsersPlaces(Status status) {
         ArrayList<Reservation> reservations = new ArrayList<>();
         for (Place place : Place.findByUser(SessionHelper.getCurrentUser())) {
             for (Reservation reservation : Reservation.findByPlace(place)) {
-                if (reservation.status.id == Status.WAITING) {
+                if (reservation.status.id == status.id) {
                     reservations.add(reservation);
                 }
             }
@@ -74,8 +74,8 @@ public class Reservation extends Model {
         return reservations;
     }
 
-    public static List<Reservation> getAllUsersReservations() {
-        List<Reservation> reservations = new ArrayList<>(Reservation.findByUser(SessionHelper.getCurrentUser()));
+    public static List<Reservation> getAllReservationsOnUsersPlaces() {
+        ArrayList<Reservation> reservations = new ArrayList<>();
         for (Place place : Place.findByUser(SessionHelper.getCurrentUser())) {
             reservations.addAll(Reservation.findByPlace(place));
         }
