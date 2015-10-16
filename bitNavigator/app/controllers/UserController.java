@@ -540,6 +540,37 @@ public class UserController extends Controller {
 
     }
 
+    public Result forgotPassword (){
+        Form<resendVerificationMailForm> boundForm = Form.form(resendVerificationMailForm.class).bindFromRequest();
+        User u = User.findByEmail(boundForm.bindFromRequest().field("verificationEmail").value());
+        if (u == null){
+            flash("error", "User with email you entered does not exist");
+            return redirect(routes.Application.index());
+        }
+
+        u.setToken(UUID.randomUUID().toString());
+        u.update();
+
+        String host = url + "forgot_password/" + u.getToken();
+        MailHelper.send(u.email, host);
+
+        flash("success", "Email sent, click on the following link to change password.");
+        return redirect(routes.Application.index());
+    }
+
+    public Result setNewPassword(String token) {
+        try {
+            User user = User.findUserByToken(token);
+            if (token == null) {
+                flash("error","Session expired");
+                return redirect("/");
+            }
+            //nova forma */*/*/*/*/*/*/*/*/*/*/*/*/*/
+        } catch (Exception e){
+            return redirect("/login");
+        }
+    }
+
 
 
 }
