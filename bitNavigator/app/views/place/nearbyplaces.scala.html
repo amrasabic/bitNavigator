@@ -37,44 +37,50 @@
         <script>
         var table;
         $(document).ready(function(){
-            var mapCenter;
-            var index = 0;
-            @for(place <- places) {
-            @if(place.latitude != null || place.longitude != null) {
-                    latlng = new google.maps.LatLng(@place.latitude
-                , @place.longitude);
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        var pos = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
-                        mapCenter = new google.maps.LatLng(pos.lat, pos.lng);
-                        var distance = (google.maps.geometry.spherical.computeDistanceBetween(mapCenter, new google.maps.LatLng(@place.latitude
-                , @place.longitude)) / 1000).toFixed(2);
-                        document.getElementById('distance-nearby-places-@place.id
-                ').innerText = distance;
-                                        //document.getElementById('distance-nearby-places-@place.id
-                ').innerText = parseInt(google.maps.geometry.spherical.computeDistanceBetween(mapCenter, new google.maps.LatLng(@place.latitude, @place.longitude)));
-                        index++;
-                    }, function() {
-                        handleLocationError(true, infoWindow, map.getCenter());
-                    });
-                } else {
-                    // Browser doesn't support Geolocation
-                    handleLocationError(false, infoWindow, map.getCenter());
-                }
-                } else {
-                    document.getElementById('distance-nearby-places-@place.id
-                ').innerText = "n/a";
-                                }
 
-        }
-            setTimeout(function(){
-                    table = $('#myTable').DataTable({
-                        "order": [[ 4, "asc" ]]
-                    });
-                }, 2000);
+            function drawTable() {
+                table = $('#myTable').DataTable({
+                    "order": [[ 4, "asc" ]]
+                });
+            };
+
+            function calculateDistances() {
+                var mapCenter;
+                var index = 0;
+                var counter = 0;
+                @for(place <- places){
+                    @if(place.latitude != null || place.longitude != null){
+                        latlng = new google.maps.LatLng(@place.latitude, @place.longitude);
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(function(position) {
+                                var pos = {
+                                    lat: position.coords.latitude,
+                                    lng: position.coords.longitude
+                                };
+                                mapCenter = new google.maps.LatLng(pos.lat, pos.lng);
+                                var distance = (google.maps.geometry.spherical.computeDistanceBetween(mapCenter, new google.maps.LatLng(@place.latitude, @place.longitude)) / 1000).toFixed(2);
+                                document.getElementById('distance-nearby-places-@place.id').innerText = distance;
+                                index++;
+                                counter++;
+                                if(counter == @places.size()) {
+                                    drawTable();
+                                }
+                            }, function() {
+                                handleLocationError(true, infoWindow, map.getCenter());
+                            });
+                        } else {
+                            // Browser doesn't support Geolocation
+                             handleLocationError(false, infoWindow, map.getCenter());
+                        }
+                    }else{
+                        document.getElementById('distance-nearby-places-@place.id').innerText = "n/a";
+                        counter++;
+                    }
+                }
+            }
+
+            calculateDistances();
+            //setTimeout(drawTable, 2000);
         });
 
     </script>

@@ -6,7 +6,7 @@
 @main("Edit place") {
 
 
-    <form method="post" action="@routes.PlaceController.updatePlace(place.id)" enctype="multipart/form-data">
+    <form id="edit-place-form" method="post" action="@routes.PlaceController.updatePlace(place.id)" enctype="multipart/form-data">
         @views.html.place.helper._placeform(place)(services)("Edit place")
     </form>
     @for(comment <- comments) {
@@ -18,8 +18,6 @@
 
     }
     <script>
-        var tmp;
-
          $(document).ready(function() {
 
             var object = '@WorkingHours.getWorkingHoursAsJSON(place)';
@@ -28,52 +26,13 @@
             $("#businessHoursContainer").businessHours({
                     operationTime: JSON.parse(object)
             });
-
-            /*
-            var openingTimes = document.querySelectorAll('[name="startTime"]');
-            var closingTimes = document.querySelectorAll('[name="endTime"]');
-            @for(i <- 0 to 6){
-                @if(WorkingHours.getFormatedOpeningTimes(place).get(i) == "not working"){
-
-                }else{
-                    openingTimes[@i].value= "@WorkingHours.getFormatedOpeningTimes(place).get(i)";
-                    closingTimes[@i].value= "@WorkingHours.getFormatedClosingTimes(place).get(i)";
-                }
-            }
-
-
-
-
-                /*
-             $("#add-place-form").submit(function(e, options){
-
-                var json = JSON.stringify(businessHoursManager.serialize());
-
-                json = $.parseJSON(json);
-
-                for(var i = 1; i <= 7; i++){
-
-                    if(json[i-1].isActive == true){
-
-                        var openHour = json[i-1].timeFrom.split(":")[0];
-                        var openMin = json[i-1].timeFrom.split(":")[1];
-                        var open = parseInt(openHour) * 60 + parseInt(openMin);
-
-                        $('#add-place-form').append('<input hidden name="open' + i + '" value="' + open + '">');
-                        var closeHour = json[i-1].timeTill.split(":")[0];
-                        var closeMin = json[i-1].timeTill.split(":")[1];
-                        var close = parseInt(closeHour) * 60 + parseInt(closeMin);
-                        $('#add-place-form').append('<input hidden name="close' + i + '" value="' + close + '">');
-
-                    }
-                }
-
-             });
-             */
          });
     </script>
 
     <script>
+        $(document).ready(function() {
+            $("#map-add-place").height($("#info-container").height());
+        });
         var urlToPost = "@routes.PlaceController.validateForm()";
         var lat;
         var lng;
@@ -82,7 +41,6 @@
                 lng = @place.longitude;
         }
     </script>
-    <script src="@routes.Assets.versioned("javascripts/validateForm.js")"></script>
     <script src="@routes.Assets.versioned("javascripts/googleMaps/miniMap.js")"></script>
     <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
     <script src="@routes.Assets.versioned("javascripts/getService.js")"></script>

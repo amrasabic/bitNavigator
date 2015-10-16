@@ -16,7 +16,6 @@ import utillities.UserValidator;
 import views.html.admin.adminview;
 import views.html.index;
 import views.html.user.profile;
-import views.html.user.signin;
 import views.html.user.signup;
 import views.html.user.userlist;
 import play.Play;
@@ -32,6 +31,7 @@ import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -64,13 +64,33 @@ public class UserController extends Controller {
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
     private static String url = Play.application().configuration().getString("url");
 
-    /**
-     * Leads random user to signin subpage
-     *
-     * @return
-     */
-    public Result signIn() {
-        return ok(signin.render(userForm));
+    public Result connectWithFB() {
+        DynamicForm boundForm = Form.form().bindFromRequest();
+        if (User.findByEmail(boundForm.data().get("email")) != null) {
+            if (User.findByEmail(boundForm.data().get("email")).isValidated()) {
+                session().clear();
+                session("email", boundForm.data().get("email"));
+            } else {
+                flash(ERROR_MESSAGE, "Account is not validated!");
+            }
+            return ok();
+        }
+        User user = new User();
+        user.email = boundForm.data().get("email");
+        user.firstName = boundForm.data().get("first_name");
+        user.lastName = boundForm.data().get("last_name");
+        user.accountCreated = Calendar.getInstance();
+        user.setToken(UUID.randomUUID().toString());
+        try {
+            user.password = PasswordHash.createHash("");
+        } catch (Exception e) {
+
+        }
+        String host = url + "validate/" + user.getToken();
+        MailHelper.send(user.email, host);
+        user.save();
+        flash("success", "You have been registered. Verification mail has been sent to your address. To login you have to verify your email.");
+        return ok();
     }
 
     /**
@@ -91,6 +111,9 @@ public class UserController extends Controller {
      */
     public Result checkSignIn() {
         Form<User> boundForm = userForm.bindFromRequest();
+        if (boundForm.hasErrors()) {
+            return badRequest(boundForm.errorsAsJson());
+        }
         User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
         if (user == null) {
             flash(ERROR_MESSAGE, "Email or password invalid!");
@@ -113,6 +136,33 @@ public class UserController extends Controller {
         }
 
         return redirect(routes.Application.index());
+    }
+
+    public Result validateSignIn() {
+        Form<User> boundForm = userForm.bindFromRequest();
+        if (boundForm.hasErrors()) {
+            return badRequest(boundForm.errorsAsJson());
+        }
+        User user = User.findByEmail(boundForm.bindFromRequest().field(User.EMAIL).value());
+        if (user == null) {
+            String msg = "{\"password\":\"Email and/or password invalid!\"}";
+            return badRequest(msg);
+        }
+        try {
+            if (!PasswordHash.validatePassword(boundForm.bindFromRequest().field(User.PASSWORD).value(), user.password)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (Exception e) {
+            String msg = "{\"password\":\"Email and/or password invalid!\"}";
+            return badRequest(msg);
+        }
+
+        if (!user.isValidated()) {
+            flash(ERROR_MESSAGE, "Account is not validated!");
+            //String msg = "{\"password\":\"Account is not validated!\"}";
+            //return badRequest(msg);
+        }
+        return ok();
     }
 
     /**
@@ -263,18 +313,7 @@ public class UserController extends Controller {
         if (user == null) {
             return notFound(String.format("User %s does not exists.", email));
         }
-        for (Comment comment : Comment.findByUser(user)) {
-            comment.delete();
-        }
-        for (Report report : Report.findByUser(user)) {
-            report.delete();
-        }
-        for (Place place : Place.findByUser(user)) {
-            place.delete();
-        }
-        for (Reservation reservation : Reservation.findByUser(user)) {
-            reservation.delete();
-        }
+
         user.delete();
         return redirect(routes.UserController.userList());
     }

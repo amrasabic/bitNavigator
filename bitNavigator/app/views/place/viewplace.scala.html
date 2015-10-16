@@ -42,7 +42,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" id="reservation" onclick="validateReservation()">
+                                <button type="submit" class="btn btn-primary" id="reservation">
                                     Submit reservation</button>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
         }
         var minDate = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + minDay;
         document.getElementById('reservation-datepicker').setAttribute("min", minDate);
-        $('#reservation-datepicker').on("keydown", function() {
+        $('#reservation-datepicker, #reservation-timepicker').on("keydown", function() {
             return false;
         });
 
@@ -222,6 +222,5 @@
     <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
     <script src="@routes.Assets.versioned("javascripts/rate.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/reportComment.js")"></script>
-    <script src="@routes.Assets.versioned("javascripts/validateForm.js")"></script>
 
 }

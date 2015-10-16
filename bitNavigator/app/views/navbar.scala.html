@@ -1,5 +1,5 @@
 @import utillities.SessionHelper
-
+@import java.util
 
 
 <nav class="navbar navbar-inverse">
@@ -19,7 +19,7 @@
 
         <div style="" aria-expanded="true" class="navbar-collapse collapse in" id="bs-example-navbar-collapse-2">
 
-            <form class="navbar-form navbar-left dont-validate" role="search"  action="@routes.Application.index()">
+            <form class="navbar-form navbar-left dont-validate" role="search" action="@routes.Application.index()">
                 <div id="srch-form" class="form-group dropdown">
                     <input id="srch-navbar" list="srch-data" class="form-control" autocomplete="off" placeholder="Search" type="text" name="srch-term">
                 </div>
@@ -28,43 +28,61 @@
 
             <ul class="nav navbar-nav navbar-right">
             @if(!SessionHelper.isAuthenticated) {
-                <form class="navbar-form navbar-right dont-validate" method="post" action="@routes.UserController.checkSignIn()">
-                    <div class="form-group">
-                        <input id="email-signin" type="email" required="required" class="form-control" placeholder=" Email" name="email" onblur="checkEmail()">
-                        <span id="nameError" class="alert-danger" data-error-for="" ></span>
-                    </div>
-                    <div class="form-group" id="my_form">
-                        <input id="password-signin" type="password" required="required" class="form-control" placeholder=" Password" name="password">
-                    </div>
-                    <button id="btn-sign-in" type="submit" class="btn btn-default" >Sign in</button>
-                    <button type="button" class="btn btn-default btn-sign"><a id="btn-sign-up-menu" href="@routes.UserController.signUp()">Sign up</a></button>
-                    <button type="button" class="btn btn-default btn-sign">
-                        <a id="btn-sign-up-menu" href="@routes.UserController.contactUs()"><span class="glyphicon glyphicon-envelope"></span> Contact Us</a>
-                    </button>
-                </form>
+                <div class="navbar-form navbar-right dont-validate">
+                    <button id="btn-sign-in" class="btn btn-default" type="button" data-toggle="modal" data-target="#sign-in-modal">Sign in</button>
+                    <button id="btn-sign-in" class="btn btn-default" type="button" data-toggle="modal" data-target="#sign-up-modal">Sign up</button>
+                    <!--button type="button" class="btn btn-default btn-sign"><a id="btn-sign-up-menu" href="@routes.UserController.signUp()">Sign up</a></button-->
 
+                    <button type="button" class="btn btn-default btn-sign">
+                        <a id="btn-sign-up-menu" href="@routes.UserController.contactUs()"><span class="glyphicon glyphicon-envelope"></span>
+                            Contact Us</a>
+                    </button>
+                </div>
             } else {
                 <div class="btn-group navbar-form navbar-right">
 
-                    <!--button class="btn btn-default"><a href="@routes.MessageController.inbox()"><span class="badge" style="color: white; font-weight: bold; background-color: red; font-size: 8px">@Reservation.reservationsOnWaiting()</span></a></button-->
-
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @SessionHelper.getCurrentUsersEmail <span class="caret"></span>
+                        @if(SessionHelper.numberOfNotifications() != 0){
+                            <span id="navbar-badge" class="badge badge-red">@SessionHelper.numberOfNotifications()</span>
+                        }
+                        @SessionHelper.getCurrentUsersEmail
+                        <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        @if(SessionHelper.isAdmin){
-                            <li><a href="@routes.UserController.adminView()"><i class="glyphicon glyphicon-star"></i> Admin view</a></li>
+                        @if(SessionHelper.isAdmin) {
+                            <li><a href="@routes.UserController.adminView()"><i class="glyphicon glyphicon-star"></i>
+                                Admin view</a></li>
                             <li role="separator" class="divider"></li>
                         }
-                        <li><a href="@routes.PlaceController.addPlace()"><i class="glyphicon glyphicon-plus-sign"></i> Add place</a></li>
-                        <li><a href="@routes.UserController.profile(SessionHelper.getCurrentUsersEmail, "View & edit your BitNavigator profile")"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                        <li><a href="@routes.PlaceController.placeList()"><i class="glyphicon glyphicon-heart"></i> Place list</a></li>
+                        <li><a href="@routes.PlaceController.addPlace()"><i class="glyphicon glyphicon-plus-sign"></i>
+                            Add place</a></li>
+                        <li><a href="@routes.UserController.profile(SessionHelper.getCurrentUsersEmail, "View & edit your BitNavigator profile")"><i class="glyphicon glyphicon-user"></i>
+                            Profile</a></li>
+                        <li><a href="@routes.PlaceController.placeList()"><i class="glyphicon glyphicon-heart"></i>
+                            Place list</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="@routes.MessageController.inbox()"><i class="glyphicon glyphicon-envelope"></i> Messages</a></li>
-                        <li><a href="@routes.ReservationController.reservationsList()"><i class="glyphicon glyphicon-calendar"></i>  Reservations</a></li>
+                        <li><a href="@routes.MessageController.inbox(MessageController.ALL)"><i class="glyphicon glyphicon-envelope"></i>
+                            Messages
+                            @if(Message.getNewMessages(SessionHelper.getCurrentUser).size() != 0){
+                                <span class="badge badge-red">@Message.getNewMessages(SessionHelper.getCurrentUser).size()</span>
+                            }
+                        </a></li>
+                        <li>
+                        <li>
+                            <a href="@routes.ReservationController.reservationsList()"><i class="glyphicon glyphicon-calendar"></i>
+                                Reservations
+                                @if(Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size() != 0){
+                                    <span class="badge badge-red">@Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size()</span>
+                                }
+
+                            </a>
+                        </li>
+
                         <li role="separator" class="divider"></li>
-                        <li><a id="contact-us" href="@routes.UserController.contactUs()"><i class="glyphicon glyphicon-envelope"></i> Contact us</a></li>
-                        <li><a id="logout" href="@routes.UserController.signOut()"><i class="glyphicon glyphicon-remove-sign"></i> Logout</a></li>
+                        <li><a id="contact-us" href="@routes.UserController.contactUs()"><i class="glyphicon glyphicon-envelope"></i>
+                            Contact us</a></li>
+                        <li><a id="logout" href="@routes.UserController.signOut()"><i class="glyphicon glyphicon-remove-sign"></i>
+                            Logout</a></li>
                     </ul>
                 </div>
             }
@@ -73,6 +91,122 @@
         </div>
 
     </div>
+
+        <!-- Sign in modal -->
+    <div class="modal fade" id="sign-in-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div id="sign-in-modal-body" class="modal-body"><!--data-auto-logout-link="true"-->
+                    <fb:login-button class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false"
+                    scope="public_profile,email" onlogin="checkLoginState();">
+                        Connect with Facebook
+                    </fb:login-button>
+                    <div class="strike">
+                        <span>Or</span>
+                    </div>
+                    <form class="sign-in-modal-form dont-validate" method="post" action="@routes.UserController.checkSignIn()">
+                        <input id="email-signin" type="text" required="required" class="form-control moadal-input" placeholder=" Email" name="email">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="email" role="alert" hidden></div>
+                        <input id="password-signin" type="password" required="required" class="form-control modal-input" placeholder=" Password" name="password">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="password" role="alert" hidden></div>
+                        <button id="btn-sign-in-modal" type="submit" class="btn btn-primary btn-lg" >Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Sign up modal -->
+    <div class="modal fade" id="sign-up-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div id="sign-up-modal-body" class="modal-body"><!--data-auto-logout-link="true"-->
+                    <fb:login-button class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false"
+                    scope="public_profile,email" onlogin="checkLoginState();">
+                        Connect with Facebook
+                    </fb:login-button>
+                    <div class="strike">
+                        <span>Or</span>
+                    </div>
+                    <form class="sign-up-modal-form" method="post" action="@routes.UserController.save()">
+
+                        <input id="first-name-signup" type="text" class="form-control moadal-input" placeholder=" First name" name="firstName"
+                        data-toggle="popover" data-trigger="focus" data-content="Can only contain letters.">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="firstName" role="alert" hidden></div>
+
+                        <input id="last-name-signup" type="text" class="form-control moadal-input" placeholder=" Last name" name="lastName"
+                        data-toggle="popover" data-trigger="focus" data-content="Can only contain letters.">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="lastName" role="alert" hidden></div>
+
+                        <input id="email-signup" type="text" required="required" class="form-control moadal-input" placeholder=" Email" name="email"
+                        data-toggle="popover" data-trigger="focus" data-content="Input valid email address.">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="email" role="alert" hidden></div>
+
+                        <input id="password-signup" type="password" required="required" class="form-control modal-input" placeholder=" Password" name="password"
+                        data-toggle="popover" data-trigger="focus" data-content="Password must contain between 8 and 25 characters. There has to be at least one letter and one digit">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="password" role="alert" hidden></div>
+
+                        <input id="confirm-password-signup" type="password" required="required" class="form-control modal-input" placeholder=" Confirm password" name="confirmPassword"
+                        data-toggle="popover" data-trigger="focus" data-content="Confirm password.">
+                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="confirmPassword" role="alert" hidden></div>
+
+                        <button id="btn-sign-in-modal" type="submit" class="btn btn-primary btn-lg" >Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var connectWithFB = "@routes.UserController.connectWithFB()";
+        var urlToPost = "@routes.UserController.validateForm()"
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+            $(".sign-in-modal-form").submit(function(e, options){
+
+                var options = options || {};
+                if(options.allow == true){
+                    return;
+                }
+
+                e.preventDefault();
+                $("[data-error-for]").html("");
+                $("[data-error-for]").hide();
+                $form = $(this);
+
+                $.ajax({
+                    url: "@routes.UserController.validateSignIn()",
+                    type: "post",
+                    data: $(this).serialize()
+                }).success(function(response){
+                    $form.trigger("submit", {allow: true});
+                }).error(function(response){
+                    var errors = response.responseText;
+                    errors = JSON.parse(errors);
+                    console.log(errors);
+                    var keys = Object.keys(errors);
+                    for(var i = 0; i < keys.length; i++){
+                        var errorMessages = errors[keys[i]];
+                        var allErrors = "";
+                        for(var j = 0; j < errorMessages.length; j++){
+                            allErrors += errorMessages[j];
+                        }
+                        $('[data-error-for="'+keys[i]+'"]').html(allErrors).show();
+                    }
+
+                });
+            });
+        });
+    </script>
+    <script src="@routes.Assets.versioned("javascripts/fb-login.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/validateForm.js")"></script>
+
 
     <script>
         $(document).ready(function() {

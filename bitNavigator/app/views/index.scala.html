@@ -36,7 +36,7 @@
         <div>
             <a href="#close" title="Close" class="close">X</a>
             <h4>Enter your email</h4>
-            <form class="form-horizontal" role="form" method="post" action="@routes.UserController.resendVerificationEmail()">
+            <form class="form-horizontal dont-validate" role="form" method="post" action="@routes.UserController.resendVerificationEmail()">
 
                     <!-- User email -->
                 <div class="form-group">
@@ -88,6 +88,7 @@
                 zoom: 13
             });
             var mapCenter = map.getCenter();
+            drawMarkers();
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                   var pos = {
@@ -96,14 +97,11 @@
                   };
                     mapCenter = new google.maps.LatLng(pos.lat, pos.lng);
                     map.setCenter(pos);
-                    drawMarkers();
                 }, function() {
-                    drawMarkers();
                     handleLocationError(true, infoWindow, map.getCenter());
                 });
             } else {
                 // Browser doesn't support Geolocation
-                drawMarkers();
                 handleLocationError(false, infoWindow, map.getCenter());
             }
             function drawMarkers() {
