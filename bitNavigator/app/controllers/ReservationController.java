@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by amra.sabic on 9/17/2015.
@@ -71,6 +72,9 @@ public class ReservationController extends Controller {
         message.sent = Calendar.getInstance();
         message.reservation.id = r.id;
         message.save();
+        if(place.numOfReservations == null){
+            place.numOfReservations = 0;
+        }
         place.numOfReservations++;
         place.update();
         return redirect(routes.Application.index());
@@ -93,6 +97,27 @@ public class ReservationController extends Controller {
         reservation.status = status;
         reservation.update();
 
+        return redirect(routes.ReservationController.reservationsList());
+    }
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result setPrice(){
+        DynamicForm boundForm = Form.form().bindFromRequest();
+        Reservation r = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
+        List<Message> messages = Message.findByReservation(Integer.parseInt(boundForm.data().get("reservationId")));
+        String prc = boundForm.data().get("priceId");
+        Double price = Double.parseDouble(prc);
+        r.price=price;
+        r.update();
+        Message message = new Message();
+        message.sender = SessionHelper.getCurrentUser();
+        message.reciever = r.user;
+        String msg = "To confirm reservation at "+r.place.title+", please transfer us "+price+" KM.";
+        message.content = msg;
+        message.reservation = r;
+        message.sent = Calendar.getInstance();
+        message.save();
+        messages.add(message);
         return redirect(routes.ReservationController.reservationsList());
     }
 

@@ -24,11 +24,11 @@ POST          /user/profile/                                @controllers.UserCon
 POST          /user/edit/password                           @controllers.UserController.changePassword()
 DELETE        /user/profile/:email                          @controllers.UserController.delete(email: String)
 
-
 GET           /user/reservations                            @controllers.ReservationController.reservationsList()
 POST          /user/reservations                            @controllers.ReservationController.changeStatus()
-DELETE        /user/reservations/:id                        @controllers.ReservationController.delete(id: Integer)
+POST          /user/reservations/price                      @controllers.ReservationController.setPrice()
 POST          /user/reservations/workingHours               @controllers.ReservationController.getWorkingHours()
+DELETE        /user/reservations/:id                        @controllers.ReservationController.delete(id: Integer)
 
 GET           /place/add                                    @controllers.PlaceController.addPlace()
 POST          /place/add                                    @controllers.PlaceController.savePlace()
@@ -69,3 +69,7 @@ POST          /checkPass                                    @controllers.UserCon
 POST          /contact                                      @controllers.UserController.sendMail()
 GET           /contact                                      @controllers.UserController.contactUs()
 POST          /resendVerificationMail                       @controllers.UserController.resendVerificationEmail()
+
+POST          /paypal/:id                                   @controllers.Application.paypal(id: Integer)
+GET           /paypal/success                               @controllers.Application.paypalSuccess()
+GET           /paypal/pdf:id                                @controllers.Application.payPdf(id: Integer)

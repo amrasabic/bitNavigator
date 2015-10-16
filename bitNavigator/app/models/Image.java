@@ -3,10 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
-import controllers.UserController;
-import controllers.UserController.UserNameForm;
 import play.Logger;
-import play.data.Form;
 import play.mvc.Security;
 import utillities.Authenticators;
 import utillities.SessionHelper;
@@ -120,7 +117,7 @@ public class Image extends Model {
     public String getSize(int width, int height) {
         Logger.debug("-------------");
         String url = cloudinary.url().format("jpg")
-                .transformation(new Transformation().width(width).height(height).crop("fit").effect("sepia"))
+                .transformation(new Transformation().width(width).height(height).crop("fill"))
                 .generate(public_id);
         return url;
     }

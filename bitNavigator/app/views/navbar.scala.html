@@ -46,6 +46,7 @@
                             <span id="navbar-badge" class="badge badge-red">@SessionHelper.numberOfNotifications()</span>
                         }
                         @SessionHelper.getCurrentUsersEmail
+                        <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
                         @if(SessionHelper.isAdmin) {

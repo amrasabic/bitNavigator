@@ -27,6 +27,9 @@ public class Reservation extends Model {
     public Calendar reservationDate;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Message> messages;
+    @Column
+    public Double price;
+    public String paymentId;
 
     public static Finder<Integer, Reservation> finder = new Finder<>(Reservation.class);
 
@@ -36,6 +39,10 @@ public class Reservation extends Model {
 
     public static Reservation findById(int id) {
         return finder.byId(id);
+    }
+
+    public static Reservation findByPaymentId(String id){
+        return finder.where().eq("paymentId",id).findUnique();
     }
 
     public static List<Reservation> findAll() {
