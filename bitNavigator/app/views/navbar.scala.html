@@ -112,7 +112,7 @@
                         <div class="alert alert-danger sign-in-modal-alert" data-error-for="email" role="alert" hidden></div>
                         <input id="password-signin" type="password" required="required" class="form-control modal-input" placeholder=" Password" name="password">
                         <div class="alert alert-danger sign-in-modal-alert" data-error-for="password" role="alert" hidden></div>
-                        <a style="color:#818181" href="#openModalPassword">Have you forgot your password ?</a>
+                        <a style="color:#818181" data-dismiss="modal" data-toggle="modal" href="#forgot-password-modal">Have you forgot your password ?</a>
                         <button id="btn-sign-in-modal" type="submit" class="btn btn-primary btn-lg" >Sign in</button>
                     </form>
                 </div>
@@ -120,36 +120,42 @@
         </div>
     </div>
 
+
         <!-- Modal for forgot password -->
-    <div id="openModalPassword" class="modalDialog">
-        <div>
-            <a href="#close" title="Close" class="close">X</a>
-            <h4>Enter your email</h4>
-            <form class="form-horizontal dont-validate" role="form" method="post" action="@routes.UserController.resendVerificationEmail()">
+    <div class="modal fade" id="forgot-password-modal">
+        <form class="form-horizontal dont-validate" role="form" method="post" action="@routes.UserController.resendForgotenPassword()">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-                    <!-- User email -->
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Email:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" required="required" type="email" name="verificationEmail" id="verification_email">
-                        <span id="passError" class="alert-danger" data-error-for="" ></span>
-                        <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4>Enter your email to get link for setting new password</h4>
+                    </div>
+                    <p>
+                        <br>
+                    </p>
+
+                    <div class="modal-body" id="set-password-modal-body" style="text-align: center">
+
+                            <!-- User email -->
+                        <div class="input-group">
+                            <span class="input-group-addon required_field" id="basic-addon1">Email </span>
+                            <input id="email-signup" type="email" required="required" class="form-control" aria-describedby="basic-addon1" name="verificationEmail"
+                            data-toggle="popover" data-trigger="focus" data-content="Input valid email address.">
+                        </div>
+                        <p>
+                            <br>
+                        </p>
+
+                            <!-- Confirm button -->
+                        <button type="submit" id="submit-set-password" class="btn btn-primary btn-lg">Send email</button>
+
                     </div>
                 </div>
-
-                <p>
-                    <br>
-                </p>
-
-                    <!-- Confirm button -->
-                <div style="text-align:center" class="form-group">
-                    <div>
-                        <input id="resend-email-verification" class="btn btn-primary" value="Send" type="submit">
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+
 
         <!-- Sign up modal -->
     <div class="modal fade" id="sign-up-modal" tabindex="-1" role="dialog">

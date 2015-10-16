@@ -17,6 +17,8 @@ GET           /user/signout                                 @controllers.UserCon
 GET           /user/list                                    @controllers.UserController.userList()
 POST          /user/validate                                @controllers.UserController.validateForm()
 GET           /validate/:token                              @controllers.UserController.emailValidation(token: String)
+GET           /forgot_password/:token                       @controllers.UserController.setNewPasswordView(token: String)
+GET           /forgot_password/set/                         @controllers.UserController.setNewPassword()
 
 POST          /user/profile/validate                        @controllers.UserController.validateUserNameForm()
 GET           /user/profile/:email                          @controllers.UserController.profile(email: String, msg: String)
@@ -69,6 +71,7 @@ POST          /checkPass                                    @controllers.UserCon
 POST          /contact                                      @controllers.UserController.sendMail()
 GET           /contact                                      @controllers.UserController.contactUs()
 POST          /resendVerificationMail                       @controllers.UserController.resendVerificationEmail()
+POST          /resendForgotenPassword                       @controllers.UserController.resendForgotenPassword()
 
 POST          /paypal/:id                                   @controllers.Application.paypal(id: Integer)
 GET           /paypal/success                               @controllers.Application.paypalSuccess()
