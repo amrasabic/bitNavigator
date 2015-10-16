@@ -62,6 +62,7 @@ public class UserController extends Controller {
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
+    private static final Form<SetNewPasswordForm> setNewPasswordForm = Form.form(SetNewPasswordForm.class);
     private static String url = Play.application().configuration().getString("url");
 
     public Result connectWithFB() {
@@ -540,6 +541,84 @@ public class UserController extends Controller {
 
     }
 
+    public Result resendForgotenPassword (){
+
+        Form<resendVerificationMailForm> boundForm = Form.form(resendVerificationMailForm.class).bindFromRequest();
+
+        User u = User.findByEmail(boundForm.bindFromRequest().field("verificationEmail").value());
+        if (u == null){
+            flash("error", "User with email you entered does not exist");
+            return redirect(routes.Application.index());
+        }
+
+        u.setToken(UUID.randomUUID().toString());
+        u.update();
+
+        String host = url + "forgot_password/" + u.getToken();
+        MailHelper.sendForPassword(u.email, host);
+
+        flash("success", "Email sent, click on the link in email to change password.");
+        return redirect(routes.Application.index());
+    }
+
+    public Result setNewPasswordView(String token) {
+
+        try {
+            User user = User.findUserByToken(token);
+            session().clear();
+            session("email", user.email);
+            if (token == null) {
+                flash("error","Session expired");
+                return redirect("/");
+            }
+        } catch (Exception e){
+            return redirect("/");
+        }
+        return ok(forgotpassword.render(setNewPasswordForm));
+    }
+
+    public static class SetNewPasswordForm {
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Password is required")
+        public String newPassword;
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Passwords do not match")
+        public String confirmPassword;
+    }
+
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result setNewPassword() {
+
+        User user = SessionHelper.getCurrentUser();
+
+        Form<SetNewPasswordForm> boundForm = Form.form(SetNewPasswordForm.class).bindFromRequest();
+
+        if (boundForm.hasErrors()) {
+            return redirect(routes.UserController.profile(user.email, "View & edit your BitNavigator profile"));
+        }
+
+        if (!((boundForm.bindFromRequest().field("newPassword").value()).equals(boundForm.bindFromRequest().field("confirmPassword").value()))) {
+            flash("error", "Password does not match!");
+            return redirect(routes.Application.index());
+        }
+        try {
+            user.password = PasswordHash.createHash(boundForm.bindFromRequest().field("newPassword").value());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        user.setToken(null);
+        user.update();
+
+        flash("success", "New password succesfully set");
+        return redirect(routes.Application.index());
+
+    }
 
 
 }
