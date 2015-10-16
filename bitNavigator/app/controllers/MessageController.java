@@ -1,9 +1,7 @@
 package controllers;
 
-import models.Comment;
-import models.Message;
-import models.Reservation;
-import models.User;
+import models.*;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -23,6 +21,12 @@ import java.util.List;
  */
 public class MessageController extends Controller {
 
+    public static final int ALL = 0;
+    public static final int APPROVED = 1;
+    public static final int WAITING = 2;
+    public static final int DENIED = 3;
+    public static final int ANSWERS = 4;
+
     private static final Form<Message> messageForm = Form.form(Message.class);
 
     @Security.Authenticated(Authenticators.User.class)
@@ -33,6 +37,7 @@ public class MessageController extends Controller {
 
     @Security.Authenticated(Authenticators.User.class)
     public Result sendMessage(Integer reservationId){
+        Reservation reservation = Reservation.findById(reservationId);
         List<Message> messages = Message.findByReservation(reservationId);
         Form<Message> boundForm = messageForm.bindFromRequest();
         Message message = new Message();
@@ -44,8 +49,14 @@ public class MessageController extends Controller {
         message.content = content;
 
         User user = SessionHelper.getCurrentUser();
+
         message.sender = user;
-        Reservation reservation = Reservation.findById(reservationId);
+        if (user.equals(reservation.place.user)) {
+            message.reciever = reservation.user;
+        } else {
+            message.reciever = reservation.place.user;
+        }
+
         message.reservation = reservation;
 
         message.sent = Calendar.getInstance();
@@ -56,10 +67,21 @@ public class MessageController extends Controller {
     }
 
     @Security.Authenticated(Authenticators.User.class)
-    public Result inbox(){
-        User user = SessionHelper.getCurrentUser();
-        List<Reservation> reservations = Reservation.findByUser(user);
-        return ok(_inbox.render(reservations));
+    public Result inbox(int type){
+        switch (type) {
+            case ALL:
+                return ok(_inbox.render(Reservation.getAllReservationsOnUsersPlaces()));
+            case APPROVED:
+                return ok(_inbox.render(Reservation.getAllReservationsOnUsersPlaces(models.Status.findById(models.Status.APPROVED))));
+            case WAITING:
+                return ok(_inbox.render(Reservation.getAllReservationsOnUsersPlaces(models.Status.findById(models.Status.WAITING))));
+            case DENIED:
+                return ok(_inbox.render(Reservation.getAllReservationsOnUsersPlaces(models.Status.findById(models.Status.DENIED))));
+            case ANSWERS:
+                return ok(_inbox.render(Reservation.findByUser(SessionHelper.getCurrentUser())));
+            default:
+                return badRequest();
+        }
     }
 
     @Security.Authenticated(Authenticators.User.class)

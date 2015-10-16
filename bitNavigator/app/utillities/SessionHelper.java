@@ -1,5 +1,8 @@
 package utillities;
 
+import models.Message;
+import models.Reservation;
+import models.Status;
 import models.User;
 import play.mvc.Http;
 
@@ -35,6 +38,10 @@ public class SessionHelper {
 
     public static boolean isAuthenticated() {
         return getUserFromSession() != null;
+    }
+
+    public static int numberOfNotifications() {
+        return Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size() + Message.getNewMessages(getCurrentUser()).size();
     }
 
 

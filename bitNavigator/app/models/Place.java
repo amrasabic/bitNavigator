@@ -38,14 +38,14 @@ public class Place extends Model {
     public List<Comment> comments;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Reservation> reservations;
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<ClientIP> clientIPs;
 
     public static Finder<Integer, Place> finder = new Finder<>(Place.class);
     /**
      * Default constructor.
      */
     public Place() {
-        this.numOfViews = 0;
-        this.numOfReservations = 0;
     }
 
     public static List<Place> findAll() {
@@ -96,14 +96,17 @@ public class Place extends Model {
         return null;
     }
 
-    public static int getLastId() {
-        int tmp = finder.order("id").findRowCount();
-        return finder.order("id").findList().get(tmp - 1).id;
-    }
-
     public void updateNumOfViews(){
+        if(this.numOfViews == null){
+            this.numOfViews = 0;
+        }
         this.numOfViews++;
         this.update();
     }
 
+    @Override
+    public void delete() {
+        WorkingHours.findByPlace(this).delete();
+        super.delete();
+    }
 }

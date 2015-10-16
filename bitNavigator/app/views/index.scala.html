@@ -80,17 +80,15 @@
 
 
     <div><!-- opening div-->
-    <script>
-
+        <script>
         var map;
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 43.850, lng: 18.390},
                 zoom: 13
             });
-
             var mapCenter = map.getCenter();
-
+            drawMarkers();
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                   var pos = {
@@ -99,20 +97,16 @@
                   };
                     mapCenter = new google.maps.LatLng(pos.lat, pos.lng);
                     map.setCenter(pos);
-                    drawMarkers();
                 }, function() {
-                    drawMarkers();
                     handleLocationError(true, infoWindow, map.getCenter());
                 });
             } else {
                 // Browser doesn't support Geolocation
-                drawMarkers();
                 handleLocationError(false, infoWindow, map.getCenter());
             }
-
             function drawMarkers() {
                 @for(place <- places){
-                    @if(place.latitude != null && place.longitude != null){
+            @if(place.latitude != null && place.longitude != null){
                         var marker = new google.maps.Marker({
                             position: {lat: @place.latitude, lng: @place.longitude},
                             map: map,
@@ -136,15 +130,13 @@
                             });
                         });
                     }
-                }
+        }
             }
-
         }
         $('#map').height(function(index, height) {
             return window.innerHeight - $(this).offset().top;
         });
-
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=geometry" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=geometry" async defer></script>
 
 }

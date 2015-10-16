@@ -14,7 +14,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-mailer" % "2.4.1",
   "org.apache.directory.studio" % "org.apache.commons.io" % "2.4",
   "com.cloudinary" % "cloudinary" % "1.0.14",
-  "com.paypal.sdk" % "rest-api-sdk" % "1.2.0"
+  "com.paypal.sdk" % "rest-api-sdk" % "1.2.0",
+  "it.innove" % "play2-pdf" % "1.3.0"
 )
 
 lazy val myProject = (project in file("."))

@@ -5,21 +5,16 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import models.Status;
-
 import play.mvc.Security;
 import utillities.Authenticators;
 import utillities.SessionHelper;
-import views.html.place.*;
 import views.html.reservations.reservationlist;
-
-import play.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by amra.sabic on 9/17/2015.
@@ -58,6 +53,11 @@ public class ReservationController extends Controller {
 
         Message message = new Message();
         message.sender = SessionHelper.getCurrentUser();
+        if (user.equals(r.place.user)) {
+            message.reciever = r.user;
+        } else {
+            message.reciever = r.place.user;
+        }
         if(content == null) {
             return TODO;
         } else {
@@ -66,13 +66,15 @@ public class ReservationController extends Controller {
 
         r.timestamp = Calendar.getInstance();
         r.reservationDate = date;
-
         r.messages.add(message);
         r.status = models.Status.findById(models.Status.WAITING);
         r.save();
         message.sent = Calendar.getInstance();
         message.reservation.id = r.id;
         message.save();
+        if(place.numOfReservations == null){
+            place.numOfReservations = 0;
+        }
         place.numOfReservations++;
         place.update();
         return redirect(routes.Application.index());
@@ -98,6 +100,27 @@ public class ReservationController extends Controller {
         return redirect(routes.ReservationController.reservationsList());
     }
 
+    @Security.Authenticated(Authenticators.User.class)
+    public Result setPrice(){
+        DynamicForm boundForm = Form.form().bindFromRequest();
+        Reservation r = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
+        List<Message> messages = Message.findByReservation(Integer.parseInt(boundForm.data().get("reservationId")));
+        String prc = boundForm.data().get("priceId");
+        Double price = Double.parseDouble(prc);
+        r.price=price;
+        r.update();
+        Message message = new Message();
+        message.sender = SessionHelper.getCurrentUser();
+        message.reciever = r.user;
+        String msg = "To confirm reservation at "+r.place.title+", please transfer us "+price+" KM.";
+        message.content = msg;
+        message.reservation = r;
+        message.sent = Calendar.getInstance();
+        message.save();
+        messages.add(message);
+        return redirect(routes.ReservationController.reservationsList());
+    }
+
     public Result validateForm(){
         //get the form data from the request - do this only once
         Form<Message> binded = Form.form(Message.class).bindFromRequest();
@@ -116,15 +139,18 @@ public class ReservationController extends Controller {
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
-
             return redirect("/");
         }
+
     }
 
     @Security.Authenticated(Authenticators.User.class)
     public Result delete(Integer id){
         Reservation reservation = Reservation.findById(id);
         if(reservation.status.id == models.Status.WAITING) {
+            for (Message message : Message.findByReservation(id)) {
+                message.delete();
+            }
             reservation.delete();
         }
 

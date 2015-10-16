@@ -1,23 +1,13 @@
 package models;
 
-import javax.persistence.*;
-
 import com.avaje.ebean.Model;
 import controllers.UserController;
-import controllers.routes;
-import org.apache.commons.io.FileUtils;
 import play.Logger;
-import play.Play;
-import play.data.Form;
 import play.data.validation.Constraints;
-import play.mvc.Http;
 import utillities.PasswordHash;
 import utillities.SessionHelper;
-import views.html.user.signup;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
 
@@ -161,5 +151,29 @@ public class User extends Model {
         return true;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        User u = (User) obj;
+        return this.id == u.id;
+    }
 
+    @Override
+    public void delete() {
+        for (Comment comment : Comment.findByUser(this)) {
+            comment.delete();
+        }
+        for (Report report : Report.findByUser(this)) {
+            report.delete();
+        }
+        for (Place place : Place.findByUser(this)) {
+            place.delete();
+        }
+        for (Reservation reservation : Reservation.findByUser(this)) {
+            reservation.delete();
+        }
+        for (Message message : Message.findBySenderAndReciever(this)) {
+            message.delete();
+        }
+        super.delete();
+    }
 }

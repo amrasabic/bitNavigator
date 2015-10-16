@@ -1,5 +1,6 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import models.*;
 import play.Logger;
 import play.data.DynamicForm;
@@ -87,6 +88,7 @@ public class PlaceController extends Controller {
     public Result updatePlace(int id) {
         Form<Place> boundForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
+        Form<WorkingHours> boundWorkingHoursForm = workingHoursForm.bindFromRequest();
 
         if (boundForm.hasErrors() || boundServiceForm.hasErrors()) {
             flash("error", "Wrong input!");
@@ -108,6 +110,13 @@ public class PlaceController extends Controller {
             return internalServerError("Something went wrong");
         }
         place.id = id;
+
+        WorkingHours workingHours = boundWorkingHoursForm.get();
+        workingHours.id = WorkingHours.findByPlace(place).id;
+        workingHours.place = place;
+        workingHours.update();
+        Logger.debug(boundWorkingHoursForm.toString());
+
         place.update();
 
         MultipartFormData body = request().body().asMultipartFormData();
@@ -148,9 +157,6 @@ public class PlaceController extends Controller {
                 return unauthorized("Permission denied!");
             }
         }
-
-        WorkingHours.findByPlace(place).delete();
-
         place.delete();
         return redirect(routes.PlaceController.placeList());
     }
@@ -169,7 +175,6 @@ public class PlaceController extends Controller {
 
     public Result viewPlace(int id) {
         DynamicForm form = Form.form().bindFromRequest();
-
         Place place = Place.findById(id);
         if (place == null) {
             return notFound(String.format("Place %s does not exists.", id));
@@ -179,15 +184,44 @@ public class PlaceController extends Controller {
             rating = place.getRating();
         }
         if (form.data().get("isModal") != null) {
-            if (!SessionHelper.getCurrentUser().places.contains(place)) {
+            if(updateCheck(place) && checkIp(place)){
                 place.updateNumOfViews();
             }
             return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
         }
-        if (!SessionHelper.getCurrentUser().places.contains(place)) {
+        if(updateCheck(place) && checkIp(place)){
             place.updateNumOfViews();
         }
         return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
+    }
+
+    public boolean checkIp(Place place){
+        String clientIP = request().remoteAddress();
+        for(int i = 0; i<place.clientIPs.size(); i++){
+            if(place.clientIPs.get(i).ipAddress.equals(clientIP)){
+                return false;
+            }
+        }
+        ClientIP ipAddress = new ClientIP();
+        ipAddress.ipAddress = clientIP;
+        ipAddress.place=place;
+        Ebean.save(ipAddress);
+        place.clientIPs.add(ipAddress);
+        place.update();
+        return true;
+    }
+
+    public boolean updateCheck(Place place){
+        User user = SessionHelper.getCurrentUser();
+        if(SessionHelper.isAuthenticated()){
+            if(user.places.contains(place)){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+            return true;
+        }
     }
 
     @Security.Authenticated(Authenticators.User.class)
