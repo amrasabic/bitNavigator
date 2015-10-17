@@ -427,13 +427,15 @@ textarea {
 }
 
 .footer-distributed{
-    background-color: #292c2f;
+    background-color: #2b669a;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
     box-sizing: border-box;
     width: 100%;
     text-align: left;
     font: bold 16px sans-serif;
-    padding: 55px 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 25px;
     margin-top: 0px;
 }
 
@@ -453,7 +455,7 @@ textarea {
 /* The company logo */
 
 .footer-distributed h3{
-    color:  #ffffff;
+    color:  white;
     font: normal 36px 'Cookie', cursive;
     margin: 0;
 }
@@ -499,7 +501,7 @@ textarea {
     border-radius: 50%;
     text-align: center;
     line-height: 42px;
-    margin: 10px 15px;
+    margin: 1px 1px;
     vertical-align: middle;
 }
 
@@ -523,8 +525,11 @@ textarea {
 }
 
 .footer-distributed .footer-center p a{
-    color:  #5383d3;
-    text-decoration: none;;
+    display: block;
+    color:  #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 
@@ -542,10 +547,26 @@ textarea {
     margin: 0;
 }
 
-.footer-distributed .footer-company-about span{
+.footer-distributed .footer-company-about {
     display: block;
     color:  #ffffff;
     font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.footer-span{
+    display: block;
+    color:  white;
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.contact-info{
+    display: block;
+    color:  white;
+    font-size: 19px;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -578,7 +599,7 @@ textarea {
 }
 
 .panel-default > .panel-heading{
-    background: #00B4FF;
+    background: #2b669a;
     margin-bottom: 0px;
 }
 
@@ -611,6 +632,16 @@ textarea {
     outline: none;
 }
 
+#arrow-up-footer a{
+    color: white;
+    text-align: right;
+    width: 100%;
+    display: block;
+    padding: 5px 5px;
+    font-size: 24px;
+    outline: none;
+}
+
 .panel-title a:hover, .panel-title a:focus, .panel-title a:active {
     text-decoration: none;
     outline: none;
@@ -638,3 +669,11 @@ textarea {
     }
 
 }
+
+.transbox {
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.6;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+

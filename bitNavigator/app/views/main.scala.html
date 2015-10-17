@@ -16,28 +16,29 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("jquery-ui-1.11.4/jquery-ui.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/jquery.dataTables.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap-social.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap-social.less")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/font-awesome.css")">
     </head>
 
     <body >
-
         @navbar()
 
         <div class="container">
         @content
         </div>
-        <div style="height: 70px "></div>
-
+        <div style="height : 70px "></div>
         <div class="panel-group-footer" id="accordion">
             <div class="panel panel-default" id="footer-panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            Click Me
-                        </a>
-                    </h4>
-                </div>
+                    <div class="panel-heading">
+
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <i class="fa fa-arrow-circle-o-up" id="arrow-up-footer"></i>
+                            </a>
+
+                    </div>
                 <div id="collapseOne" class="panel-collapse collapse">
-                    <div class="panel-body">
+                    <div class="panel-body-footer">
                     @footer()
                     </div>
                 </div>
@@ -45,18 +46,19 @@
         </div>
 
 
-
         <script src="@routes.Assets.versioned("javascripts/bootbox.min.js")"></script>
         <script>
             $('#collapseOne').on('show.bs.collapse', function () {
     $('.panel-heading').animate({
-        backgroundColor: "#515151"
+        backgroundColor: "#2b669a",
+
     }, 500);
 })
 
 $('#collapseOne').on('hide.bs.collapse', function () {
     $('.panel-heading').animate({
-        backgroundColor: "#00B4FF"
+        backgroundColor: "#2b669a",
+
     }, 500);
 })
         </script>
