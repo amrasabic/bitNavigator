@@ -30,7 +30,7 @@
             <div class="input-group">
                 <label for="inputName" class="input-group-addon required_field">
                     Name</label>
-                   <input name="name" value="@contactForm("name").value" type="text" class="form-control" id="inputName" required="required">
+                   <input name="name" style="padding-left: 10px" value="@contactForm("name").value" type="text" class="form-control" id="inputName" required="required">
             </div>
 
 
@@ -38,13 +38,13 @@
             <div class="input-group">
                 <span class="input-group-addon required_field">
                     Email  </span>
-                <input name="email" value="@contactForm("email").value" type="email" class="form-control" id="email" required="required">
+                <input name="email" style="padding-left: 10px" value="@contactForm("email").value" type="email" class="form-control" id="email" required="required">
             </div>
 
             <div class="input-group">
                 <span class="input-group-addon required_field">
                     Message </span>
-                <textarea style="resize : vertical" maxlength="250" name="message" type="text" class="form-control" id="message" required="required">@contactForm("message").value </textarea>
+                <textarea style="resize : vertical; padding-left: 10px" maxlength="250" name="message" type="text" class="form-control" id="message" required="required">@contactForm("message").value </textarea>
             </div>
 
             <div class="input-group">
