@@ -15,7 +15,8 @@ libraryDependencies ++= Seq(
   "org.apache.directory.studio" % "org.apache.commons.io" % "2.4",
   "com.cloudinary" % "cloudinary" % "1.0.14",
   "com.paypal.sdk" % "rest-api-sdk" % "1.2.0",
-  "it.innove" % "play2-pdf" % "1.3.0"
+  "it.innove" % "play2-pdf" % "1.3.0",
+  "com.twilio.sdk" % "twilio-java-sdk" % "3.4.5"
 )
 
 lazy val myProject = (project in file("."))
