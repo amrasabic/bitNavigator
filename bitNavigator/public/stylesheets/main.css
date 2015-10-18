@@ -592,28 +592,29 @@ textarea {
     margin-bottom: 5px;
 }
 
-#accordion {
+#accordion-footer {
     position: fixed;
     bottom: 0;
     width: 100%;
 }
 
-.panel-default > .panel-heading{
+.panel-default-footer > .panel-heading-footer{
     background: #2b669a;
     margin-bottom: 0px;
 }
 
-.panel-heading {
+.panel-heading-footer {
     padding: 0;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     bottom: 0px;
 }
 
-.panel-group-footer .panel {
+.panel-group-footer .panel-footer {
     border-radius: 0;
     bottom: 0px;
     margin-bottom: 0px;
+    padding: 0px;
 }
 
 #footer-panel-default{
@@ -621,7 +622,7 @@ textarea {
     margin-bottom: 0px;
 }
 
-.panel-title a {
+.panel-title-footer a {
     color: #FFFFFF;
     text-align: center;
     width: 100%;
@@ -642,7 +643,7 @@ textarea {
     outline: none;
 }
 
-.panel-title a:hover, .panel-title a:focus, .panel-title a:active {
+.panel-title-footer a:hover, .panel-title-footer a:focus, .panel-title-footer a:active {
     text-decoration: none;
     outline: none;
 }
