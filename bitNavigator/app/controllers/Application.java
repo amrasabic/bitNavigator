@@ -52,7 +52,7 @@ public class Application extends Controller {
             // Process cart/payment information
             double price = r.price;
             String priceString = String.format("%1.2f", price);
-            String desc = "Reserved: " + r.place.title + "\n Amount: "+priceString+" BAM";
+            String desc = "Reserved: " + r.place.title + "\n\n Amount: "+priceString+" BAM \n\n Reservation date: "+ r.reservationDate;
 
             // Configure payment
             Amount amount = new Amount();
@@ -136,7 +136,7 @@ public class Application extends Controller {
         Message message = new Message();
         message.sender = SessionHelper.getCurrentUser();
         message.reciever = r.place.user;
-        String msg = "Transaction successful!";
+        String msg = "Transaction successful!" + "\n Transaction ID: " + r.paymentId;
         message.content = msg;
         message.reservation = r;
         message.sent = Calendar.getInstance();

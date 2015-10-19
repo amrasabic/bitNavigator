@@ -52,7 +52,7 @@
                                 <input type="submit" class="btn btn-xs btn-warning" value="Set price">
                             </form>
                         } else {
-                            @reservation.price
+                            @reservation.price BAM
                         }
                         </td>
                         @if(reservation.status.id == Status.DENIED) {
@@ -104,7 +104,7 @@
 
                         <td class="naslov">
                         @if(reservation.price != null) {
-                            @reservation.price KM
+                            @reservation.price BAM
                         }
                         </td>
                         <td class="naslov">
