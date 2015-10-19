@@ -80,14 +80,16 @@
 
 
     <div><!-- opening div-->
-        <script>
+    <script>
         var map;
+        var markers = [];
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 43.850, lng: 18.390},
                 zoom: 13
             });
             var mapCenter = map.getCenter();
+
             drawMarkers();
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -106,7 +108,7 @@
             }
             function drawMarkers() {
                 @for(place <- places){
-            @if(place.latitude != null && place.longitude != null){
+                    @if(place.latitude != null && place.longitude != null){
                         var marker = new google.maps.Marker({
                             position: {lat: @place.latitude, lng: @place.longitude},
                             map: map,
@@ -129,13 +131,27 @@
                                 $('#view-place-modal').modal('show');
                             });
                         });
+                        markers[markers.length] = marker;
                     }
-        }
+                }
             }
+            map.addListener('zoom_changed', function() {
+                if (map.getZoom() > 12) {
+                    for (var i = 0; i < markers.length; i++) {
+                        markers[i].setVisible(true);
+                    }
+                } else {
+                    for (var i = 0; i < markers.length; i++) {
+                        markers[i].setVisible(false);
+                    }
+                }
+            });
         }
         $('#map').height(function(index, height) {
             return window.innerHeight - $(this).offset().top;
         });
+
+
     </script>
         <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=geometry" async defer></script>
 

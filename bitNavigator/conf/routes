@@ -76,3 +76,5 @@ POST          /resendForgotenPassword                       @controllers.UserCon
 POST          /paypal/:id                                   @controllers.Application.paypal(id: Integer)
 GET           /paypal/success                               @controllers.Application.paypalSuccess()
 GET           /paypal/pdf:id                                @controllers.Application.payPdf(id: Integer)
+
+GET           /api/place/list                               @controllers.RestController.getListOfPLaces()
