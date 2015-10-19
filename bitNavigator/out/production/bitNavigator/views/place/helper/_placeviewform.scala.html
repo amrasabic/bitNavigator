@@ -1,0 +1,89 @@
+@import utillities.SessionHelper
+@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: Double)
+<script>
+
+</script>
+<!--div class="container"-->
+<div class="form-group">
+    <h3>@place.title</h3>
+</div>
+
+<!--Address -->
+<div class="form-group">
+    <label for="address">Address:</label>
+    <input type="text" class="form-control" name="address" id="address" value="@place.address" readonly>
+</div>
+<p><br/></p>
+<!-- Service -->
+<div class="form-group">
+    <label for="service">Service:</label>
+    <div class="row">
+        <div class="col-xs-10">
+            <input type="text" class="form-control" name="service" id="service" value="@place.service.serviceType" readonly>
+        </div>
+        <div class="col-xs-2">
+            <img class="img-responsive" src="@routes.Assets.versioned(place.service.serviceIcon)" >
+        </div>
+    </div>
+</div>
+<p><br/></p>
+@if(place.description != "") {
+    <!-- Description -->
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Description
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body" style="white-space : pre-line ;">
+                @place.description
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Number of views -->
+<div class="form-group">
+    <label for="views">Views:</label>
+    @if(place.numOfViews == null) {
+        <input type="text" class="form-control" name="views" id="views" value="0" readonly>
+    } else {
+        <input type="text" class="form-control" name="views" id="views" value="@place.numOfViews" readonly>
+        }
+</div>
+<p><br/></p>
+
+<!-- Number of reservations -->
+@if(SessionHelper.isAuthenticated) {
+    @if(SessionHelper.getCurrentUsersEmail == place.user.email || SessionHelper.getCurrentUser().isAdmin && place.service.isReservable()) {
+        <div class="form-group">
+            <label for="views">Reservations:</label>
+            @if(place.numOfReservations == null) {
+                <input type="text" class="form-control" name="reservations"  value="0" readonly>
+            } else {
+                <input type="text" class="form-control" name="reservations" value="@place.numOfReservations" readonly>
+                }
+        </div>
+        <p><br/></p>
+    }
+}
+<!-- Rating -->
+<div class="form-group rating-group">
+@if(rating == null) {
+    <div class="label label-default">Rating:</div> n/a
+} else {
+    <div class="label label-default">Rating:</div> @rating
+    <span class="glyphicon glyphicon-star"></span>
+}
+</div>
+<script>
+    $(document).ready(function() {
+        $(".accordion").accordion();
+    })
+
+</script>

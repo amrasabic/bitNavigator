@@ -1,0 +1,57 @@
+@import utillities.SessionHelper
+@(comments: java.util.List[Comment])
+
+@main("Comments list") {
+
+
+    <h2>All comments</h2>
+    <div class="row">
+        <div class="btn-group-vertical col-md-3">
+            <a href="/user/list" class="btn btn-default">All users</a>
+            <a href="/place/list" class="btn btn-default">All places</a>
+            <a href="/comments/list" class="btn btn-default">All comments</a>
+            <a href="/comments/reported" class="btn btn-default">Reported comments</a>
+            <a href="/service/add" class="btn btn-default">Add services</a>
+            <a href="/service/list" class="btn btn-default">Service list</a>
+
+        </div>
+
+        <div class="col-md-9">
+            <table id="myTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Content</th>
+                        <th>Commented on</th>
+                        <th>Place title</th>
+                        <th>User</th>
+                        <th>View</th>
+                        @if(SessionHelper.isAdmin) {
+                            <th>Delete</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                @for(comment <- comments) {
+                    <tr>
+                        <td>@comment.commentContent</td>
+                        <td>@comment.commentCreated.getTime</td>
+                        <td>@comment.place.title</td>
+                        <td>@comment.user.email</td>
+                        <td><a href="@routes.PlaceController.viewPlace(comment.place.id)"> <i class="glyphicon glyphicon-eye-open"></i></a></td>
+                        @if(SessionHelper.isAdmin) {
+                            <td><a href="@routes.CommentController.deleteComment(comment.id)" role="button" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a></td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
+    <script>
+        $(document).ready(function(){
+            $('#myTable').DataTable();
+        });
+    </script>
+}

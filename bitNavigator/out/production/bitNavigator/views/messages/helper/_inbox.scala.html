@@ -1,0 +1,22 @@
+@import utillities.SessionHelper
+@(reservations: java.util.List[Reservation])
+
+@views.html.messages.messageview {
+
+    @for(reservation <- reservations) {
+        <a href="@routes.MessageController.messagesList(reservation.id)" class="list-group-item">
+            <div class="checkbox">
+                <label>
+                    <h4>@reservation.place.title
+                        @if(Message.numberOfNewMessages(reservation) != 0){
+                            <span class="badge badge-red">NEW!</span>
+                        }
+                    </h4>
+                </label>
+            </div>
+            <span class="name" style="min-width : 120 px ;display : inline-block ;">@reservation.user.firstName @reservation.user.lastName</span>
+            <span class="text-muted" style="font-size : 11 px ;"> - @reservation.status.status</span>
+            <span class="badge">@reservation.reservationDate.getTime()</span>
+        </a>
+    }
+}
