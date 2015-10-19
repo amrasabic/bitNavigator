@@ -2,5 +2,5 @@
 @main("Paypal") {
     <h3 style="color : #0a68b4"> <i>Successfull</i></h3>
     @paypdf(reservation)
-    <a href="@routes.Application.payPdf(reservation.id)">Download PDF</a>
+    <a href="@routes.Application.payPdf(reservation.id)" target="_blank">Download PDF</a>
 }
