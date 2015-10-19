@@ -341,8 +341,8 @@ public class UserController extends Controller {
         public String firstName;
         @Constraints.Pattern(value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
-        @Constraints.Pattern(value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
-        public String mobileNumber;
+        //@Constraints.Pattern(value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
+        //public String mobileNumber;
         //public Image avatar;
 
         public UserNameForm() {
@@ -353,7 +353,7 @@ public class UserController extends Controller {
             this.email = u.email;
             this.firstName = u.firstName;
             this.lastName = u.lastName;
-            this.mobileNumber = u.phoneNumber;
+            //this.mobileNumber = u.phoneNumber;
             //this.avatar = u.avatar;
         }
     }
