@@ -1,11 +1,12 @@
 package models;
 
 import com.avaje.ebean.Model;
+import utillities.SMS;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +21,7 @@ public class PhoneNumber extends Model{
     private String number;
     private int token;
     private boolean validated;
+    private boolean tokenSent;
     @ManyToOne (cascade = CascadeType.PERSIST)
     private User user;
 
@@ -58,6 +60,14 @@ public class PhoneNumber extends Model{
         this.validated = validated;
     }
 
+    public boolean isTokenSent() {
+        return tokenSent;
+    }
+
+    public void setTokenSent(boolean tokenSent) {
+        this.tokenSent = tokenSent;
+    }
+
     public User getUser() {
         return user;
     }
@@ -69,4 +79,13 @@ public class PhoneNumber extends Model{
     public static List<PhoneNumber> findByUser(User user) {
         return finder.where().eq("user", user).findList();
     }
+
+    public static PhoneNumber findByNumberAndUser(String number, User user) {
+        return finder.where().eq("number", number).eq("user", user).findUnique();
+    }
+
+    public void sendToken() {
+        SMS.sendSMS(getNumber(), "Code: " + getToken());
+    }
+
 }

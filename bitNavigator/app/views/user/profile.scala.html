@@ -1,56 +1,9 @@
 @import controllers.UserController.UserNameForm
+@import utillities.SessionHelper
 @(user: UserNameForm, msg: String)
 @import helper._
 
 @main("User profile") {
-
-    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/intlTelInput.css")">
-    <script src="@routes.Assets.versioned("javascripts/inputtel.js")"></script>
-    <script src="@routes.Assets.versioned("javascripts/intlTelInput.min.js")"></script>
-    <script src="@routes.Assets.versioned("javascripts/changePass.js")" type="text/javascript"></script>
-    <script>
-        $(document).ready(function(){
-           $("#mobile-number").intlTelInput({
-          defaultCountry: "auto",
-          geoIpLookup: function(callback) {
-            $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
-              var countryCode = (resp && resp.country) ? resp.country : "";
-              callback(countryCode);
-            });
-          },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
-         });
-            var telInput = $("#mobile-number"),
-                errorMsg = $("#error-msg"),
-                validMsg = $("#valid-msg");
-            telInput.intlTelInput({
-              utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
-            });
-            var a;
-            // on blur: validate
-            telInput.on("change keyup", function() {
-              if ($.trim(telInput.val())) {
-                if (telInput.intlTelInput("isValidNumber")) {
-                  validMsg.removeClass("hide");
-                } else {
-                  telInput.addClass("error");
-                  errorMsg.removeClass("hide");
-                  validMsg.addClass("hide");
-                }
-              }
-            });
-            // on keydown: reset
-            telInput.keydown(function() {
-              telInput.removeClass("error");
-              errorMsg.addClass("hide");
-              validMsg.addClass("hide");
-            });
-            $("#submit-profile").click(function(){
-                 a = $("#mobile-number").intlTelInput("getNumber");
-                  $("#mobile-number-id").val(a);
-            });
-        })
-        var urlToPost = "@routes.UserController.validateUserNameForm()";
-    </script>
 
     <div class="container-fluid" id="profile-panel">
         <h3 class="page-header">Hi @user.firstName  @user.lastName!</h3>
@@ -115,17 +68,22 @@
 
                         <!-- User phone number-->
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Phone number:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" value="" type="tel" id="mobile-number">
-                            <span id="valid-msg" class="hide">✓ Valid</span>
-                            <span id="error-msg" class="hide">Invalid number</span>
-                            <input id="mobile-number-id" name="mobileNumber" type="hidden">
-                        </div>
-                        <div class="alert alert-danger" data-error-for="mobileNumber" role="alert" hidden></div>
+                        @for(phoneNum <- PhoneNumber.findByUser(SessionHelper.getCurrentUser)){
+                            <label class="col-lg-3 control-label">Phone number:</label>
+                            <div class="col-lg-8">
+                                <div class="form-control" value="" type="tel" readonly>
+                                    @phoneNum.getNumber()
+                                    @if(phoneNum.isValidated()){
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    }else{
+                                        <a id="send-token-link" href="#" data-number="@phoneNum.getNumber()" data-toggle="modal" data-target="#validate-phone-number-modal" style="margin-left: 20px">Validate number</a>
+                                    }
+                                </div>
+                            </div>
+                        }
                         <label class="col-lg-3 control-label"></label>
-                        <div class="col-lg-8">
-                            <a href="#">
+                        <div class="col-lg-8" style="margin-top: 10px">
+                            <a href="#" data-toggle="modal" data-target="#add-phone-number-modal">
                                 +Add phone number.
                             </a>
                         </div>
@@ -199,25 +157,137 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div id="add-phone-number-modal-body" class="modal-body"><!--data-auto-logout-link="true"-->
-                    <fb:login-button class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false"
-                    scope="public_profile,email" onlogin="checkLoginState();">
-                        Connect with Facebook
-                    </fb:login-button>
-                    <div class="strike">
-                        <span>Or</span>
-                    </div>
-                    <form class="sign-in-modal-form dont-validate" method="post" action="@routes.UserController.checkSignIn()">
-                        <input id="email-signin" type="text" required="required" class="form-control moadal-input" placeholder=" Email" name="email">
-                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="email" role="alert" hidden></div>
-                        <input id="password-signin" type="password" required="required" class="form-control modal-input" placeholder=" Password" name="password">
-                        <div class="alert alert-danger sign-in-modal-alert" data-error-for="password" role="alert" hidden></div>
-                        <a style="color:#818181" data-dismiss="modal" data-toggle="modal" href="#forgot-password-modal">Have you forgot your password ?</a>
-                        <button id="btn-sign-in-modal" type="submit" class="btn btn-primary btn-lg" >Sign in</button>
+                <div id="add-phone-number-modal-body" class="modal-body">
+                    <form id="phone-number-form" class="dont-validate" method="post" action="@routes.PhoneNumberController.addPhoneNumber()">
+                        <input class="form-control" value="" type="tel" id="mobile-number">
+                        <span id="valid-msg" class="hide">✓ Valid</span>
+                        <span id="error-msg" class="hide">Invalid number</span>
+                        <input id="mobile-number-id" name="number" hidden>
+                        <div class="alert alert-danger" data-error-for="mobileNumber" role="alert" hidden></div>
+                        <div>
+                            <button class="btn btn-primary" type="submit">Add</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Validate phone number modal -->
+    <div class="modal fade" id="validate-phone-number-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div id="validate-phone-number-modal-body" class="modal-body">
+                    <form id="validate-phone-number-form" class="dont-validate" method="post" action="@routes.PhoneNumberController.validatePhoneNumber()">
+                        <label class="control-label">Input code you recieved via SMS:</label>
+                        <input class="form-control" type="number" id="phone-number-token">
+                        <div id="invalid-token" class="alert alert-danger sign-in-modal-alert" role="alert" hidden></div>
+                        <div>
+                            <button id="validate-number-button" class="btn btn-primary" type="submit">Add</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/intlTelInput.css")">
+    <script src="@routes.Assets.versioned("javascripts/inputtel.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/intlTelInput.min.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/changePass.js")" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(function(){
+
+            $("#mobile-number").intlTelInput({
+                defaultCountry: "auto",
+                geoIpLookup: function(callback) {
+                    $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+                        var countryCode = (resp && resp.country) ? resp.country : "";
+                        callback(countryCode);
+                    });
+                },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
+            });
+
+            var telInput = $("#mobile-number");
+            var errorMsg = $("#error-msg");
+            var validMsg = $("#valid-msg");
+
+            telInput.intlTelInput({
+                utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
+            });
+
+            telInput.on("change keyup", function() {
+                if ($.trim(telInput.val())) {
+                    if (telInput.intlTelInput("isValidNumber")) {
+                        validMsg.removeClass("hide");
+                    } else {
+                        telInput.addClass("error");
+                        errorMsg.removeClass("hide");
+                        validMsg.addClass("hide");
+                    }
+                }
+            });
+
+            telInput.keydown(function() {
+                telInput.removeClass("error");
+                errorMsg.addClass("hide");
+                validMsg.addClass("hide");
+            });
+
+            $('#phone-number-form').submit(function(e){
+                if (telInput.intlTelInput("isValidNumber")) {
+                    $("#mobile-number-id").val($("#mobile-number").intlTelInput("getNumber"));
+                } else {
+                    e.preventDefault();
+                }
+            });
+
+            var phoneNumber;
+            $('#send-token-link').on('click', function() {
+                phoneNumber = $(this).data('number');
+                 $.ajax({
+                    url: "@routes.PhoneNumberController.sendToken()",
+                    method: "post",
+                    data: "number=" + encodeURIComponent(phoneNumber)
+                }).error(function(response) {
+                    $('#invalid-token').text(response.responseText);
+                    $('#invalid-token').show();
+                });
+            });
+
+            $("#validate-phone-number-form").submit(function(e, options){
+
+                var options = options || {};
+                if(options.allow == true){
+                    return;
+                }
+
+                e.preventDefault();
+
+                $form = $(this);
+
+                $.ajax({
+                    url: "@routes.PhoneNumberController.validatePhoneNumber()",
+                    method: "post",
+                    data: "number=" + encodeURIComponent(phoneNumber) + "&token=" + $('#phone-number-token').val()
+                }).success(function(response){
+                    $form.trigger("submit", {allow: true});
+                    console.log("proslo")
+                }).error(function(response){
+                    $('#invalid-token').text(response.responseText);
+                    $('#invalid-token').show();
+                });
+            });
+
+        });
+
+        var urlToPost = "@routes.UserController.validateUserNameForm()";
+    </script>
 
 }

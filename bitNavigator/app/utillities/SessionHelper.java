@@ -1,9 +1,6 @@
 package utillities;
 
-import models.Message;
-import models.Reservation;
-import models.Status;
-import models.User;
+import models.*;
 import play.mvc.Http;
 
 public class SessionHelper {
@@ -43,6 +40,7 @@ public class SessionHelper {
     public static int numberOfNotifications() {
         return Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size() + Message.getNewMessages(getCurrentUser()).size();
     }
+
 
 
 }

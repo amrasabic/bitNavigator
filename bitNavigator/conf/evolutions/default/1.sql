@@ -48,6 +48,7 @@ create table phone_number (
   number                    varchar(255),
   token                     integer,
   validated                 tinyint(1) default 0,
+  token_sent                tinyint(1) default 0,
   user_id                   integer,
   constraint pk_phone_number primary key (id))
 ;
