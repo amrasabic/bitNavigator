@@ -26,7 +26,7 @@ public class MailHelper {
             mail.setHtmlMsg(String
                     .format("<html><body><strong> %s </strong> <p> %s </p> <p> %s </p> </body></html>",
                             "Thanks for signing up to bitNavigator!",
-                            "Please confirm your Email adress :).", message));
+                            "Please confirm your Email adress .", message));
             mail.setHostName("smtp.gmail.com");
             mail.setStartTLSEnabled(true);
             mail.setSSLOnConnect(true);
@@ -66,6 +66,32 @@ public class MailHelper {
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    public static void sendForPassword(String email, String message) {
+
+        try {
+            HtmlEmail mail = new HtmlEmail();
+            mail.setSubject("bitNavigator Have you forgot your password ?");
+            mail.setFrom("bitNavigator <" + Play.application().configuration().reference().getString("EMAIL_USERNAME_ENV") + ">");
+            mail.addTo("Contact <" + Play.application().configuration().reference().getString("EMAIL_USERNAME_ENV") + ">");
+            mail.addTo(email);
+            mail.setMsg(message);
+            mail.setHtmlMsg(String
+                    .format("<html><body><strong> %s </strong> <p> %s </p> <p> %s </p> </body></html>",
+                            "You have forgot your password ?",
+                            "Click on the following link to set new password :", message));
+            mail.setHostName("smtp.gmail.com");
+            mail.setStartTLSEnabled(true);
+            mail.setSSLOnConnect(true);
+            mail.setAuthenticator(new DefaultAuthenticator(
+                    Play.application().configuration().reference().getString("EMAIL_USERNAME_ENV"),
+                    Play.application().configuration().reference().getString("EMAIL_PASSWORD_ENV")
+            ));
+            mail.send();
+        } catch (Exception e) {
+            Logger.warn("Email error: " + e);
         }
     }
 
