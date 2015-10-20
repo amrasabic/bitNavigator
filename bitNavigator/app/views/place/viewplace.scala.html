@@ -9,7 +9,7 @@
                 @views.html.place.helper._placeviewform(place)(services)(comments)(images)(rating)
                 <p><br></p>
                 <div>
-                    <a data-toggle="modal" data-target="#working-hours-modal" class="btn btn-default">Working hours</a>
+                    <a data-toggle="modal" data-target="#working-hours-modal" class="btn btn-default"><i class="fa fa-clock-o"></i> Working hours</a>
                 @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email && place.service.isReservable()) {
                     <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
                 }
@@ -55,7 +55,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                            <h4 class="modal-title">Working hours</h4>
+                            <h4 class="modal-title"><i class="fa fa-clock-o"></i> Working hours</h4>
                         </div>
                         <div class="modal-body">
                             <table id="myTable" class="table">
