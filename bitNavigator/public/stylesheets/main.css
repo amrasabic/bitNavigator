@@ -237,6 +237,13 @@ textarea {
     background-color: white;
 }
 
+.alert-success{
+    height: 35px;
+    text-align: center;
+    color: green;
+    background-color: white;
+}
+
 .dropdown-item {
     width: 200px;
 }
@@ -378,6 +385,10 @@ textarea {
     width: 353px;
 }
 
+#add-phone-number-modal .modal-content, #validate-phone-number-modal .modal-content {
+    width: 247px;
+}
+
 .required_field:after {
     content: "  *";
     color: red;
@@ -391,6 +402,11 @@ textarea {
 #btn-sign-in-modal {
     margin-top: 10px;
     width: 321px;
+}
+
+#btn-add-phone-number, #validate-number-button {
+    margin-top: 10px;
+    width: 215px;
 }
 
 .sign-in-modal-alert {

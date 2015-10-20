@@ -80,6 +80,10 @@ public class PhoneNumber extends Model{
         return finder.where().eq("user", user).findList();
     }
 
+    public static PhoneNumber findById(int id) {
+        return finder.byId(id);
+    }
+
     public static PhoneNumber findByNumberAndUser(String number, User user) {
         return finder.where().eq("number", number).eq("user", user).findUnique();
     }

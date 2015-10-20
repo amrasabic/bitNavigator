@@ -29,6 +29,7 @@ DELETE        /user/profile/:email                          @controllers.UserCon
 POST          /user/profile/phonenumber/add                 @controllers.PhoneNumberController.addPhoneNumber()
 POST          /user/profile/phonenumber/validate            @controllers.PhoneNumberController.validatePhoneNumber()
 POST          /user/profile/phonenumber/sendtoken           @controllers.PhoneNumberController.sendToken()
+DELETE        /user/profile/phonenumber/delete/:id          @controllers.PhoneNumberController.delete(id: Integer)
 
 GET           /user/reservations                            @controllers.ReservationController.reservationsList()
 POST          /user/reservations                            @controllers.ReservationController.changeStatus()

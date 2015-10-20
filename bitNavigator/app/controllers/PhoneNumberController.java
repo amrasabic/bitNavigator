@@ -45,14 +45,16 @@ public class PhoneNumberController extends Controller{
         if (phoneNumber == null) {
             return redirect(routes.UserController.profile(SessionHelper.getCurrentUsersEmail(), "Invalid phone number"));
         }
-        if (!phoneNumber.isTokenSent()) {
+        boolean resend = Boolean.parseBoolean(form.data().get("resend"));
+        if (resend || !phoneNumber.isTokenSent()) {
+            phoneNumber.setToken();
             phoneNumber.sendToken();
             phoneNumber.setTokenSent(true);
             phoneNumber.update();
         } else {
             return badRequest("Token already sent.");
         }
-        return ok();
+        return ok("Token is sent.");
     }
 
     @Security.Authenticated (Authenticators.User.class)
@@ -75,6 +77,16 @@ public class PhoneNumberController extends Controller{
         }
 
         return badRequest("Token does not match.");
+    }
+
+    @Security.Authenticated (Authenticators.User.class)
+    public Result delete(int id){
+        PhoneNumber phoneNumber = PhoneNumber.findById(id);
+        if (phoneNumber == null) {
+            return badRequest();
+        }
+        phoneNumber.delete();
+        return ok();
     }
 
 }
