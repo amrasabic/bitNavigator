@@ -80,7 +80,7 @@ GET           /paypal/pdf:id                                @controllers.Applica
 GET           /showfaq                                      @controllers.Application.showFaq()
 GET           /faq/new                                      @controllers.FAQController.newFAQ()
 GET           /faq/edit/:id                                 @controllers.FAQController.editFAQ(id:Integer)
-GET           /faq/delete/:id                               @controllers.FAQController.deleteFAQ(id:Integer)
+DELETE        /faq/delete/:id                               @controllers.FAQController.deleteFAQ(id:Integer)
 POST          /faq/save                                     @controllers.FAQController.saveFAQ()
 POST          /faq/edit/:id                                 @controllers.FAQController.updateFAQ(id:Integer)
 POST          /faq/validateForm                             @controllers.FAQController.validateFormFAQ()

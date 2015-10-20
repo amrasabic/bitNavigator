@@ -2,7 +2,7 @@
 @import helper._
 
 @main("Edit FAQs") {
-    @helper.form(action = routes.FAQController.saveFAQ(), 'method -> "POST", 'class -> "form-horizontal dont-validate", 'role -> "form-dont-validate") {
+    @helper.form(action = routes.FAQController.updateFAQ(faq.id), 'method -> "POST", 'class -> "form-horizontal dont-validate", 'role -> "form-dont-validate") {
         <div class="row" style="margin-right : 0 px">
             <div class="col-md-6">
                 <h2>Edit FAQ</h2>
@@ -31,20 +31,14 @@
                 </div>
 
                 <div class ="col-md-1" style="padding-right : 0 px ;">
-                    <a href="@routes.FAQController.saveFAQ()"><button id="submit-button" class="btn btn-primary" type="submit" name="save" onclick="validateFAQ()">
-                        Save</button></a>
+                    <a href="@routes.FAQController.editFAQ(faq.id)"><button class="btn btn-primary" name="editFAQ">Edit</button></a>
                 </div>
             </form>
             }
     <div class ="row newCategory" style="margin-right : 0 px">
         <div class="col-md-1" style="padding-left : 0 px">
-            <a href="@routes.FAQController.adminFAQs()"><button type="submit" class="btn btn-default">
-                Cancel</button></a>
+            <a href="@routes.FAQController.adminFAQs()"><button type="submit" class="btn btn-default">Cancel</button></a>
         </div>
     </div>
 </div>
-    <script>
-    var urlPost = "@routes.FAQController.validateFormFAQ()";
-  </script>
-    <script src="@routes.Assets.versioned("javascripts/validateForm.js")" type="text/javascript"></script>
 }

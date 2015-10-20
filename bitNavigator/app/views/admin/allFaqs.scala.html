@@ -1,7 +1,7 @@
 @(faqs: java.util.List[FAQ])
 
 @main("All FAQs") {
-    <h1>FAQ</h1>
+    <h2>Frequently asked questions (FAQ)</h2>
 
     <div class="panel-group" id="accordion">
     @for(faq <-faqs){
@@ -13,13 +13,13 @@
                     @faq.question</a>
                 </h4>
             </div>
+
             <div id="collapse@faq.id" class="panel-collapse collapse">
                 <div class="panel-body">@faq.answer<br>
                 <td>
                     <a href="@routes.FAQController.editFAQ(faq.id)"><button type="submit"><span class="glyphicon glyphicon-pencil"></span></button></a>
                     <a href="@routes.FAQController.deleteFAQ(faq.id)" data-role="delete" data-delete-parent="tr"><i class="glyphicon glyphicon-trash"></i></a>
                 </td>
-
                 </div>
             </div>
         </div>
@@ -27,8 +27,25 @@
     </div>
 
 
-    <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
+    <script>
+        $('body').on('click', 'a[data-role="delete"]', function(e){
+            e.preventDefault();
+            $toDelete = $(this);
+            var conf = bootbox.confirm("Delete?", function(result){
+                if(result == true){
+                    $.ajax({
+                        url: $toDelete.attr("href"),
+                        type: "delete"
+                    }).success(function(response){
+                        $toDelete.parents(".panel-default").remove();
+                    });
+                }
+            });
 
-    <a href="@routes.FAQController.newFAQ()"><button class="btn btn-default">Add new faq</button></a>
+
+        });
+    </script>
+
+    <a href="@routes.FAQController.newFAQ()"><button class="btn btn-primary">Add new FAQ</button></a>
 
 }
