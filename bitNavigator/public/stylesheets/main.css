@@ -128,7 +128,7 @@ body {
     background-color: #ffffff;
 }
 
-#container-comment, #gallery-panel, #similarPlaces{
+#container-comment, #gallery-panel, #similarPlaces, #comments-panel{
     margin: 20px;
     padding: 15px;
     /*border-radius: 10px;*/

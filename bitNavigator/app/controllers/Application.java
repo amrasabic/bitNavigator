@@ -1,13 +1,11 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 
 import models.*;
-import play.Configuration;
 import play.Logger;
 import play.Play;
 import play.data.DynamicForm;
@@ -19,12 +17,8 @@ import views.html.index;
 
 import views.html.user.*;
 
-import java.net.*;
-
 import java.util.*;
-
 import it.innove.play.pdf.PdfGenerator;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
