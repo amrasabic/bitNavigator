@@ -1,0 +1,47 @@
+@(fillForm: Form[FAQ], faq: FAQ)
+@import helper._
+
+@main("Edit FAQs") {
+    @helper.form(action = routes.FAQController.updateFAQ(faq.id), 'method -> "POST", 'class -> "form-horizontal dont-validate", 'role -> "form-dont-validate") {
+        <div class="row" style="margin-right : 0 px">
+            <div class="col-md-6">
+                <h3 style="color : #0a68b4">Edit FAQ</h3>
+            </div>
+        </div>
+        <div class="col-md-10" style="border-bottom : 1px ; background-color : white ; border-radius : 5px ; border : 1px solid #E0E0D1">
+            <form action="@routes.FAQController.updateFAQ(faq.id)" method="POST">
+                <div class = "row newCategory" style="margin-right : 0px">
+                    <div class = "col-md-10">
+                        @for((key, value) <- fillForm.errors) {
+                            @for(err <- value) {
+                                <span class="alert-danger" style="font-weight : normal ; display : block ; width : 90 % ;">@err.message</span>
+                            }
+                        }
+
+                        <div>
+                            <h4>Question:</h4>
+                            <input class="form-control" name="question" required="required" style="margin-bottom : 30 px" value="@fillForm("question").value">
+                        </div>
+                        <div>
+                            <h4>Answer:</h4>
+                            <textarea class="form-control" name="answer" required="required" style="resize : none ; height : 200 px ; margin-bottom : 10 px">@fillForm("answer").value</textarea>
+                            <span class="alert-danger" data-error-for="message" style="font-weight : normal ; margin-bottom : 10 px"></span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class ="col-md-1" style="padding-right : 7px ;">
+                    <a href="@routes.FAQController.editFAQ(faq.id)"><button class="btn btn-primary" name="editFAQ">Edit</button></a>
+                </div>
+            </form>
+            }
+    <div class ="row newCategory" style="margin-right : 7px">
+        <div class="col-md-1" style="padding-left : 7px">
+            <a href="@routes.FAQController.adminFAQs()"><button type="button" class="btn btn-default">Cancel</button></a>
+        </div>
+        <br>
+    </div>
+    <br>
+</div>
+}

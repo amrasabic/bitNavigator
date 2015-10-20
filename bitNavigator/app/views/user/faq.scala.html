@@ -1,0 +1,29 @@
+@import helper._
+@(faqs: List[FAQ])
+@main("FAQ"){
+
+  <div class="jumbotron" style="background-color: white; width:80%;margin-left:10%;max-width: 1200px;margin-left:auto; margin-right:auto;">
+    <div class="container">
+      <div class="page-header ">
+        <h3 class="naslov" style="color : #0a68b4">FAQ <br><small>You have questions, we have answers.</small></h3>
+      </div>
+    <div class="panel-group" id="accordion">
+    @for(faq <- faqs){
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title" style="font-size: 20px; font-family: sans-serif">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse@faq.id">
+            @faq.question</a>
+          </h4>
+        </div>
+        <div id="collapse@faq.id" class="panel-collapse collapse">
+          <div class="panel-body" style="font-size: 15px; font-style: italic;">@faq.answer</div>
+        </div>
+      </div>
+      <hr>
+    }
+    </div>
+  </div>
+  </div>
+}
