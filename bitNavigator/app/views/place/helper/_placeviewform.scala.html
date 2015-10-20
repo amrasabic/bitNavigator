@@ -5,17 +5,20 @@
 </script>
 <!--div class="container"-->
 <div class="form-group">
-    <h3>@place.title</h3>
+    <h3 style="color : #0a68b4">@place.title</h3>
 </div>
+<br>
 
 <!--Address -->
 <div class="form-group">
+    <i class="fa fa-map-marker"></i>
     <label for="address">Address:</label>
     <input type="text" class="form-control" name="address" id="address" value="@place.address" readonly>
 </div>
 <p><br/></p>
 <!-- Service -->
 <div class="form-group">
+    <i class="fa fa-bars"></i>
     <label for="service">Service:</label>
     <div class="row">
         <div class="col-xs-10">
@@ -34,6 +37,7 @@
             <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="fa fa-arrow-circle-o-down"></i>
                         Description
                     </a>
                 </h4>
@@ -49,6 +53,7 @@
 
 <!-- Number of views -->
 <div class="form-group">
+    <i class="fa fa-eye"></i>
     <label for="views">Views:</label>
     @if(place.numOfViews == null) {
         <input type="text" class="form-control" name="views" id="views" value="0" readonly>
@@ -62,9 +67,10 @@
 @if(SessionHelper.isAuthenticated) {
     @if(SessionHelper.getCurrentUsersEmail == place.user.email || SessionHelper.getCurrentUser().isAdmin && place.service.isReservable()) {
         <div class="form-group">
+            <i class="fa fa-check-circle-o"></i>
             <label for="views">Reservations:</label>
             @if(place.numOfReservations == null) {
-                <input type="text" class="form-control" name="reservations"  value="0" readonly>
+                <input type="text" class="form-control" name="reservations" value="0" readonly>
             } else {
                 <input type="text" class="form-control" name="reservations" value="@place.numOfReservations" readonly>
                 }
@@ -73,17 +79,44 @@
     }
 }
 <!-- Rating -->
-<div class="form-group rating-group">
-@if(rating == null) {
-    <div class="label label-default">Rating:</div> n/a
-} else {
-    <div class="label label-default">Rating:</div> @rating
-    <span class="glyphicon glyphicon-star"></span>
-}
+<div class="form-group">
+    <i class="fa fa-star"></i>
+    <label for="rating1">Rating:</label>
+    <div class="row">
+    @if(rating == null) {
+        <div class="col-xs-10" style="width: 70%">
+            <input type="text" class="form-control" name="rating1" id="rating1" value="n/a" readonly>
+        </div>
+        <div class="col-xs-2" style="width: 30%">
+                <span class="glyphicon glyphicon-star-empty" style="color : gold"></span>
+                <span class="glyphicon glyphicon-star-empty" style="color : gold"></span>
+                <span class="glyphicon glyphicon-star-empty" style="color : gold"></span>
+                <span class="glyphicon glyphicon-star-empty" style="color : gold"></span>
+                <span class="glyphicon glyphicon-star-empty" style="color : gold"></span>
+            </div>
+
+    } else {
+        <div class="col-xs-10" style="width: 70%">
+            <input type="text" class="form-control" name="rating1" id="rating1" value="@rating " readonly>
+        </div>
+        <div class="col-xs-2" style="width: 30%">
+        @for(i <- place.getListRating()) {
+            @if(place.getRating() >= i) {
+                <span class="glyphicon glyphicon-star" style="color : gold"></span>
+            } else {
+                <span class="glyphicon glyphicon-star-empty" style="color : gold"></span>
+            }
+        }
+        </div>
+    }
+    </div>
 </div>
 <script>
     $(document).ready(function() {
         $(".accordion").accordion();
+    });
+    $('.collapsed').click(function () {
+        $("i", this).toggleClass("fa fa-arrow-circle-o-down fa fa-arrow-circle-o-up");
     })
 
 </script>
