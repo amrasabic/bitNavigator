@@ -1,3 +1,4 @@
+@(places: java.util.List[Place])
 <div class="row">
     <div class="col-sm-4 col-md-3 sidebar">
         <div class="mini-submenu">
@@ -7,29 +8,63 @@
         </div>
         <div class="list-group">
             <span href="#" class="list-group-item active">
-            Submenu
+            Places near you
                 <span class="pull-right" id="slide-submenu">
                     <i class="fa fa-times"></i>
                 </span>
             </span>
-            <a href="#" class="list-group-item">
-                <i class="fa fa-comment-o"></i> Lorem ipsum
-            </a>
-            <a href="#" class="list-group-item">
-                <i class="fa fa-search"></i> Lorem ipsum
-            </a>
-            <a href="#" class="list-group-item">
-                <i class="fa fa-user"></i> Lorem ipsum
-            </a>
-            <a href="#" class="list-group-item">
-                <i class="fa fa-folder-open-o"></i> Lorem ipsum <span class="badge">14</span>
-            </a>
-            <a href="#" class="list-group-item">
-                <i class="fa fa-bar-chart-o"></i> Lorem ipsumr <span class="badge">14</span>
-            </a>
-            <a href="#" class="list-group-item">
-                <i class="fa fa-envelope"></i> Lorem ipsum
-            </a>
+            @for(place <- places) {
+                <a href="@routes.PlaceController.viewPlace(place.id)" class="list-group-item">
+                    <i class="fa fa-map-marker"></i> @place.title <span class="badge" id="distance-nearby-places-@place.id"></span>
+                </a>
+            }
         </div>
     </div>
 </div>
+
+<script>
+        $(document).ready(function(){
+
+            function calculateDistances() {
+                var mapCenter;
+                var index = 0;
+                var counter = 0;
+                @for(place <- places){
+    @if(place.latitude != null || place.longitude != null){
+                        latlng = new google.maps.LatLng(@place.latitude, @place.longitude);
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(function(position) {
+                                var pos = {
+                                    lat: position.coords.latitude,
+                                    lng: position.coords.longitude
+                                };
+                                mapCenter = new google.maps.LatLng(pos.lat, pos.lng);
+                                var distance = (google.maps.geometry.spherical.computeDistanceBetween(mapCenter, new google.maps.LatLng(@place.latitude, @place.longitude)) / 1000).toFixed(2);
+                                document.getElementById('distance-nearby-places-@place.id').innerText = distance;
+                                index++;
+                                counter++;
+                                if(counter == @places.size()) {
+                                    drawTable();
+                                }
+                            }, function() {
+                                handleLocationError(true, infoWindow, map.getCenter());
+                            });
+                        } else {
+                            // Browser doesn't support Geolocation
+                             handleLocationError(false, infoWindow, map.getCenter());
+                        }
+                    }else{
+                        document.getElementById('distance-nearby-places-@place.id').innerText = "n/a";
+                        counter++;
+                    }
+}
+            }
+
+            calculateDistances();
+            //setTimeout(drawTable, 2000);
+        });
+
+    </script>
+<script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7g-OtZDAo36PRHRxeDaaBUbTeC1AXnBs&libraries=geometry">
+</script>

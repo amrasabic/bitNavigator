@@ -778,6 +778,10 @@ textarea {
     top: 50px;
 }
 
+.col-sm-4{
+    width: 300px;
+}
+
 .mini-submenu{
     display:none;
     background-color: rgba(0, 0, 0, 0);
