@@ -75,11 +75,11 @@
                                     <div class="form-control" value="" type="tel" readonly>
                                         @phoneNum.getNumber()
                                         @if(phoneNum.isValidated()){
-                                            <span class="glyphicon glyphicon-ok"></span>
+                                            <span title="Number verified!" class="glyph-phone glyphicon glyphicon-ok" style="color: green"></span>
                                         }else{
-                                            <a id="send-token-link" href="#" data-number="@phoneNum.getNumber()" data-toggle="modal" data-target="#validate-phone-number-modal" style="margin-left: 20px">Validate number</a>
+                                            <a id="send-token-link" href="#" data-number="@phoneNum.getNumber()" title="Verify number" data-toggle="modal" data-target="#validate-phone-number-modal"><i class="glyph-phone glyphicon glyphicon-envelope"></i></a>
                                         }
-                                    <a href="@routes.PhoneNumberController.delete(phoneNum.getId)" role="button" data-role="delete" data-delete-parent="span"><i class="glyphicon glyphicon-trash"></i></a>
+                                    <a href="@routes.PhoneNumberController.delete(phoneNum.getId)" role="button" title="Delete" data-role="delete" data-delete-parent="span"><i class="glyph-phone glyphicon glyphicon-trash"></i></a>
                                     </div>
                                 </div>
                             </span>
