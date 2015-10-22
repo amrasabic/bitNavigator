@@ -17,16 +17,15 @@
             <table id="myTable1" class="table table-row-cell" cellspacing="0" width="100%" style="border-bottom: none">
                 <thead>
                     <tr>
-                        <th class="naslov" style="background-image: none; background-color: white; color : #0a68b4">Place</th>
+                        <th class="naslov col-sx-7" style="background-image: none; background-color: white; color : #0a68b4">Place</th>
                         <th class="naslov" style="background-image: none; background-color: white; color : #0a68b4">Distance</th>
                     </tr>
                 </thead>
                 <tbody>
                     @for(place <- places) {
-                        <tr onclick="window.location='@routes.PlaceController.viewPlace(place.id)'" style="cursor: pointer">
+                        <tr onclick="window.location='@routes.PlaceController.viewPlace(place.id)'" style="cursor: pointer;">
                             <td class="naslov">@place.title</td>
                             <td id="distance-nearby-places-@place.id" class="naslov"></td>
-
                         </tr>
                     }
                 </tbody>
@@ -44,7 +43,8 @@
                     bFilter: false,
                     bInfo: false,
                     bPaginate: false,
-                    sScrollY: 300
+                    sScrollY: 300,
+                    border: "none"
                 });
             };
             function calculateDistances() {
