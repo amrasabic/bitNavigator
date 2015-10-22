@@ -1,4 +1,5 @@
 @(places: java.util.List[Place])
+<script src="@routes.Assets.versioned("javascripts/jquery-2.1.4.js")" type="text/javascript"></script>
 <div class="row">
     <div class="col-sm-4 col-md-3 sidebar">
         <div class="mini-submenu">
@@ -7,24 +8,45 @@
             <span class="icon-bar"></span>
         </div>
         <div class="list-group">
-            <span href="#" class="list-group-item active">
-            Places near you
+            <span href="#" class="list-group-item active" style="font-family: 'DejaVu Sans Mono', monospace; font-size: 15px; background-color: #2b669a">
+                Places near you
                 <span class="pull-right" id="slide-submenu">
                     <i class="fa fa-times"></i>
                 </span>
             </span>
-            @for(place <- places) {
-                <a href="@routes.PlaceController.viewPlace(place.id)" class="list-group-item">
-                    <i class="fa fa-map-marker"></i> @place.title <span class="badge" id="distance-nearby-places-@place.id"></span>
-                </a>
-            }
+            <table id="myTable1" class="table table-row-cell" cellspacing="0" width="100%" style="border-bottom: none">
+                <thead>
+                    <tr>
+                        <th class="naslov" style="background-image: none; background-color: white; color : #0a68b4">Place</th>
+                        <th class="naslov" style="background-image: none; background-color: white; color : #0a68b4">Distance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(place <- places) {
+                        <tr onclick="window.location='@routes.PlaceController.viewPlace(place.id)'" style="cursor: pointer">
+                            <td class="naslov">@place.title</td>
+                            <td id="distance-nearby-places-@place.id" class="naslov"></td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
 <script>
+        var table;
         $(document).ready(function(){
-
+            function drawTable() {
+                table = $('#myTable1').DataTable({
+                    "order": [[ 1, "asc" ]],
+                    bFilter: false,
+                    bInfo: false,
+                    bPaginate: false,
+                    sScrollY: 300
+                });
+            };
             function calculateDistances() {
                 var mapCenter;
                 var index = 0;
@@ -40,7 +62,7 @@
                                 };
                                 mapCenter = new google.maps.LatLng(pos.lat, pos.lng);
                                 var distance = (google.maps.geometry.spherical.computeDistanceBetween(mapCenter, new google.maps.LatLng(@place.latitude, @place.longitude)) / 1000).toFixed(2);
-                                document.getElementById('distance-nearby-places-@place.id').innerText = distance;
+                                document.getElementById('distance-nearby-places-@place.id').innerText = distance + " km";
                                 index++;
                                 counter++;
                                 if(counter == @places.size()) {
@@ -59,11 +81,9 @@
                     }
 }
             }
-
             calculateDistances();
             //setTimeout(drawTable, 2000);
         });
-
     </script>
 <script type="text/javascript"
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7g-OtZDAo36PRHRxeDaaBUbTeC1AXnBs&libraries=geometry">
