@@ -206,7 +206,8 @@ public class ReservationController extends Controller {
         for (Reservation reservation : reservations) {
             if (reservation.price != null) {
                 Date reservationCheckOutDate = new Date(reservation.timestamp.getTimeInMillis());
-                if (currentDate.after(reservationCheckOutDate)) {
+                Long res = currentDate.getTime() - reservationCheckOutDate.getTime();
+                if (res >= 172800000) {
                     reservation.status = status1;
                     try {
                         reservation.update();
