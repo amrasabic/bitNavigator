@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -10,9 +11,11 @@ import utillities.Authenticators;
 import utillities.SessionHelper;
 import views.html.reservations.reservationlist;
 
+import javax.persistence.PersistenceException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class ReservationController extends Controller {
     private static final Form<Reservation> reservationForm = Form.form(Reservation.class);
 
     @Security.Authenticated(Authenticators.User.class)
-    public Result submitReservation(int id){
+    public Result submitReservation(int id) {
         DynamicForm boundForm = Form.form().bindFromRequest();
         if (boundForm.hasErrors()) {
             return badRequest("dsadas");
@@ -43,7 +46,7 @@ public class ReservationController extends Controller {
         Calendar date = new GregorianCalendar();
         try {
             date.setTime(myDate.parse(reservationDay + " " + reservationtime));
-        }catch (ParseException e){
+        } catch (ParseException e) {
             return badRequest("qwe");
         }
 
@@ -58,7 +61,7 @@ public class ReservationController extends Controller {
         } else {
             message.reciever = r.place.user;
         }
-        if(content == null) {
+        if (content == null) {
             return TODO;
         } else {
             message.content = content;
@@ -72,7 +75,7 @@ public class ReservationController extends Controller {
         message.sent = Calendar.getInstance();
         message.reservation.id = r.id;
         message.save();
-        if(place.numOfReservations == null){
+        if (place.numOfReservations == null) {
             place.numOfReservations = 0;
         }
         place.numOfReservations++;
@@ -90,8 +93,8 @@ public class ReservationController extends Controller {
         DynamicForm boundForm = Form.form().bindFromRequest();
         models.Status status = models.Status.findById(Integer.parseInt(boundForm.data().get("statusId")));
         Reservation reservation = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
-       // Logger.info(reservation.title);
-        if(status == null || reservation == null) {
+        // Logger.info(reservation.title);
+        if (status == null || reservation == null) {
             return badRequest("Something went wrong");
         }
         reservation.status = status;
@@ -101,18 +104,18 @@ public class ReservationController extends Controller {
     }
 
     @Security.Authenticated(Authenticators.User.class)
-    public Result setPrice(){
+    public Result setPrice() {
         DynamicForm boundForm = Form.form().bindFromRequest();
         Reservation r = Reservation.findById(Integer.parseInt(boundForm.data().get("reservationId")));
         List<Message> messages = Message.findByReservation(Integer.parseInt(boundForm.data().get("reservationId")));
         String prc = boundForm.data().get("priceId");
         Double price = Double.parseDouble(prc);
-        r.price=price;
+        r.price = price;
         r.update();
         Message message = new Message();
         message.sender = SessionHelper.getCurrentUser();
         message.reciever = r.user;
-        String msg = "To confirm reservation at "+r.place.title+", please transfer us "+price+" KM.";
+        String msg = "To confirm reservation at " + r.place.title + ", please transfer us " + price + " KM.";
         message.content = msg;
         message.reservation = r;
         message.sent = Calendar.getInstance();
@@ -121,7 +124,7 @@ public class ReservationController extends Controller {
         return redirect(routes.ReservationController.reservationsList());
     }
 
-    public Result validateForm(){
+    public Result validateForm() {
         //get the form data from the request - do this only once
         Form<Message> binded = Form.form(Message.class).bindFromRequest();
         DynamicForm boundForm = Form.form().bindFromRequest();
@@ -131,11 +134,11 @@ public class ReservationController extends Controller {
         Calendar date = new GregorianCalendar();
         try {
             date.setTime(myDate.parse(reservationDay + " " + reservationtime));
-        }catch (ParseException e){
+        } catch (ParseException e) {
             return badRequest("Must choose date and time!");
         }
         //if we have errors just return a bad request
-        if(binded.hasErrors()){
+        if (binded.hasErrors()) {
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
@@ -145,9 +148,9 @@ public class ReservationController extends Controller {
     }
 
     @Security.Authenticated(Authenticators.User.class)
-    public Result delete(Integer id){
+    public Result delete(Integer id) {
         Reservation reservation = Reservation.findById(id);
-        if(reservation.status.id == models.Status.WAITING) {
+        if (reservation.status.id == models.Status.WAITING) {
             for (Message message : Message.findByReservation(id)) {
                 message.delete();
             }
@@ -169,9 +172,9 @@ public class ReservationController extends Controller {
 
         Integer openingTime = WorkingHours.getOpeningTime(place, dayOfWeek);
         Integer closingTime = WorkingHours.getClosingTime(place, dayOfWeek);
-        if(openingTime != null || closingTime != null) {
+        if (openingTime != null || closingTime != null) {
             response = String.format("%02d:%02d:00-%02d:%02d:00", openingTime / 60, openingTime % 60, closingTime / 60, closingTime % 60);
-        }else{
+        } else {
             response = "not working";
         }
 
@@ -191,6 +194,29 @@ public class ReservationController extends Controller {
 //        Logger.info(reservation.title);
         reservation.update();
         return redirect(routes.ReservationController.reservationsList());
+    }
+
+    public static void checkReservationExpiration() {
+        models.Status status = models.Status.findById(models.Status.WAITING);
+        models.Status status1 = models.Status.findById(models.Status.DENIED);
+        List<Reservation> reservations = Reservation.finder.where().eq("status", status).findList();
+
+        final Date currentDate = new Date();
+
+        for (Reservation reservation : reservations) {
+            if (reservation.price != null) {
+                Date reservationCheckOutDate = new Date(reservation.timestamp.getTimeInMillis());
+                if (currentDate.after(reservationCheckOutDate)) {
+                    reservation.status = status1;
+                    try {
+                        reservation.update();
+                    } catch (PersistenceException e) {
+                        Logger.info("Could not update reservation.");
+                        Logger.error("Error message " + e.getMessage());
+                    }
+                }
+            }
+        }
     }
 
 
