@@ -1,0 +1,19 @@
+@(reservation: Reservation)
+<table id="table_paypal" class="table table-striped table-bordered" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th class="naslov">Transaction Id</th>
+      <th class="naslov">Place title</th>
+      <th class="naslov">Price</th>
+      <th class="naslov">Reservation day</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="naslov">@reservation.paymentId</td>
+      <td class="naslov">@reservation.place.title</td>
+      <td class="naslov">@reservation.price KM</td>
+      <td class="naslov">@reservation.reservationDate.getTime</td>
+    </tr>
+  </tbody>
+</table>

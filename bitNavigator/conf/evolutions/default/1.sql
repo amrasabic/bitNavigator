@@ -20,6 +20,13 @@ create table comment (
   constraint pk_comment primary key (id))
 ;
 
+create table faq (
+  id                        integer auto_increment not null,
+  question                  varchar(255),
+  answer                    TEXT,
+  constraint pk_faq primary key (id))
+;
+
 create table image (
   id                        integer auto_increment not null,
   public_id                 varchar(255),
@@ -183,6 +190,8 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table client_ip;
 
 drop table comment;
+
+drop table faq;
 
 drop table image;
 

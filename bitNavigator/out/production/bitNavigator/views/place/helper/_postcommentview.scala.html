@@ -1,0 +1,44 @@
+@import utillities.SessionHelper
+@(place: Place)(comment: Comment)
+
+    @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null) {
+        <div id="container-comment" class="container-fluid" hidden>
+            <form class="dont-validate" method="post" action="@routes.PlaceController.updateComment(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place).id)">
+    }else{
+        <div id="container-comment" class="container-fluid">
+            <form class="dont-validate" method="post" action="@routes.PlaceController.postComment(place.id)">
+    }
+
+        <div class="rating-select">
+        @for(i <- 1 to 5) {
+            @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null && comment.rate != null && comment.rate == i) {
+                <div class="stars rate-not-selected btn-rate rating-selected selected" data-rate="@i"><span class="glyphicon glyphicon-star"></span></div>
+            } else {
+                <div class="stars rate-not-selected btn-rate" data-rate="@i"><span class="glyphicon glyphicon-star"></span></div>
+            }
+        }
+        </div>
+        <div id="comment-heading" class="panel-heading">
+            <h3 class="panel-title">Comment</h3>
+        </div>
+        <div class="panel-body">
+            <textarea class="form-control new-comment" rows="3" name="commentContent" id="commentContent" type="text">@comment.commentContent</textarea>
+            <div class="alert alert-danger" data-error-for="commentContent" role="alert" hidden></div>
+        </div>
+        <input id="comment-rate" value="@comment.rate" name="rate" type="hidden">
+        <button class="btn btn-primary" id="btn-post-comment">Post</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#btn-post-comment').click(function(e, options){
+            console.log($('.new-comment').val());
+            if($('.new-comment').val().length == 0){
+                e.preventDefault();
+                $('[data-error-for="commentContent"]').text('Can not post an empty comment!');
+                $('[data-error-for="commentContent"]').show();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,53 @@
+@(faqs: java.util.List[FAQ])
+
+@main("All FAQs") {
+    <h3 style="color : #0a68b4">Frequently asked questions (FAQ)</h3>
+
+    <br><br>
+
+    <div class="panel-group" id="accordion">
+    @for(faq <-faqs){
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse@faq.id">
+                    @faq.question</a>
+                </h4>
+            </div>
+
+            <div id="collapse@faq.id" class="panel-collapse collapse">
+                <div class="panel-body">@faq.answer<br>
+                <td>
+                    <a href="@routes.FAQController.editFAQ(faq.id)"><i class="fa fa-pencil"></i></a>
+                    <a href="@routes.FAQController.deleteFAQ(faq.id)" data-role="delete" data-delete-parent="tr"><i class="fa fa-trash-o" style="padding-left: 13px"></i></a>
+                </td>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+
+
+    <script>
+        $('body').on('click', 'a[data-role="delete"]', function(e){
+            e.preventDefault();
+            $toDelete = $(this);
+            var conf = bootbox.confirm("Delete?", function(result){
+                if(result == true){
+                    $.ajax({
+                        url: $toDelete.attr("href"),
+                        type: "delete"
+                    }).success(function(response){
+                        $toDelete.parents(".panel-default").remove();
+                    });
+                }
+            });
+
+
+        });
+    </script>
+
+    <a href="@routes.FAQController.newFAQ()"><button class="btn btn-primary">Add new FAQ</button></a>
+
+}

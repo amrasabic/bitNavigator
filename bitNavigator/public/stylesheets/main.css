@@ -72,6 +72,9 @@ body {
     width: 100%;
     position: absolute;
 }
+
+
+
 .glyphicon-globe {
     font-size:4em;
     color: white;
@@ -128,7 +131,7 @@ body {
     background-color: #ffffff;
 }
 
-#container-comment, #gallery-panel, #similarPlaces{
+#container-comment, #gallery-panel, #similarPlaces, #comments-panel{
     margin: 20px;
     padding: 15px;
     /*border-radius: 10px;*/
@@ -783,6 +786,54 @@ textarea {
     to { transform: rotateY(360deg) }
 }
 
+<<<<<<< HEAD
 .glyph-phone {
     margin-left: 30px;
+=======
+#wrapper-map { position: relative; }
+#over_map { position: absolute; top: 10px; left: 10px; z-index: 99; }
+
+.col-md-3 {
+    width: 100%;
+    top: 50px;
+}
+
+.col-sm-4{
+    width: 300px;
+}
+
+.mini-submenu{
+    display:none;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
+    padding: 9px;
+    /*position: relative;*/
+    width: 42px;
+
+}
+
+.mini-submenu:hover{
+    cursor: pointer;
+}
+
+.mini-submenu .icon-bar {
+    border-radius: 1px;
+    display: block;
+    height: 2px;
+    width: 22px;
+    margin-top: 3px;
+}
+
+.mini-submenu .icon-bar {
+    background-color: #000;
+}
+
+#slide-submenu{
+    background: rgba(0, 0, 0, 0.45);
+    display: inline-block;
+    padding: 0 8px;
+    border-radius: 4px;
+    cursor: pointer;
+>>>>>>> 5f2a3d20df50eebafb7be4376618919f159a5ad9
 }

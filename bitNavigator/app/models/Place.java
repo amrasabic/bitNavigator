@@ -5,8 +5,10 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Class representing Place model.
@@ -102,6 +104,11 @@ public class Place extends Model {
         }
         this.numOfViews++;
         this.update();
+    }
+
+    public List<Integer> getListRating(){
+        List<Integer> list = Arrays.asList(1,2,3,4,5);
+        return list;
     }
 
     @Override

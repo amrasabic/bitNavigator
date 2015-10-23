@@ -1,0 +1,188 @@
+@import controllers.UserController.UserNameForm
+@(user: UserNameForm, msg: String)
+@import helper._
+
+@main("User profile") {
+
+    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/intlTelInput.css")">
+    <script src="@routes.Assets.versioned("javascripts/inputtel.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/intlTelInput.min.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/changePass.js")" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+           $("#mobile-number").intlTelInput({
+          defaultCountry: "auto",
+          geoIpLookup: function(callback) {
+            $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+              var countryCode = (resp && resp.country) ? resp.country : "";
+              callback(countryCode);
+            });
+          },utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
+         });
+            var telInput = $("#mobile-number"),
+                errorMsg = $("#error-msg"),
+                validMsg = $("#valid-msg");
+            telInput.intlTelInput({
+              utilsScript: "@routes.Assets.versioned("javascripts/utils.js")"
+            });
+            var a;
+            // on blur: validate
+            telInput.on("change keyup", function() {
+              if ($.trim(telInput.val())) {
+                if (telInput.intlTelInput("isValidNumber")) {
+                  validMsg.removeClass("hide");
+                } else {
+                  telInput.addClass("error");
+                  errorMsg.removeClass("hide");
+                  validMsg.addClass("hide");
+                }
+              }
+            });
+            // on keydown: reset
+            telInput.keydown(function() {
+              telInput.removeClass("error");
+              errorMsg.addClass("hide");
+              validMsg.addClass("hide");
+            });
+            $("#submit-profile").click(function(){
+                 a = $("#mobile-number").intlTelInput("getNumber");
+                  $("#mobile-number-id").val(a);
+            });
+        })
+        var urlToPost = "@routes.UserController.validateUserNameForm()";
+    </script>
+
+    <div class="container-fluid" id="profile-panel">
+        <h3 class="page-header">Hi @user.firstName  @user.lastName!</h3>
+        <div class="row">
+            <form class="form-horizontal" role="form" method="post" action="@routes.UserController.updateUser()"  enctype="multipart/form-data">
+
+                    <!-- left column -->
+                    <!-- User avatar image -->
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="text-center">
+                        @if(Image.findByUser(User.findByEmail(user.email)) != null) {
+                            <img src="@Image.findByUser(User.findByEmail(user.email)).getSize(200,220)" class="avatar img-circle img-thumbnail" alt="avatar">
+                        } else {
+                            <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
+                        }
+                        <h6>Upload a different photo</h6>
+                        <input id="input-dim-1" name="image" type="file" class="file-loading" accept="image/*">
+                        @*<input type="file" class="text-center center-block well well-sm">**@
+                    </div>
+                </div>
+
+                    <!-- edit form column -->
+                    <!-- Message to User -->
+                <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+                    <div class="alert alert-info alert-dismissable" style="background-color: #0a6ebd">
+                        <a class="panel-close close" data-dismiss="alert">×</a>
+                        @*<i class="fa fa-coffee"></i>*@
+                        <p><i class="glyphicon glyphicon-user"></i> @msg
+                        </p>
+                    </div>
+
+                    <h5 class="user-info">Profile info:</h5>
+
+                        <!--User info fields -->
+
+                        <!-- User first name filed-->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">First name:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" value="@user.firstName" type="first_name" name="firstName" id="first_name">
+                            <div class="alert alert-danger" data-error-for="firstName" role="alert" hidden></div>
+                        </div>
+
+                    </div>
+
+                        <!-- User last name field-->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Last name:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" value="@user.lastName" type="last_name" name="lastName" id="last_name">
+                        </div>
+                        <div class="alert alert-danger" data-error-for="lastName" role="alert" hidden></div>
+                    </div>
+
+                        <!-- User email filed-->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Email:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" value="@user.email" type="email" name="email" id="email" readonly>
+                        </div>
+                    </div>
+
+                        <!-- User phone number-->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Phone number:</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" value="@user.mobileNumber" type="tel" id="mobile-number">
+                            <span id="valid-msg" class="hide">✓ Valid</span>
+                            <span id="error-msg" class="hide">Invalid number</span>
+                            <input id="mobile-number-id" name="mobileNumber" type="hidden">
+                        </div>
+                        <div class="alert alert-danger" data-error-for="mobileNumber" role="alert" hidden></div>
+                    </div>
+                    <p><br></p>
+
+                        <!-- Confirm and cancel buttons -->
+                    <div class="form-group">
+                        <div>
+                            <input id="submit-profile" class="btn btn-primary" value="Save Changes" type="submit">
+                            <a href="#openModal" class="btn btn-warning">Change password</a>
+                            <input class="btn btn-default" value="Cancel" type="reset" onclick="window.location='/';">
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+            <div id="openModal" class="modalDialog">
+                <div>
+                    <a href="#close" title="Close" class="close">X</a>
+                    <h2>Change password</h2>
+                    <form class="form-horizontal" role="form" method="post" action="@routes.UserController.changePassword()">
+
+                            <!-- User old password -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Old password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" name="oldPassword" id="old_password">
+                                <span id="passError" class="alert-danger" data-error-for="" ></span>
+                                <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                            </div>
+                        </div>
+
+                            <!-- User new password -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">New password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" required="required" name="newPassword" id="newPassword">
+                                <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                            </div>
+                        </div>
+
+                            <!-- User confirm password -->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Confirm password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" required="required" name="confirmPassword" onblur="checkPasswords()" id="confirmPassword">
+                                <span id="rePass" class="alert-danger" data-error-for="" ></span>
+                                <div class="alert alert-danger" data-error-for="old-password" role="alert" hidden></div>
+                            </div>
+                        </div>
+                        <p><br></p>
+
+                            <!-- Confirm button -->
+                        <div style="text-align:center" class="form-group">
+                            <div>
+                                <input id="submit-password" class="btn btn-primary" value="Save Changes" type="submit" disabled="disabled">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> <p><br></p>
+}

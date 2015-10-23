@@ -1,0 +1,226 @@
+@import utillities.SessionHelper
+@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])(images: java.util.List[Image])(rating: Double)
+
+@main("View place") {
+
+    <div id="add-place-panel" class="container-fluid">
+        <div id="info-container" class="col-md-6">
+            <div class="panel-body">
+                @views.html.place.helper._placeviewform(place)(services)(comments)(images)(rating)
+                <p><br></p>
+                <div>
+                    <a data-toggle="modal" data-target="#working-hours-modal" class="btn btn-default">Working hours</a>
+                @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email && place.service.isReservable()) {
+                    <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
+                }
+                </div>
+            </div>
+        </div>
+        <div id="map-container" class="col-md-6">
+            <!-- Modal reservation -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <form method="post" action="@routes.ReservationController.submitReservation(place.id)">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                <h4 class="modal-title">Create reservation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group" id="descriptionDiv">
+                                    <label>Content:</label>
+                                    <textarea class="form-control" rows="3" name="content" id="rdescription" type="text" placeholder="I would like to reserve .." style="resize : inherit" oninput="validateReservation()" onfocusout="validateDescription()"></textarea>
+                                    <div class="alert alert-danger" data-error-for="content" role="alert" hidden></div>
+                                    <p id="descParagraph" data-error-for="description" style="color : red ; font-size : 10 px"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Choose day:</label>
+                                    <input id="reservation-datepicker" type="date" name="reservationDay"/>
+                                    <div id="timepicker-form"></div>
+                                    <div class="alert alert-danger" data-error-for="date" role="alert" hidden></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="close" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="reservation">
+                                    Submit reservation</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                <!-- Working hours modal -->
+            <div id="working-hours-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <h4 class="modal-title">Working hours</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table id="myTable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    @for(day <- WorkingHours.DAYS_OF_WEEK){
+                                        <th>@day</th>
+                                    }
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                    <td><strong>From</strong></td>
+                                    @for(opening <- WorkingHours.getFormatedOpeningTimes(place)){
+                                        <td>
+                                        @opening
+                                        </td>
+                                    }
+                                    </tr>
+                                    <tr>
+                                        <td><strong>To</strong></td>
+                                    @for(closing <- WorkingHours.getFormatedClosingTimes(place)){
+                                        <td>
+                                        @closing
+                                        </td>
+                                    }
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="map-container">
+                <div id="map-add-place"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="gallery-panel" class="container-fluid">
+        @views.html.helpers._picturegallery(images)
+    </div>
+
+    @for(comment <- comments) {
+        <!-- Checks if user already posted a comment -->
+        @if(comment.user.email != SessionHelper.getCurrentUsersEmail) {
+            @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
+                @views.html.place.helper._commentview(comment)(true)(false)
+            }else{
+                @views.html.place.helper._commentview(comment)(false)(false)
+            }
+        }else{
+            @views.html.place.helper._commentview(comment)(false)(true)
+        }
+    }
+
+    <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
+    @if(SessionHelper.isAuthenticated && !place.user.email.equals(SessionHelper.getCurrentUsersEmail())) {
+        @if(Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place) != null && Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place).status.id == Status.APPROVED){
+            @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null){
+                @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))
+            }else{
+                @views.html.place.helper._postcommentview(place)(new Comment)
+            }
+        }
+    }
+
+    <div id="similarPlaces" class="container-fluid">
+        <h5>Suggested places</h5>
+        <br>
+        @views.html.place.similarplacelist(Place.findByService(place.service, place.id))
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="report-comment-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Report comment</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to report this comment?
+                </div>
+                <div class="modal-footer">
+                    <button id="report-comment-yes" type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var tmp = document.getElementById('reservation-datepicker');
+
+        function parseDate(s) {
+            var b = s.split(/\D/);
+            return new Date(b[0], --b[1], b[2]);
+        }
+
+        var today = new Date();
+        today.setDate(today.getDate() + 1);
+        document.getElementById('reservation-datepicker').valueAsDate = today;
+        var minDay = today.getDate();
+        if(minDay < 10){
+            minDay = "0" + minDay;
+        }
+        var minDate = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + minDay;
+        document.getElementById('reservation-datepicker').setAttribute("min", minDate);
+        $('#reservation-datepicker, #reservation-timepicker').on("keydown", function() {
+            return false;
+        });
+
+        var $timeForm = $('#timepicker-form');
+        var $timepicker = $('#reservation-timepicker');
+
+        $('#reservation-datepicker').on("change", function() {
+            var dayOfWeek = parseDate($('#reservation-datepicker').val()).getDay();
+            $.ajax({
+                url: "@routes.ReservationController.getWorkingHours()",
+                method: "post",
+                data: "dayOfWeek=" + dayOfWeek + "&placeId=" + @place.id
+            }).success(function(response){
+                if(response == 'not working'){
+                    $timeForm.empty();
+                    $timeForm.append('<label>Not working</label>');
+                }else{
+                    $timeForm.empty();
+                    $timeForm.append('<label>Choose time:</label><input id="reservation-timepicker"' +
+                         ' min="' + response.split("-")[0] + '" max="' + response.split("-")[1] + '" ' +
+                         ' value="' + response.split("-")[0] + '" type="time" name="reservationTime"/>');
+                    $timeForm.append('<label>Working hours from ' + response.split("-")[0] + ' till ' + response.split("-")[1] + '</label>');
+                }
+            });
+
+        });
+        $('#reservation-datepicker').trigger("change");
+    </script>
+    <div hidden>
+
+    </div>
+    <script>
+        $(document).ready(function() {
+                $("#map-add-place").height($("#info-container").height());
+        });
+            var urlToReportComment = '@routes.CommentController.reportComment()';
+            var lat;
+            var lng;
+            var markerDraggable = false;
+            @if(place.latitude != null && place.longitude != null) {
+                lat = @place.latitude;
+                lng = @place.longitude;
+            }
+        var urlToPost = "@routes.ReservationController.validateForm()";
+
+
+    </script>
+    <script src="@routes.Assets.versioned("javascripts/googleMaps/miniMap.js")"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+    <script src="@routes.Assets.versioned("javascripts/rate.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/reportComment.js")"></script>
+
+}

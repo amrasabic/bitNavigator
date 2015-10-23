@@ -1,48 +1,32 @@
 package controllers;
 
-import models.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import models.Image;
+import models.User;
 import play.Logger;
+import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.validation.Constraints;
+import play.libs.F.Function;
+import play.libs.F.Promise;
+import play.libs.ws.WS;
+import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import utillities.Authenticators;
-import utillities.PasswordHash;
-import utillities.SessionHelper;
-import utillities.UserValidator;
+import utillities.*;
 import views.html.admin.adminview;
-import views.html.index;
 import views.html.user.profile;
 import views.html.user.signup;
 import views.html.user.userlist;
-import play.Play;
-import utillities.MailHelper;
-import utillities.SessionHelper;
-import views.html.user.*;
-import views.html.admin.*;
-
-import utillities.PasswordHash;
-import utillities.MailHelper;
 
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-
 import java.util.Calendar;
-import java.util.ArrayList;
 import java.util.UUID;
-
-import play.libs.F.Function;
-import play.libs.F.Promise;
-import play.libs.Json;
-import play.libs.ws.WS;
-import play.libs.ws.WSResponse;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 
@@ -443,7 +427,7 @@ public class UserController extends Controller {
 
     public Result contactUs() {
 
-        return ok(contact.render(new Form<Contact>(Contact.class)));
+        return ok(views.html.user.contact.render(new Form<Contact>(Contact.class)));
     }
 
     public Promise<Result> sendMail() {
@@ -574,7 +558,7 @@ public class UserController extends Controller {
         } catch (Exception e){
             return redirect("/");
         }
-        return ok(forgotpassword.render(setNewPasswordForm));
+        return ok(views.html.user.forgotpassword.render(setNewPasswordForm));
     }
 
     public static class SetNewPasswordForm {

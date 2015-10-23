@@ -13,7 +13,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a id="home-button" href="@routes.PlaceController.nearbyPlaces()"><img src='@routes.Assets.versioned("images/logo.png")' id="logo" alt="" class="img-responsive"></a>
+            <a id="home-button" href="@routes.Application.index()"><img src='@routes.Assets.versioned("images/logo.png")' id="logo" alt="" class="img-responsive"></a>
 
         </div>
 
@@ -52,7 +52,7 @@
                             Add place</a></li>
                         <li><a href="@routes.UserController.profile(SessionHelper.getCurrentUsersEmail, "View & edit your BitNavigator profile")"><i class="glyphicon glyphicon-user"></i>
                             Profile</a></li>
-                        <li><a href="@routes.PlaceController.placeList()"><i class="glyphicon glyphicon-heart"></i>
+                        <li><a href="@routes.PlaceController.placeList()"><i class="fa fa-list-ul"></i>
                             Place list</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="@routes.MessageController.inbox(MessageController.ALL)"><i class="glyphicon glyphicon-envelope"></i>
@@ -63,7 +63,7 @@
                         </a></li>
                         <li>
                         <li>
-                            <a href="@routes.ReservationController.reservationsList()"><i class="glyphicon glyphicon-calendar"></i>
+                            <a href="@routes.ReservationController.reservationsList()"><i class="fa fa-calendar-check-o"></i>
                                 Reservations
                                 @if(Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size() != 0){
                                     <span class="badge badge-red">@Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size()</span>
@@ -75,7 +75,7 @@
                         <li role="separator" class="divider"></li>
                         <li><a id="contact-us" href="@routes.UserController.contactUs()"><i class="glyphicon glyphicon-envelope"></i>
                             Contact us</a></li>
-                        <li><a id="logout" href="@routes.UserController.signOut()"><i class="glyphicon glyphicon-remove-sign"></i>
+                        <li><a id="logout" href="@routes.UserController.signOut()"><i class="fa fa-sign-out"></i></i>
                             Logout</a></li>
                     </ul>
                 </div>

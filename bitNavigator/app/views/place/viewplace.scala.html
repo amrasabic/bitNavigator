@@ -9,22 +9,23 @@
                 @views.html.place.helper._placeviewform(place)(services)(comments)(images)(rating)
                 <p><br></p>
                 <div>
-                    <a data-toggle="modal" data-target="#working-hours-modal" class="btn btn-default">Working hours</a>
-                @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email && place.service.isReservable()) {
-                    <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
-                }
+                    <a data-toggle="modal" data-target="#working-hours-modal" class="btn btn-default"><i class="fa fa-clock-o"></i>
+                        Working hours</a>
+                    @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email && place.service.isReservable()) {
+                        <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
+                    }
                 </div>
             </div>
         </div>
         <div id="map-container" class="col-md-6">
-            <!-- Modal reservation -->
+                <!-- Modal reservation -->
             <div id="myModal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <form method="post" action="@routes.ReservationController.submitReservation(place.id)">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                                <h4 class="modal-title">Create reservation</h4>
+                                <h4 class="modal-title"><i class="fa fa-calendar-check-o"></i> Create reservation</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group" id="descriptionDiv">
@@ -55,36 +56,36 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                            <h4 class="modal-title">Working hours</h4>
+                            <h4 class="modal-title"><i class="fa fa-clock-o"></i> Working hours</h4>
                         </div>
                         <div class="modal-body">
                             <table id="myTable" class="table">
                                 <thead>
                                     <tr>
                                         <th></th>
-                                    @for(day <- WorkingHours.DAYS_OF_WEEK){
-                                        <th>@day</th>
-                                    }
+                                        @for(day <- WorkingHours.DAYS_OF_WEEK) {
+                                            <th>@day</th>
+                                        }
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr>
-                                    <td><strong>From</strong></td>
-                                    @for(opening <- WorkingHours.getFormatedOpeningTimes(place)){
-                                        <td>
-                                        @opening
-                                        </td>
-                                    }
+                                        <td><strong>From</strong></td>
+                                        @for(opening <- WorkingHours.getFormatedOpeningTimes(place)) {
+                                            <td>
+                                            @opening
+                                            </td>
+                                        }
                                     </tr>
                                     <tr>
                                         <td><strong>To</strong></td>
-                                    @for(closing <- WorkingHours.getFormatedClosingTimes(place)){
-                                        <td>
-                                        @closing
-                                        </td>
-                                    }
+                                        @for(closing <- WorkingHours.getFormatedClosingTimes(place)) {
+                                            <td>
+                                            @closing
+                                            </td>
+                                        }
                                     </tr>
                                 </tbody>
                             </table>
@@ -101,32 +102,41 @@
     </div>
 
     <div id="gallery-panel" class="container-fluid">
-        @views.html.helpers._picturegallery(images)
+    @views.html.helpers._picturegallery(images)
     </div>
 
-    @for(comment <- comments) {
-        <!-- Checks if user already posted a comment -->
-        @if(comment.user.email != SessionHelper.getCurrentUsersEmail) {
-            @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
-                @views.html.place.helper._commentview(comment)(true)(false)
-            }else{
-                @views.html.place.helper._commentview(comment)(false)(false)
+<div class="comments-container">
+    <div id="comments-panel" class="container-fluid">
+        <h5 class="header-comment"><i class="fa fa-comments-o"></i> Comments</h5>
+        <br>
+    </div>
+    <div class="comments-content">
+        @for(comment <- comments) {
+                <!-- Checks if user already posted a comment -->
+            @if(comment.user.email != SessionHelper.getCurrentUsersEmail) {
+                @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
+                    @views.html.place.helper._commentview(comment)(true)(false)
+                } else {
+                    @views.html.place.helper._commentview(comment)(false)(false)
+                }
+            } else {
+                @views.html.place.helper._commentview(comment)(false)(true)
             }
-        }else{
-            @views.html.place.helper._commentview(comment)(false)(true)
-        }
-    }
+            }
 
     <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
-    @if(SessionHelper.isAuthenticated && !place.user.email.equals(SessionHelper.getCurrentUsersEmail())) {
-        @if(Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place) != null && Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place).status.id == Status.APPROVED){
-            @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null){
-                @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))
-            }else{
-                @views.html.place.helper._postcommentview(place)(new Comment)
+        @if(SessionHelper.isAuthenticated && !place.user.email.equals(SessionHelper.getCurrentUsersEmail())) {
+            @if(Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place) != null && Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place).status.id == Status.APPROVED) {
+                @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null) {
+                    @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))
+                } else {
+                    @views.html.place.helper._postcommentview(place)(new Comment)
+                }
             }
         }
-    }
+        </div>
+    </div>
+
 
     <div id="similarPlaces" class="container-fluid">
         <h5>Suggested places</h5>
@@ -266,13 +276,26 @@
             function drawMarker() {
                 @if(place.latitude != null && place.longitude != null) {
                     marker = new google.maps.Marker({
-                        position: {lat: @place.latitude, lng: @place.longitude},
+                        position: {lat: @place.latitude
+        , lng: @place.longitude},
                         map: map,
                         draggable: false
                     });
                 }
             }
         }
+
+
+$("#comments-panel").click(function () {
+    $header = $(this);
+    //getting the next element
+    $content = $header.next();
+    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+    $content.slideToggle(500, function () {
+        //execute this after slideToggle is done
+    });
+
+});
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
     <script src="@routes.Assets.versioned("javascripts/rate.js")" type="text/javascript"></script>
