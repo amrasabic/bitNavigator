@@ -1,3 +1,4 @@
+import jdk.internal.dynalink.support.AutoDiscovery;
 import models.Image;
 import play.Application;
 import play.GlobalSettings;
@@ -7,6 +8,7 @@ import play.mvc.Result;
 import play.mvc.Http;
 import play.mvc.Http.*;
 import com.cloudinary.Cloudinary;
+import utillities.Autocomplete;
 
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.notFound;
@@ -19,6 +21,7 @@ public class Global extends GlobalSettings {
     public void onStart(Application application) {
         super.onStart(application);
         Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
+        Autocomplete.completeReservations();
     }
 
     @Override
