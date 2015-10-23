@@ -59,7 +59,7 @@ public class Application extends Controller {
             // Process cart/payment information
             double price = r.price;
             String priceString = String.format("%1.2f", price);
-            String desc = "Reserved: " + r.place.title + "\n\n Amount: "+priceString+" BAM \n\n Reservation date: "+ r.reservationDate;
+            String desc = "Reserved: " + r.place.title + "\n\n Amount: "+priceString+" BAM \n\n Reservation date: "+ r.reservationDate.getTime();
 
             // Configure payment
             Amount amount = new Amount();
