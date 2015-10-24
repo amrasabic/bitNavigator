@@ -30,7 +30,6 @@ $(document).ready(function(){
                 $('[data-error-for="date"]').html(response.responseText).show();
                 return;
             }
-            console.log(response.responseText);
             var errors = response.responseJSON;
             var keys = Object.keys(errors);
             for(var i = 0; i < keys.length; i++){

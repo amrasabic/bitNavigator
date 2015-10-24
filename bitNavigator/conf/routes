@@ -26,6 +26,11 @@ POST          /user/profile/                                @controllers.UserCon
 POST          /user/edit/password                           @controllers.UserController.changePassword()
 DELETE        /user/profile/:email                          @controllers.UserController.delete(email: String)
 
+POST          /user/profile/phonenumber/add                 @controllers.PhoneNumberController.addPhoneNumber()
+POST          /user/profile/phonenumber/validate            @controllers.PhoneNumberController.validatePhoneNumber()
+POST          /user/profile/phonenumber/sendtoken           @controllers.PhoneNumberController.sendToken()
+DELETE        /user/profile/phonenumber/delete/:id          @controllers.PhoneNumberController.delete(id: Integer)
+
 GET           /user/reservations                            @controllers.ReservationController.reservationsList()
 POST          /user/reservations                            @controllers.ReservationController.changeStatus()
 POST          /user/reservations/price                      @controllers.ReservationController.setPrice()

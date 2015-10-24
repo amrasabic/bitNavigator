@@ -42,7 +42,7 @@ public class User extends Model {
     @Constraints.Required
     public String password;
     public Calendar accountCreated;
-    public String phoneNumber;
+    public PhoneNumber phoneNumber;
     @OneToMany (cascade = CascadeType.ALL)
     public List<Place> places;
     private boolean admin = false;
@@ -83,7 +83,6 @@ public class User extends Model {
         }
         user.password = signUp.password;
         user.accountCreated = Calendar.getInstance();
-        user.phoneNumber = signUp.mobileNumber;
         user.save();
         return user;
     }
@@ -103,7 +102,6 @@ public class User extends Model {
 
         user.firstName = userNameForm.firstName;
         user.lastName = userNameForm.lastName;
-        user.phoneNumber = userNameForm.mobileNumber;
 
         return  user;
     }
