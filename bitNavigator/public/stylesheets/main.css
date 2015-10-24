@@ -784,7 +784,7 @@ textarea {
 
 .mini-submenu{
     display:none;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.9);
     border-radius: 4px;
     padding: 9px;
@@ -798,15 +798,14 @@ textarea {
 }
 
 .mini-submenu .icon-bar {
-    border-radius: 1px;
     display: block;
-    height: 2px;
+    height: 10px;
     width: 22px;
     margin-top: 3px;
 }
 
 .mini-submenu .icon-bar {
-    background-color: #000;
+    background-color: red;
 }
 
 #slide-submenu{
