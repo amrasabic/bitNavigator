@@ -13,6 +13,8 @@ function initMap() {
         center: {lat: lat, lng: lng}
     });
 
+
+
     var geocoder = new google.maps.Geocoder;
     var infowindow = new google.maps.InfoWindow;
 

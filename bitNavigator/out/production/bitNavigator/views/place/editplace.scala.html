@@ -1,0 +1,47 @@
+@import utillities.SessionHelper
+@(place: Place)(services: java.util.List[Service])(comments: java.util.List[Comment])
+@import helper._
+
+
+@main("Edit place") {
+
+
+    <form id="edit-place-form" method="post" action="@routes.PlaceController.updatePlace(place.id)" enctype="multipart/form-data">
+        @views.html.place.helper._placeform(place)(services)("Edit place")
+    </form>
+    @for(comment <- comments) {
+        @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
+            @views.html.place.helper._commentview(comment)(true)(false)
+        }else{
+            @views.html.place.helper._commentview(comment)(false)(false)
+        }
+
+    }
+    <script>
+         $(document).ready(function() {
+
+            var object = '@WorkingHours.getWorkingHoursAsJSON(place)';
+            object = object.split("*").join("\"");
+
+            $("#businessHoursContainer").businessHours({
+                    operationTime: JSON.parse(object)
+            });
+         });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#map-add-place").height($("#info-container").height());
+        });
+        var urlToPost = "@routes.PlaceController.validateForm()";
+        var lat;
+        var lng;
+        @if(place.latitude != null && place.longitude != null) {
+                lat = @place.latitude;
+                lng = @place.longitude;
+        }
+    </script>
+    <script src="@routes.Assets.versioned("javascripts/googleMaps/miniMap.js")"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap" async defer></script>
+    <script src="@routes.Assets.versioned("javascripts/getService.js")"></script>
+}

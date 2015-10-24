@@ -1,6 +1,7 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.google.common.collect.Maps;
 import models.*;
 import play.Logger;
 import play.data.DynamicForm;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -202,6 +204,7 @@ public class PlaceController extends Controller {
                 return false;
             }
         }
+
         ClientIP ipAddress = new ClientIP();
         ipAddress.ipAddress = clientIP;
         ipAddress.place=place;
@@ -223,6 +226,8 @@ public class PlaceController extends Controller {
             return true;
         }
     }
+
+
 
     @Security.Authenticated(Authenticators.User.class)
     public Result postComment(int id) {

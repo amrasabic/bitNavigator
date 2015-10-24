@@ -1,48 +1,32 @@
 package controllers;
 
-import models.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import models.Image;
+import models.User;
 import play.Logger;
+import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.validation.Constraints;
+import play.libs.F.Function;
+import play.libs.F.Promise;
+import play.libs.ws.WS;
+import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import utillities.Authenticators;
-import utillities.PasswordHash;
-import utillities.SessionHelper;
-import utillities.UserValidator;
+import utillities.*;
 import views.html.admin.adminview;
-import views.html.index;
 import views.html.user.profile;
 import views.html.user.signup;
 import views.html.user.userlist;
-import play.Play;
-import utillities.MailHelper;
-import utillities.SessionHelper;
-import views.html.user.*;
-import views.html.admin.*;
-
-import utillities.PasswordHash;
-import utillities.MailHelper;
 
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-
 import java.util.Calendar;
-import java.util.ArrayList;
 import java.util.UUID;
-
-import play.libs.F.Function;
-import play.libs.F.Promise;
-import play.libs.Json;
-import play.libs.ws.WS;
-import play.libs.ws.WSResponse;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 
@@ -62,6 +46,7 @@ public class UserController extends Controller {
     private static final Form<User> userForm = Form.form(User.class);
     private static final Form<SignUpForm> signUpForm = Form.form(SignUpForm.class);
     private static final Form<UserNameForm> userNameForm = Form.form(UserNameForm.class);
+    private static final Form<SetNewPasswordForm> setNewPasswordForm = Form.form(SetNewPasswordForm.class);
     private static String url = Play.application().configuration().getString("url");
 
     public Result connectWithFB() {
@@ -340,8 +325,8 @@ public class UserController extends Controller {
         public String firstName;
         @Constraints.Pattern(value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
-        @Constraints.Pattern(value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
-        public String mobileNumber;
+        //@Constraints.Pattern(value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
+        //public String mobileNumber;
         //public Image avatar;
 
         public UserNameForm() {
@@ -352,7 +337,7 @@ public class UserController extends Controller {
             this.email = u.email;
             this.firstName = u.firstName;
             this.lastName = u.lastName;
-            this.mobileNumber = u.phoneNumber;
+            //this.mobileNumber = u.phoneNumber;
             //this.avatar = u.avatar;
         }
     }
@@ -442,7 +427,7 @@ public class UserController extends Controller {
 
     public Result contactUs() {
 
-        return ok(contact.render(new Form<Contact>(Contact.class)));
+        return ok(views.html.user.contact.render(new Form<Contact>(Contact.class)));
     }
 
     public Promise<Result> sendMail() {
@@ -540,6 +525,84 @@ public class UserController extends Controller {
 
     }
 
+    public Result resendForgotenPassword (){
+
+        Form<resendVerificationMailForm> boundForm = Form.form(resendVerificationMailForm.class).bindFromRequest();
+
+        User u = User.findByEmail(boundForm.bindFromRequest().field("verificationEmail").value());
+        if (u == null){
+            flash("error", "User with email you entered does not exist");
+            return redirect(routes.Application.index());
+        }
+
+        u.setToken(UUID.randomUUID().toString());
+        u.update();
+
+        String host = url + "forgot_password/" + u.getToken();
+        MailHelper.sendForPassword(u.email, host);
+
+        flash("success", "Email sent, click on the link in email to change password.");
+        return redirect(routes.Application.index());
+    }
+
+    public Result setNewPasswordView(String token) {
+
+        try {
+            User user = User.findUserByToken(token);
+            session().clear();
+            session("email", user.email);
+            if (token == null) {
+                flash("error","Session expired");
+                return redirect("/");
+            }
+        } catch (Exception e){
+            return redirect("/");
+        }
+        return ok(views.html.user.forgotpassword.render(setNewPasswordForm));
+    }
+
+    public static class SetNewPasswordForm {
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Password is required")
+        public String newPassword;
+        @Constraints.MinLength(value = 8, message = "Password must be minimum 8 characters long")
+        @Constraints.MaxLength(value = 25, message = "Password can not be longer than 25 characters")
+        @Constraints.Required(message = "Passwords do not match")
+        public String confirmPassword;
+    }
+
+
+    @Security.Authenticated(Authenticators.User.class)
+    public Result setNewPassword() {
+
+        User user = SessionHelper.getCurrentUser();
+
+        Form<SetNewPasswordForm> boundForm = Form.form(SetNewPasswordForm.class).bindFromRequest();
+
+        if (boundForm.hasErrors()) {
+            return redirect(routes.UserController.profile(user.email, "View & edit your BitNavigator profile"));
+        }
+
+        if (!((boundForm.bindFromRequest().field("newPassword").value()).equals(boundForm.bindFromRequest().field("confirmPassword").value()))) {
+            flash("error", "Password does not match!");
+            return redirect(routes.Application.index());
+        }
+        try {
+            user.password = PasswordHash.createHash(boundForm.bindFromRequest().field("newPassword").value());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        user.setToken(null);
+        user.update();
+
+        flash("success", "New password succesfully set");
+        return redirect(routes.Application.index());
+
+    }
 
 
 }

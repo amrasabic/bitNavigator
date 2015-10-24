@@ -1,0 +1,89 @@
+@import utillities.SessionHelper
+@(messages: java.util.List[Message])
+
+    @views.html.messages.messageview {
+
+    <div class="panel-body">
+        <div class="chat">
+
+            @for(message <- messages){
+                @if(!message.sender.equals(SessionHelper.getCurrentUser)){
+                    <div class="left clearfix panel panel-default">
+                        <div class="message-content-container">
+                            <span class="chat-img pull-left">
+                                @if(Image.findByUser(message.sender) != null) {
+                                    <img src="@Image.findByUser(message.sender).getSize(100, 100)" class="avatar img-circle img-thumbnail" alt="avatar">
+                                } else {
+                                    <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
+                                }
+                            </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">@message.sender.firstName @message.sender.lastName</strong>
+                                    @if(Message.isNewMessage(message)){
+                                        @Message.seen(message)
+                                        <span class="badge badge-red">NEW!</span>
+                                    }
+                                    <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>@message.sent.getTime()
+                                    </small>
+                                </div>
+                                <p style="white-space: pre-line"> @message.content </p>
+                            </div>
+                        </div>
+                    </div>
+                }else{
+                    <div class="right clearfix panel panel-default">
+                        <div class="message-content-container">
+                            <span class="chat-img pull-right">
+                                @if(Image.findByUser(message.sender) != null) {
+                                    <img src="@Image.findByUser(message.sender).getSize(100, 100)" class="avatar img-circle img-thumbnail" alt="avatar">
+                                } else {
+                                    <img src="//placehold.it/100" class="avatar img-circle img-thumbnail" alt="avatar">
+                                }
+                            </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class=" text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>@message.sent.getTime()
+                                    </small>
+                                    <strong class="pull-right primary-font">@message.sender.firstName @message.sender.lastName</strong>
+                                </div>
+                                <p style="white-space: pre-line"> @message.content </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="panel panel-default">
+            <form action="@routes.MessageController.sendMessage(messages.get(0).reservation.id)" method="POST">
+                <div class="form-group">
+                    <div class="panel-body">
+                        <textarea class="form-control" style="resize : inherit" name="content" placeholder="Message ..."></textarea>
+                        <div class="alert alert-danger" data-error-for="content" role="alert" hidden></div>
+                        <div>
+                            <input type="submit" class="btn btn-primary pull-right" value="Send" style="margin-top : 1 em"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        var urlToPost = "@routes.MessageController.validateForm()";
+        $(document).ready(function() {
+            var n = $(document).height();
+            $('html, body').animate({ scrollTop: n }, 50);
+        });
+    </script>
+
+
+}

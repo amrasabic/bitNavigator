@@ -17,12 +17,19 @@ GET           /user/signout                                 @controllers.UserCon
 GET           /user/list                                    @controllers.UserController.userList()
 POST          /user/validate                                @controllers.UserController.validateForm()
 GET           /validate/:token                              @controllers.UserController.emailValidation(token: String)
+GET           /forgot_password/:token                       @controllers.UserController.setNewPasswordView(token: String)
+GET           /forgot_password/set/                         @controllers.UserController.setNewPassword()
 
 POST          /user/profile/validate                        @controllers.UserController.validateUserNameForm()
 GET           /user/profile/:email                          @controllers.UserController.profile(email: String, msg: String)
 POST          /user/profile/                                @controllers.UserController.updateUser()
 POST          /user/edit/password                           @controllers.UserController.changePassword()
 DELETE        /user/profile/:email                          @controllers.UserController.delete(email: String)
+
+POST          /user/profile/phonenumber/add                 @controllers.PhoneNumberController.addPhoneNumber()
+POST          /user/profile/phonenumber/validate            @controllers.PhoneNumberController.validatePhoneNumber()
+POST          /user/profile/phonenumber/sendtoken           @controllers.PhoneNumberController.sendToken()
+DELETE        /user/profile/phonenumber/delete/:id          @controllers.PhoneNumberController.delete(id: Integer)
 
 GET           /user/reservations                            @controllers.ReservationController.reservationsList()
 POST          /user/reservations                            @controllers.ReservationController.changeStatus()
@@ -69,7 +76,20 @@ POST          /checkPass                                    @controllers.UserCon
 POST          /contact                                      @controllers.UserController.sendMail()
 GET           /contact                                      @controllers.UserController.contactUs()
 POST          /resendVerificationMail                       @controllers.UserController.resendVerificationEmail()
+POST          /resendForgotenPassword                       @controllers.UserController.resendForgotenPassword()
 
 POST          /paypal/:id                                   @controllers.Application.paypal(id: Integer)
 GET           /paypal/success                               @controllers.Application.paypalSuccess()
 GET           /paypal/pdf:id                                @controllers.Application.payPdf(id: Integer)
+
+GET           /api/place/list                               @controllers.RestController.getListOfPLaces()
+
+GET           /showfaq                                      @controllers.Application.showFaq()
+GET           /faq/new                                      @controllers.FAQController.newFAQ()
+GET           /faq/edit/:id                                 @controllers.FAQController.editFAQ(id:Integer)
+DELETE        /faq/delete/:id                               @controllers.FAQController.deleteFAQ(id:Integer)
+POST          /faq/save                                     @controllers.FAQController.saveFAQ()
+POST          /faq/edit/:id                                 @controllers.FAQController.updateFAQ(id:Integer)
+POST          /faq/validateForm                             @controllers.FAQController.validateFormFAQ()
+GET           /faq                                          @controllers.FAQController.adminFAQs()
+
