@@ -581,10 +581,11 @@ public class UserController extends Controller {
         Form<SetNewPasswordForm> boundForm = Form.form(SetNewPasswordForm.class).bindFromRequest();
 
         if (boundForm.hasErrors()) {
-            return redirect(routes.UserController.profile(user.email, "View & edit your BitNavigator profile"));
+            return redirect(routes.Application.index());
         }
 
         if (!((boundForm.bindFromRequest().field("newPassword").value()).equals(boundForm.bindFromRequest().field("confirmPassword").value()))) {
+            session().clear();
             flash("error", "Password does not match!");
             return redirect(routes.Application.index());
         }
@@ -602,6 +603,25 @@ public class UserController extends Controller {
         flash("success", "New password succesfully set");
         return redirect(routes.Application.index());
 
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     *
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateSetNewPasswordForm() {
+
+
+        Form<SetNewPasswordForm> binded = setNewPasswordForm.bindFromRequest();
+        if(binded.hasErrors()){
+            return badRequest(binded.errorsAsJson());
+        } else {
+            //get the object from the form, for revere take a look at someForm.fill(myObject)
+            SetNewPasswordForm snpf = binded.get();
+            flash("success", "user edited");
+            return redirect("/");
+        }
     }
 
 
