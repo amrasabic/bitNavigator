@@ -10,6 +10,7 @@ import play.data.Form;
 import play.data.validation.Constraints;
 import play.libs.F.Function;
 import play.libs.F.Promise;
+import play.libs.Json;
 import play.libs.ws.WS;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
@@ -612,11 +613,13 @@ public class UserController extends Controller {
      */
     public Result validateSetNewPasswordForm() {
 
-
         Form<SetNewPasswordForm> binded = setNewPasswordForm.bindFromRequest();
         if(binded.hasErrors()){
             return badRequest(binded.errorsAsJson());
-        } else {
+        } else if (!((binded.field("newPassword").value()).equals(binded.bindFromRequest().field("confirmPassword").value()))) {
+
+            return badRequest("Password does not match");
+        }else{
             //get the object from the form, for revere take a look at someForm.fill(myObject)
             SetNewPasswordForm snpf = binded.get();
             flash("success", "user edited");
