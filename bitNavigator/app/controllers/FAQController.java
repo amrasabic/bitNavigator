@@ -1,6 +1,7 @@
 package controllers;
 
 
+
 import models.FAQ;
 import play.data.Form;
 import play.mvc.Controller;
@@ -9,8 +10,10 @@ import play.mvc.Security;
 import views.html.admin.adminCreateFaq;
 import views.html.admin.adminEditFaq;
 import views.html.admin.allFaqs;
+import play.data.DynamicForm;
 
 import java.util.List;
+
 
 
 //@Security.Authenticated(CurrentAdmin.class)
@@ -18,6 +21,7 @@ public class FAQController extends Controller {
 
     // Declaring variable
     private static final Form<FAQ> FAQForm = Form.form(FAQ.class);
+    private String srchTerm;
 
     public Result adminFAQs() {
         // Creating the list of the FAQs
@@ -110,5 +114,23 @@ public class FAQController extends Controller {
         } else {
             return ok("Validation successful");
         }
+    }
+
+    public Result searchFAQ(){
+        DynamicForm form = Form.form().bindFromRequest();
+        String search = form.data().get("searchFAQ");
+        List<FAQ> faqs = FAQ.getFAQByQuestion(search);
+
+        if(srchTerm != null) {
+            return ok(allFaqs.render(faqs));
+        }
+
+        String[] questions = new String[faqs.size()];
+        for (int i = 0; i < questions.length; i++) {
+            questions[i] = faqs.get(i).question;
+        }
+
+        return redirect(routes.Application.showFaq());
+
     }
 }

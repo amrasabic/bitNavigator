@@ -1,0 +1,21 @@
+@import helper._
+@import java.util
+@(faqs: List[FAQ])
+@main("search FAQs"){
+        <form action="@routes.FAQController.searchFAQ()" form method="GET">
+            <input  id="searchFAQ" name="searchFAQ"  type="text" placeholder="Looking for FAQ..." required/>
+            <input type="submit" value="search">
+        </form>
+
+    <h1>Search results: </h1><br>
+    @if(faqs.isEmpty()){
+        <div class="section group">
+
+            <h2>No results...</h2>
+
+            }else{
+        <h3>FAQs:</h3><br>
+        }
+    </div>
+
+}
