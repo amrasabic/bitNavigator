@@ -5,10 +5,7 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Class representing Place model.
@@ -79,7 +76,28 @@ public class Place extends Model {
         List<Place> list = finder.where().eq("service", serv).findList();
         Place p = Place.findById(id);
         list.remove(p);
+        sortByRating(list);
         return list;
+    }
+
+    public static void sortByRating(List<Place> places){
+        Collections.sort(places, new Comparator<Place>() {
+            @Override
+            public int compare(Place o1, Place o2) {
+                if(o1.getRating()==null){
+                    if (o2.getRating() == null)
+                        return 0;
+                    return 1;
+                }else if(o2.getRating()==null){
+                    return -1;
+                }else if(o1.getRating()>o2.getRating()){
+                    return -1;
+                }else if(o2.getRating()>o1.getRating()){
+                    return 1;
+                }
+                return 0;
+            }
+        });
     }
 
     public Double getRating() {
