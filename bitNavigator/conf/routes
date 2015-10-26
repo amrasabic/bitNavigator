@@ -16,6 +16,7 @@ POST          /user/signup                                  @controllers.UserCon
 GET           /user/signout                                 @controllers.UserController.signOut()
 GET           /user/list                                    @controllers.UserController.userList()
 POST          /user/validate                                @controllers.UserController.validateForm()
+POST          /user/validate/newPassword                    @controllers.UserController.validateSetNewPasswordForm()
 GET           /validate/:token                              @controllers.UserController.emailValidation(token: String)
 GET           /forgot_password/:token                       @controllers.UserController.setNewPasswordView(token: String)
 GET           /forgot_password/set/                         @controllers.UserController.setNewPassword()
