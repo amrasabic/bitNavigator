@@ -11,6 +11,7 @@ import views.html.admin.adminCreateFaq;
 import views.html.admin.adminEditFaq;
 import views.html.admin.allFaqs;
 import play.data.DynamicForm;
+import views.html.user.searchFAQ;
 
 import java.util.List;
 
@@ -116,13 +117,15 @@ public class FAQController extends Controller {
         }
     }
 
-    public Result searchFAQ(){
+
+
+    public Result searchFAQs(){
         DynamicForm form = Form.form().bindFromRequest();
         String search = form.data().get("searchFAQ");
         List<FAQ> faqs = FAQ.getFAQByQuestion(search);
 
         if(srchTerm != null) {
-            return ok(allFaqs.render(faqs));
+            return ok(searchFAQ.render(faqs));
         }
 
         String[] questions = new String[faqs.size()];
@@ -130,7 +133,10 @@ public class FAQController extends Controller {
             questions[i] = faqs.get(i).question;
         }
 
-        return redirect(routes.Application.showFaq());
+        return ok(searchFAQ.render(faqs));
 
     }
+
+
+
 }

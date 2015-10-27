@@ -5,15 +5,14 @@
   <div class="jumbotron" style="background-color: white; width:80%;margin-left:10%;max-width: 1200px;margin-left:auto; margin-right:auto;">
     <div class="container">
       <div class="page-header ">
-        <h1 class="naslov" style="color : #0a68b4">FAQ <br><small>You have questions, we have answers.</small></h1>
 
 
-        <div>
-      <form action="/faq/searchFaq" method="GET">
-        <input type="submit" value="search" style="float:right">
-        <input id="s"  type="text" style="float:right" placeholder="Looking for FAQ..." required/>
-      </form>
-     </div>
+        @helper.form(action = routes.FAQController.searchFAQs(), 'method -> "GET", 'class -> "form-horizontal dont-validate", 'role -> "form-dont-validate") {
+          <input id="searchFAQ" name="searchFAQ"  placeholder="Looking for FAQ..." required/>
+          <input type="submit" value="search"  >
+          }
+
+        <h2 class="naslov" style="color : #0a68b4">FAQ <br><small>You have questions, we have answers.</small></h2>
       </div>
     </div>
     <div class="panel-group" id="accordion">
@@ -31,7 +30,7 @@
         </div>
       </div>
       <hr>
-    }
+      }
     </div>
   </div>
 
