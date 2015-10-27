@@ -107,36 +107,41 @@
     @views.html.helpers._picturegallery(images)
     </div>
 
-<div class="comments-container">
+<div class="comments-container" id="accordion">
     <div id="comments-panel" class="container-fluid">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
         <h5 class="header-comment"><i class="fa fa-comments-o"></i> Comments</h5>
+        </a>
         <br>
-    </div>
-    <div class="comments-content">
-        @for(comment <- comments) {
-                <!-- Checks if user already posted a comment -->
-            @if(comment.user.email != SessionHelper.getCurrentUsersEmail) {
-                @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
-                    @views.html.place.helper._commentview(comment)(true)(false)
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="comments-content">
+            @for(comment <- comments) {
+                    <!-- Checks if user already posted a comment -->
+                @if(comment.user.email != SessionHelper.getCurrentUsersEmail) {
+                    @if(Report.findByComment(comment) != null && Report.isReportedByUser(Report.findByComment(comment), User.findByEmail(SessionHelper.getCurrentUsersEmail()))) {
+                        @views.html.place.helper._commentview(comment)(true)(false)
+                    } else {
+                        @views.html.place.helper._commentview(comment)(false)(false)
+                    }
                 } else {
-                    @views.html.place.helper._commentview(comment)(false)(false)
+                    @views.html.place.helper._commentview(comment)(false)(true)
                 }
-            } else {
-                @views.html.place.helper._commentview(comment)(false)(true)
-            }
-            }
+                }
 
-    <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
-        @if(SessionHelper.isAuthenticated && !place.user.email.equals(SessionHelper.getCurrentUsersEmail())) {
-            @if(Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place) != null && Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place).status.id == Status.APPROVED) {
-                @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null) {
-                    @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))
-                } else {
-                    @views.html.place.helper._postcommentview(place)(new Comment)
+        <!-- Checks if place`s owner or unregistered user is viewing place, and if so not giving the option to comment-->
+            @if(SessionHelper.isAuthenticated && !place.user.email.equals(SessionHelper.getCurrentUsersEmail())) {
+                @if(Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place) != null && Reservation.findByUserAndPlace(SessionHelper.getCurrentUser, place).status.id == Status.APPROVED) {
+                    @if(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place) != null) {
+                        @views.html.place.helper._postcommentview(place)(Comment.findByUserAndPlace(SessionHelper.getCurrentUsersEmail, place))
+                    } else {
+                        @views.html.place.helper._postcommentview(place)(new Comment)
+                    }
                 }
             }
-        }
         </div>
+        </div>
+    </div>
+
     </div>
 
 
@@ -164,6 +169,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+    $(document).ready(function() {
+        $(".accordion").accordion();
+    });
+    $('.collapsed').click(function () {
+        $("i", this).toggleClass("fa fa-arrow-circle-o-down fa fa-arrow-circle-o-up");
+    })
+
+    </script>
 
     <script>
         var tmp = document.getElementById('reservation-datepicker');
