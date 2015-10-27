@@ -88,7 +88,7 @@ public class Place extends Model {
                     if (o2.getRating() == null)
                         return 0;
                     return 1;
-                }else if(o2.getRating()==null){
+                }else if(o2.getRating() == null){
                     return -1;
                 }else if(o1.getRating()>o2.getRating()){
                     return -1;
