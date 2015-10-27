@@ -73,11 +73,18 @@ public class Place extends Model {
     }
 
     public static List<Place> findByService(Service serv, Integer id) {
-        List<Place> list = finder.where().eq("service", serv).findList();
+        List<Place> list = new ArrayList<>(6);
+        list = finder.where().eq("service", serv).findList();
+        List<Place> finalList = new ArrayList<>();
         Place p = Place.findById(id);
         list.remove(p);
         sortByRating(list);
-        return list;
+
+        for(int i = 0; i < 6 ; i++){
+            finalList.add(list.get(i));
+        }
+
+        return finalList;
     }
 
     public static void sortByRating(List<Place> places){
