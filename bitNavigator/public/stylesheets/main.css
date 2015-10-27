@@ -852,3 +852,7 @@ textarea {
     padding-left: 9%;
 
 }
+
+.list-group {
+    min-width: 305px;
+}
