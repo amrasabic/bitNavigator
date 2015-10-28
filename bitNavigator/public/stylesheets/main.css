@@ -786,11 +786,12 @@ textarea {
     to { transform: rotateY(360deg) }
 }
 
-<<<<<<< HEAD
 .glyph-phone {
     margin-left: 30px;
-=======
+}
+
 #wrapper-map { position: relative; }
+
 #over_map { position: absolute; top: 10px; left: 10px; z-index: 99; }
 
 .col-md-3 {
@@ -834,5 +835,4 @@ textarea {
     padding: 0 8px;
     border-radius: 4px;
     cursor: pointer;
->>>>>>> 5f2a3d20df50eebafb7be4376618919f159a5ad9
 }
