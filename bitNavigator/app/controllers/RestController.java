@@ -55,6 +55,30 @@ public class RestController extends Controller {
         return badRequest();
     }
 
+    public Result checkRegistration(){
+        DynamicForm form = Form.form().bindFromRequest();
+        String name = form.data().get("firstName");
+        String surname = form.data().get("lastName");
+        String email = form.data().get("email");
+        String password = form.data().get("password");
+        String pass = null;
+        try {
+            pass = PasswordHash.createHash(password);
+        }catch (Exception e){}
+        User user = new User();
+        user.email = email;
+        user.firstName = name;
+        user.lastName = surname;
+        if(pass != null) {
+            user.password = pass;
+            user.setValidated(true);
+            user.save();
+            return ok();
+        }else{
+            return badRequest();
+        }
+    }
+
     private class UserJSON{
         public Integer id;
         public String firstName;
@@ -83,6 +107,7 @@ public class RestController extends Controller {
         public Calendar placeCreated;
         public Integer numOfViews;
         public Integer numOfReservations;
+        public String service;
         //public User user;
         //public Service service;
 
@@ -96,6 +121,7 @@ public class RestController extends Controller {
             this.placeCreated = place.placeCreated;
             this.numOfViews = place.numOfViews;
             this.numOfReservations = place.numOfReservations;
+            this.service = place.service.serviceType;
             //this.service = place.service;
             //this.user = place.user;
         }
