@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Image;
 import models.Place;
 import models.User;
 import play.data.DynamicForm;
@@ -85,6 +86,7 @@ public class RestController extends Controller {
         public String lastName;
         public String email;
         public String password;
+        public String avatar;
 
         public UserJSON(User user){
             this.id = user.id;
@@ -92,6 +94,7 @@ public class RestController extends Controller {
             this.lastName = user.lastName;
             this.email = user.email;
             this.password = user.password;
+            this.avatar = Image.findByUser(user).public_id;
         }
     }
 
