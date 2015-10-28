@@ -73,14 +73,14 @@ public class MailHelper {
 
         try {
             HtmlEmail mail = new HtmlEmail();
-            mail.setSubject("bitNavigator Have you forgot your password ?");
+            mail.setSubject("bitNavigator support");
             mail.setFrom("bitNavigator <" + Play.application().configuration().reference().getString("EMAIL_USERNAME_ENV") + ">");
             mail.addTo("Contact <" + Play.application().configuration().reference().getString("EMAIL_USERNAME_ENV") + ">");
             mail.addTo(email);
             mail.setMsg(message);
             mail.setHtmlMsg(String
                     .format("<html><body><strong> %s </strong> <p> %s </p> <p> %s </p> </body></html>",
-                            "You have forgot your password ?",
+                            "Forgoten password support",
                             "Click on the following link to set new password :", message));
             mail.setHostName("smtp.gmail.com");
             mail.setStartTLSEnabled(true);

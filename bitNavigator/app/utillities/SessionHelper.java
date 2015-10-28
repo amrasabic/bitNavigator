@@ -41,6 +41,14 @@ public class SessionHelper {
         return Reservation.getAllReservationsOnUsersPlaces(Status.findById(Status.WAITING)).size() + Message.getNewMessages(getCurrentUser()).size();
     }
 
+    public static boolean hasValidatedPhoneNumber(){
+        for (PhoneNumber phoneNumber : PhoneNumber.findByUser(getCurrentUser())){
+            if(phoneNumber.isValidated()){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

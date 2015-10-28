@@ -8,8 +8,8 @@
 
     @if(!places.isEmpty) {
         @for(place <- places) {
-            <div class="col-sm-4 col-lg-4 col-md-4">
-                <div class="thumbnail">
+            <div class="col-sm-4 col-lg-4 col-md-4" id="thumbnail-container">
+                <div class="thumbnail" id="thumbnail">
                     @if(place.images.size() != 0){
                         <img src="@place.images.get(0).getSize(320,150)" alt="">
                     }else{
