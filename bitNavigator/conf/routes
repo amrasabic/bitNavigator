@@ -95,4 +95,5 @@ GET           /faq                                          @controllers.FAQCont
 
 GET           /api/place/list                               @controllers.RestController.getListOfPLaces()
 POST          /api/user/signin                              @controllers.RestController.checkUser()
+POST          /api/user/signup                              @controllers.RestController.checkRegistration()
 
