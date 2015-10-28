@@ -790,17 +790,14 @@ textarea {
     to { transform: rotateY(360deg) }
 }
 
-<<<<<<< HEAD
 .glyph-phone {
     margin-left: 30px;
 }
 
-=======
-
 .glyph-phone {
     margin-left: 30px;
 }
->>>>>>> f65e32de4600b00d90605b77e9a3292cd4a7e4cb
+
 #wrapper-map { position: relative; }
 
 #over_map { position: absolute; top: 10px; left: 10px; z-index: 99; }
@@ -857,7 +854,6 @@ textarea {
     align-content: center;
     align-items: center;
     padding-left: 9%;
-
 }
 
 .list-group {

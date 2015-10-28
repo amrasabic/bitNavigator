@@ -1,9 +1,13 @@
 package controllers;
 
 import models.Place;
+import models.User;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import utillities.PasswordHash;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +27,50 @@ public class RestController extends Controller {
 
         return ok(Json.toJson(places));
     }
+
+    public Result checkUser(){
+        DynamicForm form = Form.form().bindFromRequest();
+        String email = form.data().get("email");
+        String password = form.data().get("password");
+        System.out.println("Password = " + password + "email" + email);
+        if(email == null || password == null){
+            return badRequest();
+        }else {
+            User u = User.findByEmail(email);
+            System.out.println(u.toString());
+            if(u == null){
+                return badRequest();
+            }else{
+                try {
+                    if (PasswordHash.validatePassword(password, u.password)) {
+                        System.out.println("is true" + PasswordHash.validatePassword(password, u.password));
+                        UserJSON user = new UserJSON(u);
+                        return ok(Json.toJson(user));
+                    } else {
+                        return badRequest();
+                    }
+                }catch (Exception e){}
+            }
+        }
+        return badRequest();
+    }
+
+    private class UserJSON{
+        public Integer id;
+        public String firstName;
+        public String lastName;
+        public String email;
+        public String password;
+
+        public UserJSON(User user){
+            this.id = user.id;
+            this.firstName = user.firstName;
+            this.lastName = user.lastName;
+            this.email = user.email;
+            this.password = user.password;
+        }
+    }
+
 
     private class PlaceJSON {
 
