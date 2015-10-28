@@ -5,10 +5,10 @@
     <div><br>
     @helper.form(action = routes.FAQController.searchFAQs(), 'method -> "GET", 'class -> "form-horizontal dont-validate", 'role -> "form-dont-validate") {
         <input id="searchFAQ" name="searchFAQ"  placeholder="Search for FAQ..." required/>
-        <input  type="image" src='@routes.Assets.versioned("images/search.png")' style="position: static">
+        <input  type="image" src='@routes.Assets.versioned("images/search.png")' style="position:relative; top: 10px; height: 29px">
     }
     </div>
-    <h3>Search results: </h3><br>
+    <h3><i>Search results:</i></h3><br>
     @if(faqs.isEmpty()){
         <div class="section group">
             <img src='@routes.Assets.versioned("images/result.jpg")'>

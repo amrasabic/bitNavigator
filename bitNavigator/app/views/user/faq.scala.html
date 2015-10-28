@@ -9,7 +9,7 @@
 
         @helper.form(action = routes.FAQController.searchFAQs(), 'method -> "GET", 'class -> "form-horizontal dont-validate", 'role -> "form-dont-validate") {
           <input id="searchFAQ" name="searchFAQ"  placeholder="Looking for FAQ..." required/>
-          <input type="submit" value="search"  >
+          <input  type="image" src='@routes.Assets.versioned("images/search.png")' style="position:relative; top: 10px; height: 29px">
           }
 
         <h2 class="naslov" style="color : #0a68b4">FAQ <br><small>You have questions, we have answers.</small></h2>
