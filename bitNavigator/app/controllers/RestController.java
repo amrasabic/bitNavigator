@@ -20,7 +20,6 @@ import java.util.List;
 public class RestController extends Controller {
 
     public Result getListOfPLaces() {
-
         List<PlaceJSON> places = new ArrayList<>();
         for (Place place : Place.findAll()) {
             places.add(new PlaceJSON(place));
@@ -61,20 +60,76 @@ public class RestController extends Controller {
         public HoursJSON(WorkingHours hour) {
             this.id = hour.id;
             this.place_id = hour.place.id;
-            this.open1 = hour.open1;
-            this.close1 = hour.close1;
-            this.open2 = hour.open2;
-            this.close2 = hour.close2;
-            this.open3 = hour.open3;
-            this.close3 = hour.close3;
-            this.open4 = hour.open4;
-            this.close4 = hour.close4;
-            this.open5 = hour.open5;
-            this.close5 = hour.close5;
-            this.open6 = hour.open6;
-            this.close6 = hour.close6;
-            this.open7 = hour.open7;
-            this.close7 = hour.close7;
+            if(hour.open1 == null){
+                this.open1 = -1;
+            }else {
+                this.open1 = hour.open1;
+            }
+            if(hour.close1 == null){
+                this.close1 = -1;
+            }else{
+                this.close1 = hour.close1;
+            }
+            if(hour.open2 == null){
+                this.open2 = -1;
+            }else {
+                this.open2 = hour.open2;
+            }
+            if(hour.close2 == null){
+                this.close2 = -1;
+            }else{
+                this.close2 = hour.close2;
+            }
+            if(hour.open3 == null){
+                this.open3 = -1;
+            }else {
+                this.open3 = hour.open3;
+            }
+            if(hour.close3 == null){
+                this.close3 = -1;
+            }else{
+                this.close3 = hour.close3;
+            }
+            if(hour.open4 == null){
+                this.open4 = -1;
+            }else {
+                this.open4 = hour.open4;
+            }
+            if(hour.close4 == null){
+                this.close4 = -1;
+            }else{
+                this.close4 = hour.close4;
+            }
+            if(hour.open5 == null){
+                this.open5 = -1;
+            }else {
+                this.open5 = hour.open5;
+            }
+            if(hour.close5 == null){
+                this.close5 = -1;
+            }else{
+                this.close5 = hour.close5;
+            }
+            if(hour.open6 == null){
+                this.open6 = -1;
+            }else {
+                this.open6 = hour.open6;
+            }
+            if(hour.close6 == null){
+                this.close6 = -1;
+            }else{
+                this.close6 = hour.close6;
+            }
+            if(hour.open7 == null){
+                this.open7 = -1;
+            }else {
+                this.open7 = hour.open7;
+            }
+            if(hour.close7 == null){
+                this.close7 = -1;
+            }else{
+                this.close7 = hour.close7;
+            }
         }
     }
 
