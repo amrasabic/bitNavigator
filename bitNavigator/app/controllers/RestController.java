@@ -3,6 +3,7 @@ package controllers;
 import models.Image;
 import models.Place;
 import models.User;
+import models.WorkingHours;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -28,6 +29,57 @@ public class RestController extends Controller {
 
         return ok(Json.toJson(places));
     }
+
+    public Result getListOfHours() {
+
+        List<HoursJSON> hours = new ArrayList<>();
+        for (WorkingHours hour : WorkingHours.findAll()) {
+            hours.add(new HoursJSON(hour));
+        }
+
+        return ok(Json.toJson(hours));
+    }
+
+
+    private class HoursJSON {
+        public Integer id;
+        public Integer place_id;
+        public Integer open1;
+        public Integer close1;
+        public Integer open2;
+        public Integer close2;
+        public Integer open3;
+        public Integer close3;
+        public Integer open4;
+        public Integer close4;
+        public Integer open5;
+        public Integer close5;
+        public Integer open6;
+        public Integer close6;
+        public Integer open7;
+        public Integer close7;
+
+        public HoursJSON(WorkingHours hour) {
+            this.id = hour.id;
+            this.place_id = hour.place.id;
+            this.open1 = hour.open1;
+            this.close1 = hour.close1;
+            this.open2 = hour.open2;
+            this.close2 = hour.close2;
+            this.open3 = hour.open3;
+            this.close3 = hour.close3;
+            this.open4 = hour.open4;
+            this.close4 = hour.close4;
+            this.open5 = hour.open5;
+            this.close5 = hour.close5;
+            this.open6 = hour.open6;
+            this.close6 = hour.close6;
+            this.open7 = hour.open7;
+            this.close7 = hour.close7;
+        }
+    }
+
+
 
     public Result checkUser(){
         DynamicForm form = Form.form().bindFromRequest();

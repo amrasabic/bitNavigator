@@ -42,7 +42,12 @@ public class WorkingHours extends Model {
     public Integer open7;
     public Integer close7;
 
+
     public static Finder<Integer, WorkingHours> finder = new Finder<>(WorkingHours.class);
+
+    public static List<WorkingHours> findAll() {
+        return finder.all();
+    }
 
     public static WorkingHours findByPlace(Place place) {
         return finder.where().eq("place", place).findUnique();
