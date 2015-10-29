@@ -617,7 +617,7 @@ public class UserController extends Controller {
         if(binded.hasErrors()){
             return badRequest(binded.errorsAsJson());
         } else if (!((binded.field("newPassword").value()).equals(binded.bindFromRequest().field("confirmPassword").value()))) {
-            String msg = "{\"password\":\"Password does not match!\"}";
+            String msg = "{\"password\"\"confirmPassword\":\"Password does not match!\"}";
             return badRequest(msg);
         }else{
             //get the object from the form, for revere take a look at someForm.fill(myObject)

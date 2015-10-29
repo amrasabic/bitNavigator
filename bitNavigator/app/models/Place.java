@@ -80,8 +80,14 @@ public class Place extends Model {
         list.remove(p);
         sortByRating(list);
 
-        for(int i = 0; i < 6 ; i++){
-            finalList.add(list.get(i));
+        if(list.size() >= 6) {
+            for (int i = 0; i < 6; i++) {
+                finalList.add(list.get(i));
+            }
+        }else {
+            for (int i = 0 ; i < list.size(); i++){
+                finalList.add(list.get(i));
+            }
         }
 
         return finalList;
