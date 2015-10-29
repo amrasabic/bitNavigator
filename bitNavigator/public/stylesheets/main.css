@@ -859,3 +859,7 @@ textarea {
 .list-group {
     min-width: 305px;
 }
+
+.btn-group-vertical{
+    width: auto;
+}

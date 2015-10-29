@@ -3,6 +3,16 @@
 @main("Add service") {
 
     <div class="row">
+        <div class="btn-group-vertical col-md-3">
+            <a href="/user/list" class="btn btn-default">All users</a>
+            <a href="/place/list" class="btn btn-default">All places</a>
+            <a href="/comments/list" class="btn btn-default">All comments</a>
+            <a href="/comments/reported" class="btn btn-default">Reported comments</a>
+            <a href="/service/add" class="btn btn-default">Add services</a>
+            <a href="/service/list" class="btn btn-default">Service list</a>
+            <a href="/faq" class="btn btn-default">FAQ</a>
+
+        </div>
     <div class="col-md-7" style="margin-top: 50px;">
         <! -- Adding service form -- >
         <form method="post" action="@routes.ServiceController.save()"  enctype="multipart/form-data" >
