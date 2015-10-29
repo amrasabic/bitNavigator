@@ -163,6 +163,7 @@ public class RestController extends Controller {
         public Integer numOfViews;
         public Integer numOfReservations;
         public String service;
+        public String image;
         //public User user;
         //public Service service;
 
@@ -177,6 +178,9 @@ public class RestController extends Controller {
             this.numOfViews = place.numOfViews;
             this.numOfReservations = place.numOfReservations;
             this.service = place.service.serviceType;
+            if (Image.findByPlace(place).size() >= 1) {
+                this.image = Image.findByPlace(place).get(0).public_id;
+            }
             //this.service = place.service;
             //this.user = place.user;
         }
