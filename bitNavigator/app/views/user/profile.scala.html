@@ -136,11 +136,11 @@
     </div>
 
     <!-- Change password modal -->
-    <div id="openModal" class="modalDialog dont-validate">
+    <div id="openModal" class="modalDialog">
         <div>
             <a href="#close" title="Close" class="close">X</a>
             <h2>Change password</h2>
-            <form class="form-horizontal" role="form" method="post" action="@routes.UserController.changePassword()">
+            <form class="form-horizontal dont-validate" role="form" method="post" action="@routes.UserController.changePassword()">
 
                     <!-- User old password -->
                 <div class="form-group">
