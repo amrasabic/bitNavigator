@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -194,8 +195,9 @@ public class RestController extends Controller {
         String day = form.data().get("day");
         String time = form.data().get("time");
         String message = form.data().get("message");
+        Logger.info(day + ": " + time);
 
-        SimpleDateFormat myDate = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        SimpleDateFormat myDate = new SimpleDateFormat("dd-MM-yyyy kk:mm");
         Calendar date = new GregorianCalendar();
         try {
             date.setTime(myDate.parse(day + " " + time));
@@ -248,7 +250,12 @@ public class RestController extends Controller {
             this.lastName = user.lastName;
             this.email = user.email;
             this.password = user.password;
-            this.avatar = Image.findByUser(user).public_id;
+            if (Image.findByUser(user) == null){
+                this.avatar = "";
+            } else {
+                this.avatar = Image.findByUser(user).public_id;
+            }
+
         }
     }
 
@@ -267,6 +274,7 @@ public class RestController extends Controller {
         public String service;
         public String image;
         //public User user;
+        public Integer user_id;
         //public Service service;
 
         public PlaceJSON(Place place) {
@@ -282,7 +290,10 @@ public class RestController extends Controller {
             this.service = place.service.serviceType;
             if (Image.findByPlace(place).size() >= 1) {
                 this.image = Image.findByPlace(place).get(0).public_id;
+            } else {
+                this.image = "";
             }
+            this.user_id = place.user.id;
             //this.service = place.service;
             //this.user = place.user;
         }

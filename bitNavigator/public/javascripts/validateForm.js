@@ -26,6 +26,10 @@ $(document).ready(function(){
         }).success(function(response){
             $form.trigger("submit", {allow: true});
         }).error(function(response){
+            if(response.responseText == "not match"){
+                $('[data-error-for="confirmPassword"]').html(response.responseText).show();
+                return;
+            }
             if(response.responseText == "Must choose date and time!"){
                 $('[data-error-for="date"]').html(response.responseText).show();
                 return;
