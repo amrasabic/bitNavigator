@@ -264,7 +264,7 @@ public class RestController extends Controller {
         public Integer numOfViews;
         public Integer numOfReservations;
         public String service;
-        //public User user;
+        public Integer user_id;
         //public Service service;
 
         public PlaceJSON(Place place) {
@@ -278,6 +278,7 @@ public class RestController extends Controller {
             this.numOfViews = place.numOfViews;
             this.numOfReservations = place.numOfReservations;
             this.service = place.service.serviceType;
+            this.user_id = place.user.id;
             //this.service = place.service;
             //this.user = place.user;
         }
