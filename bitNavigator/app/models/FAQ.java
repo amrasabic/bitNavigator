@@ -55,8 +55,8 @@ public class FAQ extends Model {
      * This method is used to find faq by question
      * @return faq by name
      */
-    public static FAQ getFAQByQuestion(String question){
-        FAQ faq = FAQ.finder.where().eq("question", question).findUnique();
+    public static List<FAQ> getFAQByQuestion(String question){
+        List<FAQ> faq = FAQ.finder.where().contains("question", question).findList();
         return faq;
     }
 

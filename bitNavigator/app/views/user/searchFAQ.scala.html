@@ -1,0 +1,37 @@
+@import helper._
+@import java.util
+@(faqs: List[FAQ])
+@main("search FAQs"){
+    <div><br>
+    @helper.form(action = routes.FAQController.searchFAQs(), 'method -> "GET", 'class -> "form-horizontal dont-validate", 'role -> "form-dont-validate") {
+        <input id="searchFAQ" name="searchFAQ"  placeholder="Search for FAQ..." required/>
+        <input  type="image" src='@routes.Assets.versioned("images/search.png")' style="position:relative; top: 10px; height: 29px">
+    }
+    </div>
+    <h3><i>Search results:</i></h3><br>
+    @if(faqs.isEmpty()){
+        <div class="section group">
+            <img src='@routes.Assets.versioned("images/result.jpg")'>
+            }else{
+        <div class="panel-group" id="accordion">
+        @for(faq <- faqs){
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title" style="font-size: 20px; font-family: sans-serif">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse@faq.id">
+                        @faq.question</a>
+                    </h4>
+                </div>
+                <div id="collapse@faq.id" class="panel-collapse collapse">
+                    <div class="panel-body" style="font-size: 15px; font-style: italic;">@faq.answer</div>
+                </div>
+            </div>
+            <hr>
+            }
+        </div>
+
+        }
+    </div>
+
+}

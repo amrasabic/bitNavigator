@@ -93,4 +93,5 @@ POST          /faq/save                                     @controllers.FAQCont
 POST          /faq/edit/:id                                 @controllers.FAQController.updateFAQ(id:Integer)
 POST          /faq/validateForm                             @controllers.FAQController.validateFormFAQ()
 GET           /faq                                          @controllers.FAQController.adminFAQs()
+GET           /faq/result              			            @controllers.FAQController.searchFAQs()
 
