@@ -1,9 +1,6 @@
 package controllers;
 
-import models.Image;
-import models.Place;
-import models.User;
-import models.WorkingHours;
+import models.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -11,8 +8,11 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import utillities.PasswordHash;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -21,7 +21,6 @@ import java.util.List;
 public class RestController extends Controller {
 
     public Result getListOfPLaces() {
-
         List<PlaceJSON> places = new ArrayList<>();
         for (Place place : Place.findAll()) {
             places.add(new PlaceJSON(place));
@@ -62,20 +61,76 @@ public class RestController extends Controller {
         public HoursJSON(WorkingHours hour) {
             this.id = hour.id;
             this.place_id = hour.place.id;
-            this.open1 = hour.open1;
-            this.close1 = hour.close1;
-            this.open2 = hour.open2;
-            this.close2 = hour.close2;
-            this.open3 = hour.open3;
-            this.close3 = hour.close3;
-            this.open4 = hour.open4;
-            this.close4 = hour.close4;
-            this.open5 = hour.open5;
-            this.close5 = hour.close5;
-            this.open6 = hour.open6;
-            this.close6 = hour.close6;
-            this.open7 = hour.open7;
-            this.close7 = hour.close7;
+            if(hour.open1 == null){
+                this.open1 = -1;
+            }else {
+                this.open1 = hour.open1;
+            }
+            if(hour.close1 == null){
+                this.close1 = -1;
+            }else{
+                this.close1 = hour.close1;
+            }
+            if(hour.open2 == null){
+                this.open2 = -1;
+            }else {
+                this.open2 = hour.open2;
+            }
+            if(hour.close2 == null){
+                this.close2 = -1;
+            }else{
+                this.close2 = hour.close2;
+            }
+            if(hour.open3 == null){
+                this.open3 = -1;
+            }else {
+                this.open3 = hour.open3;
+            }
+            if(hour.close3 == null){
+                this.close3 = -1;
+            }else{
+                this.close3 = hour.close3;
+            }
+            if(hour.open4 == null){
+                this.open4 = -1;
+            }else {
+                this.open4 = hour.open4;
+            }
+            if(hour.close4 == null){
+                this.close4 = -1;
+            }else{
+                this.close4 = hour.close4;
+            }
+            if(hour.open5 == null){
+                this.open5 = -1;
+            }else {
+                this.open5 = hour.open5;
+            }
+            if(hour.close5 == null){
+                this.close5 = -1;
+            }else{
+                this.close5 = hour.close5;
+            }
+            if(hour.open6 == null){
+                this.open6 = -1;
+            }else {
+                this.open6 = hour.open6;
+            }
+            if(hour.close6 == null){
+                this.close6 = -1;
+            }else{
+                this.close6 = hour.close6;
+            }
+            if(hour.open7 == null){
+                this.open7 = -1;
+            }else {
+                this.open7 = hour.open7;
+            }
+            if(hour.close7 == null){
+                this.close7 = -1;
+            }else{
+                this.close7 = hour.close7;
+            }
         }
     }
 
@@ -130,6 +185,53 @@ public class RestController extends Controller {
         }else{
             return badRequest();
         }
+    }
+
+    public Result reservationSubmit(){
+        DynamicForm form = Form.form().bindFromRequest();
+        String placeId = form.data().get("place_id");
+        String userEmail = form.data().get("user_email");
+        String day = form.data().get("day");
+        String time = form.data().get("time");
+        String message = form.data().get("message");
+
+        SimpleDateFormat myDate = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        Calendar date = new GregorianCalendar();
+        try {
+            date.setTime(myDate.parse(day + " " + time));
+        } catch (ParseException e) {
+            return badRequest("qwe");
+        }
+
+        Place p = Place.findById(Integer.parseInt(placeId));
+        User u = User.findByEmail(userEmail);
+        Reservation r = new Reservation();
+        r.place = p;
+        r.user = u;
+
+        Message m = new Message();
+        m.sender = u;
+        if (u.equals(r.place.user)) {
+            m.reciever = r.user;
+        } else {
+            m.reciever = r.place.user;
+        }
+
+        m.content = message;
+        r.timestamp = Calendar.getInstance();
+        r.reservationDate = date;
+        r.messages.add(m);
+        r.status = models.Status.findById(models.Status.WAITING);
+        r.save();
+        m.sent = Calendar.getInstance();
+        m.reservation.id = r.id;
+        m.save();
+        if (p.numOfReservations == null) {
+            p.numOfReservations = 0;
+        }
+        p.numOfReservations++;
+        p.update();
+        return ok();
     }
 
     private class UserJSON{
