@@ -20,13 +20,14 @@
         </div>
         <div id="comment-heading" class="panel-heading">
             <h3 class="panel-title">Comment</h3>
+            <div class="panel-body">
+                <textarea class="form-control new-comment" rows="3" name="commentContent" id="commentContent" type="text">@comment.commentContent</textarea>
+                <div class="alert alert-danger" data-error-for="commentContent" role="alert" hidden></div>
+            </div>
+            <input id="comment-rate" value="@comment.rate" name="rate" type="hidden">
+            <button class="btn btn-primary" id="btn-post-comment">Post</button>
         </div>
-        <div class="panel-body">
-            <textarea class="form-control new-comment" rows="3" name="commentContent" id="commentContent" type="text">@comment.commentContent</textarea>
-            <div class="alert alert-danger" data-error-for="commentContent" role="alert" hidden></div>
-        </div>
-        <input id="comment-rate" value="@comment.rate" name="rate" type="hidden">
-        <button class="btn btn-primary" id="btn-post-comment">Post</button>
+
     </form>
 </div>
 

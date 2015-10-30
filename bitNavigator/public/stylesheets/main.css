@@ -137,6 +137,10 @@ body {
     /*border-radius: 10px;*/
     border: 1px #2b669a solid;
     text-align: center;
+    align-content: center;
+    align-items: center;
+    alignment: center;
+    align-self: center;
 }
 
 #comment-content {
@@ -786,11 +790,16 @@ textarea {
     to { transform: rotateY(360deg) }
 }
 
-<<<<<<< HEAD
 .glyph-phone {
     margin-left: 30px;
-=======
+}
+
+.glyph-phone {
+    margin-left: 30px;
+}
+
 #wrapper-map { position: relative; }
+
 #over_map { position: absolute; top: 10px; left: 10px; z-index: 99; }
 
 .col-md-3 {
@@ -834,5 +843,23 @@ textarea {
     padding: 0 8px;
     border-radius: 4px;
     cursor: pointer;
->>>>>>> 5f2a3d20df50eebafb7be4376618919f159a5ad9
+}
+
+#thumbnail {
+    width: 280px;
+    height: 330px;
+}
+
+#thumbnail-container {
+    align-content: center;
+    align-items: center;
+    padding-left: 9%;
+}
+
+.list-group {
+    min-width: 305px;
+}
+
+.btn-group-vertical{
+    width: auto;
 }

@@ -16,6 +16,7 @@ POST          /user/signup                                  @controllers.UserCon
 GET           /user/signout                                 @controllers.UserController.signOut()
 GET           /user/list                                    @controllers.UserController.userList()
 POST          /user/validate                                @controllers.UserController.validateForm()
+POST          /user/validate/newPassword                    @controllers.UserController.validateSetNewPasswordForm()
 GET           /validate/:token                              @controllers.UserController.emailValidation(token: String)
 GET           /forgot_password/:token                       @controllers.UserController.setNewPasswordView(token: String)
 GET           /forgot_password/set/                         @controllers.UserController.setNewPassword()
@@ -82,8 +83,6 @@ POST          /paypal/:id                                   @controllers.Applica
 GET           /paypal/success                               @controllers.Application.paypalSuccess()
 GET           /paypal/pdf:id                                @controllers.Application.payPdf(id: Integer)
 
-GET           /api/place/list                               @controllers.RestController.getListOfPLaces()
-
 GET           /showfaq                                      @controllers.Application.showFaq()
 GET           /faq/new                                      @controllers.FAQController.newFAQ()
 GET           /faq/edit/:id                                 @controllers.FAQController.editFAQ(id:Integer)
@@ -92,4 +91,13 @@ POST          /faq/save                                     @controllers.FAQCont
 POST          /faq/edit/:id                                 @controllers.FAQController.updateFAQ(id:Integer)
 POST          /faq/validateForm                             @controllers.FAQController.validateFormFAQ()
 GET           /faq                                          @controllers.FAQController.adminFAQs()
+GET           /faq/result              			            @controllers.FAQController.searchFAQs()
+
+#Android routes
+
+GET           /api/place/list                               @controllers.RestController.getListOfPLaces()
+POST          /api/user/signin                              @controllers.RestController.checkUser()
+POST          /api/user/signup                              @controllers.RestController.checkRegistration()
+GET           /api/hours/list                               @controllers.RestController.getListOfHours()
+POST          /api/reservation/submit                       @controllers.RestController.reservationSubmit()
 
