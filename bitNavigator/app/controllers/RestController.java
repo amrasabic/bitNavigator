@@ -1,17 +1,19 @@
 package controllers;
 
-import models.Place;
-import models.User;
-import models.WorkingHours;
+import models.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utillities.PasswordHash;
+import utillities.SessionHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -184,6 +186,53 @@ public class RestController extends Controller {
         }else{
             return badRequest();
         }
+    }
+
+    public Result reservationSubmit(){
+        DynamicForm form = Form.form().bindFromRequest();
+        String placeId = form.data().get("place_id");
+        String userEmail = form.data().get("user_email");
+        String day = form.data().get("day");
+        String time = form.data().get("time");
+        String message = form.data().get("message");
+
+        SimpleDateFormat myDate = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        Calendar date = new GregorianCalendar();
+        try {
+            date.setTime(myDate.parse(day + " " + time));
+        } catch (ParseException e) {
+            return badRequest("qwe");
+        }
+
+        Place p = Place.findById(Integer.parseInt(placeId));
+        User u = User.findByEmail(userEmail);
+        Reservation r = new Reservation();
+        r.place = p;
+        r.user = u;
+
+        Message m = new Message();
+        m.sender = u;
+        if (u.equals(r.place.user)) {
+            m.reciever = r.user;
+        } else {
+            m.reciever = r.place.user;
+        }
+
+        m.content = message;
+        r.timestamp = Calendar.getInstance();
+        r.reservationDate = date;
+        r.messages.add(m);
+        r.status = models.Status.findById(models.Status.WAITING);
+        r.save();
+        m.sent = Calendar.getInstance();
+        m.reservation.id = r.id;
+        m.save();
+        if (p.numOfReservations == null) {
+            p.numOfReservations = 0;
+        }
+        p.numOfReservations++;
+        p.update();
+        return ok();
     }
 
     private class UserJSON{

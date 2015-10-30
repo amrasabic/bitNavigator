@@ -97,4 +97,5 @@ GET           /api/place/list                               @controllers.RestCon
 POST          /api/user/signin                              @controllers.RestController.checkUser()
 POST          /api/user/signup                              @controllers.RestController.checkRegistration()
 GET           /api/hours/list                               @controllers.RestController.getListOfHours()
+POST          /api/reservation/submit                       @controllers.RestController.reservationSubmit()
 
