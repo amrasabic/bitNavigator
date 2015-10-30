@@ -5,8 +5,16 @@
   <div class="jumbotron" style="background-color: white; width:80%;margin-left:10%;max-width: 1200px;margin-left:auto; margin-right:auto;">
     <div class="container">
       <div class="page-header ">
-        <h3 class="naslov" style="color : #0a68b4">FAQ <br><small>You have questions, we have answers.</small></h3>
+
+
+        @helper.form(action = routes.FAQController.searchFAQs(), 'method -> "GET", 'class -> "form-horizontal dont-validate", 'role -> "form-dont-validate") {
+          <input id="searchFAQ" name="searchFAQ"  placeholder="Looking for FAQ..." required/>
+          <input  type="image" src='@routes.Assets.versioned("images/search.png")' style="position:relative; top: 10px; height: 29px">
+          }
+
+        <h2 class="naslov" style="color : #0a68b4">FAQ <br><small>You have questions, we have answers.</small></h2>
       </div>
+    </div>
     <div class="panel-group" id="accordion">
     @for(faq <- faqs){
 
@@ -22,8 +30,8 @@
         </div>
       </div>
       <hr>
-    }
+      }
     </div>
   </div>
-  </div>
+
 }
