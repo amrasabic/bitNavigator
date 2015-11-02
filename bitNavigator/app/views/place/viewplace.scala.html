@@ -14,6 +14,8 @@
                     @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email && place.service.isReservable()) {
                         @if(SessionHelper.hasValidatedPhoneNumber()){
                             <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
+                        } else {
+                            <div id="reservation-warning" class="alert alert-warning" role="alert">Must have validated phone number to be able to reserve!</div>
                         }
                     }
                 </div>
@@ -104,7 +106,7 @@
     </div>
 
     <div id="gallery-panel" class="container-fluid">
-    @views.html.helpers._picturegallery(images)
+        @views.html.helpers._picturegallery(images)
     </div>
 
 <div class="comments-container" id="accordion">
@@ -148,7 +150,7 @@
     <div id="similarPlaces" class="container-fluid">
         <h5>Suggested places</h5>
         <br>
-        @views.html.place.similarplacelist(Place.findByService(place.service, place.id))
+            @views.html.place.similarplacelist(Place.findByService(place.service, place.id))(false)
     </div>
 
     <!-- Modal -->
