@@ -109,11 +109,11 @@
 
 <div class="comments-container" id="accordion">
     <div id="comments-panel" class="container-fluid">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <a class="collapsed-com" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
         <h5 class="header-comment"><i class="fa fa-comments-o"></i> Comments</h5>
         </a>
         <br>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
         <div class="comments-content">
             @for(comment <- comments) {
                     <!-- Checks if user already posted a comment -->
@@ -171,10 +171,8 @@
     </div>
 
     <script>
-    $(document).ready(function() {
-        $(".accordion").accordion();
-    });
-    $('.collapsed').click(function () {
+
+    $('.collapsed-com').click(function () {
         $("i", this).toggleClass("fa fa-arrow-circle-o-down fa fa-arrow-circle-o-up");
     })
 
