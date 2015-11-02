@@ -44,11 +44,11 @@ public class RestController extends Controller {
         DynamicForm form = Form.form().bindFromRequest();
         String user_email = form.data().get("user_email");
         User u = User.findByEmail(user_email);
+        System.out.println("email asdasdas " + u.email + "id " + u.id);
         List<ReservationJSON> reservations = new ArrayList<>();
         for (Reservation r : Reservation.findByUser(u)) {
             reservations.add(new ReservationJSON(r));
         }
-
         return ok(Json.toJson(reservations));
     }
 
@@ -338,7 +338,7 @@ public class RestController extends Controller {
             this.id = r.id;
             this.place_title = r.place.title;
             this.status = r.status.status;
-            this.date = r.reservationDate.toString();
+            this.date = r.reservationDate.getTime().toString();
         }
     }
 
