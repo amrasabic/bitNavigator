@@ -100,5 +100,5 @@ POST          /api/user/signin                              @controllers.RestCon
 POST          /api/user/signup                              @controllers.RestController.checkRegistration()
 GET           /api/hours/list                               @controllers.RestController.getListOfHours()
 POST          /api/reservation/submit                       @controllers.RestController.reservationSubmit()
-POST           /api/reservation/list                         @controllers.RestController.getListOfReservations()
+POST          /api/reservation/list                         @controllers.RestController.getListOfReservations()
 

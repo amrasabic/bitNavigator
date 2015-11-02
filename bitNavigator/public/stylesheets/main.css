@@ -811,8 +811,8 @@ textarea {
     width: 300px;
 }
 
+
 .mini-submenu{
-    display:none;
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.9);
     border-radius: 4px;
@@ -858,6 +858,7 @@ textarea {
 
 .list-group {
     min-width: 305px;
+    display: none;
 }
 
 .btn-group-vertical{
