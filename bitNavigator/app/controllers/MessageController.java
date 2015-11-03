@@ -70,6 +70,7 @@ public class MessageController extends Controller {
     public Result inbox(int type){
         switch (type) {
             case ALL:
+                Logger.debug("'0'0'0:" + Reservation.getAllReservationsOnUsersPlaces().size());
                 return ok(_inbox.render(Reservation.getAllReservationsOnUsersPlaces()));
             case APPROVED:
                 return ok(_inbox.render(Reservation.getAllReservationsOnUsersPlaces(models.Status.findById(models.Status.APPROVED))));

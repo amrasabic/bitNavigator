@@ -856,7 +856,7 @@ textarea {
     padding-left: 9%;
 }
 
-.list-group {
+.list-group-nearby {
     min-width: 305px;
     display: none;
 }

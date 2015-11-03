@@ -1,9 +1,7 @@
-@import utillities.SessionHelper
 @(reservations: java.util.List[Reservation])
 
 @views.html.messages.messageview {
-
-    @for(reservation <- reservations) {
+    @for(reservation <- reservations){
         <a href="@routes.MessageController.messagesList(reservation.id)" class="list-group-item">
             <div class="checkbox">
                 <label>
