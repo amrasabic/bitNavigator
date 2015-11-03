@@ -33,7 +33,7 @@
                         <td>@user.lastName</td>
                         <td>@user.email</td>
                         <td>@if(user.email != session.get("email")) {
-                            <a href="@routes.PhoneNumberController" role="button" data-role="delete" data-delete-parent="tr"
+                            <a href="@routes.UserController.delete(user.email)" role="button" data-role="delete" data-delete-parent="tr"
                             "><i class="glyphicon glyphicon-trash"></i> </a>
                         }</td>
                     </tr>
@@ -43,7 +43,6 @@
         </div>
     </div>
 
-    <script src="@routes.Assets.versioned("javascripts/jquery-2.1.4.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/deleteConfirm.js")"></script>
     <script>
         $(document).ready(function(){
