@@ -864,3 +864,9 @@ textarea {
 .btn-group-vertical{
     width: auto;
 }
+
+#reservation-warning {
+    margin: 0px;
+    background-color: white;
+    color: #ff9800;
+}

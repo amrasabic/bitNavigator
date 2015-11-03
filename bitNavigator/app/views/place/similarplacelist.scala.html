@@ -1,4 +1,4 @@
-@(places: java.util.List[Place])
+@(places: java.util.List[Place])(editPlace: Boolean)
 
 <script>
   $(document).ready(function () {
@@ -16,8 +16,13 @@
                         <img src="http://placehold.it/320x150" alt="">
                     }
                     <div class="caption">
-                        <h4><a href="@routes.PlaceController.viewPlace(place.id)">@place.title</a>
-                        </h4>
+                        @if(editPlace){
+                            <h4><a href="@routes.PlaceController.editPlace(place.id)">@place.title</a>
+                            </h4>
+                        }else{
+                            <h4><a href="@routes.PlaceController.viewPlace(place.id)">@place.title</a>
+                            </h4>
+                        }
                         <p>@place.address </p>
                     </div>
                     <div class="ratings">

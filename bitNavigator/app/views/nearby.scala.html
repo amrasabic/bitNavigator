@@ -53,7 +53,7 @@
                 var index = 0;
                 var counter = 0;
                 @for(place <- places){
-    @if(place.latitude != null || place.longitude != null){
+                    @if(place.latitude != null || place.longitude != null){
                         latlng = new google.maps.LatLng(@place.latitude, @place.longitude);
                         if (navigator.geolocation) {
                             navigator.geolocation.getCurrentPosition(function(position) {
@@ -80,12 +80,11 @@
                         document.getElementById('distance-nearby-places-@place.id').innerText = "n/a";
                         counter++;
                     }
-}
+                }
             }
             calculateDistances();
             //setTimeout(drawTable, 2000);
         });
     </script>
-<script type="text/javascript"
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7g-OtZDAo36PRHRxeDaaBUbTeC1AXnBs&libraries=geometry">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7g-OtZDAo36PRHRxeDaaBUbTeC1AXnBs&libraries=geometry">
 </script>

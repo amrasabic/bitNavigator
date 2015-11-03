@@ -207,6 +207,13 @@
     </div>
 
 
+    <div id="similarPlaces" class="container-fluid">
+        <h5>Edit your places</h5>
+        <br>
+        @views.html.place.similarplacelist(Place.findByUser(SessionHelper.getCurrentUser()))(true)
+    </div>
+
+
 
     <script>
 
