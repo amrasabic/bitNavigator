@@ -41,6 +41,10 @@ public class Reservation extends Model {
         return finder.byId(id);
     }
 
+     public static List<Reservation> findByPlaceOwner(User user) {
+        return finder.where().eq("place.user", user).findList();
+     }
+
     public static Reservation findByPaymentId(String id){
         return finder.where().eq("paymentId",id).findUnique();
     }
@@ -85,6 +89,14 @@ public class Reservation extends Model {
     public static List<Reservation> getAllReservationsOnUsersPlaces() {
         ArrayList<Reservation> reservations = new ArrayList<>();
         for (Place place : Place.findByUser(SessionHelper.getCurrentUser())) {
+            reservations.addAll(Reservation.findByPlace(place));
+        }
+        return reservations;
+    }
+
+    public static List<Reservation> getAllReservationsOnUsersPlaces1(User u) {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for (Place place : Place.findByUser(u)) {
             reservations.addAll(Reservation.findByPlace(place));
         }
         return reservations;
