@@ -172,6 +172,9 @@ public class User extends Model {
         for (Message message : Message.findBySenderAndReciever(this)) {
             message.delete();
         }
+        for (PhoneNumber phoneNumber : PhoneNumber.findByUser(this)) {
+            phoneNumber.delete();
+        }
         super.delete();
     }
 
