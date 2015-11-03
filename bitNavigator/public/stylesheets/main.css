@@ -479,7 +479,7 @@ textarea {
 
 .footer-distributed h3{
     color:  white;
-    font: normal 36px 'Cookie', cursive;
+    font-style: inherit;
     margin: 0;
 }
 

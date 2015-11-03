@@ -2,6 +2,8 @@
 
 @main("All FAQs") {
 
+    <h2 style="color : #0a68b4" class="naslov">Frequently asked questions (FAQ)</h2>
+    <div calss="row">
     <div class="btn-group-vertical col-md-3">
         <a href="/user/list" class="btn btn-default">All users</a>
         <a href="/place/list" class="btn btn-default">All places</a>
@@ -13,10 +15,9 @@
 
     </div>
 
-    <h3 style="color : #0a68b4">Frequently asked questions (FAQ)</h3>
 
-    <br><br>
 
+        <div class="col-md-10">
     <div class="panel-group" id="accordion">
     @for(faq <-faqs){
 
@@ -39,6 +40,8 @@
         </div>
     }
     </div>
+            </div>
+        </div>
 
 
     <script>
