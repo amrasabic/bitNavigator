@@ -2,7 +2,7 @@
 
 @main("Service list") {
 
-    <h2>All services</h2>
+    <h2 style="color : #0a68b4" class="naslov">All services</h2>
     <div calss="row">
         <div class="btn-group-vertical col-md-3">
             <a href="/user/list" class="btn btn-default">All users</a>
@@ -19,8 +19,10 @@
         <a href="@routes.ServiceController.addService()" calss="btn btn-primary">
             <i class="glyphicon glyphicon-plus"></i>Add service
         </a>
+
+        <br><br>
             <!-- Table with services details -->
-        <div class="col-md-9">
+        <div class="col-md-10">
             <table id="myTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>

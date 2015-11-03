@@ -2,6 +2,8 @@
 @import helper._
 @main("Add service") {
 
+    <h2 style="color : #0a68b4" class="naslov">Add service</h2>
+
     <div class="row">
         <div class="btn-group-vertical col-md-3">
             <a href="/user/list" class="btn btn-default">All users</a>
@@ -13,7 +15,7 @@
             <a href="/faq" class="btn btn-default">FAQ</a>
 
         </div>
-    <div class="col-md-7" style="margin-top: 50px;">
+    <div class="col-md-9" style="margin-top: 50px;">
         <! -- Adding service form -- >
         <form method="post" action="@routes.ServiceController.save()"  enctype="multipart/form-data" >
             <! -- Adding service type -->
