@@ -14,6 +14,8 @@
                     @if(SessionHelper.isAuthenticated && SessionHelper.getCurrentUsersEmail != place.user.email && place.service.isReservable()) {
                         @if(SessionHelper.hasValidatedPhoneNumber()){
                             <a data-toggle="modal" data-target="#myModal" class="btn btn-default">Create reservation</a>
+                        } else {
+                            <div id="reservation-warning" class="alert alert-warning" role="alert">Must have validated phone number to be able to reserve!</div>
                         }
                     }
                 </div>
@@ -104,16 +106,16 @@
     </div>
 
     <div id="gallery-panel" class="container-fluid">
-    @views.html.helpers._picturegallery(images)
+        @views.html.helpers._picturegallery(images)
     </div>
 
 <div class="comments-container" id="accordion">
     <div id="comments-panel" class="container-fluid">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <a class="collapsed-com" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
         <h5 class="header-comment"><i class="fa fa-comments-o"></i> Comments</h5>
         </a>
         <br>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
         <div class="comments-content">
             @for(comment <- comments) {
                     <!-- Checks if user already posted a comment -->
@@ -148,7 +150,7 @@
     <div id="similarPlaces" class="container-fluid">
         <h5>Suggested places</h5>
         <br>
-        @views.html.place.similarplacelist(Place.findByService(place.service, place.id))
+            @views.html.place.similarplacelist(Place.findByService(place.service, place.id))(false)
     </div>
 
     <!-- Modal -->
@@ -171,10 +173,8 @@
     </div>
 
     <script>
-    $(document).ready(function() {
-        $(".accordion").accordion();
-    });
-    $('.collapsed').click(function () {
+
+    $('.collapsed-com').click(function () {
         $("i", this).toggleClass("fa fa-arrow-circle-o-down fa fa-arrow-circle-o-up");
     })
 

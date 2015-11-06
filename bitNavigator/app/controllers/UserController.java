@@ -179,7 +179,7 @@ public class UserController extends Controller {
 
         User u = User.newUser(singUp);
         u.setToken(UUID.randomUUID().toString());
-        u.update();
+        u.save();
 
         // Sending Email To user
         String host = url + "validate/" + u.getToken();

@@ -32,12 +32,12 @@
 <p><br/></p>
 @if(place.description != "") {
     <!-- Description -->
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <i class="fa fa-arrow-circle-o-down"></i>
+                    <a class="collapsed-desc" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="desc-down fa fa-arrow-circle-o-down"></i>
                         Description
                     </a>
                 </h4>
@@ -112,11 +112,9 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-        $(".accordion").accordion();
-    });
-    $('.collapsed').click(function () {
-        $("i", this).toggleClass("fa fa-arrow-circle-o-down fa fa-arrow-circle-o-up");
+
+    $('.collapsed-desc').click(function () {
+        $("i", this).toggleClass("desc-down fa fa-arrow-circle-o-up");
     })
 
 </script>

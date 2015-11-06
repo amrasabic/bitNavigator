@@ -4,8 +4,8 @@
         <div class="mini-submenu">
             <i class="fa fa-map-marker" style="font-size: x-large; padding-left: 5px; color: #2b669a"></i>
         </div>
-        <div class="list-group">
-            <span href="#" class="list-group-item active" style="font-family: 'DejaVu Sans Mono', monospace; font-size: 15px; background-color: #2b669a">
+        <div class="list-group-nearby list-group">
+            <span href="#" class="list-group-item active" id="slide_table" style="font-family: 'DejaVu Sans Mono', monospace; font-size: 15px; background-color: #2b669a">
                 Places near you
                 <span class="pull-right" id="slide-submenu">
                     <i class="fa fa-times"></i>
@@ -53,7 +53,7 @@
                 var index = 0;
                 var counter = 0;
                 @for(place <- places){
-    @if(place.latitude != null || place.longitude != null){
+                    @if(place.latitude != null || place.longitude != null){
                         latlng = new google.maps.LatLng(@place.latitude, @place.longitude);
                         if (navigator.geolocation) {
                             navigator.geolocation.getCurrentPosition(function(position) {
@@ -80,12 +80,11 @@
                         document.getElementById('distance-nearby-places-@place.id').innerText = "n/a";
                         counter++;
                     }
-}
+                }
             }
             calculateDistances();
             //setTimeout(drawTable, 2000);
         });
     </script>
-<script type="text/javascript"
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7g-OtZDAo36PRHRxeDaaBUbTeC1AXnBs&libraries=geometry">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7g-OtZDAo36PRHRxeDaaBUbTeC1AXnBs&libraries=geometry">
 </script>

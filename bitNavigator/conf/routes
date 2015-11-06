@@ -91,7 +91,7 @@ POST          /faq/save                                     @controllers.FAQCont
 POST          /faq/edit/:id                                 @controllers.FAQController.updateFAQ(id:Integer)
 POST          /faq/validateForm                             @controllers.FAQController.validateFormFAQ()
 GET           /faq                                          @controllers.FAQController.adminFAQs()
-GET           /faq/result              			            @controllers.FAQController.searchFAQs()
+GET           /faq/result                                   @controllers.FAQController.searchFAQs()
 
 #Android routes
 
@@ -100,4 +100,6 @@ POST          /api/user/signin                              @controllers.RestCon
 POST          /api/user/signup                              @controllers.RestController.checkRegistration()
 GET           /api/hours/list                               @controllers.RestController.getListOfHours()
 POST          /api/reservation/submit                       @controllers.RestController.reservationSubmit()
+POST          /api/reservation/list                         @controllers.RestController.getListOfReservations()
+POST          /api/reservation/places/list                  @controllers.RestController.getListOfReservationsOnMyPlaces()
 

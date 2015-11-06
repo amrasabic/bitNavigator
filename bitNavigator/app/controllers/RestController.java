@@ -40,6 +40,28 @@ public class RestController extends Controller {
         return ok(Json.toJson(hours));
     }
 
+    public Result getListOfReservations() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String user_email = form.data().get("user_email");
+        User u = User.findByEmail(user_email);
+        List<ReservationJSON> reservations = new ArrayList<>();
+        for (Reservation r : Reservation.getAllReservationsOnUsersPlaces1(u)) {
+            reservations.add(new ReservationJSON(r));
+        }
+        return ok(Json.toJson(reservations));
+    }
+
+    public Result getListOfReservationsOnMyPlaces() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String user_email = form.data().get("user_email");
+        User u = User.findByEmail(user_email);
+        List<ReservationJSON> reservations = new ArrayList<>();
+        for (Reservation r : Reservation.findByUser(u)) {
+            reservations.add(new ReservationJSON(r));
+        }
+        return ok(Json.toJson(reservations));
+    }
+
 
     private class HoursJSON {
         public Integer id;
@@ -174,6 +196,9 @@ public class RestController extends Controller {
         try {
             pass = PasswordHash.createHash(password);
         }catch (Exception e){}
+        if(User.findByEmail(email) == null){
+            return badRequest();
+        }
         User user = new User();
         user.email = email;
         user.firstName = name;
@@ -236,6 +261,8 @@ public class RestController extends Controller {
         return ok();
     }
 
+
+
     private class UserJSON{
         public Integer id;
         public String firstName;
@@ -275,6 +302,8 @@ public class RestController extends Controller {
         public String image;
         //public User user;
         public Integer user_id;
+        public Boolean isReservable;
+        public Double rating;
         //public Service service;
 
         public PlaceJSON(Place place) {
@@ -288,6 +317,8 @@ public class RestController extends Controller {
             this.numOfViews = place.numOfViews;
             this.numOfReservations = place.numOfReservations;
             this.service = place.service.serviceType;
+            this.rating = place.getRating();
+            this.isReservable = place.service.isReservable;
             if (Image.findByPlace(place).size() >= 1) {
                 this.image = Image.findByPlace(place).get(0).public_id;
             } else {
@@ -296,7 +327,30 @@ public class RestController extends Controller {
             this.user_id = place.user.id;
             //this.service = place.service;
             //this.user = place.user;
+            this.isReservable = place.service.isReservable;
+            if(place.getRating() != null){
+                this.rating = place.getRating();
+            }else {
+                this.rating = 0.0;
+            }
         }
     }
+
+    private class ReservationJSON {
+
+        public Integer id;
+        public String place_title;
+        public String status;
+        public String date;
+
+
+        public ReservationJSON(Reservation r) {
+            this.id = r.id;
+            this.place_title = r.place.title;
+            this.status = r.status.status;
+            this.date = r.reservationDate.getTime().toString();
+        }
+    }
+
 
 }
