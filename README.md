@@ -16,7 +16,7 @@ Working with: IntelliJ IDEA 14.1. 4 and JDK 1.8.0_60
 
 Instructions on how to run the application :
 1.  Clone the repository:
-https://github.com/amrasabic/bitNavigator
+https://github.com/ognjencetkovic/bitNavigator
 Using the terminal enter  the folder  with the  project.
 3. When in bitNavigator folder run the command:
 "activator run" - without the quotation marks
