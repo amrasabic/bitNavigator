@@ -94,7 +94,7 @@ public class Reservation extends Model {
         return reservations;
     }
 
-    public static List<Reservation> getAllReservationsOnUsersPlaces1(User u) {
+    public static List<Reservation> getAllReservationsOnUserPlaces(User u) {
         ArrayList<Reservation> reservations = new ArrayList<>();
         for (Place place : Place.findByUser(u)) {
             reservations.addAll(Reservation.findByPlace(place));

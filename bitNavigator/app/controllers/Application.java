@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 public class Application extends Controller {
 
 
-
     public Result showFaq() {
         List<FAQ> faqs = FAQ.findAll();
         return ok(faq.render(faqs));
