@@ -95,11 +95,11 @@ GET           /faq/result                                   @controllers.FAQCont
 
 #Android routes
 
-GET           /api/place/list                               @controllers.RestController.getListOfPLaces()
-POST          /api/user/signin                              @controllers.RestController.checkUser()
-POST          /api/user/signup                              @controllers.RestController.checkRegistration()
-GET           /api/hours/list                               @controllers.RestController.getListOfHours()
-POST          /api/reservation/submit                       @controllers.RestController.reservationSubmit()
-POST          /api/reservation/list                         @controllers.RestController.getListOfReservations()
-POST          /api/reservation/places/list                  @controllers.RestController.getListOfReservationsOnMyPlaces()
+GET           /api/place/list                               @controllers.rest.controllers.PlaceRestController.getListOfPlaces()
+POST          /api/user/signin                              @controllers.rest.controllers.UserRestController.checkUser()
+POST          /api/user/signup                              @controllers.rest.controllers.UserRestController.checkRegistration()
+GET           /api/hours/list                               @controllers.rest.controllers.WorkingHoursController.getListOfHours()
+POST          /api/reservation/submit                       @controllers.rest.controllers.ReservationRestController.reservationSubmit()
+POST          /api/reservation/list                         @controllers.rest.controllers.ReservationRestController.getListOfReservationsOnMyPlaces()
+POST          /api/reservation/places/list                  @controllers.rest.controllers.ReservationRestController.getListOfUserReservations()
 
