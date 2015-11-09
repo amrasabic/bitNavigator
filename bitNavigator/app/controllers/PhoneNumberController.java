@@ -16,6 +16,10 @@ public class PhoneNumberController extends Controller{
 
     private static final Form<PhoneNumber> phoneNumberForm = Form.form(PhoneNumber.class);
 
+    /**
+     * This method adds new phone number to user
+     * @return after adding phone number redirects user to its profile
+     */
     @Security.Authenticated (Authenticators.User.class)
     public Result addPhoneNumber() {
 
@@ -37,6 +41,7 @@ public class PhoneNumberController extends Controller{
         return redirect(routes.UserController.profile(SessionHelper.getCurrentUsersEmail(), "View & edit your BitNavigator profile"));
     }
 
+    //Sends code needed to verify phone number
     @Security.Authenticated (Authenticators.User.class)
     public Result sendToken() {
         DynamicForm form = Form.form().bindFromRequest();
@@ -57,6 +62,10 @@ public class PhoneNumberController extends Controller{
         return ok("Token is sent.");
     }
 
+    /**
+     * Verifies user phone number
+     * @return after verifying phone number redirects user to its profile
+     */
     @Security.Authenticated (Authenticators.User.class)
     public Result validatePhoneNumber() {
         DynamicForm form = Form.form().bindFromRequest();
@@ -79,6 +88,11 @@ public class PhoneNumberController extends Controller{
         return badRequest("Token does not match.");
     }
 
+    /**
+     * Deletes user phone number by id
+     * @param id id of phone number you want to delete
+     * @return deletes phone number
+     */
     @Security.Authenticated (Authenticators.User.class)
     public Result delete(int id){
         PhoneNumber phoneNumber = PhoneNumber.findById(id);
