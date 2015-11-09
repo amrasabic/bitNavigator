@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by ognje on 15-Sep-15.
  */
+//This class represents Report model
 @Entity
 public class Report extends Model {
 
@@ -28,6 +29,11 @@ public class Report extends Model {
 
     }
 
+    /**
+     * Adds report on comment
+     * @param comment comment taht is reported
+     * @param user user that reported comment
+     */
     public static void addReport(Comment comment, User user) {
         Report report = new Report();
         report.comment = comment;
@@ -35,18 +41,35 @@ public class Report extends Model {
         report.save();
     }
 
+    //Finds all reports
     public static List<Report> findAll() {
         return finder.order("comment").findList();
     }
 
+    /**
+     * Finds all reports by comment
+     * @param comment comment on which we want to find reports
+     * @return list of reports
+     */
     public static List<Report> findByComment(Comment comment) {
         return finder.where().eq("comment", comment).findList();
     }
 
+    /**
+     * Finds all reports by user
+     * @param user user that reported comment
+     * @return list of reports by user
+     */
     public static List<Report> findByUser(User user) {
         return finder.where().eq("user", user).findList();
     }
 
+    /**
+     * Checks if comment is reported by user
+     * @param reports list of reports
+     * @param user user we want to check
+     * @return true if user reported and false if not
+     */
     public static boolean isReportedByUser(List<Report> reports, User user) {
         for (Report report : reports) {
             if (report.user.equals(user)) {
@@ -56,6 +79,7 @@ public class Report extends Model {
         return false;
     }
 
+    //Gets all reports
     public static List<ReportHelper> getAllReports() {
         List<Report> reports = findAll();
         Logger.debug(reports.size() + "");
@@ -82,11 +106,13 @@ public class Report extends Model {
         return reportsHelper;
     }
 
+    //toString method for report
     @Override
     public String toString() {
         return comment.toString();
     }
 
+    //inner static class ReportHelper
     public static class ReportHelper {
 
         public Comment comment;
@@ -97,6 +123,7 @@ public class Report extends Model {
             this.reportsCount = reportsCount;
         }
 
+        //toString method for ReportHelper
         @Override
         public String toString() {
             return comment + " (" + reportsCount + ")";
