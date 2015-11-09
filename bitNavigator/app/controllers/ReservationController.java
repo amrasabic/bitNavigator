@@ -24,8 +24,17 @@ import java.util.List;
  */
 public class ReservationController extends Controller {
 
+    //Reservation form
     private static final Form<Reservation> reservationForm = Form.form(Reservation.class);
 
+    /**
+     * Method for submitting reservation. Reservation gets user id and place id.
+     * After submitting reservation place owner gets message and reservation notification.
+     * By default reservation status is waiting.
+     * Place owner can set price of reservation, can approve reservation without paying or deny reservation.
+     * @param id Reservation id
+     * @return  submits reservation, redirects user to index
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result submitReservation(int id) {
         DynamicForm boundForm = Form.form().bindFromRequest();
@@ -33,10 +42,13 @@ public class ReservationController extends Controller {
             return badRequest("dsadas");
         }
 
+        //gets current user from session
         User user = User.findByEmail(session().get("email"));
 
+        //finds place by id
         Place place = Place.findById(id);
 
+        //gets content of reservation
         String content = boundForm.data().get("content");
 
 
@@ -55,6 +67,7 @@ public class ReservationController extends Controller {
         r.place = place;
         r.user = user;
 
+        //Sends notification message to place owner
         Message message = new Message();
         message.sender = SessionHelper.getCurrentUser();
         if (user.equals(r.place.user)) {
@@ -84,11 +97,20 @@ public class ReservationController extends Controller {
         return redirect(routes.Application.index());
     }
 
+    /**
+     * Method for finding all users reservations
+     * @return list of reservation
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result reservationsList() {
         return ok(reservationlist.render(Reservation.findAll(), models.Status.findAll()));
     }
 
+    /**
+     * Method for changing reservations status.
+     * Gets reservations status and updates it.
+     * @return updates reservation, redirects user to reservation list
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result changeStatus() {
         DynamicForm boundForm = Form.form().bindFromRequest();
@@ -104,6 +126,11 @@ public class ReservationController extends Controller {
         return redirect(routes.ReservationController.reservationsList());
     }
 
+    /**
+     * Method for setting reservations price.
+     * After setting price user that made reservation gets message notification with place name and price.
+     * @return sets price, redirects user to reservation list
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result setPrice() {
         DynamicForm boundForm = Form.form().bindFromRequest();
@@ -125,6 +152,7 @@ public class ReservationController extends Controller {
         return redirect(routes.ReservationController.reservationsList());
     }
 
+    //Validate form for reservation, returns errors as Json
     public Result validateForm() {
         //get the form data from the request - do this only once
         Form<Message> binded = Form.form(Message.class).bindFromRequest();
@@ -148,6 +176,12 @@ public class ReservationController extends Controller {
 
     }
 
+    /**
+     * Method for deleting reservation.
+     * Finds reservation by id and then delete it
+     * @param id Reservation id
+     * @return deletes reservation, redirects user to reservation list
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result delete(Integer id) {
         Reservation reservation = Reservation.findById(id);
@@ -161,6 +195,10 @@ public class ReservationController extends Controller {
         return redirect(routes.ReservationController.reservationsList());
     }
 
+    /**
+     * Method for getting working hours of place.
+     * @return
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result getWorkingHours() {
         DynamicForm form = Form.form().bindFromRequest();
@@ -182,21 +220,10 @@ public class ReservationController extends Controller {
         return ok(response);
     }
 
-    public Result updateReservation(Integer id) {
-
-        Form<Reservation> boundForm = reservationForm.bindFromRequest();
-
-        Reservation reservation = Reservation.findById(id);
-
-//        reservation.title = boundForm.bindFromRequest().field("rtitle").value();
-//        reservation.description = boundForm.bindFromRequest().field("rdescription").value();
-
-//        Logger.info(reservation.description);
-//        Logger.info(reservation.title);
-        reservation.update();
-        return redirect(routes.ReservationController.reservationsList());
-    }
-
+    /**
+     * Checks if user reservation has expired.
+     * User has two days to pay reservation, after two days reservation expires
+     */
     public static void checkReservationExpiration() {
         models.Status status = models.Status.findById(models.Status.WAITING);
         models.Status status1 = models.Status.findById(models.Status.DENIED);
