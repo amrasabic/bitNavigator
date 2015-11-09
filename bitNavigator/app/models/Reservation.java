@@ -7,6 +7,7 @@ import utillities.SessionHelper;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -125,6 +126,34 @@ public class Reservation extends Model {
             reservations.addAll(Reservation.findByPlace(place));
         }
         return reservations;
+    }
+
+    /**
+     * Checks if user reservation has expired.
+     * User has two days to pay reservation, after two days reservation expires
+     */
+    public static void checkReservationExpiration() {
+        models.Status status = models.Status.findById(models.Status.WAITING);
+        models.Status status1 = models.Status.findById(models.Status.DENIED);
+        List<Reservation> reservations = Reservation.finder.where().eq("status", status).findList();
+
+        final Date currentDate = new Date();
+
+        for (Reservation reservation : reservations) {
+            if (reservation.price != null) {
+                Date reservationCheckOutDate = new Date(reservation.timestamp.getTimeInMillis());
+                Long res = currentDate.getTime() - reservationCheckOutDate.getTime();
+                if (res >= 172800000) {
+                    reservation.status = status1;
+                    try {
+                        reservation.update();
+                    } catch (PersistenceException e) {
+                        Logger.info("Could not update reservation.");
+                        Logger.error("Error message " + e.getMessage());
+                    }
+                }
+            }
+        }
     }
 
 }
