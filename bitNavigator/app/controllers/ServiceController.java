@@ -59,7 +59,7 @@ public class ServiceController extends Controller {
     /**
      * This method edit selected Service
      * @param id - id of selected Service
-     * @return
+     * @return renders edit service view
      */
     @Security.Authenticated(Authenticators.Admin.class)
     public Result editService(Integer id){
@@ -74,7 +74,7 @@ public class ServiceController extends Controller {
     /**
      * This method is used to update Service to database
      * @param id - id of selected Service
-     * @return
+     * @return updates service
      */
     @Security.Authenticated(Authenticators.Admin.class)
     public Result updateService(Integer id) {
