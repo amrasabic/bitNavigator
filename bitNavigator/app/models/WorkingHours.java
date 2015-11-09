@@ -18,11 +18,15 @@ import java.util.Map;
 /**
  * Created by ognjen.cetkovic on 30/09/15.
  */
+
+//Working hours model
 @Entity
 public class WorkingHours extends Model {
 
+    //String array. Represents all days in week.
     public static final String[] DAYS_OF_WEEK = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
+    //atributes, has starting and ending time for every day in week
     @Id
     public int id;
     @OneToOne (cascade = CascadeType.PERSIST)
@@ -43,27 +47,24 @@ public class WorkingHours extends Model {
     public Integer close7;
 
 
+    //Finder for working hours
     public static Finder<Integer, WorkingHours> finder = new Finder<>(WorkingHours.class);
 
+    //Finds working hours for all
     public static List<WorkingHours> findAll() {
         return finder.all();
     }
 
+    //Finds working hours by place
     public static WorkingHours findByPlace(Place place) {
         return finder.where().eq("place", place).findUnique();
     }
 
-    public Map<Integer, List<Integer>> getWorkingHours() {
-
-        Map<Integer, List<Integer>> workingHours = new HashMap<>();
-
-        for (int i = 1; i <= 7; i++) {
-            workingHours.put(i, getWorkingHours(i));
-        }
-
-        return workingHours;
-    }
-
+    /**
+     * Gets working hours of place by day
+     * @param day day in week for which we want to get working hours
+     * @return working hours
+     */
     public List<Integer> getWorkingHours(int day) {
         List<Integer> workingHours = new ArrayList<>();
         switch (day){
@@ -100,6 +101,12 @@ public class WorkingHours extends Model {
         }
     }
 
+    /**
+     * Gets opening time of place by day
+     * @param place place for which we want go get opening time
+     * @param day day for which we want to get opening time
+     * @return opening working hour
+     */
     public static Integer getOpeningTime(Place place, int day) {
         List<Integer> workingHours = WorkingHours.findByPlace(place).getWorkingHours(day);
         if (workingHours.get(0) == null) {
@@ -108,6 +115,12 @@ public class WorkingHours extends Model {
         return workingHours.get(0);
     }
 
+    /**
+     * Gets closing time of place by day
+     * @param place place for which we want go get closing time
+     * @param day day for which we want to get closing time
+     * @return closing working hour
+     */
     public static Integer getClosingTime(Place place, int day) {
         List<Integer> workingHours = WorkingHours.findByPlace(place).getWorkingHours(day);
         if (workingHours.get(1) == null) {
@@ -116,6 +129,11 @@ public class WorkingHours extends Model {
         return workingHours.get(1);
     }
 
+    /**
+     * Gets formatted opening time by place.
+     * @param place place for which we want to get formatted opening time
+     * @return formatted working hours
+     */
     public static List<String> getFormatedOpeningTimes(Place place) {
         List<String> workingHours = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
@@ -129,6 +147,11 @@ public class WorkingHours extends Model {
         return workingHours;
     }
 
+    /**
+     * Gets formatted closing time by place.
+     * @param place place for which we want to get formatted closing time
+     * @return formatted working hours
+     */
     public static List<String> getFormatedClosingTimes(Place place) {
         List<String> workingHours = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
@@ -142,6 +165,11 @@ public class WorkingHours extends Model {
         return workingHours;
     }
 
+    /**
+     * Gets working hours as JSON
+     * @param place place for which we want to get working hours
+     * @return String working hours as JSON
+     */
     public static String getWorkingHoursAsJSON(Place place) {
         List<WorkingHoursJSON> workingHours = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
@@ -152,26 +180,28 @@ public class WorkingHours extends Model {
             }
         }
         String s = Json.toJson(workingHours).toString();
-        s = s.replaceAll("\"", "*");
-        Logger.info(s);
         return s;
     }
 
+    //inner class
     public static class WorkingHoursJSON extends Model{
         public boolean isActive;
         public String timeFrom;
         public String timeTill;
 
+        //constructor
         public WorkingHoursJSON() {
             this.isActive = false;
         }
 
+        //constructor
         public WorkingHoursJSON(String from, String to) {
             this.isActive = true;
             this.timeFrom = from;
             this.timeTill = to;
         }
 
+        //toString method
         @Override
         public String toString() {
             return isActive + " - " + timeFrom + " - " + timeTill;
