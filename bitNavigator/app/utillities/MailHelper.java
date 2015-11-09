@@ -12,8 +12,14 @@ import static play.mvc.Controller.flash;
 /**
  * Created by Semir on 5.10.2015.
  */
+//This class represents helper for sending mail
 public class MailHelper {
 
+    /**
+     * This method sends welcome mail to user
+     * @param email email of user
+     * @param message email content
+     */
     public static void send(String email, String message) {
 
         try {
@@ -40,6 +46,11 @@ public class MailHelper {
         }
     }
 
+    /**
+     * This method sends contact us mail to user
+     * @param email email of user
+     * @param message email content
+     */
     public static void sendContactMessage(String name, String email, String message) {
         if (message != null) {
 
@@ -69,6 +80,11 @@ public class MailHelper {
         }
     }
 
+    /**
+     * This method sends mail for forgoten password to user
+     * @param email email of user
+     * @param message email content
+     */
     public static void sendForPassword(String email, String message) {
 
         try {
