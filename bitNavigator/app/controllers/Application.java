@@ -13,6 +13,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utillities.SessionHelper;
+import views.html.aboutus;
 import views.html.index;
 
 import views.html.user.*;
@@ -157,6 +158,10 @@ public class Application extends Controller {
     public  Result payPdf(Integer id){
         Reservation r = Reservation.findById(id);
         return pdfGenerator.ok(paypdf.render(r), "http://localhost:9000");
+    }
+
+    public Result aboutUs() {
+        return ok(aboutus.render());
     }
 
 }

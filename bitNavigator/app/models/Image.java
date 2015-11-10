@@ -17,8 +17,12 @@ import java.util.Map;
 /**
  * Created by Amra on 9/8/2015.
  */
+
+//This class represents image model
 @Entity
 public class Image extends Model {
+
+    //atributes
 
     public static Finder<Integer, Image> finder = new Finder<>(Image.class);
     public static Cloudinary cloudinary;
@@ -41,10 +45,12 @@ public class Image extends Model {
 
     }
 
+    //Finds all images by place
     public static List<Image> findByPlace(Place place) {
         return finder.where().eq("place", place).findList();
     }
 
+    //Creates and saves image
     public static Image create(String public_id, String image_url, String secret_image_url) {
         Image i = new Image();
         i.public_id = public_id;
@@ -54,10 +60,16 @@ public class Image extends Model {
         return i;
     }
 
+    //Finds image by user
     public static Image findByUser(User user) {
         return finder.where().eq("user", user).findUnique();
     }
 
+    /**
+     * Adds image to place and saves it
+     * @param file image file
+     * @param place place on which you are adding image
+     */
     public static void addImage(File file, Place place) {
         Map uploadResult;
         try {
@@ -78,6 +90,11 @@ public class Image extends Model {
         image.save();
     }
 
+    /**
+     * Adds avatar image to current user
+     * @param image image that is uploaded
+     * @return avatar image
+     */
     @Security.Authenticated(Authenticators.User.class)
     public static Image createAvatar(File image) {
         Map uploadResult;
@@ -106,22 +123,25 @@ public class Image extends Model {
         return avatar;
     }
 
+    //Finds image by id
     public static Image findImageById(Integer id){
         return Image.finder.where().eq("id", id).findUnique();
     }
 
+    //Getts list of all images
     public static List<Image> all() {
         return finder.all();
     }
 
+    //Getts size of width and height you want
     public String getSize(int width, int height) {
-        Logger.debug("-------------");
         String url = cloudinary.url().format("jpg")
                 .transformation(new Transformation().width(width).height(height).crop("fill"))
                 .generate(public_id);
         return url;
     }
 
+    //Crops picture to thumbnail size
     public String getThumbnail(){
         String url = cloudinary.url().format("png")
                 .transformation(
@@ -131,6 +151,7 @@ public class Image extends Model {
         return url;
     }
 
+    //Deletes image
     public void deleteImage() {
         try {
             cloudinary.uploader().destroy(public_id, null);

@@ -76,6 +76,7 @@ POST          /checkPass                                    @controllers.UserCon
 
 POST          /contact                                      @controllers.UserController.sendMail()
 GET           /contact                                      @controllers.UserController.contactUs()
+GET           /aboutUs                                      @controllers.Application.aboutUs()
 POST          /resendVerificationMail                       @controllers.UserController.resendVerificationEmail()
 POST          /resendForgotenPassword                       @controllers.UserController.resendForgotenPassword()
 
