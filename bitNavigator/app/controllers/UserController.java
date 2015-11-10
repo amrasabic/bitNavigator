@@ -30,9 +30,6 @@ import java.util.Calendar;
 import java.util.UUID;
 
 
-
-
-
 /**
  * Public class UserHandler extends Controller. Has methods within it that
  * leads random user to other subpages. Paths to subpages are defined in routes.
@@ -124,6 +121,11 @@ public class UserController extends Controller {
         return redirect(routes.Application.index());
     }
 
+    /**
+     * This method validate user input for login to web app
+     *
+     * @return ok() if everything is valid or badrequest with flash message if some of inputs are not valid
+     */
     public Result validateSignIn() {
         Form<User> boundForm = userForm.bindFromRequest();
         if (boundForm.hasErrors()) {
@@ -142,11 +144,8 @@ public class UserController extends Controller {
             String msg = "{\"password\":\"Email and/or password invalid!\"}";
             return badRequest(msg);
         }
-
         if (!user.isValidated()) {
             flash(ERROR_MESSAGE, "Account is not validated!");
-            //String msg = "{\"password\":\"Account is not validated!\"}";
-            //return badRequest(msg);
         }
         return ok();
     }
@@ -201,45 +200,33 @@ public class UserController extends Controller {
 
     @Security.Authenticated(Authenticators.User.class)
     public Result updateUser() {
-
         Form<UserNameForm> boundForm = Form.form(UserNameForm.class).bindFromRequest();
-
         User user = SessionHelper.getCurrentUser();
-
         if (user == null) {
             return notFound(String.format("User does not exist."));
         }
-
         if (!user.email.equals(boundForm.bindFromRequest().field("email").value())) {
             return unauthorized("We good we good");
         }
-
         if (boundForm.hasErrors()) {
             flash("error", "Name can only hold letters!");
             return redirect(routes.UserController.profile(user.email, "Name can only hold letters!"));
         }
-
         user = User.updateUser(boundForm.get());
-
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = body.getFile("image");
-
         if (filePart != null) {
             File file = filePart.getFile();
             Image.createAvatar(file);
         }
-
         user.update();
         return redirect(routes.Application.index());
     }
 
     @Security.Authenticated(Authenticators.User.class)
     public Result changePassword() {
-
         Form<PasswordForm> boundForm = Form.form(PasswordForm.class).bindFromRequest();
-
         User user = SessionHelper.getCurrentUser();
-
         if (user == null) {
             return notFound(String.format("User does not exist."));
         }
@@ -267,10 +254,8 @@ public class UserController extends Controller {
         } catch (InvalidKeySpecException e) {
             e.printStackTrace();
         }
-
         user.update();
         return redirect(routes.UserController.profile(user.email, "Password successfully changed"));
-
     }
 
     public static class PasswordForm {
@@ -293,13 +278,17 @@ public class UserController extends Controller {
         return ok(userlist.render(User.findAll()));
     }
 
+    /**
+     * Method for deleting user with secutity witch allows only admin to delete
+     * @param email user email to delete
+     * @return ok if user is deleted  or notfound if user doesnt exist in database
+     */
     @Security.Authenticated(Authenticators.Admin.class)
     public Result delete(String email) {
         User user = User.findByEmail(email);
         if (user == null) {
             return notFound(String.format("User %s does not exists.", email));
         }
-
         user.delete();
         return redirect(routes.UserController.userList());
     }
@@ -326,21 +315,15 @@ public class UserController extends Controller {
         public String firstName;
         @Constraints.Pattern(value = "[a-zA-Z]+", message = "Last name can only contain alphabetic characters")
         public String lastName;
-        //@Constraints.Pattern(value = "^\\+387[3,6][1-6]\\d{6}", message = "Enter valid number")
-        //public String mobileNumber;
-        //public Image avatar;
 
         public UserNameForm() {
-
         }
 
         public UserNameForm(User u) {
             this.email = u.email;
             this.firstName = u.firstName;
             this.lastName = u.lastName;
-            //this.mobileNumber = u.phoneNumber;
-            //this.avatar = u.avatar;
-        }
+            }
     }
 
     public static class SignUpForm extends UserNameForm {
@@ -380,10 +363,8 @@ public class UserController extends Controller {
      * @return ok if there are no errors or a JSON object representing the errors
      */
     public Result validateUserNameForm() {
-
-
         Form<UserNameForm> binded = userNameForm.bindFromRequest();
-        if(binded.hasErrors()){
+        if (binded.hasErrors()) {
             return badRequest(binded.errorsAsJson());
         } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
@@ -421,21 +402,18 @@ public class UserController extends Controller {
             } else {
                 return redirect("/");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             return redirect("/login");
         }
     }
 
     public Result contactUs() {
-
         return ok(views.html.user.contact.render(new Form<Contact>(Contact.class)));
     }
 
     public Promise<Result> sendMail() {
-
         //Getting recaptcha values
         final DynamicForm temp = DynamicForm.form().bindFromRequest();
-
         Promise<Result> promiseHolder = WS
                 .url("https://www.google.com/recaptcha/api/siteverify")
                 .setContentType("application/x-www-form-urlencoded")
@@ -474,7 +452,6 @@ public class UserController extends Controller {
                         }
                     }
                 });
-
         return promiseHolder;
     }
 
@@ -489,12 +466,14 @@ public class UserController extends Controller {
          * Default constructor that sets everything to NN;
          */
         public Contact() {
-            this.name= "NN";
+            this.name = "NN";
             this.email = "NN";
             this.message = "NN";
         }
+
         /**
          * Constructor with parameters;
+         *
          * @param name
          * @param email
          * @param message
@@ -507,10 +486,10 @@ public class UserController extends Controller {
         }
     }
 
-    public Result resendVerificationEmail(){
+    public Result resendVerificationEmail() {
         Form<resendVerificationMailForm> boundForm = Form.form(resendVerificationMailForm.class).bindFromRequest();
         User u = User.findByEmail(boundForm.bindFromRequest().field("verificationEmail").value());
-        if (u == null){
+        if (u == null) {
             flash("error", "User with email you entered does not exist");
             return redirect(routes.Application.index());
         }
@@ -526,12 +505,10 @@ public class UserController extends Controller {
 
     }
 
-    public Result resendForgotenPassword (){
-
+    public Result resendForgotenPassword() {
         Form<resendVerificationMailForm> boundForm = Form.form(resendVerificationMailForm.class).bindFromRequest();
-
         User u = User.findByEmail(boundForm.bindFromRequest().field("verificationEmail").value());
-        if (u == null){
+        if (u == null) {
             flash("error", "User with email you entered does not exist");
             return redirect(routes.Application.index());
         }
@@ -547,16 +524,15 @@ public class UserController extends Controller {
     }
 
     public Result setNewPasswordView(String token) {
-
         try {
             User user = User.findUserByToken(token);
             session().clear();
             session("email", user.email);
             if (token == null) {
-                flash("error","Session expired");
+                flash("error", "Session expired");
                 return redirect("/");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             return redirect("/");
         }
         return ok(views.html.user.forgotpassword.render(setNewPasswordForm));
@@ -576,11 +552,8 @@ public class UserController extends Controller {
 
     @Security.Authenticated(Authenticators.User.class)
     public Result setNewPassword() {
-
         User user = SessionHelper.getCurrentUser();
-
         Form<SetNewPasswordForm> boundForm = Form.form(SetNewPasswordForm.class).bindFromRequest();
-
         if (boundForm.hasErrors()) {
             return redirect(routes.Application.index());
         }
@@ -612,13 +585,12 @@ public class UserController extends Controller {
      * @return ok if there are no errors or a JSON object representing the errors
      */
     public Result validateSetNewPasswordForm() {
-
         Form<SetNewPasswordForm> binded = setNewPasswordForm.bindFromRequest();
-        if(binded.hasErrors()){
+        if (binded.hasErrors()) {
             return badRequest(binded.errorsAsJson());
         } else if (!((binded.field("newPassword").value()).equals(binded.bindFromRequest().field("confirmPassword").value()))) {
             return badRequest("not match");
-        }else{
+        } else {
             //get the object from the form, for revere take a look at someForm.fill(myObject)
             SetNewPasswordForm snpf = binded.get();
             flash("success", "user edited");
