@@ -36,11 +36,19 @@ public class PlaceController extends Controller {
     private static final Form<WorkingHours> workingHoursForm = Form.form(WorkingHours.class);
     private static List<String> imageLists = new ArrayList<>();
 
+    /**
+     * Redirects to add place view
+     * @return View of add place
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result addPlace() {
         return ok(addplace.render(new Place(), Service.findAll()));
     }
 
+    /**
+     * Saves place to database and redirects to index if adding was successful
+     * @return Index page if adding of the place was successful
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result savePlace() {
         Form<Place> boundForm = placeForm.bindFromRequest();
@@ -86,6 +94,11 @@ public class PlaceController extends Controller {
 
     }
 
+    /**
+     * Updates place in database and redirects to view place page if updating was successful
+     * @param id Place`s id
+     * @return View place page if updating of the place was successful
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result updatePlace(int id) {
         Form<Place> boundForm = placeForm.bindFromRequest();
@@ -136,6 +149,10 @@ public class PlaceController extends Controller {
         }
     }
 
+    /**
+     * Redirects to list of places in the database
+     * @return List of places view
+     */
     public Result placeList() {
         DynamicForm form = Form.form().bindFromRequest();
         String srchTerm = form.data().get("srch-term");
@@ -146,6 +163,11 @@ public class PlaceController extends Controller {
         return ok(placelist.render(places));
     }
 
+    /**
+     * Deletes place matching given id from database
+     * @param id Place`s id
+     * @return List of places view if deleting was seccessful
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result delete(int id) {
         Place place = Place.findById(id);
@@ -163,6 +185,11 @@ public class PlaceController extends Controller {
         return redirect(routes.PlaceController.placeList());
     }
 
+    /**
+     * Redirects to page for editing places if user has permission to edit given place
+     * @param id Place`s id
+     * @return Edit place view
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result editPlace(int id) {
         Place place = Place.findById(id);
@@ -175,6 +202,11 @@ public class PlaceController extends Controller {
         return ok(editplace.render(place, services, comments));
     }
 
+    /**
+     * View place page
+     * @param id Place`s id
+     * @return View place page
+     */
     public Result viewPlace(int id) {
         DynamicForm form = Form.form().bindFromRequest();
         Place place = Place.findById(id);
@@ -186,49 +218,22 @@ public class PlaceController extends Controller {
             rating = place.getRating();
         }
         if (form.data().get("isModal") != null) {
-            if(updateCheck(place) && checkIp(place)){
+            if(SessionHelper.isOwner(place) && SessionHelper.checkIp(place, request().remoteAddress())){
                 place.updateNumOfViews();
             }
             return ok(_placeviewform.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
         }
-        if(updateCheck(place) && checkIp(place)){
+        if(SessionHelper.isOwner(place) && SessionHelper.checkIp(place, request().remoteAddress())){
             place.updateNumOfViews();
         }
         return ok(viewplace.render(place, Service.findAll(), Comment.findByPlace(place), Image.findByPlace(place), rating));
     }
 
-    public boolean checkIp(Place place){
-        String clientIP = request().remoteAddress();
-        for(int i = 0; i<place.clientIPs.size(); i++){
-            if(place.clientIPs.get(i).ipAddress.equals(clientIP)){
-                return false;
-            }
-        }
-
-        ClientIP ipAddress = new ClientIP();
-        ipAddress.ipAddress = clientIP;
-        ipAddress.place=place;
-        Ebean.save(ipAddress);
-        place.clientIPs.add(ipAddress);
-        place.update();
-        return true;
-    }
-
-    public boolean updateCheck(Place place){
-        User user = SessionHelper.getCurrentUser();
-        if(SessionHelper.isAuthenticated()){
-            if(user.places.contains(place)){
-                return false;
-            }else{
-                return true;
-            }
-        }else{
-            return true;
-        }
-    }
-
-
-
+    /**
+     * Saves comment to database
+     * @param id Place`s id
+     * @return View place page if comment was valid
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result postComment(int id) {
         Form<Comment> boundForm = commentForm.bindFromRequest();
@@ -256,6 +261,11 @@ public class PlaceController extends Controller {
         return redirect(routes.PlaceController.viewPlace(comment.place.id));
     }
 
+    /**
+     * Updates comment in database
+     * @param id Place`s id
+     * @return View place page if comment was valid
+     */
     @Security.Authenticated(Authenticators.User.class)
     public Result updateComment(int id) {
         Form<Comment> boundForm = commentForm.bindFromRequest();
@@ -275,6 +285,12 @@ public class PlaceController extends Controller {
         return redirect(routes.PlaceController.viewPlace(comment.place.id));
     }
 
+    /**
+     * Returns bad request with JSON including all errors from form,
+     * or returns ok if form was valid.
+     * @return Ok if form was valid, or bad reqwest with JSON otherwise
+     */
+    @Security.Authenticated(Authenticators.User.class)
     public Result validateForm() {
         Form<Place> boundPlaceForm = placeForm.bindFromRequest();
         Form<Service> boundServiceForm = serviceForm.bindFromRequest();
@@ -287,6 +303,9 @@ public class PlaceController extends Controller {
         }
     }
 
+    /**
+     * @return List of places as JSON that match search term.
+     */
     public Result autoCompleteSearch() {
         DynamicForm form = Form.form().bindFromRequest();
         String srchTerm = form.data().get("srch-term");
@@ -304,6 +323,10 @@ public class PlaceController extends Controller {
         return ok(Json.toJson(titles));
     }
 
+    /**
+     * 
+     * @return
+     */
     public Result nearbyPlaces() {
         return ok(nearbyplaces.render(Place.findAll()));
     }
