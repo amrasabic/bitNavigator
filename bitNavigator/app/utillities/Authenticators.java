@@ -6,8 +6,10 @@ import play.mvc.Result;
 import play.mvc.Results;
 import play.mvc.Security;
 
+//This class represents authenticators for User and Admin
 public class Authenticators {
 
+    //Inner static class, extends Security.Authenticator. Represents authenticator for admin
     public static class Admin extends Security.Authenticator {
 
         @Override
@@ -27,6 +29,7 @@ public class Authenticators {
         }
     }
 
+    //Inner static class, extends Security.Authenticator. Represents authenticator for user
     public static class User extends Security.Authenticator {
 
         @Override

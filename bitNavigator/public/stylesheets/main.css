@@ -870,3 +870,21 @@ textarea {
     background-color: white;
     color: #ff9800;
 }
+
+#about-img {
+    width: 400px;
+    height: 230px;
+}
+
+.row{
+    align-content: center;
+}
+
+.member-container {
+
+    align-content: center;
+    align-items: center;
+    padding-left: 115px;
+
+}
+
