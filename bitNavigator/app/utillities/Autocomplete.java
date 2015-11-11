@@ -1,6 +1,6 @@
 package utillities;
 
-import controllers.ReservationController;
+import models.Reservation;
 
 /**
  * Created by hajrudin.sehic on 23/10/15.
@@ -20,7 +20,7 @@ public class Autocomplete {
 
             while (!Thread.interrupted()) {
                 try {
-                    ReservationController.checkReservationExpiration();
+                    Reservation.checkReservationExpiration();
                     Thread.sleep(ONE_HOUR);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

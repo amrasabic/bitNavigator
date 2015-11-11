@@ -16,6 +16,7 @@ import play.libs.ws.WSRequest;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utillities.SessionHelper;
+import views.html.aboutus;
 import views.html.index;
 import play.libs.F;
 import play.libs.ws.*;
@@ -163,7 +164,7 @@ public class Application extends Controller {
         Reservation r = Reservation.findById(id);
         return pdfGenerator.ok(paypdf.render(r), "http://localhost:9000");
     }
-
+    
     @Inject
     WSClient ws;
 
@@ -189,6 +190,10 @@ public class Application extends Controller {
         JsonNode json = responsePromise.get(3000);
 
         return ok(json.toString());
+    }
+
+    public Result aboutUs() {
+        return ok(aboutus.render());
     }
 
 }
