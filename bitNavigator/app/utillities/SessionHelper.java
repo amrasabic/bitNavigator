@@ -1,5 +1,6 @@
 package utillities;
 
+import com.avaje.ebean.Ebean;
 import models.*;
 import play.mvc.Http;
 
@@ -57,5 +58,29 @@ public class SessionHelper {
         return false;
     }
 
+
+    public static boolean checkIp(Place place, String clientIP){
+        //String clientIP = request().remoteAddress();
+        for(int i = 0; i<place.clientIPs.size(); i++){
+            if(place.clientIPs.get(i).ipAddress.equals(clientIP)){
+                return false;
+            }
+        }
+
+        ClientIP ipAddress = new ClientIP();
+        ipAddress.ipAddress = clientIP;
+        ipAddress.place=place;
+        Ebean.save(ipAddress);
+        place.clientIPs.add(ipAddress);
+        place.update();
+        return true;
+    }
+
+    public static boolean isOwner(Place place) {
+        if (isAuthenticated()) {
+            return place.user.equals(getCurrentUser());
+        }
+        return false;
+    }
 
 }

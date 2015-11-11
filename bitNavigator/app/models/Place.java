@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.ExpressionFactory;
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
@@ -147,4 +148,6 @@ public class Place extends Model {
         WorkingHours.findByPlace(this).delete();
         super.delete();
     }
+
+
 }

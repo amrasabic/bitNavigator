@@ -94,6 +94,9 @@ POST          /faq/validateForm                             @controllers.FAQCont
 GET           /faq                                          @controllers.FAQController.adminFAQs()
 GET           /faq/result                                   @controllers.FAQController.searchFAQs()
 
+GET           /api/hotels                                   @controllers.Application.getHotels()
+GET           /api/postoffices                              @controllers.Application.getPostOffices()
+
 #Android routes
 
 GET           /api/place/list                               @controllers.rest.controllers.PlaceRestController.getListOfPlaces()
