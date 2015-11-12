@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by hajrudin.sehic on 06/11/15.
  */
-public class ReservationRestController extends Controller {
+public class ReservationRestController extends RestSecurityController {
 
     private List<ReservationJSON> reservations = new ArrayList<>();
 
@@ -29,7 +29,12 @@ public class ReservationRestController extends Controller {
      *
      * @return list of reservations in json format
      */
-    public Result getListOfReservationsOnMyPlaces() {
+    public Result getListOfReservationsOnMyPlaces(String token) {
+
+        if(!isAuthorized(token)){
+            return badRequest();
+        }
+
         User u = getUserFromRequest();
         for (Reservation r : Reservation.getAllReservationsOnUserPlaces(u)) {
             reservations.add(new ReservationJSON(r));
@@ -42,7 +47,12 @@ public class ReservationRestController extends Controller {
      *
      * @return list of user reservations in json format
      */
-    public Result getListOfUserReservations() {
+    public Result getListOfUserReservations(String token) {
+
+        if(!isAuthorized(token)){
+            return badRequest();
+        }
+
         User u = getUserFromRequest();
         for (Reservation r : Reservation.findByUser(u)) {
             reservations.add(new ReservationJSON(r));

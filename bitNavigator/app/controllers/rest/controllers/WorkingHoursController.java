@@ -11,14 +11,19 @@ import java.util.List;
 /**
  * Created by hajrudin.sehic on 06/11/15.
  */
-public class WorkingHoursController extends Controller {
+public class WorkingHoursController extends RestSecurityController {
 
     /**
      * This method finds working hours of all places from our database on request from android app
      *
      * @return list working hours of all places in json format
      */
-    public Result getListOfHours() {
+    public Result getListOfHours(String token) {
+
+        if(!isAuthorized(token)){
+            return badRequest();
+        }
+
         List<HoursJSON> hours = new ArrayList<>();
         for (WorkingHours hour : WorkingHours.findAll()) {
             hours.add(new HoursJSON(hour));

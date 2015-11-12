@@ -99,11 +99,11 @@ GET           /api/postoffices                              @controllers.Applica
 
 #Android routes
 
-GET           /api/place/list                               @controllers.rest.controllers.PlaceRestController.getListOfPlaces()
+GET           /api/place/list                               @controllers.rest.controllers.PlaceRestController.getListOfPlaces(token : String)
 POST          /api/user/signin                              @controllers.rest.controllers.UserRestController.checkUser()
 POST          /api/user/signup                              @controllers.rest.controllers.UserRestController.checkRegistration()
-GET           /api/hours/list                               @controllers.rest.controllers.WorkingHoursController.getListOfHours()
+GET           /api/hours/list                               @controllers.rest.controllers.WorkingHoursController.getListOfHours(token : String)
 POST          /api/reservation/submit                       @controllers.rest.controllers.ReservationRestController.reservationSubmit()
-POST          /api/reservation/list                         @controllers.rest.controllers.ReservationRestController.getListOfReservationsOnMyPlaces()
-POST          /api/reservation/places/list                  @controllers.rest.controllers.ReservationRestController.getListOfUserReservations()
+POST          /api/reservation/list                         @controllers.rest.controllers.ReservationRestController.getListOfReservationsOnMyPlaces(token : String)
+POST          /api/reservation/places/list                  @controllers.rest.controllers.ReservationRestController.getListOfUserReservations(token : String)
 

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by hajrudin.sehic on 06/11/15.
  */
-public class PlaceRestController extends Controller{
+public class PlaceRestController extends RestSecurityController{
 
     private class PlaceJSON {
 
@@ -65,7 +65,12 @@ public class PlaceRestController extends Controller{
      * This method finds all places from our database on request from android app
      * @return list of all places in json format
      */
-    public Result getListOfPlaces() {
+    public Result getListOfPlaces(String token) {
+
+        if(!isAuthorized(token)){
+            return badRequest();
+        }
+
         List<PlaceJSON> places = new ArrayList<>();
         for (Place place : Place.findAll()) {
             places.add(new PlaceJSON(place));

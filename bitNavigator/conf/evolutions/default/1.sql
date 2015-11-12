@@ -94,6 +94,12 @@ create table reservation (
   constraint pk_reservation primary key (id))
 ;
 
+create table rest_token (
+  id                        bigint auto_increment not null,
+  token                     varchar(255) not null,
+  constraint pk_rest_token primary key (id))
+;
+
 create table service (
   id                        integer auto_increment not null,
   service_type              varchar(255),
@@ -204,6 +210,8 @@ drop table place;
 drop table report;
 
 drop table reservation;
+
+drop table rest_token;
 
 drop table service;
 
